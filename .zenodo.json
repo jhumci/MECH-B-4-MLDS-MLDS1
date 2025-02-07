@@ -1,0 +1,19 @@
+{
+    "access_right": "open",
+    "creators": [
+        {
+            "orcid": "0000-0003-3601-0852",
+            "name": "Kandolf, Peter"
+        },
+        {
+            "orcid": "0000-0002-0678-6855",
+            "name": "Huber, Julian"
+        }
+    ],
+    "description": "Course material for a ~2 * 15 hours (2 ECTS) course on basic concepts for data science. All the topics are presented with the Python implementation included. We cover matrix decompositions, regression, signal processing, sparsity and compressed sensing and a bit of statistics.",
+    "keywords": ["Python", "statistics","regression", "data science"],
+    "license": "cc-by-nc-sa-4.0",
+    "publication_date": "2025-02-07",
+    "title": "MECH-B-4-MLDS-MLDS1-ILV - Machine Learning and Data Science 1",
+    "upload_type": "lesson"
+}

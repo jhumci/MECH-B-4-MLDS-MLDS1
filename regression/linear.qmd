@@ -1,0 +1,585 @@
+---
+lightbox: true
+---
+# Linear Regression {#sec-regression-linear}
+
+The general idea of linear regression is to approximate a _point cloud_ by a mathematical function, this is often called _curve fitting_ and it is closely related to optimization techniques, [compare @Brunton2022, Section 4.1].
+
+
+Let us assume that we want to establish a relationship between our $n$ observations with $m$ independent variables. In order to get the notation down correctly we should describe the variables more closely.
+
+We have $n$ observations (the $k$-th representation is denoted by $y_k$) resulting in a vector:
+$$
+y = \left[
+    \begin{array}{c} y_1 \\ y_2 \\ y_3 \\ \vdots \\ y_n \end{array}
+    \right].
+$$
+
+We have $m$ independent variables and consequently for each of this $n$ observations this results in a matrix
+$$X = \left[
+    \begin{array}{c} X_{1-} \\ X_{2-} \\ X_{3-} \\ \vdots \\ X_{n-} \end{array}
+    \right] = \left[X_{-1}, \dots, X_{-m}\right],$$
+where the second representation more closely fits to our idea of the $m$ independent variables. 
+
+Let us model the relation in a linear fashion with the parameters $c$
+as 
+$$
+y_k \overset{!}{=} X_{k1} c_1 + X_{k2} c_2 + \cdots + X_{km} c_m, \quad 1\leq k \leq n,
+$$
+or in short
+$$
+y = X c = f(X, c).
+$$
+
+::: {.callout-note}
+
+In literature the parameters are most of the time called $\beta$ but for the sake of keeping notation consistent we opt for $c$ (and not $b$ to not confuse it with $Ax =b$).
+
+:::
+
+::: {.callout-tip}
+Usually the convention is to define $X_{-1}=1$ as constant 1 at each position.
+The corresponding $c_1$ is called the _intercept_.
+We even find this convention if theory tells us $c_1$ is $0$ as some procedures assume this term to exist.
+:::
+
+::: {.callout-note}
+We talk of a linear model, as long as it is linear in the parameters $c$.
+It might happen that regressors have a non linear relation.
+:::
+
+Let us assume for a moment we already have a realisation of $f$, i.e. we know the  parameters $c$, we get the error of the approximation as
+$$
+\mathbf{e} = y - f(X, c)\quad \Leftrightarrow \quad \mathbf{e}_k = y_k - f(X_{k-}, c).
+$$ {#eq-fiterror}
+
+There are various possibilities to select the metric for minimizing $\mathbf{e}$ and therefore characterizing the quality of the _fit_.
+This is done by selecting the underlying norm.
+Most commonly we use the $1$-norm, the $2$-norm and the $\infty$-norm, i.e.
+$$
+E_1 (f) = \frac1n \sum_{k=1}^n|f(X_{k-}, c) - y_k |,
+$$ {#eq-fit1}
+for the $1$-norm or mean absolute error,
+$$
+E_2 (f) = \sqrt{\frac1n \sum_{k=1}^n|f(X_{k-}, c) - y_k |^2},
+$$ {#eq-fit2}
+for the $2$-norm or least-square error,
+$$
+E_\infty (f) = \max_{k}|f(X_{k-}, c) - y_k |
+$$ {#eq-fit3}
+for the $\infty$-norm or maximum error.
+Of course $p$-norms work as well
+$$
+E_p (f) = \left(\frac1n \sum_{k=1}^n|f(X_{k-}, c) - y_k |^p\right)^{1/p}.
+$$
+If we go back and we want to solve @eq-fiterror for $c$ we have different realisations, depending on the selected norm.
+
+To illustrate this we use the example from [@Brunton2022, pp. 136-167].
+
+```{python}
+#| label: fig-linear_reg
+#| fig-cap: "Line fit with different norms. Top without outliers, bottom with one outlier."
+#| fig-subcap:
+#|   - "Observations with no outliers."
+#|   - "Observations with outliers." 
+#| layout-ncol: 1
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy.optimize
+%config InlineBackend.figure_formats = ["svg"]
+
+# Function definitions
+def fit1(x0, t):
+    x, y = t
+    return 1/len(y)*np.max(np.abs(x0[0] * x + x0[1] - y))
+def fit2(x0, t):
+    x, y = t
+    return 1/len(y)*np.sum(np.abs(x0[0] * x + x0[1] - y))
+def fit3(x0, t):
+    x, y = t
+    return 1/len(y)*np.sum(np.power(np.abs(x0[0] * x + x0[1] - y), 2))
+
+# The data
+x = np.arange(1, 11)
+y = np.array([0.2, 0.5, 0.3, 0.5, 1.0, 1.5, 1.8, 2.0, 2.3, 2.2])
+z = np.array([0.2, 0.5, 0.3, 3.5, 1.0, 1.5, 1.8, 2.0, 2.3, 2.2])
+t = (x, y)
+t2 = (x, z)
+
+x0 = np.array([1, 1])
+
+p1 = scipy.optimize.fmin(fit1, x0, args=(t,), disp=False)
+p2 = scipy.optimize.fmin(fit2, x0, args=(t,), disp=False)
+p3 = scipy.optimize.fmin(fit3, x0, args=(t,), disp=False)
+
+p12 = scipy.optimize.fmin(fit1, x0, args=(t2,), disp=False)
+p22 = scipy.optimize.fmin(fit2, x0, args=(t2,), disp=False)
+p32 = scipy.optimize.fmin(fit3, x0, args=(t2,), disp=False)
+
+xf = np.arange(0, 11, 0.1)
+y1 = np.polyval(p1, xf)
+y2 = np.polyval(p2, xf)
+y3 = np.polyval(p3, xf)
+
+y12 = np.polyval(p12, xf)
+y22 = np.polyval(p22, xf)
+y32 = np.polyval(p32, xf)
+
+X = np.array([x, np.ones(x.shape)]).T
+p4 = np.linalg.pinv(X) @ y
+p42 = np.linalg.pinv(X) @ z
+
+y4 = np.polyval(p4, xf)
+y42 = np.polyval(p42, xf)
+
+fig = plt.figure()
+
+plt.plot(x, y, "o", color="r", label="observations")
+plt.plot(xf, y1, label=r"$E_\infty$")
+plt.plot(xf, y2, "--", linewidth=2, label=r"$E_1$")
+plt.plot(xf, y3, "-.", linewidth=2, label=r"$E_2$")
+plt.plot(xf, y4, ":", linewidth=2, label=r"$X^\dagger$")
+plt.ylim(0, 4)
+plt.xlim(0, 11)
+plt.legend(loc="upper left")
+plt.gca().set_aspect(1)
+plt.grid(visible=True)
+plt.show()
+
+plt.plot(x, z, "o", color="r", label="observations")
+plt.plot(xf, y12, label=r"$E_\infty$")
+plt.plot(xf, y22, "--", linewidth=2, label=r"$E_1$")
+plt.plot(xf, y32, "-.", linewidth=2, label=r"$E_2$")
+plt.plot(xf, y42, ":", linewidth=2, label=r"$X^\dagger$")
+plt.ylim(0, 4)
+plt.xlim(0, 11)
+plt.legend(loc="upper left")
+plt.gca().set_aspect(1)
+plt.grid(visible=True)
+plt.show()
+```
+If we use @eq-fit2 the regression fit is called the _least square fit_.
+
+::: {.callout-tip}
+For the optimization algorithm to work fast it is often useful to rewrite the above error functions, e.g. the square-root in $E_2$ and the absolute value are not required. 
+:::
+
+## Ordinary Least Square {#sec-regr-linear-ols}
+
+It is worth looking into the least square solution 
+$$
+E_2 (f) = \sqrt{\frac1n \sum_{k=1}^n|\underbrace{f(X_{k-}, c) - y_k}_{\mathbf{e}_k} |^2},
+$$
+more closely.
+We can interpret it as the optimization problem
+$$
+c = \underset{v}{\operatorname{argmin}} \| y - Xv\|_2
+$$
+and with some linear algebra we get
+$$
+\begin{array}{ccl}
+c &= &\underset{v}{\operatorname{argmin}} \| y - Xv\|_2,\\
+  &= &\underset{v}{\operatorname{argmin}} \langle y -Xv, y -Xv\rangle,\\
+  &= &\underset{v}{\operatorname{argmin}} (y -Xv)^{\mathsf{T}} (y -Xv),\\
+  &= &\underset{v}{\operatorname{argmin}} y^{\mathsf{T}}y - y^{\mathsf{T}} X v - v^{\mathsf{T}} X^{\mathsf{T}} y + v^{\mathsf{T}} X^{\mathsf{T}} X v.\\
+\end{array}
+$$
+In order to find a solution we compute the derivative with respect to $v$ set it to $0$ and simplify, i.e.
+$$
+\frac{\mathrm{d}}{\mathrm{d}\,v} y^{\mathsf{T}}y- y^{\mathsf{T}} X v - v^{\mathsf{T}} X^{\mathsf{T}} y + v^{\mathsf{T}} X^{\mathsf{T}} X v = - 2X^{\mathsf{T}}y + 2 X^{\mathsf{T}}Xv 
+$$ {#eq-ols_gradient}
+and
+$$
+v = (X^{\mathsf{T}}X)^{-1}X^{\mathsf{T}}y \equiv X^\dagger y.
+$$
+We recall, that $X^\dagger$ is called the Moore-Penrose pseudo-inverse, see @def-pinv.
+
+See @fig-linear_reg for the result when using the pseudo-inverse.
+
+### Alternative computation
+
+The pseudo-inverse provides us with the optimal solution but for large systems the computation can be inefficient, or more precisely, there are more efficient ways to get the same results.
+
+Following [@Brunton2022, pp. 137-138] we can find an alternative for the above example in @fig-linear_reg.
+
+We want to fit the data points $(x_i, y_i)$ with the function $f(x) = c_2 x + c_1$ resulting in the error
+$$
+E_2(f) = \sqrt{\frac1n \sum_{k=1}^n(c_2 x_k + c_1 - y_k )^2}.
+$$
+A solution that minimizes the above equation also minimizes
+$$
+E_2 = \sum_{k=1}^n(c_2 x_k + c_1 - y_k )^2
+$$
+and we find the solution by partial differentiation
+$$
+\frac{\mathrm{d} E_2}{\mathrm{d}\, c_1} = 0 \Leftrightarrow \sum_{k=1}^n 2 (c_2 x_k + c_1 - y_k ) = 0,
+$$
+$$
+\frac{\mathrm{d} E_2}{\mathrm{d}\, c_2} = 0 \Leftrightarrow \sum_{k=1}^n 2 (c_2 x_k + c_1 - y_k ) x_k = 0,
+$$
+and this results in the system
+$$
+\left[
+\begin{array}{cc}
+n & \sum_k x_k \\
+\sum_k x_k & \sum_k x_k^2
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+c_1 \\ c_2
+\end{array}
+\right]
+= 
+\left[
+\begin{array}{c}
+\sum_k y_k\\\sum_k x_k y_k
+\end{array}
+\right].
+$$ {#eq-alternativeregression}
+This ansatz can be extended to polynomials of degree $k$, where the result is always a $(k+1) \times (k+1)$ matrix.
+
+## Polynomial Regression
+
+Polynomial regression, despite its name, is linear regression with a special function $f$ where the relation is polynomial in $x= \left[a_1, \dots, x_m\right]^{\mathsf{T}}$
+$$
+y_k = x_k^0 + x_k^1 c_1 + x_k^2 c_2 + \cdots + x_k^m c_m, \quad 1\leq k \leq n,
+$$
+With the matrix form 
+$$
+X = \left[
+\begin{array}{ccccc}
+1 & x_1    &x_1^2  & \cdots &x_1^m  \\
+1 & x_2    &x_2^2  & \cdots &x_2^m  \\
+1 & \vdots &\vdots & \ddots &\vdots \\
+1 & x_n    &x_n^2  & \cdots &x_n^m
+\end{array}
+\right]
+$$ {#eq-vander}
+
+::: {.callout-note}
+The matrix @eq-vander is called the Vandermonde matrix.
+:::
+
+This can be solved in the same ways as the before with $X^\dagger$ or the direct system, but it should not as @eq-vander is badly conditioned.
+There are other methods like _divided differences_, Lagrange interpolation for this task.
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-lregfallenobject}
+
+## Parameter estimation of a falling object
+
+Just because we deal with linear regression this does not means that the model needs to be linear too.
+As long as we are linear in the parameters $c$ we can apply our findings, even for non linear _independent variables_.
+
+To illustrate this, let us consider an object falling without aerodynamic drag, described by the differential equation
+$$
+m \ddot{y}(t) = -m g,
+$$
+for the gravitational constant $g$.
+Integration with respect to $t$ results in 
+$$
+y(t) = y(0) + v(0) t - \frac{g}{2} t^2.
+$$
+So we get
+$$
+X{k-} = 
+\left[
+    \begin{array}{ccc}
+    1 & t_k & -\frac{1}{2} t_k^2 \\
+    \end{array}
+\right],
+\quad \text{and} \quad
+y = \left[
+\begin{array}{c}
+y^{(0)}\\ v^{(0)} \\ g
+\end{array}
+\right]
+$$
+or in the long form, for $t_{k+1}-t_k = 0.1$
+$$
+X = \left[
+\begin{array}{ccc}
+1 & 0 & 0 \\
+1 & 0.1 & -0.005 \\
+1 & 0.2 & -0.020 \\
+1 & 0.3 & -0.045 \\
+1 & 0.4 & -0.080 \\
+\vdots & \vdots & \vdots 
+\end{array}
+\right]
+$$
+and we can, for example, estimate our unknowns $y^{(0)}$, $v^{(0)}$, and $g$ by
+$$
+c = X^\dagger y.
+$$
+
+::::
+:::
+
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-regression-linear-poly}
+
+## Polynomial regression
+
+In the following example we generate an artificial sample of $n=100$ points resulting in the samples 
+$$
+y_k = \frac12 x_k^2 + x_k + 2 + \epsilon_k
+$$
+where $\epsilon_k$ is a random number that simulates the error. 
+We perform the interpolation with $X^\dagger$.
+
+```{python}
+#| label: fig-linear_reg_poly
+#| fig-cap: "Fitting for different degrees of polynomial $m$"
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import matplotlib.pyplot as plt
+import numpy as np
+import warnings
+warnings.simplefilter('ignore', np.exceptions.RankWarning)
+%config InlineBackend.figure_formats = ["svg"]
+np.random.seed(6020)
+
+m = 100
+x = 6 * np.random.rand(m) - 3
+y = 1/2 * x ** 2 + x + 2 + np.random.randn(m)
+
+X1 = np.vander(x, 2)
+X2 = np.vander(x, 3)
+X3 = np.vander(x, 16)
+
+p1 = np.linalg.pinv(X1) @ y
+p2 = np.linalg.pinv(X2) @ y
+p3 = np.linalg.pinv(X3) @ y
+p4 = np.polyfit(x, y, 300)
+
+xf = np.arange(-3, 3, 0.1)
+y1 = np.polyval(p1, xf)
+y2 = np.polyval(p2, xf)
+y3 = np.polyval(p3, xf)
+y4 = np.polyval(p4, xf)
+
+fig = plt.figure()
+plt.plot(x, y, "o", color="r", label="observations", linewidth=3)
+plt.plot(xf, y1, label=r"$m=1$")
+plt.plot(xf, y2, label=r"$m=2$")
+plt.plot(xf, y3, label=r"$m=16$")
+plt.plot(xf, y4, label=r"$m=300$")
+
+plt.ylim(0, 10)
+plt.xlim(-3, 3)
+plt.xlabel(r"$x$")
+plt.ylabel(r"$y$")
+plt.legend(loc="upper left")
+#plt.gca().set_aspect(0.25)
+plt.grid(visible=True)
+plt.show()
+```
+
+::::: {.callout-caution}
+
+The condition of the Vandermonde matrix increases rapidly:
+
+| degree | $m=2$ | $m=3$ | $m=5$ | $m=10$ | $m=15$ | $m=20$ | 
+| --- | --- |  --- | --- | --- | --- | --- | 
+| $\kappa_2$  | 6.07e0 | 1.63e1 | 1.89e2 | 154e5 | 1.24e8 | 1.41e11 |
+
+The result of the $m=300$ is unstable and we can not compute it via $X^\dagger$.
+:::::
+
+As can be seen in @fig-linear_reg_poly we do not necessarily get a good result if we use a higher degree polynomial.
+This is especially true if we extrapolate and not interpolate.
+::::
+:::
+
+## Data Linearization
+
+Quite often it is possible to linearize our model at hand.
+For example if we want to fit for 
+$$
+f(x, c) = c_2 \exp(c_1 x),
+$$ {#eq-lregnonlinear}
+
+and use the same derivation as for @eq-alternativeregression we end up with the corresponding system as
+$$
+c_2 \sum_k x_k \exp(2 c_1 x_k) - \sum_k x_k y_k \exp(c_1 x_k) =0,
+$$
+$$
+c_2 \sum_k \exp(2 c_1 x_k) - \sum_k y_k \exp(c_1 x_k) =0.
+$$
+
+This non-linear system can not be solved in a straight forward fashion but we can avoid it by linearization with the simple transformation
+$$
+\begin{array}{ccl}
+\hat{y} &=& \ln(y), \\
+\hat{x} &=& x, \\
+c_3 &=& \ln c_2,
+\end{array}
+$$
+and taking the natural logarithm of both sides of @eq-lregnonlinear and simplifying
+$$
+\ln y = \ln(c_2 \exp(c_1 x)) = \ln(c_2) + c_1 x.
+$$
+Now all that is left to apply $\ln$ to the data $y$ and solve the linear problem.
+In order to apply it to the original function the parameters transform needs to be reversed.
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-population}
+
+## World population
+
+We take a look at the population growth were the data is kindly provided by @owid-population-growth. Have a look at there excellent work on [ourworldindata.org](https://ourworldindata.org/).
+
+::::: {.content-visible when-format="html"}
+```{python}
+#| label: fig-reg_wp
+#| fig-cap: "Regression analysis for world population with different scales for y axis."
+#| fig-subcap: 
+#|   - "World population with regression lines normal scale."
+#|   - "World population with regression lines logarithmic scale." 
+#| layout-ncol: 1
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+
+from owid.catalog import charts
+import numpy as np
+import scipy.optimize
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+df = charts.get_data(
+    "https://ourworldindata.org/grapher/population?country=~OWID_WRL")
+data = df[df["entities"] == "World"]
+x = data["years"].to_numpy()
+y = data["population"].to_numpy()
+ylog = np.log(y)
+
+def fit3(x0, t):
+    x, y = t
+    return np.sum(np.power(np.abs(x0[0] * x + x0[1] - y), 2))
+
+start = [-np.inf, 0, 1700, 1900, 1980]
+
+yest = []
+
+for s in start:
+    filter = x >= s
+    t = (x[filter], ylog[filter])
+    x0 = np.array([1, 1])
+    b = scipy.optimize.fmin(fit3, x0, args=(t,), disp=False)
+    yest.append(np.exp(b[1]) * np.exp(b[0] * x))
+
+fig = go.Figure()
+fig2 = go.Figure()
+fig.add_trace(go.Scatter(mode="markers", x=data["years"],
+                y=data["population"], name="data"))
+fig2.add_trace(go.Scatter(mode="markers", x=data["years"],
+                y=data["population"], name="data"))
+
+for i, ye in enumerate(yest):
+    fig.add_trace(go.Scatter(x=x, y=ye, name=f"fit from {start[i]}"))
+    fig2.add_trace(go.Scatter(x=x, y=ye, name=f"fit from {start[i]}"))
+
+
+fig.update_xaxes(title_text="year", range=[1700, 2023])
+fig.update_yaxes(title_text="population")
+fig.update_layout(legend=dict(
+    yanchor="top",
+    y=0.99,
+    xanchor="left",
+    x=0.01
+))
+fig.show()
+
+fig2.update_xaxes(title_text="year", range=[1700, 2023])
+fig2.update_yaxes(title_text="population", type="log", range=[8.5,10])
+fig2.update_layout(legend=dict(
+    yanchor="top",
+    y=0.99,
+    xanchor="left",
+    x=0.01
+))
+fig2.show()
+```
+:::::
+::::: {.content-visible unless-format="html"}
+```{python}
+#| eval: false
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+
+from owid.catalog import charts
+import numpy as np
+import scipy.optimize
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+df = charts.get_data(
+    "https://ourworldindata.org/grapher/population?country=~OWID_WRL")
+data = df[df["entities"] == "World"]
+x = data["years"].to_numpy()
+y = data["population"].to_numpy()
+ylog = np.log(y)
+
+def fit3(x0, t):
+    x, y = t
+    return np.sum(np.power(np.abs(x0[0] * x + x0[1] - y), 2))
+
+start = [-np.inf, 0, 1700, 1900, 1980]
+
+yest = []
+```
+```{.python}
+for s in start:
+    filter = x >= s
+    t = (x[filter], ylog[filter])
+    x0 = np.array([1, 1])
+    b = scipy.optimize.fmin(fit3, x0, args=(t,), disp=False)
+    yest.append(np.exp(b[1]) * np.exp(b[0] * x))
+
+fig = go.Figure()
+fig2 = go.Figure()
+fig.add_trace(go.Scatter(mode="markers", x=data["years"],
+                y=data["population"], name="data"))
+fig2.add_trace(go.Scatter(mode="markers", x=data["years"],
+                y=data["population"], name="data"))
+
+for i, ye in enumerate(yest):
+    fig.add_trace(go.Scatter(x=x, y=ye, name=f"fit from {start[i]}"))
+    fig2.add_trace(go.Scatter(x=x, y=ye, name=f"fit from {start[i]}"))
+
+
+fig.update_xaxes(title_text="year", range=[1700, 2023])
+fig.update_yaxes(title_text="population")
+fig.update_layout(legend=dict(
+    yanchor="top",
+    y=0.99,
+    xanchor="left",
+    x=0.01
+))
+fig.show()
+
+fig2.update_xaxes(title_text="year", range=[1700, 2023])
+fig2.update_yaxes(title_text="population", type="log", range=[8.5,10])
+fig2.update_layout(legend=dict(
+    yanchor="top",
+    y=0.99,
+    xanchor="left",
+    x=0.01
+))
+fig2.show()
+```
+
+![World population with regression lines normal scale.](../_assets/regression/population1.png){#fig-reg_wp-1 width="60%"}
+
+![World population with regression lines logarithmic scale.](../_assets/regression/population2.png){#fig-reg_wp-2 width="60%"}
+
+:::::
+::::
+:::
+
+Next, we are going to look into actual non-linear regression.

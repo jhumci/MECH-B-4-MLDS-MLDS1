@@ -1,0 +1,68 @@
+# Tutorial: Getting Data Tidy and finding Correlation {.unnumbered}
+
+## Objective
+
+The __Global Energy Forecasting Competition__ @HONG2014357 is a data science competition that aims to advance the field of energy forecasting. The competition is held every two years and the data is made available to the public for research purposes. Different teams from around the world participate in the competition and the best models are selected based on their performance. 
+
+
+In 2012 one of the goals was to forecast the load of a power system. The data consists of hourly load data for a period of 5 years. The data was not provided in a tidy format and we need to clean it up before we can start working with it. The main objective of the load forecasting competition was to predict an accurate system load for each hour in each of the zones.
+
+## Data
+
+The data is provided in a zip file that contains different files:
+
+- [`Holiday_List.csv`](_assets\dataexploratory\GEFCom2012\GEFCOM2012_Data\Load\Holiday_List.csv)
+- [`Load_history.csv`](_assets\dataexploratory\GEFCom2012\GEFCOM2012_Data\Load\Load_history.csv)
+- [`temperature_history.csv`](_assets\dataexploratory\GEFCom2012\GEFCOM2012_Data\Load\_assets\dataexploratory\GEFCom2012\GEFCOM2012_Data\Load\temperature_history.csv)
+
+Your task is to make sense from the data an bring it into a tidy format. Store the data in a pandas DataFrame and save it as a csv file. Also reload it, to make shure it works.
+
+## Crisp-DM
+
+We start by using the first four steps of the CRISP-DM process to make sense of the data using exploratory data analysis.
+
+1. **Business Understanding**  
+   - What is the system load of a power system and why is it important to forecast it?
+   - What are the benefits of accurate load forecasting?
+   - What factors should influence the load of a power system?
+
+2. **Data Understanding**  
+   How many systems are there in the data?
+   What are the features of the data?
+   What is the time period of the data?
+
+3. **Datenaufbereitung**  
+    What is a meaningful structure for the data?
+    What should be colums and what should be rows?
+    How can we bring the data into a tidy format?
+
+4. **Modellierung**  
+   Is there a seasionality in the data? Plot the average load for each hour of the day, day of the week and month of the year in a Boxplot.
+   How do the distributions between the different systems compare? Are there any outliers?
+   Are there any correlations between the load and the temperature? Plot the load against the temperature and compute the correlation coefficient.
+
+::: {.callout-tip}
+Make sure to store not only the processed, but also the processed data in a csv file. This way you can always go back to the original data and start over if you make a mistake.
+Also store the preprocessing steps in a separate script, so you can reproduce the results later. It is not uncommon, to recieve new data that needs to be processed in the same way.
+This is also the time to think of a proper folder structure for your project. Do not forget all the things you learned in the software design courses. You can also use modules like [cookiecutter](https://cookiecutter-data-science.drivendata.org/) to create a project structure like this:
+
+```
+├── LICENSE            <- Open-source license if one is chosen
+├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
+├── README.md          <- The top-level README for developers using this project.
+├── data
+│   ├── external       <- Data from third party sources.
+│   ├── interim        <- Intermediate data that has been transformed.
+│   ├── processed      <- The final, canonical data sets for modeling.
+│   └── raw            <- The original, immutable data dump.
+│
+├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+│
+├── models             <- Trained and serialized models, model predictions, or model summaries
+│
+├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
+│                         the creator's initials, and a short `-` delimited description, e.g.
+│                         `1.0-jqp-initial-data-exploration`.
+...
+```
+:::

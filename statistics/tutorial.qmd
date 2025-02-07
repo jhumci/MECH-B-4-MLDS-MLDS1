@@ -1,0 +1,29 @@
+# Tutorial: Monte Carlo Simulation of Equipment Failure Time {.unnumbered}
+
+## Objective
+Students will build a Monte Carlo simulation to model the time until equipment failure in machinery. The goal is to understand probability concepts like conditional probability, addition and multiplication laws, statistical independence, and to visualize the results using a __histogram__.
+
+## Story and Use Case
+### Story:
+A manufacturing plant relies on an automated production line with _three robotic arms_. Each robotic arm consists of several critical components: _motors_, _sensors_, and _control units_. If any of the _motors_ or _control units_ fail, the robotic arm stops functioning, leading to production downtime. The factory manager wants to estimate the expected downtime caused by failures and identify weak points in the system to optimize maintenance schedules.
+
+### Use Case:
+The students must develop a simulation that models the failure behavior of a robotic arm in the production line. Each robotic arm consists of four components:
+
+- **Motor** fail according to an [exponential distribution](https://numpy.org/doc/2.1/reference/random/generated/numpy.random.exponential.html) with a mean failure time of 500 hours.
+- **Sensor 1** fail according to a [normal distribution](https://numpy.org/doc/2.1/reference/random/generated/numpy.random.normal.html) with a mean of 600 hours and a standard deviation of 100 hours.
+- **Sensor 2** fail according to a [normal distribution](https://numpy.org/doc/2.1/reference/random/generated/numpy.random.normal.html) with a mean of 600 hours and a standard deviation of 100 hours.
+- **Control Unit** fail according to a [uniform distribution](https://numpy.org/doc/2.1/reference/random/generated/numpy.random.uniform.html) between 400 and 800 hours.
+- If a **Sensor** fails before the **Motor**, the the failure time of the motor is reduced by 100 hours.
+- If a **Control Unit** or **Motor**  fails, the robotic arm stops working.
+
+1. Simulate random failure times for each component.
+2. Determine the time untils the first robitic arm fails, stopping the production line.
+3. Repeat the process for 10,000 trials.
+4. Plot the histogram of failure times.
+5. Analyze the contingency tables of the variables (`motor_fails`, `sensor_1_fails`, `sensor_1_fails`, `control_unit_fails`, `line_fails`) and discuss the conditional probabilities and independence.
+6. Is there a correlation between the time-to-failure of the the Sensors and the Robotic Arm? Create the scatter plot of the time-to-failure of the Sensors and the Robotic Arm and compute the correlation coefficient.
+
+## Application of Bayes Theorem
+
+Can You use Bayes Theorem to compute the probability a Control Unit causes the failure, given that the robotic arm has stopped working. 

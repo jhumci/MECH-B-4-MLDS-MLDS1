@@ -1,0 +1,444 @@
+# Data Sets {#sec-dataexploratory-data_sets}
+
+Ein sauber aufbereiteter Datensatz ist eine grundlegende Voraussetzung für jede datenbasierte Analyse und ist im CRISP-DM Teil der **Datenaufbereitung**. Wir starten zunächst mit dem Konzept von **Tidy Data** @sec-dataexploratory-data_tidy-data, welches sich mit der sauberen Strukturierung von Daten befasst. Anschließend werden wir uns mit den **Typen von Variablen** @sec-dataexploratory-data_variable-types befassen, die unter anderem den Ausschlag gibt, welche verschiedenen **Visualisierungen** @sec-dataexploratory-data_visualization sinnvoll sind, um sich ein __Data Understanding__ zu erarbeiten. Zum Schluss werden wir uns mit den verschiedenen **Maßen für Variablen** @sec-dataexploratory-data_variable-measures auseinandersetzen, mit welchen man Datensätze beschreiben kann.
+
+## Tidy-Data {#sec-dataexploratory-data_tidy-data}
+
+Wenn wir mit Computern **automatisiert** arbeiten möchten, ist neben der **Semantik** der Daten auch deren **Syntax** essenziell. Das bedeutet, dass die Daten in einer Struktur vorliegen müssen, die ihre Semantik sinnvoll abbildet. 
+
+Ein weitverbreiteter Standard, der in diesem Zusammenhang häufig genutzt wird, sind die von @wickham2014tidy beschriebenen **Tidy Data Conventions**. Dieses Datenformat ist de facto eine Grundlage für viele Softwarepakete wie `pandas`, `statsmodels`, `sklearn`, `tensorflow` und andere Werkzeuge im Bereich Datenanalyse und des maschinelles Lernen.
+
+:::{.callout-note collapse="true"}
+### Hinweis: Datenbanknormalisierung
+Im Grunde handelt es sich bei diesem Format um ein Prinzip, das auch in der **Datenbanknormalisierung** nach Codd verfolgt wird. Ihnen wird dieses Konzept in relationalen Datenbanken (SQL) erneut begegnen.  
+:::
+
+### Was bedeutet "Tidy Data"?
+
+Tidy Data folgt drei Grundprinzipien:
+
+::: {.callout-important}
+#### Grundprinzipien von Tidy Data
+1. **Jede Zeile repräsentiert eine Beobachtung** (bzw. eine Einheit).
+2. **Jede Spalte repräsentiert eine Variable** (bzw. ein Attribut).
+3. **Jede Zelle enthält genau einen präzisen Wert** (einen primitiven Datentyp wie `int`, `float`, `str` oder `bool` – **keine Listen, Tupel oder geschachtelten Objekte**).
+:::
+
+Ein Beispiel für nicht-Tidy-Daten könnte eine Spalte enthalten, in der mehrere Werte in einer Liste zusammengefasst sind. Solche Daten sind schwerer zu verarbeiten und unflexibler beim Einsatz in Analysetools.
+
+Tidy Data hilft uns bei der **Datenbereinigung** und **Datenanalyse**. Es erleichtert die **Automatisierung** und **Standardisierung** von Prozessen und reduziert die Wahrscheinlichkeit von Fehlern.
+
+- **Kompatibilität:** Viele Python-Bibliotheken wie `pandas`, `statsmodels` oder `seaborn` setzen voraus, dass die verwendeten Daten im Tidy-Format vorliegen.
+- **Automatisierung:** Tidy-Daten erleichtern Standardoperationen wie Filtern, Gruppieren und Pivotieren erheblich.
+- **Fehlerprävention:** Unstrukturierte oder verschachtelte Datenstrukturen sind fehleranfällig und schwer zu debuggen.
+
+:::{.callout-tip}
+#### Daten in das Tidy-Format transformieren
+
+Es gibt viele hilfreiche Funktionen und Methoden in `pandas`, um Daten zu "tidy-fizieren". Ein Beispiel ist die Verwendung der Methoden `stack`, `unstack` und `melt`. Diese helfen dabei, Daten umzustrukturieren und in die gewünschte _lange_ (viele Zeilen) oder _weite_ (viele Spalten) Form zu bringen.  Ein hilfreicher Artikel hierzu ist [Reshape with Pandas](https://www.geeksforgeeks.org/reshape-a-pandas-dataframe-using-stackunstack-and-melt-method/).
+
+💡 **Tipp:** Wenn Sie unsicher sind, wie Sie Ihre Daten umorganisieren sollten, können Sie ein Beispiel (z.B. `head()` eines DataFrames) und die gewünschte Struktur (also Spaltennamen) in ein Large Language Model eingeben. Oft erhalten Sie klare Vorschläge zur Umstrukturierung!
+:::
+
+### Positive Beispiele für Tidy Data
+
+Der folgende Beispielcode zeigt, wie Sie ein CSV-Datei laden und sich mit den ersten Zeilen vertraut machen können. Glücklicher Weise ist dieser Datensatz bereits im Tidy-Format. Jede Zeile repräsentiert eine Beobachtung (Kreditnehmer) und jede Spalte eine Variable (Attribut).
+
+```{python}
+#| classes: styled-output
+import pandas as pd
+
+# Lesen der CSV-Datei in einen DataFrame
+df = pd.read_csv(r"../_assets/dataexploratory/loan50.csv")
+# Ausgabe der ersten Zeilen des Datensatzes
+print(df.head())
+```
+
+### Negative Beispiele für Tidy Data
+
+
+Folgendes Datenbeispiel zeigt, wie ein Datensatz **nicht** im Tidy-Format aussieht. Wir sehen die Strombedarfe von verschiedenen Netzgebieten `zone_id` zu verschiedenen Zeitpunkten. Allerdings ist es ungünstig, dass nicht jede Kombination aus Zone und Zeitpunkt eine eigene Zeile hat. Stattdessen sind die Werte für alle 24 Stunden in einer eigenen Spalte.
+
+```{python}
+#| classes: styled-output
+import pandas as pd
+
+df = pd.read_csv(r"../_assets/dataexploratory/GEFCom2012/GEFCOM2012_Data/Load/Load_history.csv")
+print(df.head())
+```
+
+Eine Umwandlung in das Tidy-Format würde, wie folgt aussehen, wobei wird darauf achten sollten, dass der timestamp als `datetime`-Objekt und die load als `int` gespeichert wird:
+
+| zone_id | timestamp | load (kW) |
+|---------|-----------|------|
+| 1       | 2012-01-01 00:00:00 | 1000 |
+| 1       | 2012-01-01 01:00:00 | 1100 |
+
+## Messniveaus von Variablen {#sec-dataexploratory-data_variable-types}
+
+Variablen sind die Bausteine von Daten und repräsentieren die Merkmale, die wir messen oder beobachten. Im Kapitel @sec-dataexploratory-data_variable-types werden wir uns noch tiefer mit Variablen auseinandersetzen. 
+In der Datenanalyse ist es wichtig, die **Art der Variablen** zu kennen, da dies beeinflusst, welche Methoden und Visualisierungen für die Daten geeignet sind. Variablen lassen sich nach ihrem **Messniveau** klassifizieren, was wiederum die Art der Informationen beschreibt, die sie enthalten. Die bekannteste Klassifikation von Variablen basiert auf den vier Messniveaus von Stanley Smith Stevens: *Nominal*, *Ordinal*, *Intervall* und *Ratio* (Verhältnis).
+
+:::{.callout-discussion}
+Nutzen Sie den oben gezeigten Datensatz **loan50**, um die folgenden Aufgaben für unterschiedliche Variablenarten zu lösen:
+:::
+
+1. **Sortieren:** Wie könnte man die Werte der Variablen 
+    - `state`,
+    - `grade`, 
+    - ein Beispiel für ein Intervallniveau (aber kein Ratio),
+    - `annual_income`  
+   sinnvoll in aufsteigender Reihenfolge anordnen?
+   
+2. **Zentrale Werte bestimmen:** Wie lässt sich ein zentraler Wert bestimmen, sei es durch den **Modus**, die **Median** oder den **Mittelwert**?
+
+3. **Beziehungen beschreiben:** Welche Aussage könnte man über die Beziehung zwischen zwei Werten einer Variablen machen? 
+
+
+### Nominale Variablen
+
+**Definition:** Nominale Variablen kategorisieren Daten ohne eine festgelegte Reihenfolge.  
+
+
+```{python}
+#| classes: styled-output
+df = pd.read_csv(r"../_assets/dataexploratory/loan50.csv")
+print(df["state"].head())
+```
+```{python}
+#| classes: styled-output
+print(df["state"].value_counts().head())
+```
+
+```{python}
+#| classes: styled-output
+print(df["state"].mode().head())
+```
+
+1. **Sortieren:** Es gibt keine inhärente Methode, diese Werte zu sortieren. Dies liegt daran, dass nominale Daten keine Reihenfolge implizieren.
+2. **Zentraler Wert:** Modus, da dieser Wert am häufigsten vorkommt.
+3. **Beziehungen:** Die Beziehung zwischen zwei Werten kann nur beschreiben, ob sie in derselben Kategorie sind oder nicht.
+
+
+### Ordinale Variablen
+
+Ordinale Variablen haben eine natürliche Ordnung, aber der Abstand zwischen den Werten ist nicht zwingend gleichmäßig.
+
+
+
+```{python}
+#| classes: styled-output
+print(df["grade"].head())
+```
+
+```{python}
+#| classes: styled-output
+print(df["grade"].sort_values().head())
+```
+
+```{python}
+#| classes: styled-output
+print(df["grade"].value_counts().head())
+```
+
+```{python}
+#| classes: styled-output
+print(df["grade"].mode())
+```
+
+```{python}
+#| classes: styled-output
+# Define the order for the categorical values
+grade_order = sorted(df["grade"].unique())
+
+# Convert the 'grade' column to a categorical type with the specified order
+df['grade'] = pd.Categorical(df['grade'], categories=grade_order, ordered=True)
+
+# Convert categorical data to numerical codes
+grade_codes = df['grade'].cat.codes
+
+print(grade_codes.median())
+```
+
+1. **Sortieren:** Mit geeigneten Regeln ist es möglich, diese Werte in aufsteigender Reihenfolge zu ordnen: `["C", "B", "A"]`.
+2. **Zentraler Wert:**: Der Modus ist geeignet, und der Median zeigt auf, dass 50 % der Werte gleich oder niedriger als `"B"` sind.
+3. **Beziehungen:** Zwei Werte lassen sich nach ihrer Position der Reihenfolge vergleichen: höher oder niedriger.
+
+### Intervallskalierte Variablen
+
+Intervallskalierte Variablen haben geordnete Werte mit gleichmäßigen Abständen zwischen ihnen, aber sie besitzen keinen absoluten Nullpunkt. Ein Beispiel ist das jährliche Einkommen.
+
+```{python}
+#| classes: styled-output
+print(df["annual_income"].head())
+
+print(df["annual_income"].mean())
+```
+
+1. **Sortieren:**: Daten können numerisch in aufsteigender Reihenfolge sortiert werden.
+2. **Zentraler Wert:**: Der Modus und Median sind geeignete Maße. Der arithmetische Mittelwert berechnet sich als:
+$\mu = \frac{1}{n} \sum x_i$
+3. **Beziehungen:** Der Abstand (Intervall) zwischen zwei Werten kann quantifiziert werden.
+
+:::{.callout-note}
+#### Unterschied zwischen Intervall- und Ratiodaten
+Im Gegensatz zum Ratio-Messniveau besitzen Intervall-Daten keinen absoluten Nullpunkt. Aussagen wie "das Doppelte" sind daher nicht sinnvoll.
+:::
+
+:::{.callout-tip}
+Es ist oft hilfreich, sich das Messniveau einer Variablen vor Beginn der Analyse klar zu machen. Das Messniveau entscheidet auch, welche Visualisierung sinnvoll sind. Mögliche Fehleinschätzungen können zu falschen oder unzulässigen Berechnungen führen, z. B. Mittelwerte bei Nominaldaten. Daten sollten entsprechend ihrem Typ gereinigt und transformiert werden.
+:::
+
+
+## Visualisierungen {#sec-dataexploratory-data_visualization}
+
+:::{.callout-tip}
+Es gibt viele Möglichkeiten, Daten zu visualisieren, um Muster und Trends zu erkennen. Zwei weit verbreitete Pakete sind [`matplotlib`](https://matplotlib.org) und [`plotly`](https://plotly.com/graphing-libraries/).
+Im folgenden benutzen wir vorallem [`seaborn`](https://seaborn.pydata.org), welches eine Erweiterung von [`matplotlib`](https://matplotlib.org) ist und speziell für statistische Visualisierungen entwickelt wurde.
+:::
+
+### Histogramme
+
+Ein Histogramm ist eine angenäherte Darstellung der Verteilung einer intervallskalierten Variable. Es liefert wertvolle Informationen über:
+
+- **Zentralwert:** Wo liegen die Daten?
+- **Varianz:** Wie stark streuen die Daten?
+- **Verteilung:** Wie häufig treten bestimmte Werte auf?
+
+@fig:sec-dataexploratory-sets-histogram zeigt ein Histogramm des jährlichen Einkommens aus dem Datensatz `loan50`.
+
+```{python}
+#| classes: styled-output
+#| fig-cap: Histogramm des jährlichen Einkommens
+#| label: fig:sec-dataexploratory-sets-histogram
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Create a histogram of the annual income
+sns.histplot(df["annual_income"], bins=10, stat = 'count')
+```
+
+#### Konstruktion eines Histogramms
+
+Ein Histogramm wird in wenigen Schritten erstellt. Meinst wird dies bereits für uns wie in `seaborn` erledigt, es ist jedoch hilfreich, die Schritte zu kennen, um die Visualisierung besser zu verstehen, da sie manchmal abgewandelt wird.
+
+- **Binning:** Teilen Sie die Werte der beobachteten Variablen $x_i$ in eine Reihe von Intervallen (*Bins* oder *Buckets*) auf.
+- **Zählen:** Erfassen Sie, wie viele Werte in jedes Intervall fallen (z. B. 5% der Werte).
+- **Intervall-Eigenschaften:** Die Intervalle der *Bins* sollten aufeinander folgen, sich nicht überlappen und idealerweise die gleiche Breite haben.
+- **Darstellung:** Die Anzahl der Werte in jedem Intervall wird entlang der y-Achse aufgetragen. Für relative Häufigkeiten wird durch die Stichprobengröße geteilt.
+- Wenn die Intervalle gleich breit sind, wird die y-Achse als Häufigkeit interpretiert. Wenn die Intervalle unterschiedlich breit sind, wird die y-Achse als Dichte interpretiert. Dazu wird die Höhe der Balken so skaliert, dass die Fläche unter dem Histogramm $1$ ergibt.
+
+## Maße für Variablen {#sec-dataexploratory-data_variable-measures}
+
+Variablen lassen sich auf verschiedene Weisen beschreiben. **Lagemaße** bzw. die **zentrale Tendenz** gibt an, wo die Daten liegen, während die **Streuung** angibt, wie weit die Daten von diesem Wert entfernt sind. Die **Zusammenhänge** zwischen Variablen können durch Korrelationen und Kovarianzen beschrieben werden.
+
+### Lagemaße
+
+Variablen können auf verschiedene Weisen beschrieben werden. Beispielweise können Lagemaße wie der Arithmetischer Mittelwert (Mean), Median oder Modus genutzt werden, um die zentrale Tendenz der Daten zu beschreiben. Welche wir einsetzen, hängt vom Messniveau der Variablen ab.
+
+Betrachten wir eine mindestens intervall-skalierte Variable $x \in \mathbb{R}^n$ aus den Datensatz, so können wir die folgenden Lagemaße berechnen:
+
+- das _maximale_ Element bzw. der _Höchstwert_:
+$$
+x^{max} = \max_i x_i,
+$$
+```{python}
+#| classes: styled-output
+income_max = df["annual_income"].max()
+print(f"{income_max=}")
+```
+- der minimale Wert bzw. das _Minimum_:
+```{python}
+#| classes: styled-output
+income_min = df["annual_income"].min()
+print(f"{income_min=}")
+```
+$$
+x^{min} = \min_i x_i,
+$$
+- der _arithmetische Mittelwert_:
+$$
+\overline{x} = \frac1n \sum_{i=1}^n x_i = \frac{x_1 + x_2 + \cdots + x_n}{n},
+$$
+
+```{python}
+#| classes: styled-output
+income_mean = df["annual_income"].mean()
+print(f"{income_mean=}")
+```
+- der _Median_ ist der Wert, der die Daten in zwei gleich große Teile teilt:
+
+$$
+\widetilde{x} = \begin{cases} 
+                x_{(n+1)/2}& n\quad \text{odd}\\
+                \frac{x_{n/2} + x_{n/2+1}}{2}& n\quad \text{even}
+                \end{cases},
+$$
+
+```{python}
+#| classes: styled-output
+income_median = df["annual_income"].median()
+print(f"{income_median=}")
+```
+
+- Verallgemeinert für $p\in(0,1)$ ist das _p-Quantil_ $\overline{x}_p$ der Wert, der die Daten in zwei Teile teilt, wobei $p$ der Anteil der Daten ist, die kleiner oder gleich $\overline{x}_p$ sind.
+
+```{python}
+#| classes: styled-output
+income_quartiles = df["annual_income"].quantile([0.25, 0.5, 0.75])
+print(f"{income_quartiles=}")
+```
+$$
+\overline{x}_p = \begin{cases} 
+                 \frac12\left(x_{np} + x_{np+1}\right) & pn \in \mathbb{N}\\
+                x_{\lfloor np+1\rfloor} & pn \not\in \mathbb{N}
+                \end{cases}.
+$$
+
+Einige Quantile haben spezielle Namen, wie der Median für $p=0.5$, das untere und obere Quartil für $p=0.25$ und $p=0.75$ (oder erstes, zweites (Median) und drittes Quartil), respektive.
+
+
+::: {.callout-caution}
+Wie gut lassen sich Arithmetischer Mittelwert, Median und Mode aus dem Histogramm ablesen?
+:::
+
+### Kumulative Histogramme und Empirische Verteilungsfunktionen
+
+Als Alternative haben sich kumulative Histogramme, wie in @fig-sec-dataexploratory-sets-kum-histogram, etabliert, die die kumulative Verteilungsfunktion (Cumulative Density Function / CDF) visualisieren. Diese Funktion gibt an, wie viele Werte kleiner oder gleich einem bestimmten Wert sind. Zur Konstruktion der CDF werden die Daten in aufsteigender Reihenfolge sortiert und die relative Häufigkeit der Werte berechnet.
+
+```{python}
+#| classes: styled-output
+#| #| fig-cap: Kumulatives Histogramm des jährlichen Einkommens
+#| #| label: fig-sec-dataexploratory-sets-kum-histogram
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Create a histogram of the annual income
+sns.histplot(df["annual_income"], bins=10, stat = 'density', cumulative=True)
+```
+
+
+### Steuungsmaße
+
+Steuungsmaße beschreiben die Streuung der Daten um den zentralen Wert. Beispiele sind die _Spannweite_, _Varianz_ und die _Standardabweichung_.
+
+Die Spannweite ist die Differenz zwischen dem größten und kleinsten Wert:
+$$
+\text{Spannweite} = x^{max} - x^{min}.
+$$
+Die Varianz ist ein Maß für die mittlere quadratische Abweichung der Daten vom Mittelwert. Die Einheit der Varianz ist das Quadrat der Einheit der Daten:
+$$
+\sigma = \sqrt{\operatorname{Var}(x)}.
+$$
+$$
+\operatorname{Var}(x) = \frac1n \sum_{i=1}^n (x_i - \mu)^2.
+$$
+
+Die Standardabweichung ist die Quadratwurzel der Varianz. Damit hat sie die gleiche Einheit wie die Daten:
+
+$$
+\sigma = \sqrt{\operatorname{Var}(x)}.
+$$
+
+
+In Python können wir die Varianz und Standardabweichung mit  `pandas` oder `numpy` berechnen:
+
+```{python}
+#| classes: styled-output
+print(f"Varianz: {df['annual_income'].var()}")
+print(f"Standardabweichung: {df['annual_income'].std()}")
+```
+
+
+:::{.callout-warning}
+#### Korrigerte Stichproben-Varianz
+Die Varianz einer Stichprobe ist kein erwartungstreuer Schätzer für die Varianz der Grundgesamtheit. Die Begriffe werden wir in @sec-statistics-pointestimates noch genauer betrachten. 
+Einfach gesagt, die Varianz einer Stichprobe ist tendenziell kleiner als die Varianz der Grundgesamtheit, da wird beim zufälligen Ziehen wahrscheinlich eher aus der Mitte als von den Extremen ziehen.
+Die korrigierte Stichproben-Varianz wird durch $n-1$ statt $n$ im Nenner definiert. In `pandas` wird die korrigierte Stichproben-Varianz als Standard verwendet, die unkorrigierte Varianz kann mit dem Parameter `ddof=0` berechnet werden.
+:::
+
+
+### Zusammenhangsmaße
+
+In der Statistik beschreiben Zusammenhangsmaße die Beziehung zwischen zwei Variablen. Beispiele sind die _Kovarianz_ und der _Korrelationskoeffizient_. Diese geben einen Hinweis darauf, ob und wie stark zwei Variablen zusammenhängen.
+
+#### Korrrelation 
+
+In der Statistik beschreibt der Begriff _Korrelation_ oder _Abhängigkeit_ jede statistische Beziehung zwischen _bivariaten Daten_ (gepaarte Daten) oder _Zufallsvariablen_.
+
+In unserem Datensatz können wir beispielsweise untersuchen:
+- `emp_length`: Anzahl der Jahre im Beruf
+- `annual_income`: Jährliches Einkommen
+- `debt_to_income`: Schulden-Einkommens-Verhältnis
+
+Um die Daten besser zu verstehen können wir zunächst einen Scatterplot @fig-sec-dataexploratory-sets-scatterplot erstellen:
+
+```{python}	
+#| classes: styled-output
+#| #| fig-cap: Scatterplot von `emp_length`, `annual_income` und `debt_to_income`
+#| #| label: fig-sec-dataexploratory-sets-scatterplot
+import seaborn as sns
+
+df_reduced = df[["emp_length", "annual_income", "debt_to_income"]]
+
+sns.pairplot(df_reduced)
+```
+
+:::{.callout-note}
+#### Diskussion
+Wie interpretieren Sie den Zusammenhang zwischen den Variablen `emp_length`, `annual_income` und `debt_to_income`? Was würde entsprechend Ihres Domänenwissens Sinn ergeben?
+:::
+
+
+#### Kovarianz
+
+Die Kovarianz ist ein Maß für die gemeinsame Variabilität zweier Variablen. Sie ist definiert als der Erwartungswert des Produkts der Abweichungen der Zufallsvariablen von ihren Erwartungswerten:
+
+$$
+\operatorname{cov}(x, y) = \frac1n \sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y}).
+$$
+
+In Python können wir die Kovarianz-Matrix mit `pandas` direkt berechnen:
+
+```{python}
+#| classes: styled-output
+df_reduced.cov()
+```
+
+Die Kovarianz kann Wertebereiche von $-\infty$ bis $+\infty$ annehmen und ist nicht normiert. Um die Stärke der Beziehung zu quantifizieren, verwenden wir den Korrelationskoeffizienten, der leichter zu interpretieren ist.
+
+#### Korrelationskoeffizient
+
+Der Korrelationskoeffizient nach Pearson ist ein Maß für den linearen Zusammenhang zwischen zwei Variablen. Er ist definiert als das Verhältnis der Kovarianz der beiden Variablen zur Multiplikation ihrer Standardabweichungen:
+
+$$
+\rho_{x,y} = \operatorname{corr}(x, y) = \frac{\operatorname{cov}(x, y)}{\sigma_x \sigma_y},
+$$
+
+wobei $\sigma_x$ und $\sigma_y$ die Standardabweichungen der Variablen sind.
+
+In Python können wir den Korrelationskoeffizienten mit `numpy` berechnen:
+
+```{python}
+#| classes: styled-output
+df_reduced.corr()
+```
+
+Ein Korrelationskoeffizient von $1$ bedeutet eine perfekte positive Korrelation, $-1$ eine perfekte negative Korrelation und $0$ keine Korrelation. In diesem fall beobachten wir eine leichte negative Korrelation zwischen `emp_length` und `debt_to_income` und eine leichte positive Korrelation zwischen `emp_length` und `annual_income`. Eine Variable kann auch mit sich selbst perfekt korreliert sein, was zu einem Korrelationskoeffizienten von $1$ führt.
+
+:::{.callout-warning}
+#### Vorsicht
+Der Korrelationskoeffizient misst nur lineare Zusammenhänge. Nicht-lineare Zusammenhänge werden nicht erfasst. Es kann auch Zusammenhänge geben, die nicht durch den Korrelationskoeffizienten erfasst werden, z.B. wenn die Daten nicht normalverteilt sind. In @fig-sect-dataexploratory-sets-correlation sehen wir einige Beispiele in denen definitiv Korrelationen bestehen, die aber nicht durch den Korrelationskoeffizienten erfasst werden.
+
+
+![Beispiele Korrelationskoeffizient @Korrelationskoeffizient](https://datatab.de/assets/tutorial/Korrelationskoeffizient.png){#fig-sect-dataexploratory-sets-correlation}
+:::
+
+
+
+:::{.callout-warning}
+#### Korrelation vs. Kausalität
+Eine hohe Korrelation bedeutet nicht notwendigerweise Kausalität. Es ist wichtig, die Daten und den Kontext zu verstehen, um sinnvolle Schlussfolgerungen zu ziehen. Ansonsten besteht die Gefahr, dass Zusammenhänge fehlinterpretiert werden. Ein bekanntes Beispiel ist die Korrelation zwischen der Anzahl der Piraten und der globalen Temperatur, die in @fig-correlation_pirates_climate dargestellt ist. In der Wissenschaft begegnet man diesem Problem mit kontrollierten Experimenten.
+
+![Korrelation Piraten Klima @PiratesVsTemp](https://upload.wikimedia.org/wikipedia/commons/d/de/PiratesVsTemp%28en%29.svg){#fig-correlation_pirates_climate}
+:::

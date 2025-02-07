@@ -1,0 +1,24 @@
+:::{.callout-warning}
+Die hier präsentierten Notizen befinden sich noch in Bearbeitung und können sich ohne Vorankündigung ändern.
+:::
+
+## Preface {.unnumbered}
+
+Dies sind die Vorlesungsnotizen für die Lehrveranstaltung _Machine Learning + Data Science I (Lecture)_ am _MCI | The Entrepreneurial School_ Bachelor-Studiengangs [Mechatronik](https://www.mci.edu/de/studium/bachelor/mechatronik) im Sommer-Semester 2025.
+
+## Danksagungen {.unnumbered}
+
+Wir danken der Open-Source-Community für die Bereitstellung exzellenter Tutorials und Anleitungen zu Data-Science-Themen in und mit Python im Web.  
+Einzelne Quellen werden an den entsprechenden Stellen im Dokument zitiert.
+
+Besonderer Dank gilt Peter Kandof, für das Aufsetzen eines Beispielprojekts für die Vorlesung anhand von [MECH-M-DUAL-1-DBM - Grundlagen datenbasierter Methoden](https://zenodo.org/records/14697280).
+Diese Notizen wurden mit [Quarto](https://quarto.org/) erstellt.
+
+::: {.content-visible unless-format="html"}
+:::: {.callout-note}
+Um eine akzeptable Formatierung für mehrere Ausgabeformate wie _HTML_ oder _PDF_ zu ermöglichen, sind einige Abbildungen unterschiedlich nummeriert.  
+Darüber hinaus ist interaktiver Inhalt in _HTML_, der beispielsweise mit `plotly` erstellt wurde, in der _PDF_-Version statisch.
+
+Zudem kann die Nummerierung einiger Listen in der _PDF_-Version nicht mit der in _HTML_ übereinstimmen.
+::::
+:::

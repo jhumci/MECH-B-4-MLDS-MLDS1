@@ -1,0 +1,422 @@
+---
+lightbox: true
+---
+# Non-linear Regression {#sec-regression-nonlinear}
+
+::: {.callout-important}
+This section is mainly based on @Brunton2022, Section 4.2.
+:::
+
+We extend our theory of _curve fitting_ to a non-linear function $f(X, c)$ with coefficients $c\in\mathbb{R}^m$ and our $n$ $X_{k-}$.
+We assume that $m < n$.
+
+If we define our root-mean-square error depending on $c$ as 
+$$
+E_2(c) = \sum_{k=1}^n(f(X_{k-}, c) - y_k )^2
+$$
+and we can minimize with respect to each $c_j$ resulting in a $m \times m$ system
+$$
+\sum_k (f(X_{k-}, c) - y_k)\frac{\partial f}{\partial c_j} = 0\quad\text{for}\quad j=1, 2, \ldots, m.
+$$
+
+Depending on the properties of the function at hand it can be guaranteed to find an extrema or not.
+For example convex functions have guarantees of convergence while non-convex functions can have chelating features that make it hard to work with optimization algorithms.
+
+To solve such a system we employ iterative solvers that use an initial guess.
+Let us look at the most common, the gradient descent method.
+
+## Gradient Descent {#sec-regression-nonlinear-gd}
+
+For a higher dimensional system or function $f$ the gradient must be zero  
+$$
+\nabla f(x) = 0
+$$
+to know that we are in an extrema.
+Since we can have saddle points this is not the sole criteria but a necessary one.
+Gradient descent, as the name suggest uses the gradient as _direction_ in an iterative algorithm to find a minimum.
+
+The idea is basically, if you are lost on a mountain in the fog and you can not see the path, the fastest and a reliable way that only uses local information is to follow the steepest slope down.
+
+::: {.callout-warning}
+A function does not necessarily experience gravity in the same way as we do, so please do not try this in real live, i.e. cliffs tend to be hard to walk down.
+:::
+
+We express this algorithm in terms of the iterations $x^k$ for guesses of the minimum with the updates
+$$
+x^{(k+1)} = x^{(k)} - \delta\, \nabla f(x^{(k)}) 
+$$
+where the parameter $\delta$ defines how far along the gradient descent curve we move.
+This formula is an update for a Newton method where we use the derivative as the update function.
+This leaves us with the problem to find an algorithm to determine $\delta$.
+
+Again, we can view this as an optimization problem for a new function 
+$$
+F(\delta) = f(x^{(k+1)}(\delta))
+$$
+and
+$$
+\partial_\delta F = -\nabla f(x^{(k+1)})\nabla f(x^{(k)}) = 0.
+$$ {#eq-gcupdatep}
+
+Now the interpretation of @eq-gcupdatep is that we want that the gradient of the current step is orthogonal to the gradient of the next step.
+
+In order to make it clearer we follow the example given in [@Brunton2022, Section 4.2,pp. 141-144].
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-gd}
+
+## Gradient descent
+
+For the function 
+$$
+f(x) = x_1^2 + 3 x_2^2
+$$
+we can compute the gradient as
+$$
+\nabla f (x)= \left[ \begin{array}{c} \partial_{x_1} f(x)\\ \partial_{x_2} f(x) \end{array} \right] = \left[ \begin{array}{c} 2 x_1 \\ 6 x_2 \end{array} \right]
+$$
+Resulting in 
+$$
+x^{k+1} = x^{(k)} - \delta \, \nabla f(x^{(k)}) = 
+\left[ \begin{array}{c} (1 - 2 \delta) x^{(k)}_1 \\ (1 - 6 \delta)x^{(k)}_2 \end{array} \right].
+$$
+Consequently
+$$
+F(\delta) = (1-2\delta)^2 x_1^2 + (1-6\delta)^2 x_2^2,
+$$
+$$
+\partial_\delta F = -2^2(1-2\delta)x_1^2 - 6^2(1-6\delta)x_2^2,
+$$
+and
+$$
+\partial_\delta F(\delta) = 0 \Leftrightarrow \delta = \frac{x_1^2 + 9 x_2^2}{2 x_1^2 + 54 x_2^2}.
+$$
+
+::::: {.content-visible when-format="html"}
+```{python}
+#| label: fig-gd-ex1
+#| fig-cap: "Gradient descent applied for the function $f(x) = x_1^2 + 3x_2^2$."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import plotly.graph_objects as go
+import numpy as np
+
+x_ = np.linspace(-3, 3, 20)
+y_ = np.linspace(-3, 3, 20)
+X, Y = np.meshgrid(x_, y_)
+
+f = lambda x, y: np.pow(x, 2) + 3 * np.pow(y, 2)
+grad_f = lambda x: x * np.array([2, 6]).reshape(x.shape)
+delta = lambda x: (x[0]**2 + 9 * x[1]**2)/(2 * x[0]**2 + 54 * x[1]**2)
+
+Z = f(X, Y)
+
+fig = go.Figure()
+fig.add_trace(go.Surface(z=Z, x=X, y=Y,
+                        colorscale='greys', name="Function"))
+fig.update_traces(contours_z=dict(show=True, usecolormap=True,
+                                  highlightcolor="limegreen",
+                                  project_z=True))
+fig.update_scenes(xaxis_title_text=r"x_1",  
+                  yaxis_title_text=r"x_2",  
+                  zaxis_title_text=r"f(x)")
+x = np.array([3, 2]).reshape((1, 2))
+z = np.array(f(x[0, 0], x[0, 1]))
+diff = 1
+
+while diff > 1e-10:
+    x_new = x[-1, :] - delta(x[-1, :]) * grad_f(x[-1, :])
+    z = np.hstack((z, f(x_new[0], x_new[1])))
+    diff = np.linalg.norm(z[-1] - z[-2])
+    x = np.vstack((x, x_new))
+
+fig.add_scatter3d(x=x[:, 0], y=x[:, 1], z=z,
+                  line_color='red', name="Descent path")
+
+fig.show()
+```
+:::::
+
+::::: {.content-visible unless-format="html"}
+```{python}
+#| code-fold: true
+#| eval: false
+#| code-summary: "Show the code for the figure"
+import plotly.graph_objects as go
+import numpy as np
+
+x_ = np.linspace(-3, 3, 20)
+y_ = np.linspace(-3, 3, 20)
+X, Y = np.meshgrid(x_, y_)
+
+f = lambda x, y: np.pow(x, 2) + 3 * np.pow(y, 2)
+grad_f = lambda x: x * np.array([2, 6]).reshape(x.shape)
+delta = lambda x: (x[0]**2 + 9 * x[1]**2)/(2 * x[0]**2 + 54 * x[1]**2)
+
+Z = f(X, Y)
+
+fig = go.Figure()
+fig.add_trace(go.Surface(z=Z, x=X, y=Y,
+                        colorscale='greys', name="Function"))
+fig.update_traces(contours_z=dict(show=True, usecolormap=True,
+                                  highlightcolor="limegreen",
+                                  project_z=True))
+fig.update_scenes(xaxis_title_text=r"x_1",  
+                  yaxis_title_text=r"x_2",  
+                  zaxis_title_text=r"f(x)")
+x = np.array([3, 2]).reshape((1, 2))
+z = np.array(f(x[0, 0], x[0, 1]))
+diff = 1
+
+while diff > 1e-10:
+    x_new = x[-1, :] - delta(x[-1, :]) * grad_f(x[-1, :])
+    z = np.hstack((z, f(x_new[0], x_new[1])))
+    diff = np.linalg.norm(z[-1] - z[-2])
+    x = np.vstack((x, x_new))
+
+fig.add_scatter3d(x=x[:, 0], y=x[:, 1], z=z,
+                  line_color='red', name="Descent path")
+
+fig.show()
+```
+
+![Gradient descent applied for the function $f(x) = x_1^2 + 3x_2^2$.](../_assets/regression/gd.png){#fig-gd-ex1 width="80%"}
+:::::
+
+::::
+:::
+
+::: {.callout-note}
+If you can not compute the gradient analytically there are numerical methods to help do the computation.
+:::
+
+In order to get a better idea on how this is working for _curve fitting_ we apply the gradient descent method to our curve fitting from @sec-regr-linear-ols.
+
+In @eq-ols_gradient we computed the gradient and instead of computing $X^\dagger$ with high cost we get the low cost iterative solver:
+
+$$
+c^{(k+1)} = c^{(k)} - \delta (2 X^{\mathsf{T}} X c^{(k)} - 2 X^{\mathsf{T}} y)
+$$
+
+As $\delta$ is tricky to compute we go ahead and introduce we do not update it but prescribe it.
+This will not grant us the optimal convergence (if there is convergence) but if we choose it right we still get convergence. 
+
+::: {.callout-note}
+In machine learning the parameter $\delta$ is often called the _learning rate_.
+:::
+
+So lets try it with our example from @fig-linear_reg.
+
+```{python}
+#| label: fig-non-linear_reg_gd2
+#| fig-cap: "Line fit with gradient descent for different number of iterations and learning rate 2e-3."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import matplotlib.pyplot as plt
+import numpy as np
+%config InlineBackend.figure_formats = ["svg"]
+np.random.seed(6020)
+
+grad = lambda c, X, y: 2 * X.T @ (X @ c - y)
+update = lambda c, delta, X, y: c - delta * grad(c, X, y)
+
+def gd(c, delta, X, y, n, stop=1e-10):
+    diff = 1
+    for _ in range(1, n):
+        cnew = update(c, delta, X, y)
+        diff = np.linalg.norm(cnew - c)
+        c = cnew
+        if diff < stop: break
+    return c
+
+# The data
+x = np.arange(1, 11)
+y = np.array([0.2, 0.5, 0.3, 0.5, 1.0, 
+              1.5, 1.8, 2.0, 2.3, 2.2]).reshape((-1, 1))
+
+X = np.array([x, np.ones(x.shape)]).T
+delta = 0.002
+c = np.random.random((2, 1))
+
+c_10 = gd(c, delta, X, y, 50)
+c_20 = gd(c_10, delta, X, y, 50)
+c_30 = gd(c_20, delta, X, y, 200)
+p4 = np.linalg.pinv(X) @ y
+
+xf = np.arange(0, 11, 0.1)
+y1 = np.polyval(c_10, xf)
+y2 = np.polyval(c_20, xf)
+y3 = np.polyval(c_30, xf)
+y4 = np.polyval(p4, xf)
+
+fig = plt.figure()
+plt.plot(x, y, "o", color="r", label="observations")
+plt.plot(xf, y1, label=r"$n=50$")
+plt.plot(xf, y2, label=r"$n=100$")
+plt.plot(xf, y3, label=r"$n=300$")
+plt.plot(xf, y4, label=r"$E_2$")
+plt.ylim(0, 4)
+plt.xlim(0, 11)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend(loc="upper left")
+plt.gca().set_aspect(1)
+plt.grid(visible=True)
+plt.show()
+```
+
+The above algorithm uses the entire set $X$ for the computation.
+For a large enough set $X$ this is quite cost intense, even if it is still cheaper than computing $X^\dagger$.
+
+## Stochastic Gradient Descent
+
+In order to reduce cost we can randomly select some points of our training set and only train with those.
+Obviously the computation of the gradient becomes much faster.
+We call this method _Stochastic Gradient descent_ (SGD).
+
+In @fig-non-linear_reg_gd3 we see the convergence for randomly selecting 1, 3, and 6 indices of our possible 10.
+
+The downside of the SGD algorithm is that the algorithm does not settle down for a long time and will _jump_.
+In the other side it might get less stuck in local minima.
+
+One possibility to try to get the strength of both is to use SDG to get a good guess for your initial value and SD for the fine tuning.
+```{python}
+#| label: fig-non-linear_reg_gd3
+#| fig-cap: "Line fit with stochastic gradient descent with 1 or 3 samples and 200 iterations as well as the 3 sample version as initial guess for GD with 100 iterations."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import matplotlib.pyplot as plt
+import numpy as np
+%config InlineBackend.figure_formats = ["svg"]
+np.random.seed(6020)
+
+grad = lambda c, X, y: 2 * X.T @ (X @ c - y)
+update = lambda c, delta, X, y: c - delta * grad(c, X, y)
+
+def sgd(c, delta, X, y, n, indices=-1, stop=1e-10):
+    if indices == -1:
+        indices = X.shape[0]
+    diff = 1
+    for _ in range(1, n):
+        I = np.random.choice(X.shape[0], size=indices, replace=False)
+        I.sort()
+        cnew = update(c, delta, X[I, :], y[I])
+        diff = np.linalg.norm(cnew - c)
+        c = cnew
+        if diff < stop: break
+    return c
+
+# The data
+x = np.arange(1, 11)
+y = np.array([0.2, 0.5, 0.3, 0.5, 1.0, 
+              1.5, 1.8, 2.0, 2.3, 2.2]).reshape((-1, 1))
+
+X = np.array([x, np.ones(x.shape)]).T
+delta = 0.002
+c = np.random.random((2, 1))
+
+c_10 = sgd(c, delta, X, y, 200, 1)
+c_20 = sgd(c, delta, X, y, 200, 3)
+c_30 = sgd(c, delta, X, y, 200, 5)
+c_ft = gd(c_20, delta, X, y, 150, -1)
+p4 = np.linalg.pinv(X) @ y
+
+xf = np.arange(0, 11, 0.1)
+y1 = np.polyval(c_10, xf)
+y2 = np.polyval(c_20, xf)
+y3 = np.polyval(c_30, xf)
+yft = np.polyval(c_ft, xf)
+y4 = np.polyval(p4, xf)
+
+
+fig = plt.figure()
+plt.plot(x, y, "o", color="r", label="observations")
+plt.plot(xf, y1, label=r"#I=$1$")
+plt.plot(xf, y2, label=r"#I=$3$")
+#plt.plot(xf, y3, label=r"#I=$5$")
+plt.plot(xf, yft, label=r"#I=$3$ GD $n=100$")
+plt.plot(xf, y4, label=r"$E_2$")
+
+plt.ylim(0, 4)
+plt.xlim(0, 11)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend(loc="upper left")
+plt.gca().set_aspect(1)
+plt.grid(visible=True)
+plt.show()
+```
+
+## Categorical Variables
+
+Even with our excursion to non-linear regression we still had somewhat regular data to work with.
+This is not always the case.
+Sometimes there are trends in the data, like per month, or day.
+The inclusion of categorical variables can help to control for trends in the data.
+
+We can integrate such variables to the regressor by adding columns to the matrix $X$ for each of the categories.
+Note, they can be interpreted as to correspond to the offset (the constant $1$) so this column can be omitted and each category gets a separate offset.
+
+We can see this in action in the following example. 
+We investigate the unemployment data in Austria.
+There is a strong seasonality @fig-non-categorical_variables-2 in the data.
+This is largely due to the fact that the Austrian job market has a large touristic sector with its season and the construction industry employs less people during summer.
+
+For the regression @fig-non-categorical_variables-2 we can see that this captures the seasonal change quite well.
+
+The data is taken from [Arbeitsmarktdaten online](https://iambweb.ams.or.at/ambweb/).
+
+```{python}
+#| label: fig-non-categorical_variables
+#| fig-cap: "Unemployment data from Austria for the years 2010 to 2017."
+#| fig-subcap: 
+#|   - "Regression with categorical variables per month."
+#|   - "Seasonality of the unemployment average over the years." 
+#| layout-ncol: 1
+#| code-fold: true
+#| echo: false
+#| code-summary: "Show the code for the figure"
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import locale
+import DateTime
+%config InlineBackend.figure_formats = ["svg"]
+np.random.seed(6020)
+
+df = pd.read_excel("../_assets/regression/AUT_UE10-19.ods", engine="odf")
+
+locale.setlocale(locale.LC_ALL, 'de_AT.utf8')
+select = "Gesamt Bestand"
+df["date"] = pd.to_datetime(df["Monat"], format="%B %Y")
+df["month"] = pd.to_datetime(df["Monat"], format="%B %Y").dt.month
+y = df[select].to_numpy().reshape((-1, 1))
+x = (pd.to_datetime(df["Monat"], format="%B %Y").astype(int) / 10**9 - 1262304000.0) / 2678400.0 * 1 / 12
+X = pd.concat([x, x**2, x**3, pd.get_dummies(df["month"], dtype='int')], axis=1).to_numpy()
+cat = 122
+c = np.linalg.pinv(X[:cat, :]) @ y[:cat]
+
+fig = plt.figure()
+plt.plot(x[:cat], y[:cat], "o", color="r", label="observations")
+plt.plot(x[:cat], X[:cat, :] @ c)
+plt.xticks(range(0, 10), range(2010, 2020))
+plt.ylabel("Unemployment")
+plt.grid()
+plt.show()
+
+mean_month = df[[select, "month"]].groupby("month").mean()
+mean_month = mean_month - mean_month.mean()
+fig = plt.figure()
+plt.bar(x=pd.to_datetime(df["Monat"][:12], format="%B %Y").dt.month_name(),
+        height=mean_month[select].to_numpy())
+plt.xticks(rotation=45)
+plt.ylabel("Relative unemployment")
+plt.show()
+```
+
+::: {.callout-note}
+There is also quite a difference between man and woman that could be categorized separately.
+:::
+
+We wrap up this section about regression by talking more abstract about the regression of linear systems and some general thoughts about the selection of the model and consequences.
+

@@ -1,0 +1,29 @@
+# Umgang mit Daten und Explorative Analyse {.unnumbered}
+
+::: {.callout-quote}
+> **Alice:** *Would you tell me, please, which way I ought to go from here?*  
+> **The Cheshire Cat:** *That depends a good deal on where you want to get to.*  
+> — @12723
+:::
+
+
+In dieser Vorlesung erarbeiten wir gemeinsam die Kompetenzen, um Daten zu analysieren, Modelle zu erstellen und Vorhersagen zu treffen. Hierbei lernen wir alle Grundlagen kennen, die notwendig sind, um sich dabei zurechtzufinden. Zunächst gibt, es aber die Richtung zu klären, in die wir uns bewegen wollen.
+
+
+::: {.callout-note}
+Diese Notizen setzen voraus, dass Sie über grundlegende Programmierkenntnisse in Python verfügen und wir bauen auf diesem Wissen auf.
+In diesem Sinne verwenden wir Python als Werkzeug und beschreiben die inneren Abläufe nur, wenn es uns hilft, die behandelten Themen besser zu verstehen.
+
+Falls dies nicht der Fall ist, schauen Sie sich [MCI-MECH-B-3-SWD-SWD-ILV](https://mrp123.github.io/MCI-MECH-B-3-SWD-SWD-ILV/) an, einen Kurs über Softwaredesign im selben Bachelor-Programm und von denselben Autoren.
+::: 
+
+Zusätzlich können wir die folgenden Bücher über Python empfehlen:
+
+- @Matthes2023: *Python Crash Course - A hands-on, project-based introduction to programming*: [Online Material](https://ehmatthes.github.io/pcc_3e/).
+- [Python Cheat Sheet](https://github.com/ehmatthes/pcc_3e/releases/download/v1.0.0/beginners_python_cheat_sheet_pcc_all.pdf) provided by @Matthes2023.
+
+Für die Statistik und Machine Learning ortientieren wir uns an folgenden Büchern:
+
+- @Diez2019-ll: *OpenIntro Statistics*: [Online Material](https://www.openintro.org/book/os/)
+- @james2013introduction: *Introduction to Statistical Learning*: [Online Material](https://www.statlearning.com/)
+

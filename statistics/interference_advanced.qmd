@@ -1,0 +1,198 @@
+# Tests {#sec-statistics-interference_advanced}
+
+Nach dem zuvor beschreibenen Prinzip der Hypothesentests, gibt es verschiedene Tests, die auf unterschiedliche Fragestellungen zugeschnitten sind. In diesem Abschnitt werden einige dieser Tests vorgestellt.
+
+Wir werden uns nur mit einigen typischen Tests beschäftigen. Es gibt noch viele [weitere Tests](https://statsandr.com/blog/files/overview-statistical-tests-statsandr.pdf), die auf spezielle Fragestellungen zugeschnitten sind. Die hier vorgestellten Tests sind jedoch die wichtigsten und werden in der Praxis am häufigsten verwendet.
+
+## T-Test
+
+### One-Sample Student's T-Test
+
+Beim One-Sample Student's T-Test wird die Mittelwert einer Stichprobe mit einem vorgegebenen Wert verglichen. Der Test wird verwendet, wenn die Varianz der Grundgesamtheit unbekannt ist.
+
+Wir möchten den __Typ I Fehler__ ($\alpha$) festlegen und dann sicherstellen, dass die Wahrscheinlichkeit, dass wir die Nullhypothese fälschlicherweise ablehnen, kleiner oder gleich $\alpha$ ist. 
+
+Um zu beurteilen, wie wahrscheinlich die Stichprobe ist, wenn die Nullhypothese wahr ist, wird die Teststatistik $t$ berechnet. Diese berechnet den Unterschied zwischen $\bar{x}$ und $\mu_0$ in Einheiten der Standardabweichung der Stichprobe. Wörtlich bedeutet die Teststatistik: Um wie viele Standardfehler unterscheidet sich der Stichprobenmittelwert $\bar{x}$ vom vorgegebenen Wert $\mu_0$. 
+
+$$
+t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}
+$$
+
+wobei $\bar{x}$ der Stichprobenmittelwert, $s$ die Stichprobenstandardabweichung und $n$ die Stichprobengröße ist.
+
+Die Teststatistik $t$ folgt einer t-Verteilung mit $n-1$ Freiheitsgraden.
+
+Wenn die Teststatistik $t$ größer ist als der kritische Wert $t_{\alpha}$, dann lehnen wir die Nullhypothese ab. Der kritische Wert $t_{\alpha}$ wird aus der [t-Verteilungstabelle](https://en.wikipedia.org/wiki/Student%27s_t-distribution) abgelesen.
+
+
+
+
+### Beispiel: Intelligenz von Mechatronikstudierenden
+
+```{python}
+#| classes: styled-output
+#| #| #| fig-cap: Hypothesentest für den Mittelwert einer Normalverteilung
+#| #| label: fig:sec-statistics-hypothesistests
+#| 
+# Hypothesentest
+import numpy as np
+from scipy.stats import norm
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Stichprobe der Mechatronikstudierenden
+mu = 110
+sigma = 15
+
+# Nullhypothese
+mu_0 = 100
+
+# Stichprobe
+n = 100
+X = np.random.normal(mu, sigma, n)
+
+# Schätzer für den Mittelwert und Standardabweichung
+X_hat = np.mean(X)
+mu_hat = np.std(X)
+
+# Normale Verteilung aus der Schätzung
+x = np.linspace(90, 130, 100)
+
+
+# Plot der geschätzten Verteilung und Nullhypothese
+
+plt.hist(X, bins=20, alpha=0.5, label='Stichprobe', color='blue', edgecolor='black')
+
+plt.axvline(mu_0, color='r', linestyle='--', label='Nullhypothese')
+plt.legend()
+plt.title('Verteilung der Stichprobe und Nullhypothese')
+plt.xlabel('Wert')
+plt.ylabel('Häufigkeit')
+plt.show()
+```
+
+1. Definition der Hypothesen:
+    - $H_0: \mu_x = 100$ (Der Mittelwert der Mechatronikstudierenden ist gleich dem Durchschnitt)
+    - $H_1: \mu_x > 100$ (Der Mittelwert der Mechatronikstudierenden ist größer als der Durchschnitt)
+2. Definition des Signifikanzniveaus: $\alpha = 0.05$
+    - Die Wahrscheinlichkeit, dass wir die Nullhypothese fälschlicherweise ablehnen, soll maximal 5% betragen oder $P(H_1 | H_0) \leq 0.05$.
+3. Berechnung des Teststatistik $t$:
+  - $T = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}= 6.50$
+```{python}	
+X_bar = np.mean(X)
+s = np.std(X)
+t = (X_bar - mu_0) / (s / np.sqrt(n))
+print(f't = {t}')
+```
+4. Berechnung des kritischen Wertes $t_{\alpha}$:
+  - Zunächst müssen wir uns entscheiden, ob wir ein- oder zweiseitig testen. Da wir wissen, dass der Mittelwert größer ist, wählen wir einen einseitigen Test.
+  - Aus der [t-Verteilungstabelle](https://en.wikipedia.org/wiki/Student%27s_t-distribution) können wir für $n-1 = 99$ Freiheitsgrade und $\alpha = 0.05$ den kritischen Wert $t_{\alpha} = 1.660$ ablesen.
+
+
+```{python}
+from scipy.stats import t as t_table
+
+alpha = 0.05
+t_alpha = t_table.ppf(1 - alpha, n-1)
+print(f't_alpha = {t_alpha}')
+```
+
+Dies können wir, wie folgt visualisieren:
+```{python}
+#| classes: styled-output
+#| #| #| fig-cap: t-Verteilung und Ablehnungsbereich (Einseitiger Test)
+#| #| label: fig:sec-statistics-hypothesistests-t-distribution-1seitig
+x = np.linspace(-7, 7, 100)
+y = t_table.pdf(x, n-1)
+plt.plot(x, y, label='t-Verteilung')
+plt.fill_between(x, 0, y, where=(x > t_alpha), color='red', alpha=0.5, label='Ablehnungsbereich')
+
+plt.axvline(t, color='black', linestyle='--', label='T')
+plt.legend()
+plt.title('t-Verteilung und Ablehnungsbereich')
+plt.xlabel('t')
+plt.ylabel('Dichte')
+plt.show()
+```
+
+::: {.callout-note}
+Auf den ersten  Blick kann es so wirken, als hätten wir eine Verteilung, um unsere Null-Hypothese gefittet, für die wir ja gar keine Daten haben (vgl. Beispiel im vorherigen Kapitel). Tatsächlich haben wird jedoch eine neue Zufallsvariable $T$ definiert, die die Differenz zwischen dem Stichprobenmittelwert und dem Mittelwert der Nullhypothese in Einheiten der Standardabweichung der Stichprobe angibt. Diese Zufallsvariable $T$ folgt einer t-Verteilung, die wir aus der Stichprobe berechnen können. Die Daten aus der Stichprobe können wir zum Fitten der Verteilung nutzen, da wir ja annehmen, dass alles was wird auf der Stichprobe basiert, auch auf der Grundgesamtheit basiert.
+:::
+
+5. Die Entscheidung basiert auf $T > t_{\alpha}$, 
+  - da $6.50 > 1.660$ ist, lehnen wir die Nullhypothese ab.
+  - Die Wahrscheinlichkeit, dass wir einen Mittelwert von 110 erhalten, wenn der Mittelwert tatsächlich 100 beträgt, ist deutlich kleiner als 5%.
+  - Die Wahrscheinlichkeit, dass wir die Nullhypothese fälschlicherweise ablehnen, obwohl Sie wahr ist $P(\text{Entscheidung für }H_1 | H_0) < 0.05$
+  - Wir können diese Wahrscheinlichkeit auch genau bestimmen, indem wir sie z.B. aus der t-Verteilung berechnen bzw. aus der Tabelle ablesen. $P(\text{Entscheidung für }H_1 | H_0) = 1.63\cdot 10^{-9}$
+  - Wir können unsere Null-Hypothese also mit einer Wahrscheinlichkeit von 99.999999837% ablehnen. Vorerst ist unsere These, dass die Mechatronikstudierenden intelligenter sind als der Durchschnitt, nicht falsifiziert.
+
+
+```{python}
+p_value = 1 - t_table.cdf(t, n-1)
+print(f'p-value = {p_value}')
+```
+
+::: {.callout-important}
+Wir bezeichen dern Wert $p$ als __p-Wert__. Der p-Wert gibt die Wahrscheinlichkeit an, dass wir die Nullhypothese fälschlicherweise ablehnen, wenn sie tatsächlich wahr ist. Je kleiner der p-Wert, desto unwahrscheinlicher ist es, dass wir die Nullhypothese fälschlicherweise ablehnen.
+:::
+
+
+
+#### Zweiseitiger Test
+
+Wir sind bisher davon ausgegaben, dass die Intelligenz von Mechantronikstudierenden entweder gleich oder größer als der Durchschnitt ist. Deswegen, haben wir den Ablehnungsbereich nur für $T > t_{\alpha}$ definiert und einen __einseitigen Test__ durchgeführt.
+Wir könnten aber auch einen Studiengang untersuchen, über den wir weniger wissen. In diesem Fall, könnten wir auch einen __zweiseitigen Test__ durchführen, der einen Ablehnungsbereich für $T > t_{\alpha}$ und $T < -t_{\alpha}$ definiert.
+
+```{python}
+t_alpha = t_table.ppf(1 - alpha/2, n-1)
+print(f't_alpha = {t_alpha}')
+```
+
+```{python}	
+#| classes: styled-output
+#| #| #| fig-cap: t-Verteilung und Ablehnungsbereich (Zweiseitiger Test)
+#| #| label: fig:sec-statistics-hypothesistests-t-distribution-2seitig
+
+x = np.linspace(-7, 7, 100)
+y = t_table.pdf(x, n-1)
+plt.plot(x, y, label='t-Verteilung')
+plt.fill_between(x, 0, y, where=(x > t_alpha), color='red', alpha=0.5, label='Ablehnungsbereich')
+plt.fill_between(x, 0, y, where=(x < -t_alpha), color='red', alpha=0.5)
+
+plt.axvline(t, color='black', linestyle='--', label='T')
+plt.legend()
+plt.title('t-Verteilung und Ablehnungsbereich')
+plt.xlabel('t')
+plt.ylabel('Dichte')
+plt.show()
+```
+
+Die Rechte Grenze des Ablehnungsbereichs ist $t_{\alpha} = 1.984$  wandert nun etwas nach rechts, da die Fläche unter der Kurve nun nur noch $0.025$ beträgt. Wenn wir zweiseitig testen, testen wir also streger, da wir extremere Werte beobachten müssen, um die Nullhypothese abzulehnen.
+
+Am Vorgehen ändert sich jedoch nichts. Wir berechnen die Teststatistik $T$ und vergleichen sie mit den kritischen Werten $t_{\alpha}$ und $-t_{\alpha}$, die wird nun aber aus der zweiseitigen t-Verteilungstabelle ablesen.
+
+1. Definition der Hypothesen:
+    - $H_0: \mu_x = 100$ (Der Mittelwert der Mechatronikstudierenden ist gleich dem Durchschnitt)
+    - $H_1: \mu_x \neq 100$ (Der Mittelwert der Mechatronikstudierenden ist größer als der Durchschnitt)
+2. Definition des Signifikanzniveaus: $\alpha = 0.05$
+    - Die Wahrscheinlichkeit, dass wir die Nullhypothese fälschlicherweise ablehnen, soll maximal 5% betragen oder $P(H_1 | H_0) \leq 0.05$.
+3. Berechnung des Teststatistik $t$:
+  - $T = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}= 6.50$
+```{python}	
+X_bar = np.mean(X)
+s = np.std(X)
+t = (X_bar - mu_0) / (s / np.sqrt(n))
+print(f't = {t}')
+```
+4. Berechnung des kritischen Wertes $t_{\alpha}$:
+  - Nun müssen wir uns entscheiden, ob wir ein- oder zweiseitig testen. In diesem Fall müssen wir einen zweiseitigen Test durchführen.
+  - Aus der [t-Verteilungstabelle](https://en.wikipedia.org/wiki/Student%27s_t-distribution) können wir für $n-1 = 99$ Freiheitsgrade und $\alpha = 0.05$ den kritischen Wert $t_{\alpha} = 1.984$ ablesen.
+5. Die Entscheidung basiert auf $T > t_{\alpha}$
+  - da $6.50 > 1.984$ ist, lehnen wir die Nullhypothese weiterhin ab.
+
+
+
+## T-Test
+
+
+## Chi-Quadrat-Test

@@ -1,0 +1,769 @@
+---
+lightbox: true
+---
+# Bayesian Statistics {#sec-statistic-bayesian}
+
+In the middle of the eighteenth century Joshua Bayes, a Presbyterian minister, set the ground work and as it so often happens was first not acknowledged by his peers.
+
+The basic rule is often illustrated via a Venn diagram for sets.
+
+::: {#fig-statistics-venn}
+
+![](../_assets/statistics/vann.svg)
+
+Venn diagram illustrating the principal of joint probabilities.
+:::
+
+
+Translated into a statistic problem this becomes:
+What is the probability, that a number is both, in set $A$ and set $B$. 
+
+Before we can write this down proper we need to introduce some notation.
+With $P(A)$ we denote the probability of the event $A$ and $P(A, B, \ldots)$ the probability of all events listed combined.
+Furthermore we call $P(\neg A)$ the probability of _not_ $A$, i.e. $P(\neg A) = 1 - P(A)$.
+
+::: {.callout appearance="simple"}
+:::: {#def-statistics-independent} 
+## Independent events - unconditional probability
+
+We call two events $A$ and $B$ independent if the fact that we know $A$ happened does not give us any insight the probability that $B$ happens or vice versa. 
+
+In this case the probability of both events happening is
+$$
+P(A, B) = P(A) P(B).
+$$
+
+An example is the classic coin toss.
+After throwing the first coin that lands on heads we have no information what the second toss will likely be. 
+
+So if we say $A$ represents _first flip heads_, $B$ _second flip heads_ we get
+$$
+P(A, B) = P(A) P(B) = \frac12 \frac12 = \frac14,
+$$
+or if $B$ represents _both flips tail_ we get:
+$$
+P(A, B) = P(A) P(B) = \frac12 0 = 0.
+$$
+::::
+:::
+
+Now what happens when the two events are not independent.
+
+::: {.callout appearance="simple"}
+:::: {#def-statistics-dependent} 
+## Dependent events - conditional probability
+
+If two events $A$ and $B$ are not independent and the probability of event $B$ is not zero, i.e. $P(B)\neq 0$ we define the conditional probability of $A$ under the condition $B$ as $P(A | B)$ and we get the relation
+$$
+P(A | B) = \frac{P(A, B)}{P(B)}.
+$$
+::::
+:::
+
+Therefore, if we return to our Venn diagram in @fig-statistics-venn we can see this relation played out. 
+As $P(A|B)$ can be understood as the fraction of probability $B$ that intersects with $A$.
+
+::: {.callout appearance="simple"}
+:::: {#def-statistics-ljp} 
+## Law of joint probabilities
+For two events $A$ and $B$ the following relation
+$$
+P(A, B) = P(B|A) P(A) = P(A|B) P(B)
+$$ 
+is called the **law of joint probabilities**.
+::::
+:::
+
+::: {.callout appearance="simple"}
+:::: {#def-statistics-bayesianth} 
+## Bayes' theorem
+For two events $A$ and $B$ as well as there dependent probabilities the following relation is called Bayes' theorem
+$$
+P(A|B) = \frac{P(B|A) P(A)}{P(B)}.
+$$
+
+The term $P(A|B)$ is usually called the **posterior probability density** (posterior for short), $P(A)$ the **prior**, $P(B|A)$ the **likelihood**, and finally the term $P(B)$ the **denominator**.
+::::
+:::
+
+::: {.callout-note}
+We have some further properties that follow from the above definitions for two events $A$ and $B$. 
+
+If they are independent we get
+$$
+P(A|B) = P(A).
+$$
+
+Furthermore, if $\neg B$ denotes the negative of $B$ we have
+$$
+P(A) = P(A, B) + P(A, \neg B)
+$$
+and therefore we get
+$$
+P(A|B) = \frac{P(B|A) P(A)}{P(B|A)P(A) + P(B|\neg A)P(\neg A)}
+$$
+:::
+
+Let us look at this with an example.
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-statistics-cancerscreeing}
+
+## Cancer Screening 
+
+Let us assume we look at a medical procedure that tests for something like prostate or breast cancer.
+
+This test for $cancer$ is quite reliable with a true positive rate of $80\%$ and a true negative rate with $90\%$. 
+This translates into the probabilities
+$$
+\begin{aligned}
+P(+ | cancer) = 0.8,\\
+P(+ | \neg cancer) = 0.1.
+\end{aligned}
+$$
+furthermore we assume that only $1\%$ of all the people taking the exam actually have cancer, i.e.
+$$
+P(cancer) = 0.01.
+$$
+
+From Beyes' theorem we can compute the probability (or likelihood) to have cancer when receiving a positive test result as
+$$
+P(cancer | +) = \frac{P(+ | cancer) P(cancer)}{P(+)}
+$$
+The part we do not know in this equation is $P(+)$ but we can compute this with @def-statistics-ljp as
+$$
+\begin{aligned}
+P(+) &= P(+, cancer) + P(+, \neg cancer) \\
+     &= P(+| cancer)P(cancer) + P(+| \neg cancer) P(\neg cancer)\\
+     &= 0.8 \cdot 0.01 + 0.1 \cdot 0.99 = 0.107.
+\end{aligned}
+$$
+
+Overall, this allow us to compute
+$$
+P(cancer | +) = \frac{P(+ | cancer) P(cancer)}{P(+)} = \frac{0.8 \cdot 0.01}{0.107} = 0.07477.
+$$
+
+[Compare @Lambert2018-ll, Section 3.6.2]
+::::
+:::
+
+::: {.callout-caution appearance="simple" collapse="true" icon=false}
+:::: {#exr-statistics-bayes}
+## Bayes' theorem
+
+1. A person is known to lie one third the time.
+This person throws a die and reports it is a 4 (four). \
+\
+What is the probability that it is actually a four?
+\
+1. There are 3 urns containing 3 white and 2 black, 2 white and 3 black, as well as 4 white and 1 black ball respectively. Each urn can be chosen with equal probability. \
+\
+What is the likelihood that a white ball is drawn?
+::::
+:::
+
+## Random variable
+
+A random variable $X$ (often also called random quantity or stochastic variable) is a variable that is dependent on _random events_ and is a function defined on a probability space $(\Omega, \mathcal{F}, P)$.
+$\Omega$ is called the sample space of all possible outcomes, $\mathcal{F}$ the event space (a set of outcomes in the sample space), and $P$ is the probability function which assigns each event in the event space a probability as a number between $0$ and $1$. 
+
+A very simple random variable is the one describing a coin toss.
+It is one for heads and zero for tails.
+To increase the complexity we can search for a random variable that tells us how often tails was the result for $n$ coin tosses. 
+
+To get a better idea what $(\Omega, \mathcal{F}, P)$ and $X$ is we should ask a the following question: _How likely is the value of $X=2$?_
+
+To answer this question we need to find the probability of the event $\{\omega\,:\, X(\omega) = 2\} that can be expressed via $P$ as $P(X=2)=p_X(2)$.
+
+If we record all this probabilities of outcomes of $X$ results in the **probability distribution** of $X$.
+If this probability distribution is real valued we get the **cumulative distribution function** (CDF)
+$$
+F_X(x) = P(X\leq x).
+$$
+
+### Discrete random variables
+
+We have already seen a discrete random variable as _the number of heads for $n$ coin tosses_, other possibilities are _the number of children for a person_.
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-statistics-cointoss}
+
+## Coin toss
+
+For the coin toss we have $\Omega=\{heads, tails\}$ and 
+$$
+X(\omega) = 
+\begin{cases}
+1, \quad \text{if}\, \omega = heads,\\
+0, \quad \text{if}\, \omega = tails.
+\end{cases}
+$$
+for a _fair coin_ the function 
+$$
+F_X(x) = 
+\begin{cases}
+\frac12, \quad \text{if}\, y = 1,\\
+\frac12, \quad \text{if}\, y = 0.
+\end{cases}
+$$
+
+Of course this does not mean we will get exactly $\frac12$ for $n$ tosses but with the rule of large numbers we see that it will end up there for a lot of flips
+```{python}
+#| label: fig-statistics-cointossln
+#| fig-cap: "Rule of large numbers for coin toss, coin toss simulated by a random numbers smaller or grater than 0.5."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import numpy as np
+import matplotlib.pyplot as plt
+%config InlineBackend.figure_formats = ["svg"]
+np.random.seed(6020)
+import scipy.special
+
+x = range(1, 1_001, 2)
+y = []
+for n in x:
+    y.append(np.sum(np.random.rand(n) < 0.5) / n)
+
+plt.plot(x, y)
+plt.plot([0, max(x)], [1/2,  1/2])
+plt.gca().set_aspect(1000 / (3))
+plt.show()
+```
+::::
+:::
+
+### Continuous random variable
+
+If the cumulative distribution function is continuous everywhere we get have a continuous random variable. 
+For such variables it makes more sense to not look for an exact equality with a number but rather, what is the probability that $X$ lies between $[a, b]$.
+
+Example could be the height of a person (if we can measure continuously).
+In this example it the probability that a person is exactly $185m$ is zero but the question if somebodies hight is in $[180, 190)$ makes sense.
+
+::: {.callout-note}
+We introduced the Laplace transform in @sec-signal-laplace. 
+It finds an application in probability theory where the Laplace transform of a random variable $X$ is defined as the expected value of $X$ with probability density function $f$, i.e.
+
+$$
+\mathcal{L}\{f\}(s) = \mathrm{E}\left[\mathrm{e}^{- s X}\right].
+$$
+
+Furthermore, we can recover the copulative distribution function  of a continuous random variable $X$ as 
+$$
+F_X(x) = \mathcal{L}^{-1}\left\{ \frac{1}{s} \mathrm{E}\left[\mathrm{e}^{- s X}\right]\right\}(x) = \mathcal{L}^{-1}\left\{ \frac{1}{s} \mathcal{L}\{f\}(s)\right\}(x).
+$$
+:::
+
+## Probability distributions
+
+It is instructive to look at some of the most common probability distributions so that we know what we can describe by these them. 
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-statistics-binomial_dist}
+
+## Binomial distribution
+
+The binomial distribution is a discrete probability function with parameters $n$ and $p$. 
+It describes the number of successes in a sequence of $n$ independent experiments, where $p$ describes the probability of the experiment being a success. 
+
+The probability density function is
+$$
+f(x) = \left(\begin{array}{c} n\\ x\end{array}\right) p^k (1-p)^{n-k},
+$$
+with 
+$$
+\left(\begin{array}{c} n\\ x\end{array}\right) = \frac{n!}{k!(n-k)!}.
+$$
+It measures the probability that we get exactly $x$ successes in $n$ independent trials.
+
+The corresponding CDF is 
+$$
+F(x) = \sum_{i=0}^{\lfloor x \rfloor}\left(\begin{array}{c} n\\ i\end{array}\right) p^i(1-p)^{n-i}.
+$$
+
+```{python}
+#| label: fig-statistics-binomial
+#| fig-cap: "Binomial distribution - basic functions."
+#| fig-subcap:
+#|   - "Probability density function."
+#|   - "Cumulative distribution function."
+#| layout-ncol: 1
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+%config InlineBackend.figure_formats = ["svg"]
+
+
+f = lambda n, p, x: np.vectorize(lambda x: math.comb(n, x))(x) * \
+                    np.pow(p, x) * np.pow(1 - p, n - x)
+
+helper = lambda n, p, x: np.sum(f(n, p, np.arange(0, x + 1)))
+cfd = lambda n, p, x: np.vectorize(lambda x: helper(n, p, x))(x)
+
+x = np.arange(0, 40)
+plt.figure()
+plt.plot(x, f(20, 0.5, x), "o", label=r"$n=20, p=\frac{1}{2}$")
+plt.plot(x, f(20, 0.7, x), "x", label=r"$n=20, p=\frac{7}{10}$")
+plt.plot(x, f(40, 0.5, x), "d", label=r"$n=40, p=\frac{1}{2}$")
+plt.gca().set_aspect(40/(3 * 0.2))
+plt.legend()
+plt.figure()
+plt.plot(x, cfd(20, 0.5, x), "o", label=r"$n=20, p=\frac{1}{2}$")
+plt.plot(x, cfd(20, 0.7, x), "x", label=r"$n=20, p=\frac{7}{10}$")
+plt.plot(x, cfd(40, 0.5, x), "d", label=r"$n=40, p=\frac{1}{2}$")
+plt.gca().set_aspect(40/(3 * 1))
+plt.legend()
+plt.show()
+```
+:::
+::::
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-statistics-bernoulli_dist}
+
+## Bernoulli distribution
+
+The Bernoulli distribution is a discrete probability function which takes the value $1$ with probability $p$ and the value $0$ with probability $q=1-p$.
+It is how we can model a coin toss or anything that is expressed in a _yes-no question_.
+
+It is the special case of a Binomial distribution @exm-statistics-binomial_dist with $n=1$.
+
+The probability density function becomes
+$$
+f(x) = p^x (1-p)^{1-x} \quad\text{for}\quad x\in \{0,1\}
+$$
+and the corresponding CDF 
+$$
+F(x) = \begin{cases}
+0 \quad &\text{if}\, x \leq 0,\\
+1-p \quad &\text{if}\, 0\leq x \le 1,\\
+1 \quad &\text{if}\, x \geq 1.
+\end{cases}
+$$
+::::
+:::
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-statistics-cont_dist}
+
+## Continuous uniform distribution
+The continuous uniform distribution is also called the rectangular distribution and describes an outcome that lies between certain bounds. 
+
+The probability density function is
+$$
+f(x) = 
+\begin{cases}
+\frac{1}{b-a} \quad &\text{if}\_ a \leq x \leq b,\\
+0 \quad &\text{else.}
+\end{cases}
+$$
+and the corresponding CDF 
+$$
+F(x) = 
+\begin{cases}
+\frac{x-a}{b-a} \quad &\text{if}\_ a \leq x \leq b,\\
+0 \quad &\text{else.}
+\end{cases}
+$$
+
+```{python}
+#| label: fig-statistics-cud
+#| fig-cap: "Continuous uniform distribution - basic functions."
+#| fig-subcap:
+#|   - "Probability density function."
+#|   - "Cumulative distribution function."
+#| layout-ncol: 1
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import numpy as np
+import matplotlib.pyplot as plt
+%config InlineBackend.figure_formats = ["svg"]
+a = 0
+b = 1
+f = lambda x: np.astype((x >= a) & (x < b), float) / (b - a)
+cfd = lambda x: (x - a) / (b - a) * np.astype((x >= a) & (x < b) , float) + \
+                np.astype((x >= b) , float)
+x = np.linspace(-1, 2, 1024)
+plt.figure()
+plt.plot(x, f(x))
+plt.gca().set_aspect(3/(3 * 1))
+plt.figure()
+plt.plot(x, cfd(x))
+plt.gca().set_aspect(3/(3 * 1))
+plt.show()
+
+```
+:::
+::::
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-statistics-normal_dist}
+
+## Normal distribution
+
+The normal distribution or Gaussian distribution is a continuous probability function for a real valued random variable. 
+
+The probability density function is
+$$
+f(x) = \mathcal{N}[\mu, \sigma^2](x) = \frac{1}{\sqrt{2 \pi \sigma^2}}\mathrm{e}^{-\frac{(x - \mu)^2}{2\sigma^2}},
+$$
+where $\mu$ is called the mean and the parameter $\delta^2$ is the called the variance.
+The standard deviation of the distribution is $\sigma$.
+For $\mu = 0$ and $\sigma^2=1$ it is called the **standard normal distribution**.
+
+The corresponding CDF of the standard normal distribution is
+$$
+\Phi(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^x \mathrm{e}^{-\frac{t^2}{2}}\, \mathrm{d}t,
+$$
+and the generic form is 
+$$
+F(x) = \Phi\left(\frac{x-\mu}{\sigma}\right).
+$$
+$\Phi(x)$ is expressed in terms of the error function
+$$
+\Phi(x) = \frac12\left(1 + \operatorname{erf}\left(\frac{x}{\sqrt{2}}\right)\right), \quad\text{with}\quad \operatorname{erf}(x) = \frac{1}{\sqrt{2}}\int_{0}^x\mathrm{e}^{-t^2}\, \mathrm{d}t.
+$$
+
+```{python}
+#| label: fig-statistics-nd
+#| fig-cap: "Normal distribution - basic functions."
+#| fig-subcap:
+#|   - "Probability density function."
+#|   - "Cumulative distribution function."
+#| layout-ncol: 1
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+%config InlineBackend.figure_formats = ["svg"]
+
+f = lambda mu, sigma, x: 1 / np.sqrt(2 * np.pi * sigma**2) * \
+    np.exp(- (x - mu)**2 / (2 * sigma**2))
+
+phi = np.vectorize(lambda x: 1/2 * (1 + math.erf(x / np.sqrt(2))))
+cfd = lambda mu, sigma, x: phi((x - mu) / sigma)
+x = np.linspace(-3, 3, 1024)
+plt.figure()
+plt.plot(x, f(0, 1, x),
+         label=r"$\mu=0$, $\sigma^2=1$")
+plt.plot(x, f(0, np.sqrt(0.1), x),
+         label=r"$\mu=0$, $\sigma^2=0.1$")
+plt.plot(x, f(1/2, np.sqrt(0.5), x),
+         label=r"$\mu=\frac{1}{2}$, $\sigma^2=0.5$")
+plt.gca().set_aspect(6/(3 * 1.25))
+plt.legend()
+plt.figure()
+plt.plot(x, cfd(0, 1, x),
+         label=r"$\mu=0$, $\sigma^2=1$")
+plt.plot(x, cfd(0, np.sqrt(0.1), x),
+         label=r"$\mu=0$, $\sigma^2=0.1$")
+plt.plot(x, cfd(1/2, np.sqrt(0.5), x),
+         label=r"$\mu=\frac{1}{2}$, $\sigma^2=0.5$")
+plt.gca().set_aspect(6/(3 * 1))
+plt.legend()
+plt.show()
+```
+:::
+::::
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-statistics-normal_gammainv}
+
+## Inverse $\Gamma$ distribution
+The main use of the inverse $\Gamma$ distribution is in Bayesian statistics.
+
+The probability density function is given by
+$$
+f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)}\frac{1}{x^{\alpha+1}}\mathrm{e}^{-\frac{\beta}{x}},
+$$
+for the shape parameter $\alpha$, the scale parameter $\beta$ and the name giving $\Gamma$ function.
+
+The corresponding CDF is
+$$
+F(x) = \frac{\Gamma\left(\alpha, \frac{\beta}{x}\right)}{\Gamma(\alpha)}
+$$
+where the numerator is called the upper incomplete gamma function.
+
+```{python}
+#| label: fig-statistics-gammainv
+#| fig-cap: "Inverse Gamma distribution - basic functions."
+#| fig-subcap:
+#|   - "Probability density function."
+#|   - "Cumulative distribution function."
+#| layout-ncol: 1
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+import scipy
+%config InlineBackend.figure_formats = ["svg"]
+
+f = lambda alpha, beta, x: np.pow(beta, alpha) / math.gamma(alpha) * \
+                           np.pow(1/x, 1 + alpha) * np.exp(-beta/x)
+
+cfd = lambda alpha, beta, x: scipy.special.gdtr(alpha, beta, x)
+x = np.linspace(1e-3, 3, 1024)
+plt.figure()
+plt.plot(x, f(1, 1, x), label=r"$\alpha=1$, $\beta=1$")
+plt.plot(x, f(3, 1, x), label=r"$\alpha=3$, $\beta=1$")
+plt.plot(x, f(3, 0.5, x), label=r"$\alpha=3$, $\beta=0.5$")
+plt.gca().set_aspect(4/(3 * 5))
+plt.legend()
+plt.figure()
+plt.plot(x, cfd(1, 1, x), label=r"$\mu=0$, $\sigma^2=1$")
+plt.plot(x, cfd(3, 1, x), label=r"$\mu=0$, $\sigma^2=0.1$")
+plt.plot(x, cfd(3, 0.5, x), label=r"$\mu=\frac{1}{2}$, $\sigma^2=0.5$")
+plt.gca().set_aspect(6/(3 * 1))
+plt.legend()
+plt.show()
+```
+
+::::
+:::
+
+## Bayes' theorem in action
+
+What Bayes was after was the basic question of data science: find the parameters of a model given the outcome data together with the model.
+The theorem can be used as an update for the probability we have with additional information and therefore fitting our parameters.
+
+Before we get to an example let us consider the terms of the theorem once more. 
+
+1. The prior expresses our initial believe of the outcome. If we know nothing about it we can use an non-informative prior like the uniform distribution.
+
+1. The likelihood is similar to a probability distribution but the integral is not 1. As the name suggest it is the likelihood of a certain experiment result as a function of the parameters of the _model_. If we select the likelihood as a conjugate to the prior we know the shape of the posterior and this can speed up the calculation.
+
+1. The denominator are there to normalize the posterior so that the posterior becomes a probability distribution with integral 1.
+
+1. The posterior are our main result of the so called Bayers inference. If we have multiple samples we can use it as the prior for the next.
+
+Let us look at some more elaborate examples to show how Bayes theorem can be used. 
+
+### Election prediction as instructive example
+
+Here we give a rudimentary introduction to election forecasts (this example follows the notes @mehrle).
+
+::: {.callout-note}
+So far our probabilities where not continuous functions.
+For this example we need continuous functions and to reflect this in the notation we use small letters.
+:::
+
+First we need to get a relative vote for party $x$ which might come from the last elections or a prior poll.
+We assume $\mu = 20\%$ and express the uncertainty in our estimate with a normal distribution with standard deviation of $\sigma = 5\%$. 
+
+The resulting probability distribution becomes
+$$
+p(x) = \mathcal{N}[\mu, \sigma^2](x) = \frac{1}{\sqrt{2 \pi \sigma^2}}\mathrm{e}^{-\frac{(x - \mu)^2}{2\sigma^2}}
+$$
+and in our case we get $p(x) = \mathcal{N}[0.2, 0.05^2](x)$.
+
+```{python}
+#| label: fig-statistics-bayesian-vote1
+#| fig-cap: "Probability density for our initial guess of the vote for party x."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import numpy as np
+import matplotlib.pyplot as plt
+%config InlineBackend.figure_formats = ["svg"]
+
+normaldist = lambda mu, sigma, x: 1 / np.sqrt(2 * np.pi * sigma**2) * \
+    np.exp(- (x - mu)**2 / (2 * sigma**2))
+
+p = lambda x: normaldist(0.2, 0.05, x)
+
+x = np.linspace(0, 1, 1024)
+plt.figure()
+plt.plot(x, p(x))
+plt.grid("major")
+plt.gca().set_aspect(1/(3 * 8))
+plt.xlabel(r"$x$")
+plt.ylabel(r"$p(x)$")
+plt.show()
+```
+
+Now we improvement our estimate with the help of Bayes' theorem by asking _random_ people what they will vote.
+
+::: {.callout-note}
+Of course this needs to be done in the proper way to make sure it is not biased.
+We assume to not be biased.
+:::
+
+The probability that exactly $k$ people of a random sample of size $n$ vote for party $x$ is a best described with a binomial distribution
+$$
+p\left(\frac{k}{n} | x\right) = \left(\begin{array}{c} n\\ k\end{array}\right) x^k (1-x)^{n-k}.
+$$
+
+```{python}
+#| label: fig-statistics-bayesian-vote2
+#| fig-cap: "Probability density of k=5 positives out of n=15 samples."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import scipy
+
+bino = lambda k, n, x: scipy.special.comb(n, k) * np.pow(x, k) * \
+                       np.pow(1-x, n - k)
+p2 = lambda x: bino(2, 10, x)
+
+x = np.linspace(0, 1, 1024)
+plt.figure()
+plt.plot(x, p2(x))
+plt.grid("major")
+plt.gca().set_aspect(1)
+plt.xlabel(r"$x$")
+plt.ylabel(r"$p(\frac{5}{15}|x)$")
+plt.show()
+```
+
+In order to compute $p(\frac{k}{n})$ we need to integrate our two results
+$$
+p\left(\frac{k}{n}\right) = \int_0^1 p\left(\frac{k}{n} | x\right) p(x)\,\mathrm{d}x
+$$
+
+So for a given sample size $n$ and positive samples $k$ we get a new distribution.
+
+```{python}
+#| label: fig-statistics-bayesian-vote3
+#| fig-cap: "Parameter likelihood after a survey with k=5 positives out of n=15 samples (solid - blue) and k=15 out of n=150 samples (dotted)."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+
+p3 = lambda k, n: scipy.integrate.quad(lambda x: bino(k, n, x) * p(x), 0, 1)[0]
+
+p4 = lambda k, n ,x: p(x) * bino(k, n, x) / p3(k, n)
+
+x = np.linspace(0, 1, 1024)
+plt.figure()
+plt.plot(x, p4(5, 15, x), label=r"$n=5, k=15$")
+plt.plot(x, p4(50, 150, x), ":", label=r"$n=50, k=150$")
+plt.plot(x, p4(0, 15, x), "-.", label=r"$n=0, k=15$")
+plt.legend()
+plt.grid("major")
+plt.gca().set_aspect(1 / (3 * 14))
+plt.xlabel(r"$x$")
+plt.ylabel(r"$p(x|\frac{k}{n})$")
+plt.show()
+```
+In @fig-statistics-bayesian-vote3 we can see that the peak moves from $0.2$ closer to $\tfrac13$ (our pooling results) and the bigger our sample size gets the more likely our change is (we get closer).
+
+::: {.callout-warning}
+A point that is often criticised regarding the _Bayesian inference_ we applied here is that it is highly dependent on the initial guess (@fig-statistics-bayesian-vote1).
+:::
+
+### Material properties
+
+To identify material properties such as strength we can also use Bayes' theorem.
+
+::: {.callout-important}
+This example follows the notes @mehrle but as we do not have the data the plots are not generated interactively.
+:::
+
+Again we start with an initial guess, in this case for the yield stress with $90\%$ of the samples endure in our experiment. 
+
+For steel _S235JR_ this is $R_{aH,0} = 235 \mathrm{MPa}$.
+We use a Gaussian normal distribution with $\mu_0 = 270\mathrm{MPa}$ and $\sigma_0 = 27.3 \mathrm{MPa}$.
+
+```{python}
+#| label: fig-statistics-bayesian-material1
+#| fig-cap: "Initial assumption for the yield stress of the material, the coloured part represents the 90% of samples that have a yield stress larger than 235."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import numpy as np
+import matplotlib.pyplot as plt
+%config InlineBackend.figure_formats = ["svg"]
+
+normaldist = lambda mu, sigma, x: 1 / np.sqrt(2 * np.pi * sigma**2) * \
+    np.exp(- (x - mu)**2 / (2 * sigma**2))
+Finv = lambda mu, sigma, p: mu + sigma * np.sqrt(2) * \
+                            scipy.special.erfinv(2 * p - 1) 
+
+mu_0 = 270
+sigma_0 = 27.31
+RaH_0 = Finv(mu_0, sigma_0, 0.1)
+
+p = lambda x: normaldist(mu_0, sigma_0, x)
+
+x = np.linspace(0, 400, 1024)
+plt.figure()
+plt.plot(x, p(x))
+plt.fill_between(x, p(x), where=(x > RaH_0))
+my_max = np.round(np.max(p(x)), 3)
+plt.plot([RaH_0, RaH_0], [0, my_max])
+plt.grid("major")
+plt.gca().set_aspect(400/(3 * my_max))
+plt.xlabel(r"$x$")
+plt.ylabel(r"$p(R_{aH})$")
+plt.show()
+```
+
+This time our parameters $\mu$ and $\sigma$ are uncertain and need to be modified, furthermore, they do not follow a binomial distribution but our assumption is that they are better described by a normal distribution
+$$
+p(\mu) = \mathcal{N}(\mu_0, \sigma_{\mu_0}),\quad\text{with}\quad \sigma_{\mu_0} = \frac{\mu_0}{10},
+$$
+and
+$$
+p(\sigma) = \mathcal{N}(\sigma_0, \sigma_{\sigma_0}),\quad\text{with}\quad \sigma_{\sigma_0} = \frac{\sigma_0}{10}.
+$$
+
+The likelihood of drawing a sample with yield strength $R_{aH}^{(i)}$ we calculate the dependent probabilities separate by fixing the _current_ values of $\mu = \check{\mu}$ and $\sigma = \check{\sigma}$, respectively.
+$$
+p\left(R_{aH}^{(i)} | \mu \right) = \mathcal{N}[\mu, \check{\sigma}](R_{aH}^{(i)})
+$$
+and 
+$$
+p\left(R_{aH}^{(i)} | \sigma \right) = \mathcal{N}[\check{\mu}, \sigma](R_{aH}^{(i)})
+$$
+and with Bayes' theorem we can compute
+$$
+p\left( \mu | R_{aH}^{(i)}\right)  = \frac{p\left(R_{aH}^{(i)} | \mu \right) p(\mu)}{\int p\left(R_{aH}^{(i)} | \mu \right) p(\mu)\,\mathrm{d}\mu},
+$$
+and
+$$
+p\left( \sigma | R_{aH}^{(i)}\right)  = \frac{p\left(R_{aH}^{(i)} | \sigma \right) p(\sigma)}{\int p\left(R_{aH}^{(i)} | \sigma \right) p(\sigma)\,\mathrm{d}\sigma},
+$$
+
+Now by computing the inverse from our above probabilities we can update our $\mu_0$ and $\sigma_0$ accordingly.
+This we can continue for several samples.
+```{python}
+#| label: fig-statistics-bayesian-material2
+#| fig-cap: "Update after 10 and 100 iterations"
+#| code-fold: true
+#| eval: true
+#| echo: false
+#| code-summary: "Show the code for the figure"
+import scipy
+normaldist = lambda mu, sigma, x: 1 / np.sqrt(2 * np.pi * sigma**2) * \
+    np.exp(- (x - mu)**2 / (2 * sigma**2))
+
+p_RaH = lambda mu, sigma, x: normaldist(mu, sigma, x)
+
+plt.plot(x, p_RaH(mu_0, sigma_0, x))
+plt.plot(x, p_RaH(290, 30, x))
+plt.plot(x, p_RaH(300, 37, x))
+plt.gca().set_aspect(400/(3 * 0.015))
+plt.grid("major")
+plt.show()
+```
+
+The mean converges relatively fast and stays but the deviation still changes after 100 sample drawn.
+This is due to the fact that the two variables are not independent of each other and the assumption that of a normal distribution is not a good estimate for $\sigma$.
+
+## Conjugate priors
+
+The above updates are relatively expensive in terms of computing and are not handy.
+The idea is to find the updates analytically. 
+
+In general this is not _likely to happen_ but for certain combinations of density functions the convert neatly into each other under Bayers' theorem.
+
+For the normal distribution this is the case and the update becomes
+$$
+\frac{1}{\sigma_{k+1}^2} = \frac{1}{\sigma_{k}^2} + \frac{1}{\sigma^2}, 
+$$
+and 
+$$
+\mu_{k+1} = \left(\frac{\mu_k}{\sigma_{k}^2} + \frac{\mu}{\sigma^2}\right)\sigma^2_{k+1}, 
+$$
+

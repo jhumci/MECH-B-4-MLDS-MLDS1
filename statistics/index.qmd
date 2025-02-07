@@ -1,0 +1,12 @@
+# Statistik {.unnumbered}
+
+
+> _"Ich bin Ingenieur und gewohnt, in Wahrscheinlichkeiten zu denken, nach der Mathematik der Vernunft."_ - @frisch_faber
+
+Die klassische Statistik ist ein Teilbereich der Mathematik, der sich mit der Sammlung, Analyse, Interpretation, Präsentation und Modellierung von Daten beschäftigt. Ein großen Teil der Statistik ist die Wahrscheinlichkeitstheorie, die sich mit dem Verständnis von Zufallsereignissen befasst.
+
+In Kapitel @sec-statistics-sampling beschäftigen wir uns zunöchst damit, wie Daten erhoben werden und wie man die Wahrscheinlichkeiten von Ereignissen berechnet. In zweiten Kapitel @sec-statistics-distributions betrachten wir typische Verteilungen, die eigenet sind zufällige Ereignisse zu beschreiben. 
+
+@sec-statistics-estimates
+
+@sec-statistics-hypothesis

@@ -1,0 +1,409 @@
+# Data sets {#sec-intro-sets}
+
+We continue our little introduction by looking at _data sets_ in the sense of a list of values that we want to describe closer.
+
+We use the `mieten3.asc` from [Open Data LMU](https://data.ub.uni-muenchen.de/2/). 
+The data set contains information about rents in Munich from the year 2003.
+The columns have the following meaning, see `DETAILS`:
+```txt
+Variablenbeschreibung:
+
+nm		    Nettomiete in EUR
+nmqm		Nettomiete pro m² in EUR
+wfl		    Wohnfläche in m²
+rooms		Anzahl der Zimmer in der Wohnung
+bj		    Baujahr der Wohnung
+bez		    Stadtbezirk
+wohngut		Gute Wohnlage? (J=1,N=0)
+wohnbest	Beste Wohnlage? (J=1,N=0)
+ww0		    Warmwasserversorgung vorhanden? (J=0,N=1)
+zh0		    Zentralheizung vorhanden? (J=0,N=1)
+badkach0	Gekacheltes Badezimmer? (J=0,N=1)
+badextra	Besondere Zusatzausstattung im Bad? (J=1,N=0)
+kueche		Gehobene Küche? (J=1,N=0)
+```
+
+
+For now, we'll just show the code without much explanation because we want to jump right in and do not want to delve into how it works.
+We use a [structured array](https://numpy.org/doc/stable/user/basics.rec.html#module-numpy.doc.structured_arrays) of `numpy` for it.
+
+```{python}
+#| classes: styled-output
+import numpy as np
+import requests
+import io
+response = requests.get("https://data.ub.uni-muenchen.de/2/1/miete03.asc")
+
+# Transform the content of the file into a numpy.ndarray
+data = np.genfromtxt(io.BytesIO(response.content), names=True)
+# Access the data types and names
+print(f"{data.dtype=}")
+# Access the second element (row)
+print(f"{data[1]=}")
+# Access a name
+print(f"{data['rooms']=}")
+```
+
+Now that we have some data we can look at it more closely, for this we interpret a row as a vector.
+
+## Basic properties of a data set
+
+First we are looking at the total net rent, i.e. the row `nm`.
+
+For a vector $v \in \mathbb{R}^n$ we have:
+
+- the maximal value, i.e. the maximum
+$$
+v^{max} = \max_i v_i,
+$$
+- the minimal value, i.e. the minimum
+$$
+v^{min} = \min_i v_i,
+$$
+- the _mean_ of all values (often called the _arithmetic mean_)
+$$
+\overline{v} = \frac1n \sum_{i=1}^n v_i = \frac{v_1 + v_2 + \cdots + v_n}{n},
+$$
+- the median, i.e. the value where half of all the other values are bigger and the other half is smaller, for a sorted $v$ this is
+$$
+\widetilde{v} = \begin{cases} 
+                v_{(n+1)/2}& n\quad \text{odd}\\
+                \frac{v_{n/2} + v_{n/2+1}}{2}& n\quad \text{even}
+                \end{cases},
+$$
+- more general, we have quantiles. For a sorted $v$ and $p\in(0,1)$
+$$
+\overline{v}_p = \begin{cases} 
+                 \frac12\left(v_{np} + v_{np+1}\right) & pn \in \mathbb{N}\\
+                v_{\lfloor np+1\rfloor} & pn \not\in \mathbb{N}
+                \end{cases}.
+$$
+Some quantiles have special names, like the median for $p=0.5$, the lower and upper quartile for $p=0.25$ and $p=0.75$ (or first, second (median) and third quartile), respectively.
+```{python}
+#| classes: styled-output
+nm_max = np.max(data['nm'])
+print(f"{nm_max=}")
+
+nm_min = np.min(data['nm'])
+print(f"{nm_min=}")
+
+nm_mean = np.mean(data['nm'])
+# round to 2 digits
+nm_mean_r = np.around(nm_mean, 2)
+print(f"{nm_mean_r=}")
+
+nm_median = np.median(data['nm'])
+print(f"{nm_median=}")
+
+nm_quartiles = np.quantile(data['nm'], [1/4, 1/2, 3/4])
+print(f"{nm_quartiles=}")
+```
+```{python}
+#| echo: false
+max_index = np.argmax(data['nm'])
+rooms = int(data['rooms'][max_index])
+year = int(data['bj'][max_index])
+```
+From this Python snippet we know that for tenants the rent varied between `{python} float(nm_min)` and `{python} float(nm_max)`, with an average of `{python} float(nm_mean_r)` and a median of `{python} float(nm_median)`.
+Of course there are tricky questions that require us to dig a bit deeper into these functions, e.g. how many rooms does the most expensive flat have?
+The surprising answer is `{python} rooms` and it was built in `{python} year`, but how do we obtain these results?
+
+We can use `numpy.argwhere` or a function which returns the index directly like `numpy.argmax`.
+```{python}
+#| classes: styled-output
+max_index = np.argmax(data['nm'])
+rooms = int(data['rooms'][max_index])
+year = int(data['bj'][max_index])
+print(f"{rooms=}, {year=}")
+```
+
+### Visualization
+
+:::{.callout-tip}
+There are various ways of visualizing data in Python.
+Two widely used packages are [`matplotlib`](https://matplotlib.org) and [`plotly`](https://plotly.com/graphing-libraries/).
+:::
+
+It often helps to visualize the values to see differences and get an idea of their use.
+```{python}
+#| label: fig-quartiles
+#| fig-cap: "Visualization of the different measurements."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import matplotlib.pyplot as plt
+nm_sort = np.sort(data["nm"])
+x = np.linspace(0, 1, len(nm_sort), endpoint=True,)
+
+plt.plot(x, nm_sort, label="net rent")
+plt.axis((0, 1, np.round(nm_min/100)*100, np.round(nm_max/100)*100))
+plt.xlabel('Scaled index')
+plt.ylabel('Net rent - nm')
+
+plt.plot([0, 0.25, 0.25], [nm_quartiles[0], nm_quartiles[0], nm_min], 
+         label='1st quartile')
+plt.plot([0, 0.5, 0.5], [nm_quartiles[1], nm_quartiles[1], nm_min],
+         label='2st quartile')
+plt.plot([0, 0.75, 0.75], [nm_quartiles[2], nm_quartiles[2], nm_min],
+         label='3st quartile')
+plt.plot([0, 1], [nm_mean, nm_mean],
+         label='mean')
+plt.legend()
+plt.show()
+```
+
+What is shown in @fig-quartiles is often combined into a single [boxplot](https://en.wikipedia.org/wiki/Box_plot) (see @fig-boxplot) that provides way more information at once.
+
+::: {.content-visible when-format="html"}
+```{python}
+#| label: fig-boxplot
+#| fig-cap: "Boxplot done in plotly with whiskers following 3/2 IQR."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import plotly.graph_objects as go
+
+fig = go.Figure()
+fig.add_trace(go.Box(y=data["nm"], name="Standard"))
+fig.add_trace(go.Box(y=data["nm"], name="With points", boxpoints="all"))
+fig.show()
+```
+:::
+
+::: {.content-visible unless-format="html"}
+```{python}
+#| fig-cap: "Boxplot done in plotly with whiskers following 3/2 IQR."
+#| code-fold: true
+#| eval: false
+#| code-summary: "Show the code for the figure"
+import plotly.graph_objects as go
+
+fig = go.Figure()
+fig.add_trace(go.Box(y=data["nm"], name="Standard"))
+fig.add_trace(go.Box(y=data["nm"], name="With points", boxpoints="all"))
+fig.show()
+```
+
+![Boxplot done in plotly with whiskers following 3/2 IQR.](../_assets/basics/boxplot_fig2.2.png){#fig-boxplot width="80%"}
+:::
+
+The plot contains the box which is defined by the 1st quantile $Q_1$ and the 3rd quantile $Q_3$, with the median as line in between these two.
+Furthermore, we can see the whiskers which help us identify so called outliers.
+By default they are defined as $\pm 1.5(Q_3 - Q_1)$, where ($Q_3 - Q_1$) is often called the _interquartile range_ (IQR).
+
+:::{.callout-note}
+@fig-boxplot is an interactive plot in the html version.
+:::
+
+## Spread
+
+The _spread_ (or _dispersion_, _variability_, _scatter_) are measures used in statistics to classify how data is distributed.
+Common examples are _variance_, _standard deviation_, and the _interquartile range_ that we have already seen above.
+
+::: {.callout appearance="simple"}
+:::: {#def-variance} 
+## Variance
+For a finite set represented by a vector $v\in\mathbb{R}^n$ the **variance** is defined as
+$$
+\operatorname{Var}(v) = \frac1n \sum_{i=1}^n (v_i - \mu)^2, \quad \mu = \overline{v} \quad\text{(the mean)}
+$$
+or directly
+$$
+\operatorname{Var}(v) = \frac{1}{n^2} \sum_{i=1}^n\sum_{j>i} (v_i - v_j)^2.
+$$
+::::
+:::
+
+::: {.callout appearance="simple"}
+:::: {#def-stddeviation} 
+## Standard deviation
+For a finite set represented by a vector $v\in\mathbb{R}^n$ the **standard deviation** is defined as
+$$
+\sigma = \sqrt{\frac1n \sum_{i=1}^n (v_i - \mu)^2}, \quad \mu = \overline{v} \quad\text{(the mean)}.
+$$
+If we interpret $v$ as a sample this is often also called _uncorrected sample standard deviation_.
+::::
+:::
+
+::: {.callout appearance="simple"}
+:::: {#def-iqr} 
+## Interquartile range (IQR)
+For a finite set represented by a vector $v\in\mathbb{R}^n$ the **interquartile range** is defined as the difference of the first and third quartile, i.e.
+$$
+IQR = \overline{v}_{0.75} - \overline{v}_{0.25}.
+$$
+::::
+:::
+
+With `numpy` they are computed as follows
+
+```{python}
+#| classes: styled-output
+
+nm_var = np.var(data["nm"])
+print(f"{nm_var=}")
+
+nm_std = np.std(data["nm"])
+print(f"{nm_std=}")
+
+nm_IQR = nm_quartiles[2] - nm_quartiles[0]
+print(f"{nm_IQR=}")
+```
+
+## Histogram
+
+When exploring data it is also quite useful to draw histograms.
+For the _net rent_ this makes not much sense but for _rooms_ this is useful.
+
+```{python}
+#| label: fig-hist
+#| fig-cap: "Histogram of the number of rooms in our dataset."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+index = np.array(range(0, len(data['rooms'])))
+
+plt.hist(data['rooms'])
+plt.xlabel('rooms')
+plt.ylabel('# of rooms')
+plt.show()
+```
+What we see in @fig-hist is simply the amount of occurrences of $1$ to $6$ in our dataset.
+Already we can see something rather interesting, there are flats with $5.5$ rooms in our dataset.
+
+Another helpful histogram is @fig-hist2 showing the amount of buildings built per year.
+```{python}
+#| label: fig-hist2
+#| fig-cap: "Histogram of buildings built per year."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+index = np.array(range(0, len(data['rooms'])))
+
+plt.hist(data['bj'])
+plt.xlabel('year of building')
+plt.ylabel('# of buildings')
+plt.show()
+```
+
+## Correlation 
+
+In statistics, the terms _correlation_ or _dependence_ describe any statistical relationship between _bivariate data_ (data that is paired) or _random variables_.
+
+For our dataset we can, for example, check:
+
+1. the _living area in $m^2$_ - `wfl` vs. the _net rent_ - `nm`
+1. the _year of construction_ - `bj` vs. if _central heating_ - `zh0` is available
+1. the _year of construction_ - `bj` vs. the _city district_ - `bez`
+
+::: {.content-visible when-format="html"}
+```{python}
+#| label: fig-correlation
+#| fig-cap: "Scatterplot to investigate correlations in the data set."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+from plotly.subplots import make_subplots
+
+fig = make_subplots(rows=3, cols=1)
+
+fig.add_trace(go.Scatter(x=data["wfl"], y=data["nm"], mode="markers"),
+                row=1, col=1)
+fig.update_xaxes(title_text="living area in m^2", row=1, col=1)
+fig.update_yaxes(title_text="net rent", row=1, col=1)
+
+fig.add_trace(go.Scatter(x=data["bj"], y=data["zh0"], mode="markers"),
+                row=2, col=1)
+fig.update_xaxes(title_text="year of construction", row=2, col=1)
+fig.update_yaxes(title_text="central heating", row=2, col=1)
+
+fig.add_trace(go.Scatter(x=data["bj"], y=data["bez"], mode="markers"),
+                row=3, col=1)
+fig.update_xaxes(title_text="year of construction", row=3, col=1)
+fig.update_yaxes(title_text="city district", row=3, col=1)
+
+fig.show()
+```
+:::
+
+::: {.content-visible unless-format="html"}
+```{python}
+#| fig-cap: "Scatterplot to investigate correlations in the data set."
+#| code-fold: true
+#| eval: false
+#| code-summary: "Show the code for the figure"
+from plotly.subplots import make_subplots
+
+fig = make_subplots(rows=3, cols=1)
+
+fig.add_trace(go.Scatter(x=data["wfl"], y=data["nm"], mode="markers"),
+                row=1, col=1)
+fig.update_xaxes(title_text="living area in m^2", row=1, col=1)
+fig.update_yaxes(title_text="net rent", row=1, col=1)
+
+fig.add_trace(go.Scatter(x=data["bj"], y=data["zh0"], mode="markers"),
+                row=2, col=1)
+fig.update_xaxes(title_text="year of construction", row=2, col=1)
+fig.update_yaxes(title_text="central heating", row=2, col=1)
+
+fig.add_trace(go.Scatter(x=data["bj"], y=data["bez"], mode="markers"),
+                row=3, col=1)
+fig.update_xaxes(title_text="year of construction", row=3, col=1)
+fig.update_yaxes(title_text="city district", row=3, col=1)
+
+fig.show()
+```
+![Scatterplot to investigate correlations in the data set.](../_assets/basics/scatter_fig2.5.png){#fig-correlation}
+:::
+
+In the first plot of @fig-correlation we see that the rent tends to go up with the size of the flat but there are for sure some rather cheap options in terms of space.
+
+The second plot of @fig-correlation tells us that central heating became a constant around $1966$.
+Of course we can also guess that the older buildings with central heating were renovated, but we have no data to support this claim.
+
+The third plot of @fig-correlation does not yield an immediate correlation.
+
+More formally, we can describe possible correlations using the _covariance_.
+The covariance is a measure of the joint variability of two random variables.
+
+::: {.callout appearance="simple"}
+:::: {#def-cov} 
+## Covariance
+For two finite sets represented by vectors $v, w\in\mathbb{R}^n$ the **covariance** is defined as
+$$
+\operatorname{cov}(v, w) = \frac1n \langle v -\overline{v}, w - \overline{w}\rangle.
+$$
+::::
+:::
+
+The covariance is tricky to interpret, e.g. the unities of the two must not make sense.
+In the example below, we have rent per square meter, which makes some sense.
+
+From the covariance we can compute the correlation.
+
+::: {.callout appearance="simple"}
+:::: {#def-corr} 
+## Correlation
+For two finite sets represented by vectors $v, w\in\mathbb{R}^n$ the **correlation** is defined as
+$$
+\rho_{v,w} = \operatorname{corr}(v, w) = \frac{\operatorname{cov}(v, w)}{\sigma_v \sigma_w},
+$$
+where $\sigma_v$ and $\sigma_w$ are the standard deviation of these vectors, see @def-stddeviation.
+::::
+:::
+
+In `numpy` the function `numpy.cov` computes a matrix where the diagonal is the variance of the values and the off-diagonals are the covariances of the $i$ and $j$ samples.
+Consequently, `numpy.corrcoef` is a matrix as well.
+```{python}
+#| classes: styled-output
+cov_nm_wfl = np.cov(data["nm"], data["wfl"])
+print(f"{cov_nm_wfl[0, 1]=}")
+
+corr_nm_wfl = np.corrcoef(data["nm"], data["wfl"])
+print(f"{corr_nm_wfl[0, 1]=}")
+```
+
+The above results, particularly $\rho_{\text{nm},\text{wfl}}=`{python} round(float(corr_nm_wfl[0, 1]),3)`$ suggest that the higher the rent, the more space you get.
+
+:::{.callout-tip}
+Correlation and causation are not the same thing!
+:::
+
+:::{.callout-tip}
+We showed some basic tests for correlation, there are more elaborate methods but they are subject to a later chapter.
+:::

@@ -1,0 +1,58 @@
+project:
+  type: book
+
+book:
+  title: "Basics of Data Science"
+  date: last-modified
+  reader-mode: true
+  page-footer:
+    left: Basics of Data Science WS 2024 (MECH-M-DUAL-1-GDM)
+    center: "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) Julian Huber"
+    right: This book was built with <a href="https://quarto.org/">Quarto</a>.
+  author:
+    - name: "Julian Huber"
+      orcid: 0000-0002-0678-6855
+      affiliation: "MCI | The Entrepreneurial School"
+  license: "CC BY-NC-SA"
+  site-url: https://kandolfp.github.io/MECH-M-DUAL-1-DBM/
+  repo-url: https://github.com/kandolfp/MECH-M-DUAL-1-DBM/
+  repo-branch: main
+  repo-actions: [edit, issue]
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - part: dataexploratory/index.qmd
+      chapters:
+        - dataexploratory/data_science.qmd
+        - dataexploratory/data_sets.qmd
+        - dataexploratory/tutorial.qmd
+    - part: statistics/index.qmd
+      chapters: 
+        - statistics/sampling.qmd
+        - statistics/distributions.qmd
+        - statistics/tutorial.qmd
+        - statistics/interference_basics.qmd
+        - statistics/interference_advanced.qmd
+    - part: regression/index.qmd
+      chapters:        
+        - regression/index.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      light: [flatly, style.css]
+      dark: [darkly, dark-style.css]
+    default-image-extension: svg
+  pdf:
+    documentclass: scrreprt
+    default-image-extension: png
+    keep-tex: true
+    include-before-body: 
+      - text: \ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced jigsaw, breakable, sharp corners, bottomrule=0mm, colback=white, after skip=-5mm, grow to left by=1mm, grow to right by=1mm]\end{tcolorbox}\vspace*{-0.1\baselineskip}}{\vspace*{-1.9\baselineskip}\begin{tcolorbox}[enhanced jigsaw, breakable, sharp corners, toprule=0mm, opacityback=0, grow to left by=1mm, grow to right by=1mm]\end{tcolorbox}}\fi
+
+
+

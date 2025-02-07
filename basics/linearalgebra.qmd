@@ -1,0 +1,571 @@
+# Linear Algebra {#sec-intro-linearalgebra}
+
+The aim of this section is to discuss the basics of matrix, vector and number theory that we need for the later chapters and not introduce the whole of linear algebra.
+Nevertheless, we will rely on some basic definitions that can be found in any linear algebra book.
+For notation we refer to @GoluLoan.
+
+In Python the module `numpy` is used to represent vectors and matrices, we can include it like this (and give it its short hand `np`):
+```{python}
+import numpy as np
+```
+
+## Notation
+
+We will refer to 
+$$
+v \in \mathbb{R}^{n} 
+\quad 
+\Leftrightarrow
+\quad
+v = \left[
+    \begin{array}{c} v_1 \\ v_2 \\ v_3 \\ \vdots \\ v_n \end{array}
+\right], \quad v_i \in \mathbb{R},
+$$
+as a _vector_ $v$ with $n$ elements.
+The set $(\mathbb{R}^n, + ,\cdot)$ forms a so called _vector space_ with the _vector addition_ $+$ and the _scalar multiplication_ $\cdot$.
+
+::: {.callout appearance="simple"}
+:::: {#def-vectorspace} 
+## Vector space
+
+For a set $V$ over a [field](https://en.wikipedia.org/wiki/Field_(mathematics)) $F$ with the _vectors_ $u, v, w \in V$ and the _scalars_ $\alpha, \beta \in F$ the following properties need to hold true to form a vector space.
+
+For the vector addition we need to have
+
+1. associativity
+    $$ u + (v + w) = (u + v) +w,$$
+
+2. commutativity
+    $$u + v = v + u,$$
+
+3. there needs to exists an identity element $0\in \mathbb{R}^n$, i.e. the zero vector such that
+    $$v + 0 =  v,$$
+
+4. there needs to exist an inverse element
+    $$v + w =  0\quad \Rightarrow w\equiv -v,$$
+    and this element is usually denoted by $-v$.
+
+For the scalar multiplication we need to have
+
+5. associativity
+    $$\alpha(\beta v) = (\alpha\beta)v,$$
+6. distributivity with respect to the vector addition
+    $$\alpha(u + v) = \alpha u + \alpha v,$$
+7. distributivity of the scalar addition
+    $$(\alpha + \beta)v = \alpha v + \beta v,$$
+8. and there needs to exist a multiplicative identity element $1\in\mathbb{R}$
+    $$1 v = v.$$
+::::
+:::
+
+
+```{python}
+#| classes: styled-output
+v = np.array([1, 2, 3, 4])
+# show the shape
+print(f"{v.shape=}")
+# access a single element
+print(f"{v[0]=}")
+# use slicing to access multiple elements
+print(f"{v[0:3]=}")
+print(f"{v[2:]=}")
+print(f"{v[:2]=}")
+print(f"{v[0::2]=}")
+
+alpha = 0.5
+w = alpha * v
+print(f"{w=}")
+```
+
+::: {.callout-important}
+While in math we start indices with 1, Python starts with 0.
+:::
+
+::: {.callout-caution appearance="simple" collapse="true" icon=false}
+:::: {#exr-basics-vectorspace-python}
+## Vector space in Python
+Create some vectors and scalars with `np.array` and check the above statements with `+` and `*`.
+::::
+:::
+
+From vectors we can move to matrices, where
+$$
+A \in \mathbb{R}^{m\times n} 
+\quad 
+\Leftrightarrow
+\quad A = (a_{ij}) = \left[
+    \begin{array}{cccc} a_{11} & a_{12} & \dots & a_{1n} \\
+                        a_{21} & a_{22} & \dots & a_{2n} \\  
+                        \vdots & \vdots & \ddots & \vdots\\
+                        a_{m1} & a_{m2} & \dots & a_{mn} \\  \end{array}
+\right],\quad a_{ij} \in \mathbb{R},
+$$ 
+is called a $m \times n$ ($m$ times $n$) matrix.
+If its values are real numbers we say it is an element of $\mathbb{R}^{m\times n}$.
+
+::: {.callout-important}
+We will use capital letters for matrices and small letters for vectors.
+:::
+
+```{python}
+#| classes: styled-output
+A = np.array([[1, 2, 3, 4], 
+              [5, 6, 7, 8],
+              [9, 10, 11, 12]])
+# show the shape
+print(f"{A.shape=}")
+# access a single element
+print(f"{A[0, 0]=}")
+# use slicing to access multiple elements
+print(f"{A[0, :]=}")
+print(f"{A[:, 2]=}")
+```
+
+Consequently we can say that a vector is a $n \times 1$ matrix.
+It is sometimes also referred to as _column vector_ and its counterpart a $1 \times n$ matrix as a _row vector_.
+
+::: {.callout-caution appearance="simple" collapse="true" icon=false}
+:::: {#exr-basics-mv-space}
+## Matrix as vector space?
+How do we need to define $+$ and $\cdot$ to say that $(\mathbb{R}^{m \times n}, + ,\cdot)$ is forming a vector space?
+
+Does `np.array`, `+`, `*` fulfil the properties of a vector space?
+::::
+:::
+
+If we want to refer to a row or a column of a matrix $A$ we will use the following short hands:
+
+- $A_{i-}$ for _row_ $i$,
+- $A_{-j}$ for _column $j$.
+
+We can multiply a matrix with a vector, as long as the dimensions fit.
+Note that usually there is no $\cdot$ used to indicate multiplication:
+$$
+Av = 
+\left[
+    \begin{array}{cccc} a_{11} & a_{12} & \dots & a_{1n} \\
+                        a_{21} & a_{22} & \dots & A_{2n} \\  
+                        \vdots & \vdots & \ddots & \vdots\\
+                        a_{m1} & a_{m2} & \dots & A_{mn} \\  \end{array}
+\right] 
+\left[
+    \begin{array}{c} v_1 \\ v_2 \\ \vdots \\ v_n \end{array}
+\right]
+= A_{-1} v_1 + A_{-2} v_2 + \dots + A_{-n} v_n.
+$$
+The result is a vector but this time in $\mathbb{R}^m$.
+
+In Python the `*` operator is usually indicating multiplication.
+Unfortunately, in `numpy` it is interpreted as _element wise multiplication_, so we use `@` for multiplications between vector spaces.
+```{python}
+#| classes: styled-output
+w = A @ v
+# show the shape
+print(f"{w.shape=}")
+# show the result
+print(f"{w=}")
+# Doing the same by hand this is tricky
+w_tilde = np.zeros(A.shape[0])
+for i, bb in enumerate(v):
+    w_tilde += A[:, i] * bb
+print(f"{w_tilde=}")
+```
+
+As we can see from the above equation, we can view the matrix $A$ as a _linear mapping_ or _linear function_ between two vector spaces, namely from $\mathbb{R}^{n}$ to $\mathbb{R}^{m}$.
+
+::: {.callout appearance="simple"}
+:::: {#def-linearmap} 
+## Linear map
+A **linear map** between vector spaces are mappings or functions that preserve the structure of the vector space.
+For two vector spaces $V$ and $W$ over a field $F$ the mapping 
+$$T: V \to W$$
+is called linear if
+
+1. for $v, w \in V$
+$$T(v + w) = T(v) + T(w),$$
+1. for $v \in V$ and $\alpha \in F$
+$$T(\alpha v) = \alpha T(v).$$
+::::
+:::
+
+A linear mapping of special interest to us is the _transpose_ of a matrix defined by turning rows into columns and vice versa:
+$$
+C = A^{\mathsf{T}}, \quad \Rightarrow \quad c_{ij} = a_{ji}.
+$$
+Consequently, the transpose of a (row) vector is a column vector.
+
+```{python}
+#| classes: styled-output
+print(f"{A=}")
+print(f"{A.shape=}")
+B = A.transpose()
+print(f"{B=}")
+print(f"{B.shape=}")
+```
+
+With this operation we can define two more mappings.
+
+::: {.callout appearance="simple"}
+:::: {#def-dotproduct} 
+## Dot product
+The _dot product_, _inner product_, or _scalar product_ of two vectors $v$ and $w$ as is defined by
+$$\langle v, w\rangle = v \cdot w = v^{\mathsf{T}} w = \sum_i v_i w_i.$$
+::::
+:::
+
+```{python}
+#| classes: styled-output
+v = np.array([1, 2, 3, 4])
+w = np.array([1, 1, 1, 1])
+# alternatively we can define w with
+w = np.ones(v.shape)
+alpha = np.vdot(v, w)
+print(f"{alpha=}")
+```
+
+:::{.callout-note}
+As $\mathbb{R}^n$ is an euclidean vector space the above function is also called the _inner product_.
+:::
+
+::: {.callout appearance="simple"}
+:::: {#def-outerproduct} 
+## Outer product
+We also have the _outer product_ defined as:
+$$
+v w^{\mathsf{T}} = \left[
+    \begin{array}{cccc} v_1 w_1 & v_1 w_2 & \dots & v_1 w_n \\
+                        v_2 w_1 & v_2 w_2 & \dots &v_2 w_n \\  
+                        \vdots & \vdots & \ddots & \vdots\\
+                        v_n w_1 & v_n w_2 & \dots & v_n w_n \\  \end{array}
+\right]
+$$
+::::
+:::
+
+```{python}
+#| classes: styled-output
+C = np.outer(v, w)
+print(f"{C=}")
+```
+
+We can also multiply matrices $A$ and $B$ by applying the matrix vector multiplication to each column vector of $B$, or a bit more elaborated:
+
+For a ${m \times p}$ matrix $A$ and a ${p \times n}$ matrix $B$ the matrix-matrix multiplication ($\mathbb{R}^{m\times p} \times \mathbb{R}^{p\times n} \to \mathbb{R}^{m\times n}$)
+$$C=AB \quad \Rightarrow\quad c_{ij} = \sum_{k=1}^p a_{ik}b_{kj}$$
+forms a ${m \times n}$ matrix.
+
+::: {.callout-caution appearance="simple" collapse="true" icon=false}
+:::: {#exr-basics-mm}
+## Matrix multiplication?
+Show that the matrix multiplication is:
+
+- associative
+- (left and right) distributive
+- but not commutative
+::::
+:::
+
+```{python}
+#| classes: styled-output
+C = A @ A.transpose()
+print(f"{C=}")
+D = A.transpose() @ A
+print(f"{D=}")
+```
+
+From the above Python snippet we can easily see that matrix-matrix multiplication is not commutative.
+
+## Norms
+
+::: {.callout appearance="simple"}
+:::: {#def-norm} 
+## Norm
+A **norm** is a mapping from a vector space $V$ to the field $F$ into the real numbers
+
+$$\| \cdot \|: V \to \mathbb{R}_0^+, v \mapsto \|v\|$$
+if it fulfils for $v, w\in V$ and $\alpha \in F$ the following 
+
+1. positivity
+$$ \|v\| = 0 \Rightarrow v = 0, $$
+1. absolute homogeneity
+$$ \| \alpha v \| = |\alpha| \| v \|, $$
+1. subadditivity (often called the _triangular inequality_) 
+$$ \| v + w\| \leq  \| v \| + \| w \|.$$
+::::
+:::
+
+There are multiple norms that can be useful for vectors.
+The most common are:
+
+1. the one norm
+$$ \| v \|_1 = \sum_i |v_i|,$$
+1. the two norm (euclidean norm)
+$$ \| w \| = \| v \|_2 = \sqrt{\sum_i |x_i|^2} = \sqrt{\langle v, v \rangle},$$
+1. more general the $p$-norms (for $1\leq p \le \infty$)
+$$ \| v \|_p = \left(\sum_i |v_i|^p\right)^{\frac{1}{p}},$$
+1. the $\infty$ norm
+$$ \| v \|_\infty = \max_i |v_i|.$$
+
+And for metrics:
+
+1. the one norm (column sum norm)
+$$ \| A \|_1 = max_j \sum_i |a_{ij}|,$$
+1. the Frobeniusnorm
+$$ \| A \| = \| A \|_F = \sqrt{\sum_i \sum_j |a_{ij}|^2},$$
+1. the $p$ norms are defined
+$$ \| A \|_p = \left(\sum_i \sum_j |a_{ij}|^p\right)^{\frac1p},$$
+1. the $\infty$ norm (row sum norm)
+$$ \| A \|_1 = max_i \sum_j |a_{ij}|.$$
+
+```{python}
+#| classes: styled-output
+# The norms can be found in the linalg package of numpy
+from numpy import linalg as LA
+norm_v = LA.norm(v)
+print(f"{norm_v=}")
+norm_v2 = LA.norm(v, 2)
+print(f"{norm_v2=}")
+norm_A = LA.norm(A, 1)
+print(f"{norm_A=}")
+norm_Afr = LA.norm(A, "fro")
+print(f"{norm_Afr=}")
+```
+
+:::{.callout-note}
+The function `norm` from the `numpy.linalg` package can be used to compute other norms or properties as well, see [docs](https://numpy.org/doc/stable/reference/generated/numpy.linalg.norm.html).
+:::
+
+## Basis of vector spaces {#sec-intro-linearalgebra-basis}
+
+As we will be using the notion of _basis vector_ or a _basis of a vector space_ we should introduce them properly.
+
+::: {.callout appearance="simple"}
+:::: {#def-basis} 
+## Basis
+A set of vectors $\mathcal{B} = \{b_1, \ldots, b_r\}, b_i \in \mathbb{R}^n$:
+
+1. is called linear independent if
+$$ \sum_{j=1}^r \alpha_j b_j = 0 \Rightarrow \alpha_1 = \alpha_2 = \cdots = \alpha_r = 0,$$
+1. spans $\mathbb{R}^n$ if
+$$ v = \sum_{j=1}^r \alpha_j b_j, \quad \forall v \in \mathbb{R}^n, \alpha_1, \ldots, \alpha_r \in \mathbb{R}.$$
+
+The set $\mathcal{B}$ is called a _basis_ of a vector space if it is linear independent and spans the entire vector space.
+The size of the basis, i.e. the number of vectors in the basis, is called the _dimension_ of the vector space.
+
+For a shorter notation we often associate the matrix 
+$$
+B = \left[b_1 | \cdots | b_n\right]
+$$
+with the basis.
+::::
+:::
+
+The standard basis of $\mathbb{R}^n$ are the vectors $e_i$ that are zero everywhere except for index $i$ and its associated matrix is 
+$$
+I_n = \left[
+    \begin{array}{cccc} 1 & 0 & \dots & 0\\
+                        0 & 1 & \ddots & \vdots \\  
+                        \vdots & \ddots & 1 & 0\\
+                        0 & \dots & 0 & 1 \\  \end{array}
+\right] 
+ \in \mathbb{R}^{n \times n},
+ $$
+and called the _identity matrix_.
+Note, the index $n$ is often omitted as it should be clear from the dimensions of the matrix.
+
+The easiest way to create one of standard basis vectors, lets say $e_3 \in \mathbb{R}^3$, in Python is by calling
+```{python}
+#| classes: styled-output
+# We need to keep the index shift in mind
+n = 3
+e_3 = np.zeros(n)
+e_3[3-1] = 1
+print(f"{e_3=}")
+```
+and the identity matrix by
+```{python}
+#| classes: styled-output
+n = 4
+I_4 = np.eye(n)
+print(f"{I_4=}")
+```
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-basics-std-basis}
+## Standard basis
+```{python}
+#| classes: styled-output
+#| error: true
+n = 3
+e_1 = np.zeros(n)
+e_1[0] = 1
+e_2 = np.zeros(n)
+e_2[1] = 1
+e_3 = np.zeros(n) 
+e_3[2] = 1
+
+x = np.random.rand(n)
+print(f"{x=}")
+# compute the coefficients
+a = np.dot(x, e_1) / np.dot(e_1, e_1)
+b = np.dot(x, e_2) / np.dot(e_2, e_2)
+c = np.dot(x, e_3) / np.dot(e_3, e_3)
+y = a * e_1 + b * e_2 + c * e_3
+print(f"{y=}")
+print(f"{np.allclose(x, y)=}")
+print(f"{LA.norm(x-y)=}")
+```
+
+See [`numpy.testing`](https://numpy.org/doc/stable/reference/routines.testing.html#) for more ways of testing in `numpy`.
+::::
+:::
+
+## The inverse of a matrix
+
+::: {.callout appearance="simple"}
+:::: {#def-minverse} 
+## Matrix inverse
+For matrices $A, X\in \mathbb{R}^{n\times n}$ that satisfy
+$$ A X = X A = I_n $$
+we call $X$ the inverse of $A$ and denote it by $A^{-1}$.
+::::
+:::
+
+The following holds true for the inverse of matrices:
+
+- the inverse of a product is the product of the inverses
+$$ (AB)^{-1} = B^{-1}A^{-1},$$
+- the inverse of the transpose is the transpose of the inverse
+$$ (A^{-1})^{\mathsf{T}} = (A^{\mathsf{T}})^{-1} \equiv A^{-\mathsf{T}}.$$
+
+::: {.content-visible when-format="html"}
+```{python}
+#| classes: styled-output
+#| error: true
+A = np.random.rand(3, 3)
+print(f"{A=}")
+X = LA.inv(A)
+print(f"{X=}")
+print(f"{A @ X=}")
+print(f"{np.allclose(A @ X, np.eye(A.shape[0]))=}")
+# Note that the equality is hard to achieve for floats
+np.testing.assert_equal(A @ X, np.eye(A.shape[0]), verbose=False)
+```
+:::
+
+::: {.content-visible unless-format="html"}
+```{python}
+#| classes: styled-output
+#| error: true
+A = np.random.rand(3, 3)
+print(f"{A=}")
+X = LA.inv(A)
+print(f"{X=}")
+print(f"{A @ X=}")
+print(f"{np.allclose(A @ X, np.eye(A.shape[0]))=}")
+# Note that the equality is hard to achieve for floats
+# Error message can currently not be displayed in pdf
+# np.testing.assert_equal(A @ X, np.eye(A.shape[0]), verbose=False)
+```
+:::
+
+::: {.callout appearance="simple"}
+:::: {#def-changebasis} 
+## Change of basis
+If we associate the matrices $B$ and $C$ with the matrix consisting of the basis vectors of two bases $\mathcal{B}$ and $\mathcal{C}$ of a vector space we can define the transformation matrix $T_{\mathcal{C}}^{\mathcal{B}}$ from $\mathcal{B}$ to $\mathcal{C}$ as
+$$
+T_{\mathcal{C}}^{\mathcal{B}} = C^{-1}B.
+$$
+
+So if we have a vector $b$ represented in $\mathcal{B}$ we can compute its representation in $\hat{b}$ in $\mathcal{C}$ as
+$$
+\hat{b} = T_{\mathcal{C}}^{\mathcal{B}} b = C^{-1}B b.
+$$
+
+A special form is if we have the standard basis $I$ and move to a basis $C$ we get
+$$
+\hat{b} = T_{C}^{I} b = C^{-1} b.
+$$
+::::
+:::
+
+::: {.callout-tip appearance="simple" collapse="true" icon=false}
+:::: {#exm-basics-basis-change}
+
+## Basis Change
+
+For 
+$$
+B = \left[
+    \begin{array}{ccc} 1 & 3 & 2 \\
+                       0 & 1 & 1 \\  
+                       2 & 0 & 1 \\  \end{array}
+\right]\quad \text{and}\quad
+C = \left[
+    \begin{array}{ccc} 1 & 0 & 1 \\
+                       0 & 1 & 1 \\  
+                       1 & 1 & 0 \\  \end{array}
+\right]
+$$
+we get
+$$
+T_{C}^{B} = \left[
+    \begin{array}{ccc} \frac32 & 1 & 1 \\
+                       \frac12 & -1 & 0 \\  
+                       -\frac12 & 2 & 1 \\  \end{array}
+\right],
+$$
+and for a $v = 2 b_1 - b_2 + 3 b_3$ we can compute its representation in $C$ as
+$$
+\hat{v} = T_{C}^{B} v 
+= \left[
+    \begin{array}{ccc} \frac32 & 1 & 1 \\
+                       \frac12 & -1 & 0 \\  
+                       -\frac12 & 2 & 1 \\  \end{array}
+\right]
+\left[
+    \begin{array}{c} 2 \\ -1 \\ 3 \end{array}
+\right]
+=
+\left[
+    \begin{array}{c} 5 \\ 2 \\ 0 \end{array}
+\right],
+$$
+and therefore, $v = 5c_1 + 2c_2 + 0 c_3$.
+
+(Compare [Wikipedia](https://de.wikipedia.org/wiki/Basiswechsel_(Vektorraum)))
+::::
+:::
+
+There are special basis vectors, respectively matrices that allow for easy computation of the inverse.
+
+::: {.callout appearance="simple"}
+:::: {#def-orthonormal} 
+## Orthonormal vector
+
+We call a set of vectors $\mathcal{V}=\{u_1, u_2, \ldots, u_m\}$ orthonormal if and only if
+$$
+\forall i,j: \langle u_i, u_j \rangle = \delta_{ij}
+$$
+where $\delta_{ij}$ is called the Kronecker delta which is $1$ if and only if $i=j$ and $0$ otherwise.
+This is true for a inner product, see @def-dotproduct.
+::::
+:::
+
+Extending this to a matrix (and to that end a basis) as follows.
+
+::: {.callout appearance="simple"}
+:::: {#def-orthonormalmatrix} 
+## Orthogonal matrix
+
+We call a matrix $Q\in\mathbb{R}^{n\times n}$, here the real and square is important, orthogonal if its columns and rows are orthonormal vectors.
+This is the same as
+$$
+Q^{\mathsf{T}} Q = Q Q^{\mathsf{T}} = I
+$$
+and this implies that $Q^{-1} = Q^{\mathsf{T}}$.
+::::
+:::
+
+For now, this concludes our introduction to linear algebra.
+We will come back to more in later sections.

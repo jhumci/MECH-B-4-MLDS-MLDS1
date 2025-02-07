@@ -1,0 +1,281 @@
+---
+lightbox: true
+---
+# Optimizers {#sec-regression-optimizers}
+
+As we have seen in the previous section the task of regression usually results in an optimization problem.
+It is worth investigating this further by looking closely on the 
+$$
+A x = b
+$$ {#eq-axb}
+problem for different dimensions of $A$.
+
+We investigate the impact of restricting our solution not just by @eq-axb but with the help of the $\ell_1$ and $\ell_2$ norm imposed on the solution $x$.
+As we have seen in @fig-linear_reg the choice of norm has an implication on the result and the same is true here.
+
+::: {.callout-important}
+This section is mainly based on @Brunton2022, Section 4.3.
+:::
+
+## Over-Determined Systems
+
+We speak of an over-determined system if we have more rows than columns, i.e. $A$ is tall and skinny and in general there is no solution to @eq-axb but rather we minimize the error according to a norm, see @sec-regr-linear-ols.
+If we further impose a restriction on $x$ we can select a more specific solution.
+
+The generalized form is
+$$
+x = \underset{v}{\operatorname{argmin}} \|Av - b\|_2 + \lambda_1 \|v\|_1 + \lambda_2\|v\|_2
+$$ {#eq-reg-optimizers}
+where the parameters $\lambda_1$ and $\lambda_2$ are called the _penalization coefficients_, with respect to the norm.
+Selecting these coefficients is the first step towards _model selection_.
+
+Let us have a look at this in action for solving a _random_ system with different parameters $\lambda_1$ and setting $\lambda_2$.
+
+### LASSO {#sec-regression-optimizers-lasso}
+
+The _least absolute shrinkage and selection operator_ LASSO solves @eq-reg-optimizers with $\lambda_1 > 0$ and $\lambda_2=0$, i.e. only optimizing with the $\ell_1$ norm.
+The theory tells us that for increasing $\lambda_1$ we should get more and more zeros in our solution $x$.
+
+```{python}
+#| label: fig-opt_lambda1
+#| fig-cap: "LASSO regression coefficients of an over-determined system with 500 constraints and 100 unknowns. Top three show the values for the solution and the bottom three a histogram of this solution. The label with lambda maps the two."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.optimize import minimize
+%config InlineBackend.figure_formats = ["svg"]
+np.random.seed(6020)
+
+m = 500
+n = 100
+A = np.random.rand(m, n)
+b = np.random.rand(m)
+x0 = np.linalg.pinv(A) @ b
+
+optimize = lambda x, A, b, lam, norm: np.linalg.norm(A @ x - b, ord=norm[0]) +\
+    lam * np.linalg.norm(x, ord=norm[1])
+
+fig = plt.figure()
+axs = []
+axs.append(fig.add_subplot(4, 1, 1))
+axs.append(fig.add_subplot(4, 3, 10))
+axs.append(fig.add_subplot(4, 1, 2))
+axs.append(fig.add_subplot(4, 3, 11))
+axs.append(fig.add_subplot(4, 1, 3))
+axs.append(fig.add_subplot(4, 3, 12))
+
+for i, lam in enumerate([0, 0.1, 0.5]):
+    res = minimize(optimize, args=(A, b, lam, [2, 1]), x0=x0)
+    axs[i * 2].bar(range(n), res.x)
+    axs[i * 2].text(5, 0.05, rf"$\lambda_1={lam}$")
+    axs[i * 2].set_xlim(0, 100)
+    axs[i * 2].set_ylim(-0.1, 0.1)
+    axs[i * 2 + 1].hist(res.x, 20)
+    axs[i * 2 + 1].text(-0.08, 50, rf"$\lambda_1={lam}$")
+    axs[i * 2 + 1].set_xlim(-0.1, 0.1)
+    axs[i * 2 + 1].set_ylim(0, 70)
+axs[0].set_xticks([])
+axs[2].set_xticks([])
+axs[3].set_yticks([])
+axs[5].set_yticks([])
+
+
+plt.subplots_adjust(top = 0.99, bottom=0.1, hspace=0.35, wspace=0.2)
+plt.show()
+```
+
+The last row of @fig-opt_lambda1 confirms this quite impressively, interesting enough the solution also becomes positive.
+
+### RIDGE 
+
+The Ridge Regression solves @eq-reg-optimizers with $\lambda_1 = 0$ and $\lambda_2 > 0$, i.e. only optimizing with the $\ell_2$ norm.
+The theory tells us that for for increasing $\lambda_1$ we should get more and more zeros in our solution $x$.
+
+```{python}
+#| label: fig-opt_lambda2
+#| fig-cap: "Ridge regression coefficients of an over-determined system with 500 constraints and 100 unknowns. Top three show the values for the solution and the bottom three a histogram of this solution. The label with lambda maps the two."
+#| code-fold: true
+#| code-summary: "Show the code for the figure"
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.optimize import minimize
+%config InlineBackend.figure_formats = ["svg"]
+np.random.seed(6020)
+
+m = 500
+n = 100
+A = np.random.rand(m, n)
+b = np.random.rand(m)
+x0 = np.linalg.pinv(A) @ b
+
+optimize = lambda x, A, b, lam, norm: np.linalg.norm(A @ x - b, ord=norm[0]) +\
+    lam * np.linalg.norm(x, ord=norm[1])
+
+fig = plt.figure()
+axs = []
+axs.append(fig.add_subplot(4, 1, 1))
+axs.append(fig.add_subplot(4, 3, 10))
+axs.append(fig.add_subplot(4, 1, 2))
+axs.append(fig.add_subplot(4, 3, 11))
+axs.append(fig.add_subplot(4, 1, 3))
+axs.append(fig.add_subplot(4, 3, 12))
+
+for i, lam in enumerate([0, 0.1, 0.5]):
+    res = minimize(optimize, args=(A, b, lam, [2, 2]), x0=x0)
+    axs[i * 2].bar(range(n), res.x)
+    axs[i * 2].text(5, 0.05, rf"$\lambda_2={lam}$")
+    axs[i * 2].set_xlim(0, 100)
+    axs[i * 2].set_ylim(-0.1, 0.1)
+    axs[i * 2 + 1].hist(res.x, 20)
+    axs[i * 2 + 1].text(-0.08, 15, rf"$\lambda_2={lam}$")
+    axs[i * 2 + 1].set_xlim(-0.1, 0.1)
+    axs[i * 2 + 1].set_ylim(0, 20)
+axs[0].set_xticks([])
+axs[2].set_xticks([])
+axs[3].set_yticks([])
+axs[5].set_yticks([])
+
+
+plt.subplots_adjust(top = 0.99, bottom=0.1, hspace=0.35, wspace=0.2)
+plt.show()
+```
+::: {.content-visible when-format="html"}
+:::: {.callout-caution appearance="simple" collapse="true" icon=false}
+::::: {#exr-lasso_reg}
+
+## Implement the above optimization yourself.
+
+Fill out the missing parts:
+
+```{python}
+#| code-fold: true
+#| code-summary: "Code fragment for implementation."
+#| eval: false
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.optimize import minimize
+np.random.seed(6020)
+
+m = 500
+n = 100
+A = # Random matrix with m rows and 100 columns 
+b = np.random.rand(m)
+x0 = # Optimal 2 norm solution without penalization as initial start
+
+optimize = # function to optimize
+
+fig = plt.figure()
+axs = []
+axs.append(fig.add_subplot(4, 1, 1))
+axs.append(fig.add_subplot(4, 3, 10))
+axs.append(fig.add_subplot(4, 1, 2))
+axs.append(fig.add_subplot(4, 3, 11))
+axs.append(fig.add_subplot(4, 1, 3))
+axs.append(fig.add_subplot(4, 3, 12))
+
+for i, lam in enumerate([0, 0.1, 0.5]):
+    res = minimize(optimize, args=, x0=x0)    # use your correct arguments here
+    axs[i * 2].bar(range(n), res.x)
+    axs[i * 2].text(5, 0.05, rf"$\lambda={lam}$")
+    axs[i * 2].set_xlim(0, 100)
+    axs[i * 2].set_ylim(-0.1, 0.1)
+    axs[i * 2 + 1].hist(res.x, 20)
+    axs[i * 2 + 1].text(-0.08, 15, rf"$\lambda={lam}$")
+    axs[i * 2 + 1].set_xlim(-0.1, 0.1)
+    axs[i * 2 + 1].set_ylim(0, 20)
+axs[0].set_xticks([])
+axs[2].set_xticks([])
+axs[3].set_yticks([])
+axs[5].set_yticks([])
+
+plt.subplots_adjust(top = 0.99, bottom=0.1, hspace=0.35, wspace=0.2)
+plt.show()
+```
+:::::
+::::
+:::
+
+## Model Selection/Identification and over-/underfitting {#sec-regression-optimizers-msou}
+
+Let us use the results we have obtain so far for a discussion on _model selection_. 
+
+So far, we have mostly explicitly proposed a model that we think will fit our data and we have seen that even it this case we can still choose multiple parameters to fin tune our selection. 
+
+Now consider the other possibility, we have data where the model is unknown.
+For example, in @exm-lregfallenobject we stopped with degree 2 for our polynomial because we know about Newton's principles, if we don't know it, we might extend the model for a higher degree.
+
+One of the leading assumptions to use in such a case is:
+
+> _Among competing hypotheses, the one with the fewest assumptions should be selected, or when you have two competing theories that make exactly the same predictions, the simpler one is the more likely._
+- Occam's razor
+
+This plays an intimate role in over- and underfitting of models.
+To illustrate this we recall @exm-regression-linear-poly with @fig-linear_reg_poly as seen below once more.
+
+```{python}
+#| label: fig-linear_reg_poly2
+#| fig-cap: "Fitting for different degrees of polynomial $m$"
+#| echo: false
+#| code-summary: "Show the code for the figure"
+import matplotlib.pyplot as plt
+import numpy as np
+import warnings
+warnings.simplefilter('ignore', np.exceptions.RankWarning)
+%config InlineBackend.figure_formats = ["svg"]
+np.random.seed(6020)
+
+m = 100
+x = 6 * np.random.rand(m) - 3
+y = 1/2 * x ** 2 + x + 2 + np.random.randn(m)
+
+X1 = np.vander(x, 2)
+X2 = np.vander(x, 3)
+X3 = np.vander(x, 16)
+
+p1 = np.linalg.pinv(X1) @ y
+p2 = np.linalg.pinv(X2) @ y
+p3 = np.linalg.pinv(X3) @ y
+p4 = np.polyfit(x, y, 300)
+
+xf = np.arange(-3, 3, 0.1)
+y1 = np.polyval(p1, xf)
+y2 = np.polyval(p2, xf)
+y3 = np.polyval(p3, xf)
+y4 = np.polyval(p4, xf)
+
+fig = plt.figure()
+plt.plot(x, y, "o", color="r", label="observations", linewidth=3)
+plt.plot(xf, y1, label=r"$m=1$")
+plt.plot(xf, y2, label=r"$m=2$")
+plt.plot(xf, y3, label=r"$m=16$")
+plt.plot(xf, y4, label=r"$m=300$")
+
+plt.ylim(0, 10)
+plt.xlim(-3, 3)
+plt.xlabel(r"$x$")
+plt.ylabel(r"$y$")
+plt.legend(loc="upper left")
+#plt.gca().set_aspect(0.25)
+plt.grid(visible=True)
+plt.show()
+```
+
+For $m=1$, a straight line, we have an underfitted model.
+We can not adequately capture the underlying model, at least not in the entire region.
+
+If we move to $m=16$ and the extreme $m=300$ we see an overfitted system.
+The $m=16$ curve follows clusters of points _too close_, e.g. in the region around $x=-2$, this is more pronounced for $m=300$ where we quite often closely follow our observations but between them we clearly overshoot.
+
+In this way we can also say that an overfitted system follows the _training_ set to closely and will not generalize good for another _testing_/_evaluation_ set.
+
+As a consequence model selection should always be followed by a cross-validation.
+Meaning we need to check if our model is any good. 
+
+A classic method is the _k-fold cross validation_:
+
+> _Take random portions of your data and build a model. Do this $k$ times and average the parameter scores (regression loadings) to produce a cross-validated model._
+> _Test the model predictions against withheld (extrapolation) data and evaluate whether the model is actually any good._ 
+- [see @Brunton2022, pp. 159]
+
+As we can see, there are a lot of further paths to investigate but for now this concludes our excursion into regression.
