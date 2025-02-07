@@ -137,7 +137,7 @@ import pandas as pd
 import seaborn as sns
 
 # Lesen der CSV-Datei in einen DataFrame
-df = pd.read_csv("C:\\code\\MECH-M-DUAL-1-DBM\\_assets\\dataexploratory\\loan50.csv")
+df = pd.read_csv("../_assets/dataexploratory/loan50.csv")
 df.columns
 
 sns.histplot(data=df, x="annual_income", bins=30, hue="homeownership")
@@ -419,7 +419,7 @@ mietet, eine Hypothek hat oder Eigentümer seiner Immobilie ist. Von den 10.000 
 #| classes: styled-output
 import pandas as pd
 
-df = pd.read_csv("C:\\code\\MECH-M-DUAL-1-DBM\\_assets\\dataexploratory\\loan50.csv")
+df = pd.read_csv("../_assets/dataexploratory/loan50.csv")
 print(f"Number of Observations: {df["homeownership"].shape[0]}")
 print(df["homeownership"].value_counts())
 ```
@@ -626,7 +626,7 @@ Das $|$ wird hierbei als _"gegeben"_ gelesen. Die Abhängigkeit lässt sich in e
 #| classes: styled-output
 import pandas as pd
 
-df = pd.read_csv("C:\\code\\MECH-M-DUAL-1-DBM\\_assets\\dataexploratory\\loan50.csv")
+df = pd.read_csv("../_assets/dataexploratory/loan50.csv")
 
 # Create a contingency table
 contingency_table = pd.crosstab(df['homeownership'], df['has_second_income'])

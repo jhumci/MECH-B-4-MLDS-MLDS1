@@ -2,11 +2,11 @@ project:
   type: book
 
 book:
-  title: "Basics of Data Science"
+  title: "Machine Learning and Data Science 1"
   date: last-modified
   reader-mode: true
   page-footer:
-    left: Basics of Data Science WS 2024 (MECH-M-DUAL-1-GDM)
+    left: Machine Learning and Data Science 1 SoSe 2025 (MECH-B-4-MLDS-MLDS1)
     center: "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) Julian Huber"
     right: This book was built with <a href="https://quarto.org/">Quarto</a>.
   author:
@@ -14,8 +14,8 @@ book:
       orcid: 0000-0002-0678-6855
       affiliation: "MCI | The Entrepreneurial School"
   license: "CC BY-NC-SA"
-  site-url: https://kandolfp.github.io/MECH-M-DUAL-1-DBM/
-  repo-url: https://github.com/kandolfp/MECH-M-DUAL-1-DBM/
+  site-url: https://jhumci.github.io/MECH-B-4-MLDS-MLDS1
+  repo-url: https://github.com/jhumci/MECH-B-4-MLDS-MLDS1
   repo-branch: main
   repo-actions: [edit, issue]
   chapters:
@@ -33,6 +33,7 @@ book:
         - statistics/tutorial.qmd
         - statistics/interference_basics.qmd
         - statistics/interference_advanced.qmd
+        - statistics/tutorial_2.qmd
     - part: regression/index.qmd
       chapters:        
         - regression/index.qmd
