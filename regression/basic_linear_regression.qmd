@@ -1,0 +1,453 @@
+---
+lightbox: true
+---
+
+# Lineare Regression {#sec-regression-linear}
+
+Die lineare Regression ist ein statistisches Verfahren, das dazu verwendet wird, die Beziehung zwischen einer abhängigen Variable $Y$ und einer oder mehreren unabhängigen Variablen $X$ zu modellieren. Das Modell der linearen Regression kann als eine lineare Beziehung zwischen $Y$ und $X$ interpretiert werden, die durch die Gleichung 
+
+$$
+Y = f(X, \theta) + \epsilon,
+$$
+
+## Linare Regression mit einer Variablen
+
+
+Für den Fall, dass wird nur eine Variable $X$ betrachten, wird die lineare Regression durch die Gleichung:
+$$
+Y = \beta_0 + \beta_1 X + \epsilon
+$$
+
+beschrieben wird. Hierbei sind $\beta_0$ und $\beta_1$ die Parameter $\theta$ des Modells, die die Steigung und den Achsenabschnitt der Regressionsgeraden bestimmen, und $\epsilon$ ist der Fehlerterm, der die Abweichung der beobachteten Werte von den vorhergesagten Werten beschreibt.
+
+In diesem Fall haben wir einen einfachen Zusammenhang zwischen nur zwei Variablen $X$ und $Y$. In der Praxis kann die lineare Regression jedoch auch auf mehrere unabhängige Variablen erweitert werden, um komplexere Beziehungen zu modellieren.
+
+::: {.callout-important}
+### Überwachtes Lernen
+Die lineare Regression ist ein Beispiel für ein überwachtes Lernverfahren, bei dem wir ein Modell auf Basis von gelabelten Trainingsdaten erstellen. Das bedeutet, dass wir sowohl die unabhängigen Variablen $X$ als auch die abhängige Variable $Y$ kennen und das Modell so anpassen, dass es die Beziehung zwischen $X$ und $Y$ möglichst gut abbildet. Wir können dabei _überwachen_ wie gut sich das Modell mit verschiedenen Parametern an die Daten anpasst und das Modell so optimieren, dass es die besten Vorhersagen liefert.
+:::
+
+::: {.callout-important}
+### Parametrische Modelle
+Bei der linearen Regression handelt es sich um ein parametrisches Modell, bei dem wir eine bestimmte Form der Beziehung zwischen $X$ und $Y$ annehmen und die Parameter $\theta$ des Modells so anpassen, dass es die Daten möglichst gut abbildet. Im Gegensatz dazu gibt es auch nicht-parametrische Modelle, bei denen keine spezifische Form der Beziehung angenommen wird und das Modell flexibler ist, aber auch mehr Daten benötigt, um zuverlässige Vorhersagen zu treffen (z.B. Neuronale Netze). 
+:::
+
+
+::: {.callout-important}
+## Interpreation und Prognose
+Es gibt grundlegend zwei Zielstellungen, die mit der linearen Regression, und auch vielen anderen Modellen, verfolgt werden können:
+
+- __Interpretation__: Die Interpretation der Beziehung zwischen den Variablen $X$ und $Y$ steht im Vordergrund. Hierbei geht es darum, die Auswirkung der unabhängigen Variablen auf die abhängige Variable zu verstehen und zu erklären und ggf. Hypothesen zu testen.
+- __Prognose__: Die Vorhersage von Werten der abhängigen Variablen $Y$ auf Basis der unabhängigen Variablen $X$ steht im Vordergrund. Hierbei geht es darum, die Genauigkeit der Vorhersagen zu maximieren und die Modellgüte zu optimieren.
+
+Wichtig ist es, sich vor der Anwendung eines Modells klar zu machen, welches Ziel
+verfolgt wird.
+:::
+
+## Beispiel: Vorhersage von Zeitungenverkäufen
+
+![](images/tv.png)
+
+::: {.callout-note} {.collapsed = "true"}
+### Wenn wir diese Grafik stellen, welche Fragen können wir uns stellen? Fallen diese Fragen in die Kategorie der Interpretation oder der Prognose?
+
+- Interpretation:
+    - Gibt es einen Zusammenhang zwischen den Werbeausgaben und den Verkäufen?
+    - Wie stark ist der Zusammenhang?
+    - Welche Ausgaben haben den größten Einfluss auf die Verkäufe?
+    - Ist die Beziehung linear oder nicht-linear?
+    - Gibt es Synergieeffekte zwischen den verschiedenen Werbekanälen?
+- Prognose:
+    - Wie gut können wir die Verkäufe vorhersagen, wenn wir die Werbeausgaben kennen?
+    - Wie genau sind unsere Vorhersagen?
+:::
+
+Wenn wir das lineare Modell aufstellen könnte, wir das folgendermaßen aussehen:
+
+$$
+Y ≈ β_0 + β_1 \cdot X_1,
+$$
+
+bzw. in unserem Beispiel:
+
+$$
+\text{sales} ≈ β_0 + β_1 \cdot \text{TV}
+$$
+
+Die Parameter $β_0$ und $β_1$ haben dabei bestimmt Bedeutungen:
+
+- $β_0$ ... intercept oder y-Achsenabschnitt
+- $β_1$ ... slope oder Steigung
+
+Als nächstes müssen wir einen Weg finden die Parameter $β_0$ und $β_1$ zu schätzen. Dafür gibt es verschiedene Methoden. Die Klassische Methode ist die Methode der kleinsten Quadrate (OLS). Diese Methode minimiert die Summe der quadrierten Abweichungen zwischen den beobachteten Werten und den vorhergesagten Werten. 
+
+$$Y ≈ \hat{β}_0 + \hat{β}_1 \cdot X_1$$
+
+
+## Methode der kleinsten Quadrate (OLS)
+
+Die Methode der kleinsten Quadrate (OLS) ist ein Verfahren zur Schätzung der Parameter eines linearen Regressionsmodells, das die Summe der quadrierten Abweichungen zwischen den beobachteten Werten und den vorhergesagten Werten minimiert.
+
+Als erstes definieren wir den Fehler $\epsilon_i$ für jeden Datenpunkt $i$ als die Differenz zwischen dem beobachteten Wert $y_i$ und dem vorhergesagten Wert $\hat{y}_i$:
+
+$$
+\epsilon_i = y_i - \hat{y}_i.
+$$
+
+Die Methode der kleinsten Quadrate zielt darauf ab, die Summe der quadrierten Fehler zu minimieren, d.h. die Summe der quadrierten Abweichungen zwischen den beobachteten Werten und den vorhergesagten Werten:
+
+$$
+\text{RSS} = \sum_{i=1}^{n} \epsilon_i^2 = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2.
+$$
+
+Auf Englisch wird die Summe als _Residual Sum of Squares_ (RSS) bezeichnet. Die Methode der kleinsten Quadrate sucht nun die Parameter $\hat{\beta}_0$ und $\hat{\beta}_1$, die die Summe der quadrierten Fehler minimieren:
+
+$$
+\hat{\beta}_0, \hat{\beta}_1 = \text{argmin}_{\beta_0, \beta_1} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2.
+$$
+
+
+::: {.callout-important}
+### Kostenfunktion $J$
+Die Methode der kleinsten Quadrate kann auch als Optimierungsproblem formuliert werden, bei dem wir eine __Kostenfunktion__ (Cost Function) minimieren, die die Summe der quadrierten Fehler zwischen den beobachteten und den vorhergesagten Werten beschreibt. Die Kostenfunktion ist in diesem Fall die Residual Sum of Squares (RSS), die wir minimieren, um die besten Parameter für das Modell zu finden.
+Kostenfunktionen hängen in der Regel von Modell, den Daten und den Parametern ab und dienen dazu, die Güte des Modells zu bewerten und zu optimieren. Da wir meist ein festes Modell und Daten haben und nur die Parameter anpassen, können wir die Kostenfunktion als Funktion der Parameter betrachten, die wir minimieren wollen.
+Ein eng verwandtes Konzept ist die Verlustfunktion (Loss Function) oder Accuracy Measures, die in der Regel den Fehler zwischen den beobachteten und den vorhergesagten Werten beschreiben Die Kostenfunktion ist in der Regel eine Summe der Verlustfunktionen über alle Datenpunkte.
+:::
+
+
+## Schätzung der Parameter mittels Odinary Least Squares (OLS)
+
+Die Methode der kleinsten Quadrate (Ordinary Least Squares, OLS) wird verwendet, um die Parameter einer linearen Regression zu schätzen. Ziel ist es, die Gerade
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
+$$
+
+so zu bestimmen, dass die Summe der quadrierten Fehler (Residual Sum of Squares, RSS) minimiert wird:
+
+$$
+RSS = \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right)^2.
+$$
+
+### 1. Berechnung der Mittelwerte  
+
+Für spätere Berechnungen ist es nützlich, die Mittelwerte der Variablen $x$ und $y$ zu bestimmen:
+
+$$
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad \bar{y} = \frac{1}{n} \sum_{i=1}^{n} y_i.
+$$
+
+### 2. Minimierung der Kostenfunktion nach $\beta_1$
+
+Um $\beta_1$ zu bestimmen, setzen wir die erste Ableitung der Kostenfunktion $J = RSS$ gleich null:
+
+$$
+\frac{\partial RSS}{\partial \beta_1} = 0.
+$$
+
+Die Ableitung der Kostenfunktion lautet:
+
+$$
+\frac{\partial RSS}{\partial \beta_1} = \frac{\partial}{\partial \beta_1} \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right)^2.
+$$
+
+::: {.callout-tip} {.collapsed = "true"}
+#### Anwendung der Kettenregel  
+Die Kettenregel besagt:
+
+$$
+[f(g(x))]' = f'(g(x)) \cdot g'(x),
+$$
+
+wobei hier $f(x) = x^2$ und $g(x) = y_i - \beta_0 - \beta_1 x_i$.
+:::
+
+Angewendet ergibt dies:
+
+$$
+\frac{\partial RSS}{\partial \beta_1} = -2 \sum_{i=1}^{n} x_i \left(y_i - \beta_0 - \beta_1 x_i\right).
+$$
+
+Setzen wir die Ableitung gleich null:
+
+$$
+-2 \sum_{i=1}^{n} x_i \left(y_i - \beta_0 - \beta_1 x_i\right) = 0.
+$$
+
+Vereinfachen der Gleichung:
+
+$$
+\sum_{i=1}^{n} x_i y_i - \beta_0 \sum_{i=1}^{n} x_i - \beta_1 \sum_{i=1}^{n} x_i^2 = 0.
+$$
+
+Setzen wir die Mittelwerte ein:
+
+$$
+\sum_{i=1}^{n} x_i y_i - \beta_0 n \bar{x} - \beta_1 \sum_{i=1}^{n} x_i^2 = 0.
+$$
+
+### 3. Minimierung der Kostenfunktion nach $\beta_0$
+
+Analog leiten wir $J$ nach $\beta_0$ ab:
+
+$$
+\frac{\partial RSS}{\partial \beta_0} = 0.
+$$
+
+$$
+\frac{\partial RSS}{\partial \beta_0} = -2 \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right).
+$$
+
+Setzen wir die Ableitung gleich null:
+
+$$
+\sum_{i=1}^{n} y_i - \beta_0 \sum_{i=1}^{n} 1 - \beta_1 \sum_{i=1}^{n} x_i = 0.
+$$
+
+Da $\sum_{i=1}^{n} 1 = n$, folgt:
+
+$$
+n \beta_0 + \beta_1 \sum_{i=1}^{n} x_i = \sum_{i=1}^{n} y_i.
+$$
+
+Umformen ergibt:
+
+$$
+\beta_0 = \frac{1}{n} \sum_{i=1}^{n} y_i - \beta_1 \frac{1}{n} \sum_{i=1}^{n} x_i.
+$$
+
+### 4. Einsetzen von $\beta_1$ in die Gleichung für $\beta_0$
+
+Die optimale Steigung $\hat{\beta_1}$ erhält man durch:
+
+$$
+\hat{\beta_1} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2}.
+$$
+
+Dies ist die Kovarianz zwischen $x$ und $y$ geteilt durch die Varianz von $x$ (vgl. Kapitel )
+Für den Achsenabschnitt $\hat{\beta_0}$ setzen wir $\hat{\beta_1}$ ein:
+
+$$
+\hat{\beta_0} = \bar{y} - \hat{\beta_1} \bar{x}.
+$$
+
+### 5. Ergebnis  
+
+Die geschätzte Regressionsgerade lautet:
+
+$$
+\hat{y} = \hat{\beta_0} + \hat{\beta_1} x.
+$$
+
+Hiermit haben wir die OLS-Schätzung der Parameter $\beta_0$ und $\beta_1$ abgeschlossen.
+
+
+## Beispiel: Lineare Regression mit einer Variablen
+
+Wir simulieren einen Datensatz mit einer linearen Beziehung zwischen $X$ (€ ausgegeben für TV-Werbung) und $Y$ (Verkäufe von Zeitungen). In diesem Fall kennen wir den Zufalls-Prozess, der die Daten generiert hat, und können daher die wahren Parameter des Modells bestimmen.
+Die Variable $X$ ist gleichmäßig zwischen 0 und 300 verteilt, und $Y$ wird durch die Gleichung 
+$$
+Y = 7 + 0.05 \cdot X + \epsilon
+$$
+
+generiert, wobei $\epsilon$ ein normalverteilter Fehler mit einer Standardabweichung von $5$ ist.
+
+```{python}
+#| classes: styled-output
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Simulate population data
+np.random.seed(0)
+X = 300 * np.random.rand(100, 1)
+Y = 7 + 0.05 * X + 5 * np.random.randn(100, 1)
+
+# Simulate sample data
+sample_size = 100
+idx = np.random.choice(100, sample_size, replace=False)
+X_sample = X[idx]
+Y_sample = Y[idx]
+
+# Store data in a tidy dataframe
+data = pd.DataFrame({"X (TV advertising spending (€))": X_sample.flatten(), "Y (Sales)": Y_sample.flatten()})
+print(data.head())
+```
+
+
+```{python}
+#| classes: styled-output
+#| fig-cap: Scatter plot of TV advertising vs. sales
+#| fig-label: fig-tv-advertising
+# Plot data
+plt.scatter(X, Y)
+plt.xlabel("TV advertising spending (€)")
+plt.ylabel("Sales")
+plt.title("TV advertising vs. sales")
+plt.show()
+```
+
+Nun können wir unsere Formel für die OLS-Schätzung der Parameter $\beta_0$ und $\beta_1$ anwenden:
+
+```{python}
+#| classes: styled-output
+
+# Calculate means
+X_mean = np.mean(X_sample)
+Y_mean = np.mean(Y_sample)
+
+# Calculate slope
+numerator = np.sum((X_sample - X_mean) * (Y_sample - Y_mean))
+denominator = np.sum((X_sample - X_mean) ** 2)
+beta_1 = numerator / denominator
+
+# Calculate intercept
+beta_0 = Y_mean - beta_1 * X_mean
+
+print(f"Slope (beta_1): {beta_1}")
+print(f"Intercept (beta_0): {beta_0}")
+```
+
+In der Zukunft werden wir stattdessen eines von zwei Paketen verwenden, die die OLS-Schätzung automatisch durchführen: `statsmodels` oder `scikit-learn`.
+
+### `scikit-learn`
+
+[`scikit-learn`](https://scikit-learn.org/stable/) ist eine der bekanntesten Bibliotheken für maschinelles Lernen in Python. Sie bietet eine Vielzahl von Algorithmen und Werkzeugen für die Modellierung und Analyse von Daten. Wir werden es später und im kommenden Semester noch ausführlich verwenden.
+
+```{python}
+#| classes: styled-output
+
+from sklearn.linear_model import LinearRegression
+
+# Defines what kind of model we want to use
+model = LinearRegression()
+
+# Fits the model to the data
+model.fit(X_sample, Y_sample)
+
+# Get slope and intercept from the models coefficients
+beta_1_sklearn = model.coef_[0][0]
+beta_0_sklearn = model.intercept_[0]
+
+print(f"Slope (beta_1): {beta_1_sklearn}")
+print(f"Intercept (beta_0): {beta_0_sklearn}")
+```
+
+
+### `statsmodels`
+
+[`statsmodels`](https://www.statsmodels.org/stable/index.html) ist eine Bibliothek für statistische Modellierung in Python. Sie bietet eine Vielzahl von statistischen Modellen und Tests, darunter auch die lineare Regression. Die Ausgabe von `statsmodels` ist oft detaillierter und enthält mehr statistische Informationen als die von `scikit-learn`.
+
+
+```{python}
+#| classes: styled-output
+
+import statsmodels.api as sm
+
+# Fit linear regression model
+X_sm = sm.add_constant(X_sample)
+model_sm = sm.OLS(Y_sample, X_sm).fit()
+
+# Get slope and intercept
+print(model_sm.summary())
+```
+
+:::::: {.callout-tip}
+#### Arbeit mit DataFrames und Formula-Strings
+Anstelle die Daten in einem Numpy-Array zu speichern, können wir auch ein Pandas DataFrame verwenden. Dies hat den Vorteil, dass wir die Spalten mit ihren Namen ansprechen können und so den Code besser lesbar machen. Zudem läss sich die lineare Regression auch mit Hilfe von Formel-Strings durchführen, die die Beziehung zwischen den Variablen angeben.
+
+```{python}
+#| classes: styled-output
+import statsmodels.formula.api as smf
+
+# Create DataFrame
+data = pd.DataFrame({"TV": X_sample.flatten(), "Sales": Y_sample.flatten()})
+# Fit linear regression model using formula string
+model_smf = smf.ols("Sales ~ TV", data=data).fit()
+```
+::::::	
+
+
+Wenn wir die Ergebnisse der OLS-Schätzung betrachten, sehen wir einige Zusatzinformationen, die uns helfen, die Güte des Modells zu bewerten
+
+
+#### Koeffizienten und deren Konfidenzintervalle
+
+Wir können die geschätzen Koeffizienten $\hat{\beta}_0$ und $\hat{\beta}_1$ sowie deren Konfidenzintervalle ablesen. Die Konfidenzintervalle geben an. Es wird davon ausgegangen, dass die Schätzer der Koeffizienten normalverteilt sind. Entsprechend sind die Konfidenzintervalle symmetrisch um den Schätzer und 95% der Werte liegen innerhalb von zwei Standardabweichung des Schätzers z.B:
+
+$$
+[CI_{0.025}^{\beta_0}, CI^{\beta_0}_{0.975}] = [8.1108 - 2 0.966 , 8.1108 + 2 0.966] = [6.193, 10.029]
+$$
+
+#### Teststatistiken $t$ und $p$-Werte
+
+Eine weitere wichtige Frage ist, ob ein Koeffizient (Parameter) tatsächlich siginifikant von $0$ verschiedenen ist. Im unserem konkreten Beispiel stellt sich die Fragen: Verändert sich der Umsatz, wenn wir mehr Geld in TV-Werbung investieren?  Dies kann mit einem T-Test überprüft werden.
+
+- $H_0$: $\beta_1 = 0$ (kein Effekt)
+- $H_1$: $\beta_1 \neq 0$ (Effekt)
+
+Die Teststatistik $t$ gibt an, wie viele Standardabweichungen der Schätzer $\hat{\beta}_1$ vom Wert $0$ entfernt ist. Ein hoher $t$-Wert deutet darauf hin, dass der Schätzer signifikant von $0$ verschieden ist. Der $p$-Wert gibt die Wahrscheinlichkeit an, dass der beobachtete Effekt auftritt, wenn die Nullhypothese wahr ist. Ein $p$-Wert kleiner als $0.05$ wird oft als Hinweis darauf interpretiert, dass der Effekt signifikant ist.
+
+Im Vorliegenden Fall können wir also die Nullhypothese, dass der Umsatz unabhängig von den Werbeausgaben ist mit hoher Konfidenz ablehnen.
+
+
+#### Koeffizient der Determination $R^2$
+
+Der Koeffizient der Determination $R^2$ gibt an, wie gut das Modell die beobachteten Daten erklärt. Er liegt zwischen $0$ und $1$ und gibt den Anteil der Varianz der abhängigen Variable $Y$ an, der durch das Modell erklärt wird. Ein $R^2$ von $1$ bedeutet, dass das Modell alle Variationen in $Y$ erklärt, während ein $R^2$ von $0$ bedeutet, dass das Modell keine Variationen erklärt. In unserem Fall beträgt $R^2 = 0.41$, was darauf hindeutet, dass das Modell etwa $41\%$ der Variationen in den Verkäufen erklärt.
+
+Das Bestimmtheitsmaß $R^2$ ist definiert als:
+$$
+R^2 = \frac{TSS-RSS}{TSS} = 1- \frac{RSS}{TSS},
+$$
+
+wobei $RSS$ die Residual Sum of Squares und $TSS$ die Total Sum of Squares ist. $TSS$ ist die Summe der quadrierten Abweichungen der abhängigen Variable $Y$ von ihrem Mittelwert $\bar{y}$.
+
+Die Varianz und TSS hängen eng miteinander zusammen:
+
+$$
+TSS = \sum_{i=1}^{n} (y_i - \bar{y})^2 = n \text{Var}(Y).
+$$
+
+Intuitiv kann man sagen, R² gibt an, wie viel Prozent der Varianz der abhängigen Variable durch die unabhängigen Variablen erklärt wird, bzw. genauer. Wie veringern sich die Fehler, wenn man ein naives Mittel-Wert-Modells ($f(x)=\bar(y)$) durch das lineare Modell ersetzt.
+
+```{python}
+#| classes: styled-output
+#| fig-cap: Scatter plot of TV advertising vs. sales
+#| fig-label: fig-tv-advertising
+# Plot data
+plt.scatter(X, Y)
+plt.plot(X, beta_0 + beta_1 * X, color="red", label="OLS regression")
+plt.plot(X, np.mean(Y) * np.ones_like(X), color="green", label="Mean of Y")
+plt.legend()
+plt.xlabel("TV advertising spending (€)")
+plt.ylabel("Sales")
+plt.title("TV advertising vs. sales")
+plt.show()
+```
+
+::: {.callout-warning}
+##### Stolpersteine beim Interpretieren von $R^2$
+- Ein hoher $R^2$ bedeutet nicht unbedingt, dass das Modell gut ist. Ein Modell mit einem hohen $R^2$ kann immer noch schlechte Vorhersagen machen, wenn es nicht gut generalisiert.
+- Ein niedriger $R^2$ bedeutet nicht unbedingt, dass das Modell schlecht ist. Ein Modell mit einem niedrigen $R^2$ kann immer noch nützlich sein, wenn es die Beziehung zwischen den Variablen gut erklärt.
+- $R^2$ hängt von der Anzahl der Variablen im Modell ab. Ein Modell mit mehr Variablen wird tendenziell ein höheres $R^2$ haben, auch wenn es nicht besser ist.
+
+Die Folgede Abbildung zeigt zudem verschiende Zusammenhänge und den $R^2$ Wert für die jeweiligen Modelle. 
+:::
+
+
+![](https://www.datasciencecentral.com/wp-content/uploads/2021/10/2742052271.jpg)
+
+![](https://www.enmanreg.org/wp-content/uploads/2016/05/r2_vs_CVRMSE.png)
+
+
+::: {.callout-note}
+##### Annahmen für die lineare Regression
+
+Damit eine Lineare Regression sinnvoll ist und die Schätzung der Parameter gut funktioniert müssen einige Annahmen erfüllt sein:
+
+- Lineare Beziehung: Die Beziehung zwischen den unabhängigen und abhängigen Variablen ist linear.
+- Unabhängigkeit: Die Beobachtungen sind unabhängig voneinander.
+- Homoskedastizität: Die Varianz der Fehler ist konstant.
+- Normalverteilung: Die Fehler sind normalverteilt.
+- Keine Multikollinearität: Die unabhängigen Variablen sind nicht stark miteinander korreliert.
+:::

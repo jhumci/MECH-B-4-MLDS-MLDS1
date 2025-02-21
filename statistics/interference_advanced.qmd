@@ -192,7 +192,291 @@ print(f't = {t}')
 
 
 
-## T-Test
+## Zwei Stichproben T-Test
+
+Häufig ist man daran interessiert, ob sich die Mittelwerte zweier Stichproben unterscheiden. Auch in diesem Fall kann man einen T-Test einsetzen und die Teststatistik $t$ berechnen (vgl. Fig. @fig-sec-statistics-hypothesistests-two-sample-t-test)
+
+Vorraussetzung ist jedoch, dass die Varianzen der beiden Stichproben gleich sind und die Stichproben unabhängig voneinander sind.
+
+
+![Zwei Stichproben T-Test @Inductiveload_TwoSampleTTest](https://upload.wikimedia.org/wikipedia/commons/3/35/Two_sample_ttest.svg) {#fig-sec-statistics-hypothesistests-two-sample-t-test}
+
+0. Prüfen der Vorraussetzungen:
+    - Die Varianzen der beiden Stichproben sind gleich
+    - Die Stichproben sind unabhängig
+1. Definition der Hypothesen:
+    - $H_0: \mu_1 = \mu_2$ (Die Mittelwerte der beiden Stichproben sind gleich)
+    - $H_1: \mu_1 \neq \mu_2$ (Die Mittelwerte der beiden Stichproben sind ungleich)
+3. Berechnung der Teststatistik $t$:
+  - $T = \frac{\bar{x}_1 - \bar{x}_2}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$
+  - wobei $s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$ die gepoolte Standardabweichung ist.
+4. Berechnung des kritischen Wertes $t_{\alpha}$:
+  - Aus der [t-Verteilungstabelle](https://en.wikipedia.org/wiki/Student%27s_t-distribution) können wir für $n_1 + n_2 - 2$ Freiheitsgrade und $\alpha = 0.05$ den kritischen Wert $t_{\alpha}$ ablesen.
+5. Die Entscheidung basiert auf $T > t_{\alpha}$ oder $T < -t_{\alpha}$
+
+
+::: {.callout-note}
+### Test auf Differenz der Erwartungswerte
+Statt auf Gleichheit der Mittelwerte zu testen, könnte man auch auf einen bestimmten Unterschied $\omega_0$ testen. In diesem Fall, würde die Nullhypothese $H_0: \mu_1 - \mu_2 = \omega_0$ lauten. Die Teststatistik $T$ würde dann wie folgt berechnet werden:
+$$
+T = \frac{\bar{x}_1 - \bar{x}_2 - \omega_0}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}.
+$$
+
+Die Freiheitsgrade der t-Verteilung wären weiterhin $n_1 + n_2 - 2$.
+:::
+
+::: {.callout-note}
+### Test bei gepaarten Stichproben
+
+In manchen Fällen, haben wir zwei Stichproben, die nicht unabhängig voneinander sind. Ein Beispiel wäre, wenn wir ein Experiment haben, bei dem wir die gleiche Bauteil vor und nach einer Behandlung messen. In diesem Fall, können wir die Differenz der beiden Stichproben berechnen und dann einen One-Sample T-Test durchführen.
+
+Zum Beispiel könnte man ein Verfahren zum Härten eines metallischen Bauteils untersuchen. Im Experiment würde man den Härtungsgrad vor und nach der Behandlung messen.
+
+Tabelle: Härtungsgrad in HR (Rockwell) vor und nach der Behandlung
+
+|  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Vor der Behandlung | 49.1 | 49.2 | 49.3 | 49.4 | 49.5 | 49.6 | 49.7 | 49.8 | 49.0 | 50.0 |
+| Nach der Behandlung | 50.2 | 50.3 | 50.3 | 50.2 | 50.7 | 50.7 | 50.8 | 50.9 | 51.0 | 51.1 |
+| Differenz | 1.1 | 1.1 | 1.0 | 0.9 | 1.2 | 1.1 | 1.1 | 1.1 | 1.0 | 1.1 |
+
+Die durchschnittliche Differenz der Stichproben beträgt $\bar{d} = 1.07$ und die Standardabweichung der Differenz beträgt $s_d = 0.08$. Wir könnten nun einen One-Sample T-Test durchführen, um zu testen, ob die Behandlung den Härtungsgrad signifikant erhöht.
+
+```{python}
+#| classes: styled-output
+import numpy as np
+d = np.array([1.1, 1.1, 1.0, 0.9, 1.2, 1.1, 1.1, 1.1, 1.0, 1.1])
+d_bar = np.mean(d)
+s_d = np.std(d)
+n = len(d)
+print(f'd_bar = {d_bar}, s_d = {s_d}, n = {n}')
+t = d_bar / (s_d / np.sqrt(n))
+print(f't = {t}')
+```	
+
+0. Prüfen der Vorraussetzungen:
+    - Die Differenz der Stichproben ist normalverteilt
+    - Die Stichproben sind gepaart
+1. Definition der Hypothesen:
+    - $H_0: \mu = 0$ (Die Behandlung hat keinen Effekt)
+    - $H_1: \mu > 0$ (Die Behandlung erhöht den Härtungsgrad)
+2. Berechnung der Teststatistik $t$:
+    - $T = \frac{\bar{x}}{s / \sqrt{n}} = \frac{1.07}{0.08/\sqrt{10}} = 43.2$
+3. Berechnung des kritischen Wertes $t_{\alpha}$:
+  - Aus der [t-Verteilungstabelle](https://en.wikipedia.org/wiki/Student%27s_t-distribution) können wir für $n-1 = 9$ Freiheitsgrade und $\alpha = 0.05$ den kritischen Wert $t_{\alpha} = 1.833$ ablesen.
+
+  ``` {python}
+  #| classes: styled-output
+  from scipy.stats import t as t_table
+  alpha = 0.05
+
+  t_alpha = t_table.ppf(1 - alpha, n-1)
+  print(f't_alpha = {t_alpha}')
+  ```
+
+4. Entscheidung basiert auf $T > t_{\alpha}$
+  - Da $43.2 > 1.833$ ist, lehnen wir die Nullhypothese ab. Die Behandlung hat den Härtungsgrad signifikant erhöht.
 
 
 ## Chi-Quadrat-Test
+
+Nicht alle Test basieren auf der Normalverteilung oder einer T-Verteilung. Einige Schätzer folgen einer anderen Verteilung, wie z.B. der Chi-Quadrat($\mathcal{X}^2$)-Verteilung. Der Chi-Quadrat-Test ist ein statistischer Test, der für verschiedene Fragestellungen eingesetzt werden kann.
+
+- **Verteilungstest** (auch Anpassungstest genannt): Hier wird geprüft, ob vorliegende Daten auf eine bestimmte Weise verteilt sind.
+- **Unabhängigkeitstest**: Hier wird geprüft, ob zwei Merkmale stochastisch unabhängig sind.
+- **Homogenitätstest**: Hier wird geprüft, ob zwei oder mehr Stichproben derselben Verteilung bzw. einer homogenen Grundgesamtheit entstammen.
+
+### Verteilungs-Test
+
+Der Chi-Quadrat-Test kann verwendet werden, um zu prüfen, ob zwei oder mehr Stichproben derselben Verteilung entstammen. Als Beispiel mit mechantronischem Anwendungsfall könnten wir die Qualität eines Lieferanten mit denen unserer bisherigen vergleichen. Wir können dabei die Häufigkeiten von OK-Teilen und verschiedenen Arten von Fehlern zählen und dann prüfen, ob der Lieferant die gleiche Qualität liefert.
+
+| Lieferant | OK | Fehler 1 | Fehler 2 | Fehler 3 |
+| --- | --- | --- | --- | --- |
+| A | 100 | 10 | 5 | 5 |
+| Bisherige | 0.81 | 0.08 | 0.06 | 0.05 |
+
+Wir können die beobachteten Häufigkeiten in einer Kontingenztafel darstellen und dann die erwarteten Häufigkeiten berechnen, wenn die beiden Lieferanten die gleiche Qualität liefern würden.
+
+| Lieferant | OK | Fehler 1 | Fehler 2 | Fehler 3 | Summe |
+| --- | --- | --- | --- | --- | --- |
+| A (Observed) | 100 | 10 | 5 | 5 | 120 |
+| Bisherige (Expected) | 97.2  | 9.6 |  7.2 |   6.0 | 120 |
+
+
+0. Überprüfen der Vorraussetzungen:
+    - Die Stichproben sind unabhängig
+    - Die erwarteten Häufigkeiten sind größer als 5
+1. Defintion der Hypothesen:
+    - $H_0$: Der neue Lieferant liefert die gleiche Qualität (Identische Verteilung)
+    - $H_1$: Die neue Lieferanten liefert abweichende Qualität
+  - 
+2. Berechnung der Teststatistik $Z$
+  - Die Test-Statistik $Z$ wird über die Summe der quadrierten Differenzen zwischen beobachteten $O_i$ und erwarteten Häufigkeiten $E_i$ berechnet. Dabei liegt der Ablehnungsbereich immer rechts.
+$$
+Z = \sum{\frac{(O_i - E_i)^2}{E_i}}
+$$
+
+```{python}
+#| classes: styled-output
+import numpy as np
+from scipy.stats import chi2
+O = np.array([100, 10, 5, 5])
+E = np.array([0.81, 0.08, 0.06, 0.05]) * np.sum(O)
+
+print(f'O = {O}, E = {E}')
+
+Z = np.sum((O - E)**2 / E)
+print(f'Z = {Z}')
+```
+3. Berechnung des kritischen Wertes $Z_{\alpha}$:
+
+  - Der kritische Wert $Z_{\alpha}$ wird aus der Chi-Quadrat-Verteilungstabelle abgelesen. Die Anzahl der Freiheitsgrade $df$ entspricht der Anzahl der Kategorien minus 1.
+  - In diesem Fall haben wir 4 Kategorien, also $df = 4 - 1 = 3$ Freiheitsgrade.
+  - Für $\alpha = 0.05$ beträgt der kritische Wert $Z_{\alpha} = 7.815$.
+
+Die Chi-Quadrat-Verteilung ist asymmetrisch und hat eine hohe Wahrscheinlichkeit für Werte nahe 0. Abbildung @fig-sec-statistics-hypothesistests-chi2-distribution zeigt die Chi-Quadrat-Verteilung und den Ablehnungsbereich für $\alpha = 0.05$. Der Ablehnungsbereich ist rot markiert. 
+
+```{python}
+#| classes: styled-output
+#| #| fig-cap: Chi-Quadrat-Verteilung und Ablehnungsbereich
+#| #| label: fig-sec-statistics-hypothesistests-chi2-distribution
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 20, 100)
+y = chi2.pdf(x, 3)
+plt.plot(x, y, label='Chi-Quadrat-Verteilung')
+plt.fill_between(x, 0, y, where=(x > 7.815), color='red', alpha=0.5, label='Ablehnungsbereich')
+
+plt.axvline(Z, color='black', linestyle='--', label='Z')
+plt.legend()
+plt.title('Chi-Quadrat-Verteilung und Ablehnungsbereich')
+plt.xlabel('Z')
+plt.ylabel('Dichte')
+
+plt.show()
+```
+
+4. Die Entscheidung basiert auf $Z > Z_{\alpha}$
+  - Da $Z = 0.936 < 7.815 =  Z_{\alpha}$ ist, können wir die Nullhypothese nicht ablehnen. Der neue Lieferant liefert die gleiche Qualität wie der bisherige Lieferant.
+
+
+::: {.callout-important}
+### Test auf bestimmte Verteilung
+Anstelle einer Empirischen Grundgesamtheit, könnten wir auch eine bestimmte Verteilung annehmen und prüfen, ob die Daten dieser Verteilung entsprechen. In diesem Fall, würden wir die erwarteten Häufigkeiten basierend auf der angenommenen Verteilung berechnen und dann den Chi-Quadrat-Test durchführen.
+:::
+
+### Unabhängigkeitstest
+
+Der Chi-Quadrat-Test kann auch verwendet werden, um zu prüfen, ob zwei Merkmale $X$ mit $m$ Kategorien und $Y$ mit $k$ Kategorien stochastisch unabhängig sind. 
+
+Hierzu kann man eine Kontingenztafel erstellen, die die Häufigkeiten der Kombinationen der beiden Merkmale enthält:
+
+```{=html}
+<table border="1">
+    <tr>
+        <th></th>
+        <th>\( Y_1 \)</th>
+        <th>\( Y_2 \)</th>
+        <th>\(\dots\)</th>
+        <th>\( Y_r \)</th>
+        <th>\( \sum \)</th>
+    </tr>
+    <tr>
+        <td>\( X_1 \)</td>
+        <td>\( n_{11} \)</td>
+        <td>\( n_{12} \)</td>
+        <td>\(\dots\)</td>
+        <td>\( n_{1r} \)</td>
+        <td>\( n_{1.} \)</td>
+    </tr>
+    <tr>
+        <td>\( X_2 \)</td>
+        <td>\( n_{21} \)</td>
+        <td>\( n_{22} \)</td>
+        <td>\(\dots\)</td>
+        <td>\( n_{2r} \)</td>
+        <td>\( n_{2.} \)</td>
+    </tr>
+    <tr>
+        <td>\( \vdots \)</td>
+        <td>\( \vdots \)</td>
+        <td>\( \vdots \)</td>
+        <td>\( \ddots \)</td>
+        <td>\( \vdots \)</td>
+        <td>\( \vdots \)</td>
+    </tr>
+    <tr>
+        <td>\( X_m \)</td>
+        <td>\( n_{m1} \)</td>
+        <td>\( n_{m2} \)</td>
+        <td>\(\dots\)</td>
+        <td>\( n_{mr} \)</td>
+        <td>\( n_{m.} \)</td>
+    </tr>
+    <tr>
+        <td>\( \sum \)</td>
+        <td>\( n_{.1} \)</td>
+        <td>\( n_{.2} \)</td>
+        <td>\(\dots\)</td>
+        <td>\( n_{.r} \)</td>
+        <td>\( n \)</td>
+    </tr>
+</table>
+```
+
+Für die Zeilen und Spalten der Kontingenztafel werden die Randhäufigkeiten berechnet:
+
+$$
+n_{i.} = \sum_{j=1}^{r} n_{ij} \quad \text{und} \quad n_{.j} = \sum_{i=1}^{m} n_{ij}
+$$
+
+Die erwarteten Häufigkeiten $p_{ij}$ für jede Zelle der Kontingenztafel werden berechnet als das Produkt der Randhäufigkeiten geteilt durch die Gesamtanzahl der Beobachtungen:
+
+$$
+p_{ij} = \frac{n_{i.} \cdot n_{.j}}{n},
+$$
+
+und die relativen Randhäufigkeiten als
+
+$$
+p_{i.} = \frac{n_{i.}}{n} \quad \text{und} \quad p_{.j} = \frac{n_{.j}}{n}.
+$$
+
+Aus den Rechenregeln der Wahrscheinlichkeit in Kapitel @sec-statistics-sampling folgt für unabhängige Ereignisse, dass die Wahrscheinlichkeit des gemeinsamen Eintretens der beiden Ereignisse gleich dem Produkt der Einzelwahrscheinlichkeiten ist:
+
+$$
+P(A \cap B) = P(A) \cdot P(B).
+$$
+
+Für die Kontingenztafel bedeutet dies, dass die erwarteten Häufigkeiten $p_{ij}$ gleich dem Produkt der Randhäufigkeiten $p_{i.}$ und $p_{.j}$ sind, wenn die beiden Merkmale unabhängig voneinander sind. Wenn dies für alle Zellen nahezu zutrifft, dann können wir die Nullhypothese annehmen, dass die beiden Merkmale unabhängig voneinander sind.
+
+Die Testgröße $\mathcal{X}^2$ wird dann berechnet als die Summe der quadrierten Differenzen zwischen beobachteten und erwarteten Häufigkeiten, normiert durch die erwarteten Häufigkeiten:
+
+$$
+\mathcal{X}^2 = \sum_{i=1}^{m} \sum_{j=1}^{r} \frac{(n_{ij} - p_{ij})^2}{p_{ij}}.
+$$
+
+Die Testgröße $\mathcal{X}^2$ folgt einer Chi-Quadrat-Verteilung mit $(m-1)(r-1)$ Freiheitsgraden.
+
+### Homogenitätstest
+
+Auf ähnliche Weise kann der Chi-Quadrat-Test auch verwendet werden, um zu prüfen, ob zwei oder mehr Stichproben derselben Verteilung bzw. einer homogenen Grundgesamtheit entstammen. In diesem Fall wird eine Kontingenztafel erstellt, die die Häufigkeiten der Kombinationen der Stichproben enthält. Die Testgröße $\mathcal{X}^2$ wird dann berechnet als die Summe der quadrierten Differenzen zwischen beobachteten und erwarteten Häufigkeiten, normiert durch die erwarteten Häufigkeiten.
+
+
+
+
+## Kolmogorov-Smirnov-Test
+
+Der $\mathcal{X}^2$-Test funktionier auf der Basis von Häufigkeiten und ist daher nur für diskrete Daten geeignet. Der Kolmogorov-Smirnov-Test hingegen kann auch für kontinuierliche Daten verwendet werden. Der Kolmogorov-Smirnov-Test, kann z.B. angewendet werden, um zu prüfen ob, 
+
+- zwei Zufallsvariablen eine identische Verteilung besitzen oder
+- eine Zufallsvariable einer zuvor angenommenen Wahrscheinlichkeitsverteilung folgt.
+
+
+## Übersicht über Statistische Tests
+
+Grundsätzlich setzen wir statischtische Tests ein, wenn wir eine Hypothese über eine Grundgesamtheit aufstellen und diese Hypothese auf Basis einer Stichprobe überprüfen wollen. Die Hypothese wird in eine Nullhypothese $H_0$ und eine Alternativhypothese $H_1$ aufgeteilt. Die Nullhypothese ist die Hypothese, die wir widerlegen wollen, während die Alternativhypothese die Hypothese ist, die wir annehmen, wenn die Nullhypothese widerlegt wird.
+
+Test ermöglichen und zu unterschieden, ob die durch uns auf Grund der Stichprobe getroffene Aussage auf die Grundgesamtheit übertragbar oder möglicherweise nur Zufall sind.
+

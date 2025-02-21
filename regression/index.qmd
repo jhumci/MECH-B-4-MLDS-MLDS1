@@ -1,18 +1,23 @@
-# Regression analysis {.unnumbered}
+# Regressions-Analyse {.unnumbered}
 
-In general, _regression analysis_ can be understood as a set of tools that is used to estimate or establish a relationship between a dependent variable $Y$ (also called outcome or response variable, label) and the independent variable $X$ (also called regressor, predictors, covariates, explanatory variable or feature).
-If we add a regression function $f$ and some unknown parameters $c$ to the mix the problem can be written mathematically as
+Im Allgemeinen kann die Regressionsanalyse als eine Sammlung von Werkzeugen verstanden werden, die dazu verwendet werden, eine Beziehung zwischen einer abhängigen Variable  $Y$$ (auch Zielvariable, Antwortvariable oder Label genannt) und der unabhängigen Variable $X$ (auch Regressor, Prädiktoren, Kovariaten, erklärende Variable oder Feature genannt) zu schätzen oder festzustellen.
+
+Wenn wir eine Regressionsfunktion $f$ als Modell für die Beziehung zwischen $X$ und $Y$ annehmen, können wir die Regressionsanalyse als die Suche nach den Parametern $\theta$ verstehen, die die Funktion $f$ am besten an die Daten anpassen.
+
+Das Problem der Regressionsanalyse kann also wie folgt formuliert werden:
 $$
-Y = f(X, c)
-$$ {#eq-curvefitting}
-where $c$ is found by optimizing for _a good fit_ of $f$ to the data.
+Y = f(X, \theta) + \epsilon,
+$$
 
-We split up the discussion along the well known topics:
+wobei $\theta$ durch die Optimierung für _eine gute Anpassung_ von $f$ an die Daten gefunden wird. In der Regel erhalten wir dabei einen Fehlerterm $\epsilon$, der – wenn wir Glück haben – normalverteilt mit einem Erwartungswert von null und konstanter Varianz ist.
 
-- @sec-regression-linear
-- @sec-regression-nonlinear
-   - @sec-regression-nonlinear-gd
-- @sec-regression-optimizers
-   - @sec-regression-optimizers-msou
+Regessionen sind ein mächtiges Werkzeug für die _Interpetation von Daten_ und die _Vorhersage von Werten_. In der Praxis gibt es viele verschiedene Arten von Regressionsmodellen, die sich in ihrer Komplexität und den Annahmen, die sie machen, unterscheiden. In diesem Kapitel werden wir uns auf die lineare Regression konzentrieren, die eine der einfachsten und am häufigsten verwendeten Formen der Regressionsanalyse ist und sich für Zusammenhänge zwischen einer abhängigen und einer unabhängigen Variablen mit intervallskalierten Daten eignet.
 
-Parts of this section are based on [@Brunton2022, Section 4].
+
+Zuerst führen wir eine einfache Lineare Regression mit einer unabhängigen Variable durch. Anschließend erweitern wir das Modell auf mehrere unabhängige und auch kategorische Variablen. Hierzu nutzen wird die Matrix-Schreibweise. 
+
+Erweiterte Themen Intercepts und Regularisierung
+
+Diskussion von Statistischem Lernen und Resampling
+
+Logistische Regression als Beispiel für Klassifikation

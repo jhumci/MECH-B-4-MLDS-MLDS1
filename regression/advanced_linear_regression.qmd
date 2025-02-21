@@ -1,0 +1,293 @@
+---
+lightbox: true
+---
+
+# Lineare Regression {#sec-regression-linear-advanced}
+
+Zusammenhänge können auch zwischen mehr als zwei Variablen bestehen. In diesem Fall sprechen wir von einer multiplen linearen Regression. Das Modell kann dann wie folgt formuliert werden:
+
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon
+$$
+
+
+Als Beispiel könnten wir nicht nur die Absatzmenge eines Produkts in Abhängigkeit von der Werbeausgabe für TV-Spots, sondern auch von der Werbeausgabe für Radio-Spots modellieren. Wir simuliieren die Daten wieder mit Python, so dass wir die Zusammenhänge kennen.
+
+```{python}
+#| classes: styled-output
+#| #| fig-cap: Simulierte Daten für eine multiple lineare Regression
+#| #| fig-label: fig:regression-linear-advanced-simulated-data
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Simulate population data
+np.random.seed(0)
+X_1 = 300 * np.random.rand(100, 1)
+X_2 = 100 * np.random.rand(100, 1)
+X_3 = 200 * np.random.rand(100, 1)
+
+Y = 7 + 0.05 * X_1 + 0.1 * X_2 + 0.2 * X_3 + 5 * np.random.randn(100, 1) +  0.1 * X_1 * X_2
+
+# Simulate sample data
+sample_size = 100
+idx = np.random.choice(100, sample_size, replace=False)
+X_sample = [X_1[idx], X_2[idx], X_3[idx]]
+Y_sample = Y[idx]
+
+# Store data in a tidy dataframe
+data = pd.DataFrame({"X_1 (TV advertising spending (€))": X_sample[0].flatten(), "X_2 (Radio advertising spending (€))": X_sample[1].flatten(), "X_3 (Newspaper advertising spending (€))": X_sample[2].flatten(), "Y (Sales)": Y_sample.flatten()})
+print(data.head())
+```
+
+Wir können nun drei unabhängige Modelle fitten und visualisieren.
+
+```{python}
+#| classes: styled-output
+#| fig-cap: Lineare Regression für die drei unabhängigen Variablen
+#| fig-label: fig:regression-linear-advanced-linear-regression
+from sklearn.linear_model import LinearRegression
+
+labels = ["TV advertising spending (€)", "Radio advertising spending (€)", "Newspaper advertising spending (€)"]
+for predictor in range(3):
+    # Fit the model
+    model = LinearRegression()
+    model.fit(X_sample[predictor].reshape(-1, 1), Y_sample)
+    
+    # Predict the values
+    Y_pred = model.predict(X_sample[predictor].reshape(-1, 1))
+    
+    # Plot the data
+    plt.scatter(X_sample[predictor], Y_sample, color='black')
+    plt.plot(X_sample[predictor], Y_pred, color='blue', linewidth=3)
+    plt.xlabel(labels[predictor])
+    plt.ylabel("Sales")
+    plt.title(f"Linear Regression with {labels[predictor]}")
+    # Plot R^2
+    plt.text(0.1, 0.9, f"$R^2$ = {model.score(X_sample[predictor].reshape(-1, 1), Y_sample):.2f}\nY = {model.intercept_[0]:.2f} + {model.coef_[0][0]:.2f} * X$", transform=plt.gca().transAxes)
+
+    plt.show()
+```
+
+Offensichtlich sind die Modelle von mittlerer Qualität. Wir können die drei unabhängigen Variablen auch in einem Modell zusammenfassen.
+
+
+```{python}
+#| classes: styled-output
+# Fit the model
+import statsmodels.api as sm
+
+# Fit linear regression model
+X_sm = sm.add_constant(data[["X_1 (TV advertising spending (€))", "X_2 (Radio advertising spending (€))", "X_3 (Newspaper advertising spending (€))"]])
+model_sm = sm.OLS(data["Y (Sales)"], X_sm).fit()
+
+# Get slope and intercept
+print(model_sm.summary())
+```
+
+Wir können das Modell visualisieren, indem wir dreidimensionale Daten plotten. Wir lassen $x_3$ weg, da es den geringsten Einfluss auf die abhängige Variable zu haben scheint.
+
+```{python}
+#| classes: styled-output
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+# Plot the data
+ax.scatter(X_sample[0], X_sample[1], Y_sample, color='black')
+
+# Plot the regression plane
+x1 = np.linspace(0, 300, 100)
+x2 = np.linspace(0, 100, 100)
+X1, X2 = np.meshgrid(x1, x2)
+Y_pred = model_sm.params[0] + model_sm.params[1] * X1 + model_sm.params[2] * X2 + model_sm.params[3] * 0	
+ax.plot_surface(X1, X2, Y_pred, alpha=0.5, color='blue')
+ax.set_xlabel('X_1 (TV advertising spending (€))')
+ax.set_ylabel('X_2 (Radio advertising spending (€))')
+ax.set_zlabel('Y (Sales)')
+ax.set_zlabel('Y')
+
+plt.show()
+```
+
+Das Modell ist linear und jede der drei Variablen hat einen positiven Einfluss auf die abhängige Variable. Das Modell kann wie folgt geschrieben werden:
+
+$$
+Y =  -689.7 + 4.9 X_1 + 13.3 X_2 + 0.6 X_3,
+$$
+
+oder noch klarer:
+
+$$
+\text{sales} = 689.7 \text{units} + 4.9 \frac{\text{units}}{Euro} \times \text{TV advertising spending} + 13.3 \frac{\text{units}}{Euro} \times \text{Radio advertising spending} + 0.6 \frac{\text{units}}{Euro} \times \text{Newspaper advertising spending}.
+$$
+
+Dieses lineare Modell eigent sich ausgezeichnet für eine Interpretation des Daten.
+
+- Gibt es einen Zusammenhang zwischen den Werbeausgaben und den Verkäufen?
+    - *Aus den p-Werten Koeffizienten können wir ablesen, dass die Koeffizienten für TV- und Radio-Werbung signifikant sind, während der Koeffizient für Zeitungswerbung nicht signifikant ist.*
+- Wie stark ist der Zusammenhang?
+    - *Der Wer des Koeffizienten ergibt z.B. ca. 4.9 abgesetzte Einheiten pro € TV-Budget**
+- Welche Ausgaben haben den größten Einfluss auf die Verkäufe?
+    - *Radio-Werbung hat den größten Einfluss auf die Verkäufe.*
+- Ist die Beziehung linear oder nicht-linear?
+    - *Das Lineare Modell ist eine gute Näherung für die Daten, da $R^2=0.85$
+
+:::::: {.callout-warning}
+## Korrelation und Kausalität
+Streng genommen, zeigt sich immer nur die Korrelation zwischen den Variablen. Es ist nicht möglich, aus einer Korrelation auf eine Kausalität zu schließen. Es könnte auch sein, dass ganz andere Effekte die Verkäufe beeinflussen, die wir nicht gemessen haben.
+:::
+
+Wichtig ist auch, dass wir unsere Interpretation der Welt durch unser Modell nicht verabsolutieren. Es ist immer nur eine Näherung und kann nie die Realität vollständig abbilden. Wenn wir unser Model wörtlich nehmen, könnten wir uns in die Irre führen. Stellen, wir uns vor, die Firma stellt die Werbeausgaben für Zeitungswerbung ein. Dann würde unser Modell den folgenden Absatz vorhersagen:
+
+$$
+\text{sales} = - 689.7 \text{units}
+$$
+
+Ein negativer Absatz ist offensichtlich in der Realität nicht zu erwarten. Entsprechend haben wir den Grenzen unseres Modells erreicht. Die reale Welt lässt sich nur in bestimmten Grenzen durch das lineare Modell abbilden.
+
+::: {.callout-quote}
+> *All Models are wrong, some are useful!*  
+> — George E. P. Box,
+:::
+
+## Abbildung nicht-linearer Zusammenhänge mit Linearen Modellen
+
+In der Praxis hört man oft, dass sich lineare Modelle nur für lineare Zusammenhänge eignen. Das ist nicht ganz richtig. Lineare Modelle können auch nicht-lineare Zusammenhänge abbilden. Zunächst vergegenwärtigen wir uns nochmal was passiert, wenn wir die Vorhersage unseres Modells nur in Abhängigkeit von einer Variablen betrachten. Jeder schwarze Punkt in @fig:regression-linear-advanced-linear-regression zeigt die beobachtete Absatzmenge zu einem Zeitpunkt in Abhängigkeit von den Werbeausgaben für TV-Spots. Der blaue Punkt zeigt die Vorhersage unseres Modells, in das Modell geht natürlich auch die Werbeausgaben für Radio- und Zeitungswerbung ein. Deswegen liegen die blauen Punkte nicht auf einer Linie, obwohl wir ein lineares Modell verwenden.
+
+```{python}
+#| classes: styled-output
+#| fig-cap: Lineare Regression für die drei unabhängigen Variablen als Plot für eine
+#| fig-label: fig:regression-linear-advanced-linear-regression
+from sklearn.linear_model import LinearRegression
+
+# Prediction for TV advertising spending
+X = X_sample[0]
+plt.scatter(X, Y_sample, color='black')
+Y_pred = model_sm.params[0] + model_sm.params[1] * X_1 + model_sm.params[2] * X_2 + model_sm.params[3] * X_3
+plt.scatter(X_1, Y_pred, color='blue')
+plt.xlabel("TV advertising spending (€)")
+plt.ylabel("Sales")
+plt.title("Linear Regression with TV advertising spending (€)")
+# Add legend
+plt.legend(["Data", "Prediction"])
+plt.show()
+```
+
+
+Manchmal begegnen wir Zusammenhängen, die ganz klar nicht linear sind, beispielsweise der zwischen Verbrauch in Meilen pro Gallone und der Leistung eines Autos. Offensichtlich sinkt der Verbrauch nicht linear mit der Leistung:
+
+```{python}
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+df = pd.read_csv(r"../_assets/regression/Auto_Data_Set_963_49.csv")
+
+# linear model
+
+model = LinearRegression()
+model.fit(df[["horsepower"]], df["mpg"])
+Y_pred = model.predict(df[["horsepower"]])
+
+
+# Scatter plot between mpg und horsepower
+plt.scatter(df["horsepower"], df["mpg"])
+plt.plot(df["horsepower"], Y_pred, color='blue', linewidth=3)
+plt.xlabel("Horsepower")
+plt.ylabel("Miles per Gallon")
+plt.title("Scatter plot between Horsepower and Miles per Gallon")
+# Legend with parameters
+plt.legend([f"Linear Model: $Y = {model.intercept_:.1f} + {model.coef_[0]:.1f}X$"])
+# Add RSS
+plt.text( 
+plt.show()
+
+```
+
+
+Eine Lösung ist die Transformation der unabhängigen Variablen. In unserem Beispiel könnten wir die Quadratwurzel der Werbeausgaben verwenden. Das Modell wird dann wie folgt aussehen:
+
+$$
+\text{mpg} = \beta_0 + \beta_1 \sqrt{\text{horsepower}} + \epsilon
+$$
+
+```{python}
+#| classes: styled-output
+#| fig-cap: Lineare Regression für mit transformierten unabhängigen Variablen
+#| fig-label: fig:regression-linear-advanced-linear-regression-transformed
+
+# Transformation of the independent variable
+df["sqrt_horsepower"] = np.sqrt(df["horsepower"])
+
+# linear model
+model = LinearRegression()
+model.fit(df[["sqrt_horsepower"]], df["mpg"])
+
+# Sort before plotting
+df = df.sort_values(by="horsepower")
+
+Y_pred = model.predict(df[["sqrt_horsepower"]])
+
+# Scatter plot between mpg und horsepower
+plt.scatter(df["horsepower"], df["mpg"])
+plt.plot(df["horsepower"], Y_pred, color='blue', linewidth=3)
+plt.xlabel("Horsepower")
+plt.ylabel("Miles per Gallon")
+plt.title("Scatter plot between Horsepower and Miles per Gallon")
+# Legend with parameters
+plt.legend([f"Linear Model: $Y = {model.intercept_:.1f} {model.coef_[0]:.1f}X^{{0.5}}$"])
+plt.show()
+```
+
+
+::: {.callout-important}
+### Feature Engineering
+Die Transformation der unabhängigen Variablen wird auch als __Feature Engineering__ bezeichnet. Feature Engineering ist ein wichtiger Schritt in der Modellierung, um die Leistungsfähigkeit von Modellen zu verbessern.
+:::
+
+
+## Umgang mit Categorical Variablen
+
+Bisher haben wir nur numerische Variablen betrachtet. In der Praxis haben wir es aber oft mit kategorischen Variablen zu tun. Kategorische Variablen sind Variablen, die eine endliche Anzahl von Kategorien haben. Beispiele sind Geschlecht, Region oder Produkttyp. Beispielsweise wird im Car-Data-Set die Herkunft der Autos erfasst.
+
+```{python}
+#| classes: styled-output
+#| #| fig-cap: Verteilung der Herkunft der Autos
+#| #| fig-label: fig:regression-linear-advanced-car-origin
+
+df["origin"] = df["origin"].map({1: "USA", 2: "Europe", 3: "Japan"})
+df["origin"].value_counts().plot(kind='bar')
+plt.xlabel("Origin")
+plt.ylabel("Count")
+```
+
+Nun wollen wir untersuchen, ob wir die Herkunft der Autos verwenden können, um den Verbrauch vorherzusagemn. Wie immer starten wir mit einer explorativen Analyse.
+
+```{python}
+#| classes: styled-output
+#| #| fig-cap: Verteilung der Leistung in Abhängigkeit von der Herkunft
+#| #| fig-label: fig:regression-linear-advanced-car-origin-mpg
+
+import seaborn as sns
+
+sns.boxplot(x="origin", y="mpg", data=df)
+plt.xlabel("Origin")
+plt.ylabel("Miles per Gallon")
+```
+
+Offensichtlich gibt es hier einen Zusammenhang. Wir wollen unser Modell von vorhin erweiten, um es weiter zu verbessern. Um kategoriale Variablen in einer Linearen Regression zu Berücksichtigen gibt es zwei Möglichkeiten.
+
+### Dummy-Variablen
+
+
+### One-Hot-Encoding
+
+
+## Modell nur mit Kategorischen Variablen
+
+
+## Modell mit allem
+
+
