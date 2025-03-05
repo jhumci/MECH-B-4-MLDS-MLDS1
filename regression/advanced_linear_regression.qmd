@@ -45,7 +45,7 @@ Wir können nun drei unabhängige Modelle fitten und visualisieren.
 ```{python}
 #| classes: styled-output
 #| fig-cap: Lineare Regression für die drei unabhängigen Variablen
-#| fig-label: fig:regression-linear-advanced-linear-regression
+#| fig-label: fig:regression-linear-advanced-linear-regression_three
 from sklearn.linear_model import LinearRegression
 
 labels = ["TV advertising spending (€)", "Radio advertising spending (€)", "Newspaper advertising spending (€)"]
@@ -201,7 +201,7 @@ plt.title("Scatter plot between Horsepower and Miles per Gallon")
 # Legend with parameters
 plt.legend([f"Linear Model: $Y = {model.intercept_:.1f} + {model.coef_[0]:.1f}X$"])
 # Add RSS
-plt.text( 
+
 plt.show()
 
 ```
