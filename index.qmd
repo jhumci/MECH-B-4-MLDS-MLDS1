@@ -4,7 +4,7 @@ Die hier präsentierten Notizen befinden sich noch in Bearbeitung und können si
 
 ## Preface {.unnumbered}
 
-Dies sind die Vorlesungsnotizen für die Lehrveranstaltung _Machine Learning + Data Science I (Lecture)_ am _MCI | The Entrepreneurial School_ Bachelor-Studiengangs [Mechatronik](https://www.mci.edu/de/studium/bachelor/mechatronik) im Sommer-Semester 2025.
+Dies sind die __Vorlesungsnotizen__ für die Lehrveranstaltung _Machine Learning + Data Science I (Lecture)_ am _MCI | The Entrepreneurial School_ Bachelor-Studiengangs [Mechatronik](https://www.mci.edu/de/studium/bachelor/mechatronik) im Sommer-Semester 2025.
 
 ## Danksagungen {.unnumbered}
 

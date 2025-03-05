@@ -5,3 +5,8 @@ In dieser Lehrveranstaltung werden wir uns mit den grundlegenden Konzepten moder
 Die verwendeten Referenzen wurden nach Qualität, freier Verfügbarkeit und der Nutzung von Python ausgewählt. Für die statistischen Grundlagen greifen wir auf Beispiele aus @Diez2019-ll zurück, während für die Einführung in das statistische Lernen @james2013introduction herangezogen wird. 
 
 Dieses Skriptum richtet sich an Studierende der Ingenieurwissenschaften, weshalb mathematische Konzepte nur selten mit strengen Beweisen versehen sind.
+
+## Leistungsüberprüfung {.unnumbered}
+
+Die Vorlesungsteil der Lehrveranstaltung wird mit einer __Klausur__ bewertet.
+
