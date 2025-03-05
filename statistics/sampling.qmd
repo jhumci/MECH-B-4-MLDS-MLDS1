@@ -736,3 +736,10 @@ Youtube-Videos:
 - [Veritasium: The Bayesian Trap
 ](https://www.youtube.com/watch?v=R13BD8qKeTg)
 :::
+
+
+::: {.callout-tip}
+### Assoziationsanalyse mit A-Priori-Algorithmus
+Die [Assoziationsanalyse](https://de.wikipedia.org/wiki/Assoziationsanalyse) ist ein Verfahren, um Zusammenhänge in Daten zu finden. Ein bekannter Algorithmus ist der [A-Priori-Algorithmus](https://de.wikipedia.org/wiki/Apriori-Algorithmus), der z.B. in für Predictive Maintainance oder in der Warenkorbanalyse verwendet wird. Der A-Priori-Algorithmus findet heraus, welche Produkte oft zusammen gekauft werden. Ein Beispiel ist, dass Kunden, die Windeln kaufen, oft auch Bier kaufen.
+:::
+
