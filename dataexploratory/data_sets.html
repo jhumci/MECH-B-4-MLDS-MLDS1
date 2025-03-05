@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Data Sets – Machine Learning and Data Science 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../dataexploratory/tutorial.html" rel="next">
+<link href="../dataexploratory/data_science.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2bcf7be291d79734ada0dea710dd8908.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-6bb28caf545b74723fac9b4cde4209ed.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../dataexploratory/index.html">Umgang mit Daten und Explorative Analyse</a></li><li class="breadcrumb-item"><a href="../dataexploratory/data_sets.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Sets</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Machine Learning and Data Science 1</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Einleitung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../dataexploratory/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Umgang mit Daten und Explorative Analyse</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/data_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science, Statisik, und Machine Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/data_sets.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Sets</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial: Getting Data Tidy and finding Correlation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistik</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stichproben und Zufallsvariablen</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Verteilungen</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial: Monte Carlo Simulation of Equipment Failure Time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/interference_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interferenz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/interference_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tutorial_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 2: Understanding Patterns in Grid Loads</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressions-Analyse</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressions-Analyse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/basic_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/advanced_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/expansions_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Interkationsterme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/statistical_learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">statistical_learning.html</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/tutorial2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">tutorial2.html</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-dataexploratory-data_tidy-data" id="toc-sec-dataexploratory-data_tidy-data" class="nav-link active" data-scroll-target="#sec-dataexploratory-data_tidy-data"><span class="header-section-number">2.1</span> Tidy-Data</a>
+  <ul class="collapse">
+  <li><a href="#was-bedeutet-tidy-data" id="toc-was-bedeutet-tidy-data" class="nav-link" data-scroll-target="#was-bedeutet-tidy-data"><span class="header-section-number">2.1.1</span> Was bedeutet “Tidy Data”?</a></li>
+  <li><a href="#positive-beispiele-für-tidy-data" id="toc-positive-beispiele-für-tidy-data" class="nav-link" data-scroll-target="#positive-beispiele-für-tidy-data"><span class="header-section-number">2.1.2</span> Positive Beispiele für Tidy Data</a></li>
+  <li><a href="#negative-beispiele-für-tidy-data" id="toc-negative-beispiele-für-tidy-data" class="nav-link" data-scroll-target="#negative-beispiele-für-tidy-data"><span class="header-section-number">2.1.3</span> Negative Beispiele für Tidy Data</a></li>
+  </ul></li>
+  <li><a href="#sec-dataexploratory-data_variable-types" id="toc-sec-dataexploratory-data_variable-types" class="nav-link" data-scroll-target="#sec-dataexploratory-data_variable-types"><span class="header-section-number">2.2</span> Messniveaus von Variablen</a>
+  <ul class="collapse">
+  <li><a href="#nominale-variablen" id="toc-nominale-variablen" class="nav-link" data-scroll-target="#nominale-variablen"><span class="header-section-number">2.2.1</span> Nominale Variablen</a></li>
+  <li><a href="#ordinale-variablen" id="toc-ordinale-variablen" class="nav-link" data-scroll-target="#ordinale-variablen"><span class="header-section-number">2.2.2</span> Ordinale Variablen</a></li>
+  <li><a href="#intervallskalierte-variablen" id="toc-intervallskalierte-variablen" class="nav-link" data-scroll-target="#intervallskalierte-variablen"><span class="header-section-number">2.2.3</span> Intervallskalierte Variablen</a></li>
+  </ul></li>
+  <li><a href="#sec-dataexploratory-data_visualization" id="toc-sec-dataexploratory-data_visualization" class="nav-link" data-scroll-target="#sec-dataexploratory-data_visualization"><span class="header-section-number">2.3</span> Visualisierungen</a>
+  <ul class="collapse">
+  <li><a href="#histogramme" id="toc-histogramme" class="nav-link" data-scroll-target="#histogramme"><span class="header-section-number">2.3.1</span> Histogramme</a></li>
+  </ul></li>
+  <li><a href="#sec-dataexploratory-data_variable-measures" id="toc-sec-dataexploratory-data_variable-measures" class="nav-link" data-scroll-target="#sec-dataexploratory-data_variable-measures"><span class="header-section-number">2.4</span> Maße für Variablen</a>
+  <ul class="collapse">
+  <li><a href="#lagemaße" id="toc-lagemaße" class="nav-link" data-scroll-target="#lagemaße"><span class="header-section-number">2.4.1</span> Lagemaße</a></li>
+  <li><a href="#kumulative-histogramme-und-empirische-verteilungsfunktionen" id="toc-kumulative-histogramme-und-empirische-verteilungsfunktionen" class="nav-link" data-scroll-target="#kumulative-histogramme-und-empirische-verteilungsfunktionen"><span class="header-section-number">2.4.2</span> Kumulative Histogramme und Empirische Verteilungsfunktionen</a></li>
+  <li><a href="#steuungsmaße" id="toc-steuungsmaße" class="nav-link" data-scroll-target="#steuungsmaße"><span class="header-section-number">2.4.3</span> Steuungsmaße</a></li>
+  <li><a href="#zusammenhangsmaße" id="toc-zusammenhangsmaße" class="nav-link" data-scroll-target="#zusammenhangsmaße"><span class="header-section-number">2.4.4</span> Zusammenhangsmaße</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/dataexploratory/data_sets.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../dataexploratory/index.html">Umgang mit Daten und Explorative Analyse</a></li><li class="breadcrumb-item"><a href="../dataexploratory/data_sets.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Sets</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-dataexploratory-data_sets" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Sets</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Ein sauber aufbereiteter Datensatz ist eine grundlegende Voraussetzung für jede datenbasierte Analyse und ist im CRISP-DM Teil der <strong>Datenaufbereitung</strong>. Wir starten zunächst mit dem Konzept von <strong>Tidy Data</strong> <a href="#sec-dataexploratory-data_tidy-data" class="quarto-xref"><span>Section 2.1</span></a>, welches sich mit der sauberen Strukturierung von Daten befasst. Anschließend werden wir uns mit den <strong>Typen von Variablen</strong> <a href="#sec-dataexploratory-data_variable-types" class="quarto-xref"><span>Section 2.2</span></a> befassen, die unter anderem den Ausschlag gibt, welche verschiedenen <strong>Visualisierungen</strong> <a href="#sec-dataexploratory-data_visualization" class="quarto-xref"><span>Section 2.3</span></a> sinnvoll sind, um sich ein <strong>Data Understanding</strong> zu erarbeiten. Zum Schluss werden wir uns mit den verschiedenen <strong>Maßen für Variablen</strong> <a href="#sec-dataexploratory-data_variable-measures" class="quarto-xref"><span>Section 2.4</span></a> auseinandersetzen, mit welchen man Datensätze beschreiben kann.</p>
+<section id="sec-dataexploratory-data_tidy-data" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-dataexploratory-data_tidy-data"><span class="header-section-number">2.1</span> Tidy-Data</h2>
+<p>Wenn wir mit Computern <strong>automatisiert</strong> arbeiten möchten, ist neben der <strong>Semantik</strong> der Daten auch deren <strong>Syntax</strong> essenziell. Das bedeutet, dass die Daten in einer Struktur vorliegen müssen, die ihre Semantik sinnvoll abbildet.</p>
+<p>Ein weitverbreiteter Standard, der in diesem Zusammenhang häufig genutzt wird, sind die von <span class="citation" data-cites="wickham2014tidy">Wickham (<a href="../references.html#ref-wickham2014tidy" role="doc-biblioref">2014</a>)</span> beschriebenen <strong>Tidy Data Conventions</strong>. Dieses Datenformat ist de facto eine Grundlage für viele Softwarepakete wie <code>pandas</code>, <code>statsmodels</code>, <code>sklearn</code>, <code>tensorflow</code> und andere Werkzeuge im Bereich Datenanalyse und des maschinelles Lernen.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hinweis: Datenbanknormalisierung
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Im Grunde handelt es sich bei diesem Format um ein Prinzip, das auch in der <strong>Datenbanknormalisierung</strong> nach Codd verfolgt wird. Ihnen wird dieses Konzept in relationalen Datenbanken (SQL) erneut begegnen.</p>
+</div>
+</div>
+</div>
+<section id="was-bedeutet-tidy-data" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="was-bedeutet-tidy-data"><span class="header-section-number">2.1.1</span> Was bedeutet “Tidy Data”?</h3>
+<p>Tidy Data folgt drei Grundprinzipien:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Grundprinzipien von Tidy Data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Jede Zeile repräsentiert eine Beobachtung</strong> (bzw. eine Einheit).</li>
+<li><strong>Jede Spalte repräsentiert eine Variable</strong> (bzw. ein Attribut).</li>
+<li><strong>Jede Zelle enthält genau einen präzisen Wert</strong> (einen primitiven Datentyp wie <code>int</code>, <code>float</code>, <code>str</code> oder <code>bool</code> – <strong>keine Listen, Tupel oder geschachtelten Objekte</strong>).</li>
+</ol>
+</div>
+</div>
+<p>Ein Beispiel für nicht-Tidy-Daten könnte eine Spalte enthalten, in der mehrere Werte in einer Liste zusammengefasst sind. Solche Daten sind schwerer zu verarbeiten und unflexibler beim Einsatz in Analysetools.</p>
+<p>Tidy Data hilft uns bei der <strong>Datenbereinigung</strong> und <strong>Datenanalyse</strong>. Es erleichtert die <strong>Automatisierung</strong> und <strong>Standardisierung</strong> von Prozessen und reduziert die Wahrscheinlichkeit von Fehlern.</p>
+<ul>
+<li><strong>Kompatibilität:</strong> Viele Python-Bibliotheken wie <code>pandas</code>, <code>statsmodels</code> oder <code>seaborn</code> setzen voraus, dass die verwendeten Daten im Tidy-Format vorliegen.</li>
+<li><strong>Automatisierung:</strong> Tidy-Daten erleichtern Standardoperationen wie Filtern, Gruppieren und Pivotieren erheblich.</li>
+<li><strong>Fehlerprävention:</strong> Unstrukturierte oder verschachtelte Datenstrukturen sind fehleranfällig und schwer zu debuggen.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Daten in das Tidy-Format transformieren
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Es gibt viele hilfreiche Funktionen und Methoden in <code>pandas</code>, um Daten zu “tidy-fizieren”. Ein Beispiel ist die Verwendung der Methoden <code>stack</code>, <code>unstack</code> und <code>melt</code>. Diese helfen dabei, Daten umzustrukturieren und in die gewünschte <em>lange</em> (viele Zeilen) oder <em>weite</em> (viele Spalten) Form zu bringen. Ein hilfreicher Artikel hierzu ist <a href="https://www.geeksforgeeks.org/reshape-a-pandas-dataframe-using-stackunstack-and-melt-method/">Reshape with Pandas</a>.</p>
+<p>💡 <strong>Tipp:</strong> Wenn Sie unsicher sind, wie Sie Ihre Daten umorganisieren sollten, können Sie ein Beispiel (z.B. <code>head()</code> eines DataFrames) und die gewünschte Struktur (also Spaltennamen) in ein Large Language Model eingeben. Oft erhalten Sie klare Vorschläge zur Umstrukturierung!</p>
+</div>
+</div>
+</section>
+<section id="positive-beispiele-für-tidy-data" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="positive-beispiele-für-tidy-data"><span class="header-section-number">2.1.2</span> Positive Beispiele für Tidy Data</h3>
+<p>Der folgende Beispielcode zeigt, wie Sie ein CSV-Datei laden und sich mit den ersten Zeilen vertraut machen können. Glücklicher Weise ist dieser Datensatz bereits im Tidy-Format. Jede Zeile repräsentiert eine Beobachtung (Kreditnehmer) und jede Spalte eine Variable (Attribut).</p>
+<div id="93eafb49" class="cell styled-output" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lesen der CSV-Datei in einen DataFrame</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/dataexploratory/loan50.csv"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ausgabe der ersten Zeilen des Datensatzes</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  state  emp_length  term homeownership  annual_income verified_income  \
+0    NJ         3.0    60          rent          59000    Not Verified   
+1    CA        10.0    36          rent          60000    Not Verified   
+2    SC         NaN    36      mortgage          75000        Verified   
+3    CA         0.0    36          rent          75000    Not Verified   
+4    OH         4.0    60      mortgage         254000    Not Verified   
+
+   debt_to_income  total_credit_limit  total_credit_utilized  \
+0        0.557525               95131                  32894   
+1        1.305683               51929                  78341   
+2        1.056280              301373                  79221   
+3        0.574347               59890                  43076   
+4        0.238150              422619                  60490   
+
+   num_cc_carrying_balance        loan_purpose  loan_amount grade  \
+0                        8  debt_consolidation        22000     B   
+1                        2         credit_card         6000     B   
+2                       14  debt_consolidation        25000     E   
+3                       10         credit_card         6000     B   
+4                        2    home_improvement        25000     B   
+
+   interest_rate  public_record_bankrupt loan_status  has_second_income  \
+0          10.90                       0     Current              False   
+1           9.92                       1     Current              False   
+2          26.30                       0     Current              False   
+3           9.92                       0     Current              False   
+4           9.43                       0     Current              False   
+
+   total_income  
+0         59000  
+1         60000  
+2         75000  
+3         75000  
+4        254000  </code></pre>
+</div>
+</div>
+</section>
+<section id="negative-beispiele-für-tidy-data" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="negative-beispiele-für-tidy-data"><span class="header-section-number">2.1.3</span> Negative Beispiele für Tidy Data</h3>
+<p>Folgendes Datenbeispiel zeigt, wie ein Datensatz <strong>nicht</strong> im Tidy-Format aussieht. Wir sehen die Strombedarfe von verschiedenen Netzgebieten <code>zone_id</code> zu verschiedenen Zeitpunkten. Allerdings ist es ungünstig, dass nicht jede Kombination aus Zone und Zeitpunkt eine eigene Zeile hat. Stattdessen sind die Werte für alle 24 Stunden in einer eigenen Spalte.</p>
+<div id="24a67d98" class="cell styled-output" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/dataexploratory/GEFCom2012/GEFCOM2012_Data/Load/Load_history.csv"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   zone_id  year  month  day      h1      h2      h3      h4      h5      h6  \
+0        1  2004      1    1  16,853  16,450  16,517  16,873  17,064  17,727   
+1        1  2004      1    2  14,155  14,038  14,019  14,489  14,920  16,072   
+2        1  2004      1    3  14,439  14,272  14,109  14,081  14,775  15,491   
+3        1  2004      1    4  11,273  10,415   9,943   9,859   9,881  10,248   
+4        1  2004      1    5  10,750  10,321  10,107  10,065  10,419  12,101   
+
+   ...     h15     h16     h17     h18     h19     h20     h21     h22  \
+0  ...  13,518  13,138  14,130  16,809  18,150  18,235  17,925  16,904   
+1  ...  16,127  15,448  15,839  17,727  18,895  18,650  18,443  17,580   
+2  ...  13,507  13,414  13,826  15,825  16,996  16,394  15,406  14,278   
+3  ...  14,207  13,614  14,162  16,237  17,430  17,218  16,633  15,238   
+4  ...  13,845  14,350  15,501  17,307  18,786  19,089  19,192  18,416   
+
+      h23     h24  
+0  16,162  14,750  
+1  16,467  15,258  
+2  13,315  12,424  
+3  13,580  11,727  
+4  17,006  16,018  
+
+[5 rows x 28 columns]</code></pre>
+</div>
+</div>
+<p>Eine Umwandlung in das Tidy-Format würde, wie folgt aussehen, wobei wird darauf achten sollten, dass der timestamp als <code>datetime</code>-Objekt und die load als <code>int</code> gespeichert wird:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>zone_id</th>
+<th>timestamp</th>
+<th>load (kW)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2012-01-01 00:00:00</td>
+<td>1000</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>2012-01-01 01:00:00</td>
+<td>1100</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="sec-dataexploratory-data_variable-types" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-dataexploratory-data_variable-types"><span class="header-section-number">2.2</span> Messniveaus von Variablen</h2>
+<p>Variablen sind die Bausteine von Daten und repräsentieren die Merkmale, die wir messen oder beobachten. Im Kapitel <a href="#sec-dataexploratory-data_variable-types" class="quarto-xref"><span>Section 2.2</span></a> werden wir uns noch tiefer mit Variablen auseinandersetzen. In der Datenanalyse ist es wichtig, die <strong>Art der Variablen</strong> zu kennen, da dies beeinflusst, welche Methoden und Visualisierungen für die Daten geeignet sind. Variablen lassen sich nach ihrem <strong>Messniveau</strong> klassifizieren, was wiederum die Art der Informationen beschreibt, die sie enthalten. Die bekannteste Klassifikation von Variablen basiert auf den vier Messniveaus von Stanley Smith Stevens: <em>Nominal</em>, <em>Ordinal</em>, <em>Intervall</em> und <em>Ratio</em> (Verhältnis).</p>
+<div class="callout-discussion">
+<p>Nutzen Sie den oben gezeigten Datensatz <strong>loan50</strong>, um die folgenden Aufgaben für unterschiedliche Variablenarten zu lösen:</p>
+</div>
+<ol type="1">
+<li><p><strong>Sortieren:</strong> Wie könnte man die Werte der Variablen</p>
+<ul>
+<li><code>state</code>,</li>
+<li><code>grade</code>,</li>
+<li>ein Beispiel für ein Intervallniveau (aber kein Ratio),</li>
+<li><code>annual_income</code><br>
+sinnvoll in aufsteigender Reihenfolge anordnen?</li>
+</ul></li>
+<li><p><strong>Zentrale Werte bestimmen:</strong> Wie lässt sich ein zentraler Wert bestimmen, sei es durch den <strong>Modus</strong>, die <strong>Median</strong> oder den <strong>Mittelwert</strong>?</p></li>
+<li><p><strong>Beziehungen beschreiben:</strong> Welche Aussage könnte man über die Beziehung zwischen zwei Werten einer Variablen machen?</p></li>
+</ol>
+<section id="nominale-variablen" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="nominale-variablen"><span class="header-section-number">2.2.1</span> Nominale Variablen</h3>
+<p><strong>Definition:</strong> Nominale Variablen kategorisieren Daten ohne eine festgelegte Reihenfolge.</p>
+<div id="6332c068" class="cell styled-output" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/dataexploratory/loan50.csv"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"state"</span>].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    NJ
+1    CA
+2    SC
+3    CA
+4    OH
+Name: state, dtype: object</code></pre>
+</div>
+</div>
+<div id="ece18cf3" class="cell styled-output" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"state"</span>].value_counts().head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>state
+CA    9
+TX    5
+IL    4
+NJ    3
+MD    3
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="e7cf294f" class="cell styled-output" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"state"</span>].mode().head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    CA
+Name: state, dtype: object</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><strong>Sortieren:</strong> Es gibt keine inhärente Methode, diese Werte zu sortieren. Dies liegt daran, dass nominale Daten keine Reihenfolge implizieren.</li>
+<li><strong>Zentraler Wert:</strong> Modus, da dieser Wert am häufigsten vorkommt.</li>
+<li><strong>Beziehungen:</strong> Die Beziehung zwischen zwei Werten kann nur beschreiben, ob sie in derselben Kategorie sind oder nicht.</li>
+</ol>
+</section>
+<section id="ordinale-variablen" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="ordinale-variablen"><span class="header-section-number">2.2.2</span> Ordinale Variablen</h3>
+<p>Ordinale Variablen haben eine natürliche Ordnung, aber der Abstand zwischen den Werten ist nicht zwingend gleichmäßig.</p>
+<div id="9ad33d10" class="cell styled-output" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"grade"</span>].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    B
+1    B
+2    E
+3    B
+4    B
+Name: grade, dtype: object</code></pre>
+</div>
+</div>
+<div id="44ca1eed" class="cell styled-output" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"grade"</span>].sort_values().head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>49    A
+18    A
+33    A
+36    A
+14    A
+Name: grade, dtype: object</code></pre>
+</div>
+</div>
+<div id="71421f1d" class="cell styled-output" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"grade"</span>].value_counts().head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>grade
+B    19
+A    15
+D     8
+C     6
+E     2
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="fbdd767e" class="cell styled-output" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"grade"</span>].mode())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    B
+Name: grade, dtype: object</code></pre>
+</div>
+</div>
+<div id="e450d776" class="cell styled-output" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the order for the categorical values</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>grade_order <span class="op">=</span> <span class="bu">sorted</span>(df[<span class="st">"grade"</span>].unique())</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the 'grade' column to a categorical type with the specified order</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'grade'</span>] <span class="op">=</span> pd.Categorical(df[<span class="st">'grade'</span>], categories<span class="op">=</span>grade_order, ordered<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert categorical data to numerical codes</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>grade_codes <span class="op">=</span> df[<span class="st">'grade'</span>].cat.codes</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grade_codes.median())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.0</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><strong>Sortieren:</strong> Mit geeigneten Regeln ist es möglich, diese Werte in aufsteigender Reihenfolge zu ordnen: <code>["C", "B", "A"]</code>.</li>
+<li><strong>Zentraler Wert:</strong>: Der Modus ist geeignet, und der Median zeigt auf, dass 50 % der Werte gleich oder niedriger als <code>"B"</code> sind.</li>
+<li><strong>Beziehungen:</strong> Zwei Werte lassen sich nach ihrer Position der Reihenfolge vergleichen: höher oder niedriger.</li>
+</ol>
+</section>
+<section id="intervallskalierte-variablen" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="intervallskalierte-variablen"><span class="header-section-number">2.2.3</span> Intervallskalierte Variablen</h3>
+<p>Intervallskalierte Variablen haben geordnete Werte mit gleichmäßigen Abständen zwischen ihnen, aber sie besitzen keinen absoluten Nullpunkt. Ein Beispiel ist das jährliche Einkommen.</p>
+<div id="c9ef7698" class="cell styled-output" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"annual_income"</span>].head())</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"annual_income"</span>].mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0     59000
+1     60000
+2     75000
+3     75000
+4    254000
+Name: annual_income, dtype: int64
+86170.0</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><strong>Sortieren:</strong>: Daten können numerisch in aufsteigender Reihenfolge sortiert werden.</li>
+<li><strong>Zentraler Wert:</strong>: Der Modus und Median sind geeignete Maße. Der arithmetische Mittelwert berechnet sich als: <span class="math inline">\(\mu = \frac{1}{n} \sum x_i\)</span></li>
+<li><strong>Beziehungen:</strong> Der Abstand (Intervall) zwischen zwei Werten kann quantifiziert werden.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Unterschied zwischen Intervall- und Ratiodaten
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Im Gegensatz zum Ratio-Messniveau besitzen Intervall-Daten keinen absoluten Nullpunkt. Aussagen wie “das Doppelte” sind daher nicht sinnvoll.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Es ist oft hilfreich, sich das Messniveau einer Variablen vor Beginn der Analyse klar zu machen. Das Messniveau entscheidet auch, welche Visualisierung sinnvoll sind. Mögliche Fehleinschätzungen können zu falschen oder unzulässigen Berechnungen führen, z. B. Mittelwerte bei Nominaldaten. Daten sollten entsprechend ihrem Typ gereinigt und transformiert werden.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-dataexploratory-data_visualization" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-dataexploratory-data_visualization"><span class="header-section-number">2.3</span> Visualisierungen</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Es gibt viele Möglichkeiten, Daten zu visualisieren, um Muster und Trends zu erkennen. Zwei weit verbreitete Pakete sind <a href="https://matplotlib.org"><code>matplotlib</code></a> und <a href="https://plotly.com/graphing-libraries/"><code>plotly</code></a>. Im folgenden benutzen wir vorallem <a href="https://seaborn.pydata.org"><code>seaborn</code></a>, welches eine Erweiterung von <a href="https://matplotlib.org"><code>matplotlib</code></a> ist und speziell für statistische Visualisierungen entwickelt wurde.</p>
+</div>
+</div>
+<section id="histogramme" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="histogramme"><span class="header-section-number">2.3.1</span> Histogramme</h3>
+<p>Ein Histogramm ist eine angenäherte Darstellung der Verteilung einer intervallskalierten Variable. Es liefert wertvolle Informationen über:</p>
+<ul>
+<li><strong>Zentralwert:</strong> Wo liegen die Daten?</li>
+<li><strong>Varianz:</strong> Wie stark streuen die Daten?</li>
+<li><strong>Verteilung:</strong> Wie häufig treten bestimmte Werte auf?</li>
+</ul>
+<p><span class="citation" data-cites="fig:sec-dataexploratory-sets-histogram">(<a href="../references.html#ref-fig:sec-dataexploratory-sets-histogram" role="doc-biblioref"><strong>fig:sec-dataexploratory-sets-histogram?</strong></a>)</span> zeigt ein Histogramm des jährlichen Einkommens aus dem Datensatz <code>loan50</code>.</p>
+<div id="cell-fig:sec-dataexploratory-sets-histogram" class="cell styled-output" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram of the annual income</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">"annual_income"</span>], bins<span class="op">=</span><span class="dv">10</span>, stat <span class="op">=</span> <span class="st">'count'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="figsec-dataexploratory-sets-histogram" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="data_sets_files/figure-html/figsec-dataexploratory-sets-histogram-output-1.png" width="585" height="429" class="figure-img"></p>
+<figcaption>Histogramm des jährlichen Einkommens</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="konstruktion-eines-histogramms" class="level4" data-number="2.3.1.1">
+<h4 data-number="2.3.1.1" class="anchored" data-anchor-id="konstruktion-eines-histogramms"><span class="header-section-number">2.3.1.1</span> Konstruktion eines Histogramms</h4>
+<p>Ein Histogramm wird in wenigen Schritten erstellt. Meinst wird dies bereits für uns wie in <code>seaborn</code> erledigt, es ist jedoch hilfreich, die Schritte zu kennen, um die Visualisierung besser zu verstehen, da sie manchmal abgewandelt wird.</p>
+<ul>
+<li><strong>Binning:</strong> Teilen Sie die Werte der beobachteten Variablen <span class="math inline">\(x_i\)</span> in eine Reihe von Intervallen (<em>Bins</em> oder <em>Buckets</em>) auf.</li>
+<li><strong>Zählen:</strong> Erfassen Sie, wie viele Werte in jedes Intervall fallen (z. B. 5% der Werte).</li>
+<li><strong>Intervall-Eigenschaften:</strong> Die Intervalle der <em>Bins</em> sollten aufeinander folgen, sich nicht überlappen und idealerweise die gleiche Breite haben.</li>
+<li><strong>Darstellung:</strong> Die Anzahl der Werte in jedem Intervall wird entlang der y-Achse aufgetragen. Für relative Häufigkeiten wird durch die Stichprobengröße geteilt.</li>
+<li>Wenn die Intervalle gleich breit sind, wird die y-Achse als Häufigkeit interpretiert. Wenn die Intervalle unterschiedlich breit sind, wird die y-Achse als Dichte interpretiert. Dazu wird die Höhe der Balken so skaliert, dass die Fläche unter dem Histogramm <span class="math inline">\(1\)</span> ergibt.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="sec-dataexploratory-data_variable-measures" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-dataexploratory-data_variable-measures"><span class="header-section-number">2.4</span> Maße für Variablen</h2>
+<p>Variablen lassen sich auf verschiedene Weisen beschreiben. <strong>Lagemaße</strong> bzw. die <strong>zentrale Tendenz</strong> gibt an, wo die Daten liegen, während die <strong>Streuung</strong> angibt, wie weit die Daten von diesem Wert entfernt sind. Die <strong>Zusammenhänge</strong> zwischen Variablen können durch Korrelationen und Kovarianzen beschrieben werden.</p>
+<section id="lagemaße" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="lagemaße"><span class="header-section-number">2.4.1</span> Lagemaße</h3>
+<p>Variablen können auf verschiedene Weisen beschrieben werden. Beispielweise können Lagemaße wie der Arithmetischer Mittelwert (Mean), Median oder Modus genutzt werden, um die zentrale Tendenz der Daten zu beschreiben. Welche wir einsetzen, hängt vom Messniveau der Variablen ab.</p>
+<p>Betrachten wir eine mindestens intervall-skalierte Variable <span class="math inline">\(x \in \mathbb{R}^n\)</span> aus den Datensatz, so können wir die folgenden Lagemaße berechnen:</p>
+<ul>
+<li>das <em>maximale</em> Element bzw. der <em>Höchstwert</em>: <span class="math display">\[
+x^{max} = \max_i x_i,
+\]</span></li>
+</ul>
+<div id="0e1e367c" class="cell styled-output" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>income_max <span class="op">=</span> df[<span class="st">"annual_income"</span>].<span class="bu">max</span>()</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>income_max<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>income_max=np.int64(325000)</code></pre>
+</div>
+</div>
+<ul>
+<li>der minimale Wert bzw. das <em>Minimum</em>:</li>
+</ul>
+<div id="b5af4b6c" class="cell styled-output" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>income_min <span class="op">=</span> df[<span class="st">"annual_income"</span>].<span class="bu">min</span>()</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>income_min<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>income_min=np.int64(28800)</code></pre>
+</div>
+</div>
+<p><span class="math display">\[
+x^{min} = \min_i x_i,
+\]</span> - der <em>arithmetische Mittelwert</em>: <span class="math display">\[
+\overline{x} = \frac1n \sum_{i=1}^n x_i = \frac{x_1 + x_2 + \cdots + x_n}{n},
+\]</span></p>
+<div id="d654339e" class="cell styled-output" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>income_mean <span class="op">=</span> df[<span class="st">"annual_income"</span>].mean()</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>income_mean<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>income_mean=np.float64(86170.0)</code></pre>
+</div>
+</div>
+<ul>
+<li>der <em>Median</em> ist der Wert, der die Daten in zwei gleich große Teile teilt:</li>
+</ul>
+<p><span class="math display">\[
+\widetilde{x} = \begin{cases}
+                x_{(n+1)/2}&amp; n\quad \text{odd}\\
+                \frac{x_{n/2} + x_{n/2+1}}{2}&amp; n\quad \text{even}
+                \end{cases},
+\]</span></p>
+<div id="32b16e85" class="cell styled-output" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>income_median <span class="op">=</span> df[<span class="st">"annual_income"</span>].median()</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>income_median<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>income_median=np.float64(74000.0)</code></pre>
+</div>
+</div>
+<ul>
+<li>Verallgemeinert für <span class="math inline">\(p\in(0,1)\)</span> ist das <em>p-Quantil</em> <span class="math inline">\(\overline{x}_p\)</span> der Wert, der die Daten in zwei Teile teilt, wobei <span class="math inline">\(p\)</span> der Anteil der Daten ist, die kleiner oder gleich <span class="math inline">\(\overline{x}_p\)</span> sind.</li>
+</ul>
+<div id="f9d3d25b" class="cell styled-output" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>income_quartiles <span class="op">=</span> df[<span class="st">"annual_income"</span>].quantile([<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>])</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>income_quartiles<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>income_quartiles=0.25    55750.0
+0.50    74000.0
+0.75    99500.0
+Name: annual_income, dtype: float64</code></pre>
+</div>
+</div>
+<p><span class="math display">\[
+\overline{x}_p = \begin{cases}
+                 \frac12\left(x_{np} + x_{np+1}\right) &amp; pn \in \mathbb{N}\\
+                x_{\lfloor np+1\rfloor} &amp; pn \not\in \mathbb{N}
+                \end{cases}.
+\]</span></p>
+<p>Einige Quantile haben spezielle Namen, wie der Median für <span class="math inline">\(p=0.5\)</span>, das untere und obere Quartil für <span class="math inline">\(p=0.25\)</span> und <span class="math inline">\(p=0.75\)</span> (oder erstes, zweites (Median) und drittes Quartil), respektive.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Wie gut lassen sich Arithmetischer Mittelwert, Median und Mode aus dem Histogramm ablesen?</p>
+</div>
+</div>
+</section>
+<section id="kumulative-histogramme-und-empirische-verteilungsfunktionen" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="kumulative-histogramme-und-empirische-verteilungsfunktionen"><span class="header-section-number">2.4.2</span> Kumulative Histogramme und Empirische Verteilungsfunktionen</h3>
+<p>Als Alternative haben sich kumulative Histogramme, wie in <span class="quarto-unresolved-ref">?fig-sec-dataexploratory-sets-kum-histogram</span>, etabliert, die die kumulative Verteilungsfunktion (Cumulative Density Function / CDF) visualisieren. Diese Funktion gibt an, wie viele Werte kleiner oder gleich einem bestimmten Wert sind. Zur Konstruktion der CDF werden die Daten in aufsteigender Reihenfolge sortiert und die relative Häufigkeit der Werte berechnet.</p>
+<div id="ddebf83b" class="cell styled-output" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram of the annual income</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">"annual_income"</span>], bins<span class="op">=</span><span class="dv">10</span>, stat <span class="op">=</span> <span class="st">'density'</span>, cumulative<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_sets_files/figure-html/cell-19-output-1.png" width="589" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="steuungsmaße" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="steuungsmaße"><span class="header-section-number">2.4.3</span> Steuungsmaße</h3>
+<p>Steuungsmaße beschreiben die Streuung der Daten um den zentralen Wert. Beispiele sind die <em>Spannweite</em>, <em>Varianz</em> und die <em>Standardabweichung</em>.</p>
+<p>Die Spannweite ist die Differenz zwischen dem größten und kleinsten Wert: <span class="math display">\[
+\text{Spannweite} = x^{max} - x^{min}.
+\]</span> Die Varianz ist ein Maß für die mittlere quadratische Abweichung der Daten vom Mittelwert. Die Einheit der Varianz ist das Quadrat der Einheit der Daten: <span class="math display">\[
+\sigma = \sqrt{\operatorname{Var}(x)}.
+\]</span> <span class="math display">\[
+\operatorname{Var}(x) = \frac1n \sum_{i=1}^n (x_i - \mu)^2.
+\]</span></p>
+<p>Die Standardabweichung ist die Quadratwurzel der Varianz. Damit hat sie die gleiche Einheit wie die Daten:</p>
+<p><span class="math display">\[
+\sigma = \sqrt{\operatorname{Var}(x)}.
+\]</span></p>
+<p>In Python können wir die Varianz und Standardabweichung mit <code>pandas</code> oder <code>numpy</code> berechnen:</p>
+<div id="8a6f0249" class="cell styled-output" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Varianz: </span><span class="sc">{</span>df[<span class="st">'annual_income'</span>]<span class="sc">.</span>var()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Standardabweichung: </span><span class="sc">{</span>df[<span class="st">'annual_income'</span>]<span class="sc">.</span>std()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Varianz: 3313901734.6938777
+Standardabweichung: 57566.49837096119</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Korrigerte Stichproben-Varianz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die Varianz einer Stichprobe ist kein erwartungstreuer Schätzer für die Varianz der Grundgesamtheit. Die Begriffe werden wir in <a href="../statistics/interference_basics.html#sec-statistics-pointestimates" class="quarto-xref"><span>Section 5.1</span></a> noch genauer betrachten. Einfach gesagt, die Varianz einer Stichprobe ist tendenziell kleiner als die Varianz der Grundgesamtheit, da wird beim zufälligen Ziehen wahrscheinlich eher aus der Mitte als von den Extremen ziehen. Die korrigierte Stichproben-Varianz wird durch <span class="math inline">\(n-1\)</span> statt <span class="math inline">\(n\)</span> im Nenner definiert. In <code>pandas</code> wird die korrigierte Stichproben-Varianz als Standard verwendet, die unkorrigierte Varianz kann mit dem Parameter <code>ddof=0</code> berechnet werden.</p>
+</div>
+</div>
+</section>
+<section id="zusammenhangsmaße" class="level3" data-number="2.4.4">
+<h3 data-number="2.4.4" class="anchored" data-anchor-id="zusammenhangsmaße"><span class="header-section-number">2.4.4</span> Zusammenhangsmaße</h3>
+<p>In der Statistik beschreiben Zusammenhangsmaße die Beziehung zwischen zwei Variablen. Beispiele sind die <em>Kovarianz</em> und der <em>Korrelationskoeffizient</em>. Diese geben einen Hinweis darauf, ob und wie stark zwei Variablen zusammenhängen.</p>
+<section id="korrrelation" class="level4" data-number="2.4.4.1">
+<h4 data-number="2.4.4.1" class="anchored" data-anchor-id="korrrelation"><span class="header-section-number">2.4.4.1</span> Korrrelation</h4>
+<p>In der Statistik beschreibt der Begriff <em>Korrelation</em> oder <em>Abhängigkeit</em> jede statistische Beziehung zwischen <em>bivariaten Daten</em> (gepaarte Daten) oder <em>Zufallsvariablen</em>.</p>
+<p>In unserem Datensatz können wir beispielsweise untersuchen: - <code>emp_length</code>: Anzahl der Jahre im Beruf - <code>annual_income</code>: Jährliches Einkommen - <code>debt_to_income</code>: Schulden-Einkommens-Verhältnis</p>
+<p>Um die Daten besser zu verstehen können wir zunächst einen Scatterplot <span class="quarto-unresolved-ref">?fig-sec-dataexploratory-sets-scatterplot</span> erstellen:</p>
+<div id="02dc2841" class="cell styled-output" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>df_reduced <span class="op">=</span> df[[<span class="st">"emp_length"</span>, <span class="st">"annual_income"</span>, <span class="st">"debt_to_income"</span>]]</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>sns.pairplot(df_reduced)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="data_sets_files/figure-html/cell-21-output-1.png" width="711" height="711" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Diskussion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Wie interpretieren Sie den Zusammenhang zwischen den Variablen <code>emp_length</code>, <code>annual_income</code> und <code>debt_to_income</code>? Was würde entsprechend Ihres Domänenwissens Sinn ergeben?</p>
+</div>
+</div>
+</section>
+<section id="kovarianz" class="level4" data-number="2.4.4.2">
+<h4 data-number="2.4.4.2" class="anchored" data-anchor-id="kovarianz"><span class="header-section-number">2.4.4.2</span> Kovarianz</h4>
+<p>Die Kovarianz ist ein Maß für die gemeinsame Variabilität zweier Variablen. Sie ist definiert als der Erwartungswert des Produkts der Abweichungen der Zufallsvariablen von ihren Erwartungswerten:</p>
+<p><span class="math display">\[
+\operatorname{cov}(x, y) = \frac1n \sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y}).
+\]</span></p>
+<p>In Python können wir die Kovarianz-Matrix mit <code>pandas</code> direkt berechnen:</p>
+<div id="75644746" class="cell styled-output" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df_reduced.cov()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">emp_length</th>
+<th data-quarto-table-cell-role="th">annual_income</th>
+<th data-quarto-table-cell-role="th">debt_to_income</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">emp_length</td>
+<td>12.393174</td>
+<td>1.924082e+04</td>
+<td>-0.051111</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">annual_income</td>
+<td>19240.824468</td>
+<td>3.313902e+09</td>
+<td>-8584.039227</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">debt_to_income</td>
+<td>-0.051111</td>
+<td>-8.584039e+03</td>
+<td>0.918269</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Die Kovarianz kann Wertebereiche von <span class="math inline">\(-\infty\)</span> bis <span class="math inline">\(+\infty\)</span> annehmen und ist nicht normiert. Um die Stärke der Beziehung zu quantifizieren, verwenden wir den Korrelationskoeffizienten, der leichter zu interpretieren ist.</p>
+</section>
+<section id="korrelationskoeffizient" class="level4" data-number="2.4.4.3">
+<h4 data-number="2.4.4.3" class="anchored" data-anchor-id="korrelationskoeffizient"><span class="header-section-number">2.4.4.3</span> Korrelationskoeffizient</h4>
+<p>Der Korrelationskoeffizient nach Pearson ist ein Maß für den linearen Zusammenhang zwischen zwei Variablen. Er ist definiert als das Verhältnis der Kovarianz der beiden Variablen zur Multiplikation ihrer Standardabweichungen:</p>
+<p><span class="math display">\[
+\rho_{x,y} = \operatorname{corr}(x, y) = \frac{\operatorname{cov}(x, y)}{\sigma_x \sigma_y},
+\]</span></p>
+<p>wobei <span class="math inline">\(\sigma_x\)</span> und <span class="math inline">\(\sigma_y\)</span> die Standardabweichungen der Variablen sind.</p>
+<p>In Python können wir den Korrelationskoeffizienten mit <code>numpy</code> berechnen:</p>
+<div id="6a4a1df0" class="cell styled-output" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df_reduced.corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">emp_length</th>
+<th data-quarto-table-cell-role="th">annual_income</th>
+<th data-quarto-table-cell-role="th">debt_to_income</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">emp_length</td>
+<td>1.000000</td>
+<td>0.093156</td>
+<td>-0.014857</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">annual_income</td>
+<td>0.093156</td>
+<td>1.000000</td>
+<td>-0.155610</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">debt_to_income</td>
+<td>-0.014857</td>
+<td>-0.155610</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Ein Korrelationskoeffizient von <span class="math inline">\(1\)</span> bedeutet eine perfekte positive Korrelation, <span class="math inline">\(-1\)</span> eine perfekte negative Korrelation und <span class="math inline">\(0\)</span> keine Korrelation. In diesem fall beobachten wir eine leichte negative Korrelation zwischen <code>emp_length</code> und <code>debt_to_income</code> und eine leichte positive Korrelation zwischen <code>emp_length</code> und <code>annual_income</code>. Eine Variable kann auch mit sich selbst perfekt korreliert sein, was zu einem Korrelationskoeffizienten von <span class="math inline">\(1\)</span> führt.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Vorsicht
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Der Korrelationskoeffizient misst nur lineare Zusammenhänge. Nicht-lineare Zusammenhänge werden nicht erfasst. Es kann auch Zusammenhänge geben, die nicht durch den Korrelationskoeffizienten erfasst werden, z.B. wenn die Daten nicht normalverteilt sind. In <a href="#fig-sect-dataexploratory-sets-correlation" class="quarto-xref">Figure&nbsp;<span>2.1</span></a> sehen wir einige Beispiele in denen definitiv Korrelationen bestehen, die aber nicht durch den Korrelationskoeffizienten erfasst werden.</p>
+<div id="fig-sect-dataexploratory-sets-correlation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sect-dataexploratory-sets-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://datatab.de/assets/tutorial/Korrelationskoeffizient.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sect-dataexploratory-sets-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Beispiele Korrelationskoeffizient <span class="citation" data-cites="Korrelationskoeffizient">DATAtab (<a href="../references.html#ref-Korrelationskoeffizient" role="doc-biblioref">retrieved 2025</a>)</span>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Korrelation vs.&nbsp;Kausalität
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Eine hohe Korrelation bedeutet nicht notwendigerweise Kausalität. Es ist wichtig, die Daten und den Kontext zu verstehen, um sinnvolle Schlussfolgerungen zu ziehen. Ansonsten besteht die Gefahr, dass Zusammenhänge fehlinterpretiert werden. Ein bekanntes Beispiel ist die Korrelation zwischen der Anzahl der Piraten und der globalen Temperatur, die in <a href="#fig-correlation_pirates_climate" class="quarto-xref">Figure&nbsp;<span>2.2</span></a> dargestellt ist. In der Wissenschaft begegnet man diesem Problem mit kontrollierten Experimenten.</p>
+<div id="fig-correlation_pirates_climate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-correlation_pirates_climate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/de/PiratesVsTemp%28en%29.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correlation_pirates_climate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: Korrelation Piraten Klima <span class="citation" data-cites="PiratesVsTemp">RedAndr and Mikhail Ryazanov (<a href="../references.html#ref-PiratesVsTemp" role="doc-biblioref">2011</a>)</span>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Korrelationskoeffizient" class="csl-entry" role="listitem">
+DATAtab. retrieved 2025. <span>“<span>Korrelationskoeffizient Tutorial Image</span>.”</span> <a href="https://datatab.de/assets/tutorial/Korrelationskoeffizient.png">https://datatab.de/assets/tutorial/Korrelationskoeffizient.png</a>.
+</div>
+<div id="ref-PiratesVsTemp" class="csl-entry" role="listitem">
+RedAndr and Mikhail Ryazanov. 2011. <span>“<span class="nocase">Satirical diagram illustrating the influence of pirates decreasing on global warming as per Pastafarian beliefs</span>.”</span> <a href="https://commons.wikimedia.org/wiki/File:PiratesVsTemp(en).svg">https://commons.wikimedia.org/wiki/File:PiratesVsTemp(en).svg</a>.
+</div>
+<div id="ref-wickham2014tidy" class="csl-entry" role="listitem">
+Wickham, Hadley. 2014. <span>“Tidy Data.”</span> <em>Journal of Statistical Software</em> 59: 1–23.
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/jhumci\.github\.io\/MECH-B-4-MLDS-MLDS1");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../dataexploratory/data_science.html" class="pagination-link" aria-label="Data Science, Statisik, und Machine Learning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science, Statisik, und Machine Learning</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../dataexploratory/tutorial.html" class="pagination-link" aria-label="Tutorial: Getting Data Tidy and finding Correlation">
+        <span class="nav-page-text">Tutorial: Getting Data Tidy and finding Correlation</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Machine Learning and Data Science 1 SoSe 2025 (MECH-B-4-MLDS-MLDS1)</p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> Julian Huber</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/dataexploratory/data_sets.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Tests – Machine Learning and Data Science 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../statistics/tutorial_2.html" rel="next">
+<link href="../statistics/interference_basics.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2bcf7be291d79734ada0dea710dd8908.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-6bb28caf545b74723fac9b4cde4209ed.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/interference_advanced.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tests</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Machine Learning and Data Science 1</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Einleitung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../dataexploratory/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Umgang mit Daten und Explorative Analyse</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/data_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science, Statisik, und Machine Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/data_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Sets</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial: Getting Data Tidy and finding Correlation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistik</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stichproben und Zufallsvariablen</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Verteilungen</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial: Monte Carlo Simulation of Equipment Failure Time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/interference_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interferenz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/interference_advanced.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tutorial_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 2: Understanding Patterns in Grid Loads</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressions-Analyse</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressions-Analyse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/basic_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/advanced_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/expansions_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Interkationsterme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/statistical_learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">statistical_learning.html</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/tutorial2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">tutorial2.html</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#t-test" id="toc-t-test" class="nav-link active" data-scroll-target="#t-test"><span class="header-section-number">6.1</span> T-Test</a>
+  <ul class="collapse">
+  <li><a href="#one-sample-students-t-test" id="toc-one-sample-students-t-test" class="nav-link" data-scroll-target="#one-sample-students-t-test"><span class="header-section-number">6.1.1</span> One-Sample Student’s T-Test</a></li>
+  <li><a href="#beispiel-intelligenz-von-mechatronikstudierenden" id="toc-beispiel-intelligenz-von-mechatronikstudierenden" class="nav-link" data-scroll-target="#beispiel-intelligenz-von-mechatronikstudierenden"><span class="header-section-number">6.1.2</span> Beispiel: Intelligenz von Mechatronikstudierenden</a></li>
+  </ul></li>
+  <li><a href="#zwei-stichproben-t-test" id="toc-zwei-stichproben-t-test" class="nav-link" data-scroll-target="#zwei-stichproben-t-test"><span class="header-section-number">6.2</span> Zwei Stichproben T-Test</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/statistics/interference_advanced.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/interference_advanced.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tests</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-statistics-interference_advanced" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tests</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Nach dem zuvor beschreibenen Prinzip der Hypothesentests, gibt es verschiedene Tests, die auf unterschiedliche Fragestellungen zugeschnitten sind. In diesem Abschnitt werden einige dieser Tests vorgestellt.</p>
+<p>Wir werden uns nur mit einigen typischen Tests beschäftigen. Es gibt noch viele <a href="https://statsandr.com/blog/files/overview-statistical-tests-statsandr.pdf">weitere Tests</a>, die auf spezielle Fragestellungen zugeschnitten sind. Die hier vorgestellten Tests sind jedoch die wichtigsten und werden in der Praxis am häufigsten verwendet.</p>
+<section id="t-test" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="t-test"><span class="header-section-number">6.1</span> T-Test</h2>
+<section id="one-sample-students-t-test" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="one-sample-students-t-test"><span class="header-section-number">6.1.1</span> One-Sample Student’s T-Test</h3>
+<p>Beim One-Sample Student’s T-Test wird die Mittelwert einer Stichprobe mit einem vorgegebenen Wert verglichen. Der Test wird verwendet, wenn die Varianz der Grundgesamtheit unbekannt ist.</p>
+<p>Wir möchten den <strong>Typ I Fehler</strong> (<span class="math inline">\(\alpha\)</span>) festlegen und dann sicherstellen, dass die Wahrscheinlichkeit, dass wir die Nullhypothese fälschlicherweise ablehnen, kleiner oder gleich <span class="math inline">\(\alpha\)</span> ist.</p>
+<p>Um zu beurteilen, wie wahrscheinlich die Stichprobe ist, wenn die Nullhypothese wahr ist, wird die Teststatistik <span class="math inline">\(t\)</span> berechnet. Diese berechnet den Unterschied zwischen <span class="math inline">\(\bar{x}\)</span> und <span class="math inline">\(\mu_0\)</span> in Einheiten der Standardabweichung der Stichprobe. Wörtlich bedeutet die Teststatistik: Um wie viele Standardfehler unterscheidet sich der Stichprobenmittelwert <span class="math inline">\(\bar{x}\)</span> vom vorgegebenen Wert <span class="math inline">\(\mu_0\)</span>.</p>
+<p><span class="math display">\[
+t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}
+\]</span></p>
+<p>wobei <span class="math inline">\(\bar{x}\)</span> der Stichprobenmittelwert, <span class="math inline">\(s\)</span> die Stichprobenstandardabweichung und <span class="math inline">\(n\)</span> die Stichprobengröße ist.</p>
+<p>Die Teststatistik <span class="math inline">\(t\)</span> folgt einer t-Verteilung mit <span class="math inline">\(n-1\)</span> Freiheitsgraden.</p>
+<p>Wenn die Teststatistik <span class="math inline">\(t\)</span> größer ist als der kritische Wert <span class="math inline">\(t_{\alpha}\)</span>, dann lehnen wir die Nullhypothese ab. Der kritische Wert <span class="math inline">\(t_{\alpha}\)</span> wird aus der <a href="https://en.wikipedia.org/wiki/Student%27s_t-distribution">t-Verteilungstabelle</a> abgelesen.</p>
+</section>
+<section id="beispiel-intelligenz-von-mechatronikstudierenden" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="beispiel-intelligenz-von-mechatronikstudierenden"><span class="header-section-number">6.1.2</span> Beispiel: Intelligenz von Mechatronikstudierenden</h3>
+<div id="f6724c6f" class="cell styled-output" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesentest</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Stichprobe der Mechatronikstudierenden</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="dv">110</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Nullhypothese</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>mu_0 <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Stichprobe</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.random.normal(mu, sigma, n)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Schätzer für den Mittelwert und Standardabweichung</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>X_hat <span class="op">=</span> np.mean(X)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>mu_hat <span class="op">=</span> np.std(X)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Normale Verteilung aus der Schätzung</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">90</span>, <span class="dv">130</span>, <span class="dv">100</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot der geschätzten Verteilung und Nullhypothese</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>plt.hist(X, bins<span class="op">=</span><span class="dv">20</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Stichprobe'</span>, color<span class="op">=</span><span class="st">'blue'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>plt.axvline(mu_0, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Nullhypothese'</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Verteilung der Stichprobe und Nullhypothese'</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wert'</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Häufigkeit'</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="interference_advanced_files/figure-html/cell-2-output-1.png" width="585" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="1">
+<li>Definition der Hypothesen:
+<ul>
+<li><span class="math inline">\(H_0: \mu_x = 100\)</span> (Der Mittelwert der Mechatronikstudierenden ist gleich dem Durchschnitt)</li>
+<li><span class="math inline">\(H_1: \mu_x &gt; 100\)</span> (Der Mittelwert der Mechatronikstudierenden ist größer als der Durchschnitt)</li>
+</ul></li>
+<li>Definition des Signifikanzniveaus: <span class="math inline">\(\alpha = 0.05\)</span>
+<ul>
+<li>Die Wahrscheinlichkeit, dass wir die Nullhypothese fälschlicherweise ablehnen, soll maximal 5% betragen oder <span class="math inline">\(P(H_1 | H_0) \leq 0.05\)</span>.</li>
+</ul></li>
+<li>Berechnung des Teststatistik <span class="math inline">\(t\)</span>:</li>
+</ol>
+<ul>
+<li><span class="math inline">\(T = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}= 6.50\)</span></li>
+</ul>
+<div id="18ba48c0" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X_bar <span class="op">=</span> np.mean(X)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> np.std(X)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> (X_bar <span class="op">-</span> mu_0) <span class="op">/</span> (s <span class="op">/</span> np.sqrt(n))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f't = </span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>t = 6.635426522014312</code></pre>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Berechnung des kritischen Wertes <span class="math inline">\(t_{\alpha}\)</span>:</li>
+</ol>
+<ul>
+<li>Zunächst müssen wir uns entscheiden, ob wir ein- oder zweiseitig testen. Da wir wissen, dass der Mittelwert größer ist, wählen wir einen einseitigen Test.</li>
+<li>Aus der <a href="https://en.wikipedia.org/wiki/Student%27s_t-distribution">t-Verteilungstabelle</a> können wir für <span class="math inline">\(n-1 = 99\)</span> Freiheitsgrade und <span class="math inline">\(\alpha = 0.05\)</span> den kritischen Wert <span class="math inline">\(t_{\alpha} = 1.660\)</span> ablesen.</li>
+</ul>
+<div id="fbdd0bf7" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> t <span class="im">as</span> t_table</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>t_alpha <span class="op">=</span> t_table.ppf(<span class="dv">1</span> <span class="op">-</span> alpha, n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f't_alpha = </span><span class="sc">{</span>t_alpha<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>t_alpha = 1.6603911559963895</code></pre>
+</div>
+</div>
+<p>Dies können wir, wie folgt visualisieren:</p>
+<div id="b02527f1" class="cell styled-output" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">100</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> t_table.pdf(x, n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, label<span class="op">=</span><span class="st">'t-Verteilung'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, <span class="dv">0</span>, y, where<span class="op">=</span>(x <span class="op">&gt;</span> t_alpha), color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Ablehnungsbereich'</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.axvline(t, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'T'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'t-Verteilung und Ablehnungsbereich'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'t'</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="interference_advanced_files/figure-html/cell-5-output-1.png" width="597" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Auf den ersten Blick kann es so wirken, als hätten wir eine Verteilung, um unsere Null-Hypothese gefittet, für die wir ja gar keine Daten haben (vgl. Beispiel im vorherigen Kapitel). Tatsächlich haben wird jedoch eine neue Zufallsvariable <span class="math inline">\(T\)</span> definiert, die die Differenz zwischen dem Stichprobenmittelwert und dem Mittelwert der Nullhypothese in Einheiten der Standardabweichung der Stichprobe angibt. Diese Zufallsvariable <span class="math inline">\(T\)</span> folgt einer t-Verteilung, die wir aus der Stichprobe berechnen können. Die Daten aus der Stichprobe können wir zum Fitten der Verteilung nutzen, da wir ja annehmen, dass alles was wird auf der Stichprobe basiert, auch auf der Grundgesamtheit basiert.</p>
+</div>
+</div>
+<ol start="5" type="1">
+<li>Die Entscheidung basiert auf <span class="math inline">\(T &gt; t_{\alpha}\)</span>,</li>
+</ol>
+<ul>
+<li>da <span class="math inline">\(6.50 &gt; 1.660\)</span> ist, lehnen wir die Nullhypothese ab.</li>
+<li>Die Wahrscheinlichkeit, dass wir einen Mittelwert von 110 erhalten, wenn der Mittelwert tatsächlich 100 beträgt, ist deutlich kleiner als 5%.</li>
+<li>Die Wahrscheinlichkeit, dass wir die Nullhypothese fälschlicherweise ablehnen, obwohl Sie wahr ist <span class="math inline">\(P(\text{Entscheidung für }H_1 | H_0) &lt; 0.05\)</span></li>
+<li>Wir können diese Wahrscheinlichkeit auch genau bestimmen, indem wir sie z.B. aus der t-Verteilung berechnen bzw. aus der Tabelle ablesen. <span class="math inline">\(P(\text{Entscheidung für }H_1 | H_0) = 1.63\cdot 10^{-9}\)</span></li>
+<li>Wir können unsere Null-Hypothese also mit einer Wahrscheinlichkeit von 99.999999837% ablehnen. Vorerst ist unsere These, dass die Mechatronikstudierenden intelligenter sind als der Durchschnitt, nicht falsifiziert.</li>
+</ul>
+<div id="10afa016" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> t_table.cdf(t, n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'p-value = </span><span class="sc">{</span>p_value<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>p-value = 8.691883879308193e-10</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Wir bezeichen dern Wert <span class="math inline">\(p\)</span> als <strong>p-Wert</strong>. Der p-Wert gibt die Wahrscheinlichkeit an, dass wir die Nullhypothese fälschlicherweise ablehnen, wenn sie tatsächlich wahr ist. Je kleiner der p-Wert, desto unwahrscheinlicher ist es, dass wir die Nullhypothese fälschlicherweise ablehnen.</p>
+</div>
+</div>
+<section id="zweiseitiger-test" class="level4" data-number="6.1.2.1">
+<h4 data-number="6.1.2.1" class="anchored" data-anchor-id="zweiseitiger-test"><span class="header-section-number">6.1.2.1</span> Zweiseitiger Test</h4>
+<p>Wir sind bisher davon ausgegaben, dass die Intelligenz von Mechantronikstudierenden entweder gleich oder größer als der Durchschnitt ist. Deswegen, haben wir den Ablehnungsbereich nur für <span class="math inline">\(T &gt; t_{\alpha}\)</span> definiert und einen <strong>einseitigen Test</strong> durchgeführt. Wir könnten aber auch einen Studiengang untersuchen, über den wir weniger wissen. In diesem Fall, könnten wir auch einen <strong>zweiseitigen Test</strong> durchführen, der einen Ablehnungsbereich für <span class="math inline">\(T &gt; t_{\alpha}\)</span> und <span class="math inline">\(T &lt; -t_{\alpha}\)</span> definiert.</p>
+<div id="8082b89a" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>t_alpha <span class="op">=</span> t_table.ppf(<span class="dv">1</span> <span class="op">-</span> alpha<span class="op">/</span><span class="dv">2</span>, n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f't_alpha = </span><span class="sc">{</span>t_alpha<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>t_alpha = 1.9842169515086827</code></pre>
+</div>
+</div>
+<div id="26d57697" class="cell styled-output" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">100</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> t_table.pdf(x, n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, label<span class="op">=</span><span class="st">'t-Verteilung'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, <span class="dv">0</span>, y, where<span class="op">=</span>(x <span class="op">&gt;</span> t_alpha), color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Ablehnungsbereich'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, <span class="dv">0</span>, y, where<span class="op">=</span>(x <span class="op">&lt;</span> <span class="op">-</span>t_alpha), color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.axvline(t, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'T'</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'t-Verteilung und Ablehnungsbereich'</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'t'</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="interference_advanced_files/figure-html/cell-8-output-1.png" width="597" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Die Rechte Grenze des Ablehnungsbereichs ist <span class="math inline">\(t_{\alpha} = 1.984\)</span> wandert nun etwas nach rechts, da die Fläche unter der Kurve nun nur noch <span class="math inline">\(0.025\)</span> beträgt. Wenn wir zweiseitig testen, testen wir also streger, da wir extremere Werte beobachten müssen, um die Nullhypothese abzulehnen.</p>
+<p>Am Vorgehen ändert sich jedoch nichts. Wir berechnen die Teststatistik <span class="math inline">\(T\)</span> und vergleichen sie mit den kritischen Werten <span class="math inline">\(t_{\alpha}\)</span> und <span class="math inline">\(-t_{\alpha}\)</span>, die wird nun aber aus der zweiseitigen t-Verteilungstabelle ablesen.</p>
+<ol type="1">
+<li>Definition der Hypothesen:
+<ul>
+<li><span class="math inline">\(H_0: \mu_x = 100\)</span> (Der Mittelwert der Mechatronikstudierenden ist gleich dem Durchschnitt)</li>
+<li><span class="math inline">\(H_1: \mu_x \neq 100\)</span> (Der Mittelwert der Mechatronikstudierenden ist größer als der Durchschnitt)</li>
+</ul></li>
+<li>Definition des Signifikanzniveaus: <span class="math inline">\(\alpha = 0.05\)</span>
+<ul>
+<li>Die Wahrscheinlichkeit, dass wir die Nullhypothese fälschlicherweise ablehnen, soll maximal 5% betragen oder <span class="math inline">\(P(H_1 | H_0) \leq 0.05\)</span>.</li>
+</ul></li>
+<li>Berechnung des Teststatistik <span class="math inline">\(t\)</span>:</li>
+</ol>
+<ul>
+<li><span class="math inline">\(T = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}= 6.50\)</span></li>
+</ul>
+<div id="5343cff4" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>X_bar <span class="op">=</span> np.mean(X)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> np.std(X)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> (X_bar <span class="op">-</span> mu_0) <span class="op">/</span> (s <span class="op">/</span> np.sqrt(n))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f't = </span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>t = 6.635426522014312</code></pre>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Berechnung des kritischen Wertes <span class="math inline">\(t_{\alpha}\)</span>:</li>
+</ol>
+<ul>
+<li>Nun müssen wir uns entscheiden, ob wir ein- oder zweiseitig testen. In diesem Fall müssen wir einen zweiseitigen Test durchführen.</li>
+<li>Aus der <a href="https://en.wikipedia.org/wiki/Student%27s_t-distribution">t-Verteilungstabelle</a> können wir für <span class="math inline">\(n-1 = 99\)</span> Freiheitsgrade und <span class="math inline">\(\alpha = 0.05\)</span> den kritischen Wert <span class="math inline">\(t_{\alpha} = 1.984\)</span> ablesen.</li>
+</ul>
+<ol start="5" type="1">
+<li>Die Entscheidung basiert auf <span class="math inline">\(T &gt; t_{\alpha}\)</span></li>
+</ol>
+<ul>
+<li>da <span class="math inline">\(6.50 &gt; 1.984\)</span> ist, lehnen wir die Nullhypothese weiterhin ab.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="zwei-stichproben-t-test" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="zwei-stichproben-t-test"><span class="header-section-number">6.2</span> Zwei Stichproben T-Test</h2>
+<p>Häufig ist man daran interessiert, ob sich die Mittelwerte zweier Stichproben unterscheiden. Auch in diesem Fall kann man einen T-Test einsetzen und die Teststatistik <span class="math inline">\(t\)</span> berechnen (vgl. Fig. <span class="quarto-unresolved-ref">?fig-sec-statistics-hypothesistests-two-sample-t-test</span>)</p>
+<p>Vorraussetzung ist jedoch, dass die Varianzen der beiden Stichproben gleich sind und die Stichproben unabhängig voneinander sind.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Two_sample_ttest.svg" class="img-fluid" alt="Zwei Stichproben T-Test Inductiveload (n.d.)"> {#fig-sec-statistics-hypothesistests-two-sample-t-test}</p>
+<ol start="0" type="1">
+<li>Prüfen der Vorraussetzungen:
+<ul>
+<li>Die Varianzen der beiden Stichproben sind gleich</li>
+<li>Die Stichproben sind unabhängig</li>
+</ul></li>
+<li>Definition der Hypothesen:
+<ul>
+<li><span class="math inline">\(H_0: \mu_1 = \mu_2\)</span> (Die Mittelwerte der beiden Stichproben sind gleich)</li>
+<li><span class="math inline">\(H_1: \mu_1 \neq \mu_2\)</span> (Die Mittelwerte der beiden Stichproben sind ungleich)</li>
+</ul></li>
+<li>Berechnung der Teststatistik <span class="math inline">\(t\)</span>:</li>
+</ol>
+<ul>
+<li><span class="math inline">\(T = \frac{\bar{x}_1 - \bar{x}_2}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}\)</span></li>
+<li>wobei <span class="math inline">\(s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}\)</span> die gepoolte Standardabweichung ist.</li>
+</ul>
+<ol start="4" type="1">
+<li>Berechnung des kritischen Wertes <span class="math inline">\(t_{\alpha}\)</span>:</li>
+</ol>
+<ul>
+<li>Aus der <a href="https://en.wikipedia.org/wiki/Student%27s_t-distribution">t-Verteilungstabelle</a> können wir für <span class="math inline">\(n_1 + n_2 - 2\)</span> Freiheitsgrade und <span class="math inline">\(\alpha = 0.05\)</span> den kritischen Wert <span class="math inline">\(t_{\alpha}\)</span> ablesen.</li>
+</ul>
+<ol start="5" type="1">
+<li>Die Entscheidung basiert auf <span class="math inline">\(T &gt; t_{\alpha}\)</span> oder <span class="math inline">\(T &lt; -t_{\alpha}\)</span></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Test auf Differenz der Erwartungswerte
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Statt auf Gleichheit der Mittelwerte zu testen, könnte man auch auf einen bestimmten Unterschied <span class="math inline">\(\omega_0\)</span> testen. In diesem Fall, würde die Nullhypothese <span class="math inline">\(H_0: \mu_1 - \mu_2 = \omega_0\)</span> lauten. Die Teststatistik <span class="math inline">\(T\)</span> würde dann wie folgt berechnet werden: <span class="math display">\[
+T = \frac{\bar{x}_1 - \bar{x}_2 - \omega_0}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}.
+\]</span></p>
+<p>Die Freiheitsgrade der t-Verteilung wären weiterhin <span class="math inline">\(n_1 + n_2 - 2\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Test bei gepaarten Stichproben
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In manchen Fällen, haben wir zwei Stichproben, die nicht unabhängig voneinander sind. Ein Beispiel wäre, wenn wir ein Experiment haben, bei dem wir die gleiche Bauteil vor und nach einer Behandlung messen. In diesem Fall, können wir die Differenz der beiden Stichproben berechnen und dann einen One-Sample T-Test durchführen.</p>
+<p>Zum Beispiel könnte man ein Verfahren zum Härten eines metallischen Bauteils untersuchen. Im Experiment würde man den Härtungsgrad vor und nach der Behandlung messen.</p>
+<p>Tabelle: Härtungsgrad in HR (Rockwell) vor und nach der Behandlung</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Vor der Behandlung</td>
+<td>49.1</td>
+<td>49.2</td>
+<td>49.3</td>
+<td>49.4</td>
+<td>49.5</td>
+<td>49.6</td>
+<td>49.7</td>
+<td>49.8</td>
+<td>49.0</td>
+<td>50.0</td>
+</tr>
+<tr class="even">
+<td>Nach der Behandlung</td>
+<td>50.2</td>
+<td>50.3</td>
+<td>50.3</td>
+<td>50.2</td>
+<td>50.7</td>
+<td>50.7</td>
+<td>50.8</td>
+<td>50.9</td>
+<td>51.0</td>
+<td>51.1</td>
+</tr>
+<tr class="odd">
+<td>Differenz</td>
+<td>1.1</td>
+<td>1.1</td>
+<td>1.0</td>
+<td>0.9</td>
+<td>1.2</td>
+<td>1.1</td>
+<td>1.1</td>
+<td>1.1</td>
+<td>1.0</td>
+<td>1.1</td>
+</tr>
+</tbody>
+</table>
+<p>Die durchschnittliche Differenz der Stichproben beträgt <span class="math inline">\(\bar{d} = 1.07\)</span> und die Standardabweichung der Differenz beträgt <span class="math inline">\(s_d = 0.08\)</span>. Wir könnten nun einen One-Sample T-Test durchführen, um zu testen, ob die Behandlung den Härtungsgrad signifikant erhöht.</p>
+<div id="d8b35fdd" class="cell styled-output" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> np.array([<span class="fl">1.1</span>, <span class="fl">1.1</span>, <span class="fl">1.0</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>, <span class="fl">1.1</span>, <span class="fl">1.1</span>, <span class="fl">1.1</span>, <span class="fl">1.0</span>, <span class="fl">1.1</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>d_bar <span class="op">=</span> np.mean(d)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>s_d <span class="op">=</span> np.std(d)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(d)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'd_bar = </span><span class="sc">{</span>d_bar<span class="sc">}</span><span class="ss">, s_d = </span><span class="sc">{</span>s_d<span class="sc">}</span><span class="ss">, n = </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> d_bar <span class="op">/</span> (s_d <span class="op">/</span> np.sqrt(n))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f't = </span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>d_bar = 1.0699999999999998, s_d = 0.07810249675906655, n = 10
+t = 43.323033664571994</code></pre>
+</div>
+</div>
+<ol start="0" type="1">
+<li>Prüfen der Vorraussetzungen:
+<ul>
+<li>Die Differenz der Stichproben ist normalverteilt</li>
+<li>Die Stichproben sind gepaart</li>
+</ul></li>
+<li>Definition der Hypothesen:
+<ul>
+<li><span class="math inline">\(H_0: \mu = 0\)</span> (Die Behandlung hat keinen Effekt)</li>
+<li><span class="math inline">\(H_1: \mu &gt; 0\)</span> (Die Behandlung erhöht den Härtungsgrad)</li>
+</ul></li>
+<li>Berechnung der Teststatistik <span class="math inline">\(t\)</span>:
+<ul>
+<li><span class="math inline">\(T = \frac{\bar{x}}{s / \sqrt{n}} = \frac{1.07}{0.08/\sqrt{10}} = 43.2\)</span></li>
+</ul></li>
+<li>Berechnung des kritischen Wertes <span class="math inline">\(t_{\alpha}\)</span>:</li>
+</ol>
+<ul>
+<li>Aus der <a href="https://en.wikipedia.org/wiki/Student%27s_t-distribution">t-Verteilungstabelle</a> können wir für <span class="math inline">\(n-1 = 9\)</span> Freiheitsgrade und <span class="math inline">\(\alpha = 0.05\)</span> den kritischen Wert <span class="math inline">\(t_{\alpha} = 1.833\)</span> ablesen.</li>
+</ul>
+<p>::: {#4979abe9 .cell .styled-output execution_count=10} ``` {.python .cell-code} from scipy.stats import t as t_table alpha = 0.05</p>
+<p>t_alpha = t_table.ppf(1 - alpha, n-1) print(f’t_alpha = {t_alpha}’) ```</p>
+<p>::: {.cell-output .cell-output-stdout} <code>t_alpha = 1.8331129326536335</code> ::: :::</p>
+<ol start="4" type="1">
+<li>Entscheidung basiert auf <span class="math inline">\(T &gt; t_{\alpha}\)</span></li>
+</ol>
+<ul>
+<li>Da <span class="math inline">\(43.2 &gt; 1.833\)</span> ist, lehnen wir die Nullhypothese ab. Die Behandlung hat den Härtungsgrad signifikant erhöht.</li>
+</ul>
+<section id="chi-quadrat-test" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="chi-quadrat-test"><span class="header-section-number">6.3</span> Chi-Quadrat-Test</h2>
+<p>Nicht alle Test basieren auf der Normalverteilung oder einer T-Verteilung. Einige Schätzer folgen einer anderen Verteilung, wie z.B. der Chi-Quadrat(<span class="math inline">\(\mathcal{X}^2\)</span>)-Verteilung. Der Chi-Quadrat-Test ist ein statistischer Test, der für verschiedene Fragestellungen eingesetzt werden kann.</p>
+<ul>
+<li><strong>Verteilungstest</strong> (auch Anpassungstest genannt): Hier wird geprüft, ob vorliegende Daten auf eine bestimmte Weise verteilt sind.</li>
+<li><strong>Unabhängigkeitstest</strong>: Hier wird geprüft, ob zwei Merkmale stochastisch unabhängig sind.</li>
+<li><strong>Homogenitätstest</strong>: Hier wird geprüft, ob zwei oder mehr Stichproben derselben Verteilung bzw. einer homogenen Grundgesamtheit entstammen.</li>
+</ul>
+<section id="verteilungs-test" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="verteilungs-test"><span class="header-section-number">6.3.1</span> Verteilungs-Test</h3>
+<p>Der Chi-Quadrat-Test kann verwendet werden, um zu prüfen, ob zwei oder mehr Stichproben derselben Verteilung entstammen. Als Beispiel mit mechantronischem Anwendungsfall könnten wir die Qualität eines Lieferanten mit denen unserer bisherigen vergleichen. Wir können dabei die Häufigkeiten von OK-Teilen und verschiedenen Arten von Fehlern zählen und dann prüfen, ob der Lieferant die gleiche Qualität liefert.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Lieferant</th>
+<th>OK</th>
+<th>Fehler 1</th>
+<th>Fehler 2</th>
+<th>Fehler 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>100</td>
+<td>10</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Bisherige</td>
+<td>0.81</td>
+<td>0.08</td>
+<td>0.06</td>
+<td>0.05</td>
+</tr>
+</tbody>
+</table>
+<p>Wir können die beobachteten Häufigkeiten in einer Kontingenztafel darstellen und dann die erwarteten Häufigkeiten berechnen, wenn die beiden Lieferanten die gleiche Qualität liefern würden.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Lieferant</th>
+<th>OK</th>
+<th>Fehler 1</th>
+<th>Fehler 2</th>
+<th>Fehler 3</th>
+<th>Summe</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A (Observed)</td>
+<td>100</td>
+<td>10</td>
+<td>5</td>
+<td>5</td>
+<td>120</td>
+</tr>
+<tr class="even">
+<td>Bisherige (Expected)</td>
+<td>97.2</td>
+<td>9.6</td>
+<td>7.2</td>
+<td>6.0</td>
+<td>120</td>
+</tr>
+</tbody>
+</table>
+<ol start="0" type="1">
+<li>Überprüfen der Vorraussetzungen:
+<ul>
+<li>Die Stichproben sind unabhängig</li>
+<li>Die erwarteten Häufigkeiten sind größer als 5</li>
+</ul></li>
+<li>Defintion der Hypothesen:
+<ul>
+<li><span class="math inline">\(H_0\)</span>: Der neue Lieferant liefert die gleiche Qualität (Identische Verteilung)</li>
+<li><span class="math inline">\(H_1\)</span>: Die neue Lieferanten liefert abweichende Qualität</li>
+</ul></li>
+</ol>
+<ul>
+<li></li>
+</ul>
+<ol start="2" type="1">
+<li>Berechnung der Teststatistik <span class="math inline">\(Z\)</span></li>
+</ol>
+<ul>
+<li>Die Test-Statistik <span class="math inline">\(Z\)</span> wird über die Summe der quadrierten Differenzen zwischen beobachteten <span class="math inline">\(O_i\)</span> und erwarteten Häufigkeiten <span class="math inline">\(E_i\)</span> berechnet. Dabei liegt der Ablehnungsbereich immer rechts. <span class="math display">\[
+Z = \sum{\frac{(O_i - E_i)^2}{E_i}}
+\]</span></li>
+</ul>
+<div id="b560e3c6" class="cell styled-output" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>O <span class="op">=</span> np.array([<span class="dv">100</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">5</span>])</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> np.array([<span class="fl">0.81</span>, <span class="fl">0.08</span>, <span class="fl">0.06</span>, <span class="fl">0.05</span>]) <span class="op">*</span> np.<span class="bu">sum</span>(O)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'O = </span><span class="sc">{</span>O<span class="sc">}</span><span class="ss">, E = </span><span class="sc">{</span>E<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> np.<span class="bu">sum</span>((O <span class="op">-</span> E)<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> E)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Z = </span><span class="sc">{</span>Z<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O = [100  10   5   5], E = [97.2  9.6  7.2  6. ]
+Z = 0.9362139917695469</code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Berechnung des kritischen Wertes <span class="math inline">\(Z_{\alpha}\)</span>:</li>
+</ol>
+<ul>
+<li>Der kritische Wert <span class="math inline">\(Z_{\alpha}\)</span> wird aus der Chi-Quadrat-Verteilungstabelle abgelesen. Die Anzahl der Freiheitsgrade <span class="math inline">\(df\)</span> entspricht der Anzahl der Kategorien minus 1.</li>
+<li>In diesem Fall haben wir 4 Kategorien, also <span class="math inline">\(df = 4 - 1 = 3\)</span> Freiheitsgrade.</li>
+<li>Für <span class="math inline">\(\alpha = 0.05\)</span> beträgt der kritische Wert <span class="math inline">\(Z_{\alpha} = 7.815\)</span>.</li>
+</ul>
+<p>Die Chi-Quadrat-Verteilung ist asymmetrisch und hat eine hohe Wahrscheinlichkeit für Werte nahe 0. Abbildung <span class="quarto-unresolved-ref">?fig-sec-statistics-hypothesistests-chi2-distribution</span> zeigt die Chi-Quadrat-Verteilung und den Ablehnungsbereich für <span class="math inline">\(\alpha = 0.05\)</span>. Der Ablehnungsbereich ist rot markiert.</p>
+<div id="3dfd4723" class="cell styled-output" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">100</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> chi2.pdf(x, <span class="dv">3</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, label<span class="op">=</span><span class="st">'Chi-Quadrat-Verteilung'</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, <span class="dv">0</span>, y, where<span class="op">=</span>(x <span class="op">&gt;</span> <span class="fl">7.815</span>), color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Ablehnungsbereich'</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>plt.axvline(Z, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Z'</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Chi-Quadrat-Verteilung und Ablehnungsbereich'</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Z'</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="interference_advanced_files/figure-html/cell-13-output-1.png" width="597" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Die Entscheidung basiert auf <span class="math inline">\(Z &gt; Z_{\alpha}\)</span></li>
+</ol>
+<ul>
+<li>Da <span class="math inline">\(Z = 0.936 &lt; 7.815 =  Z_{\alpha}\)</span> ist, können wir die Nullhypothese nicht ablehnen. Der neue Lieferant liefert die gleiche Qualität wie der bisherige Lieferant.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Test auf bestimmte Verteilung
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Anstelle einer Empirischen Grundgesamtheit, könnten wir auch eine bestimmte Verteilung annehmen und prüfen, ob die Daten dieser Verteilung entsprechen. In diesem Fall, würden wir die erwarteten Häufigkeiten basierend auf der angenommenen Verteilung berechnen und dann den Chi-Quadrat-Test durchführen.</p>
+</div>
+</div>
+</section>
+<section id="unabhängigkeitstest" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="unabhängigkeitstest"><span class="header-section-number">6.3.2</span> Unabhängigkeitstest</h3>
+<p>Der Chi-Quadrat-Test kann auch verwendet werden, um zu prüfen, ob zwei Merkmale <span class="math inline">\(X\)</span> mit <span class="math inline">\(m\)</span> Kategorien und <span class="math inline">\(Y\)</span> mit <span class="math inline">\(k\)</span> Kategorien stochastisch unabhängig sind.</p>
+<p>Hierzu kann man eine Kontingenztafel erstellen, die die Häufigkeiten der Kombinationen der beiden Merkmale enthält:</p>
+<table class="caption-top table" data-quarto-postprocess="true" data-border="1">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td data-quarto-table-cell-role="th">\( Y_1 \)</td>
+<td data-quarto-table-cell-role="th">\( Y_2 \)</td>
+<td data-quarto-table-cell-role="th">\(\dots\)</td>
+<td data-quarto-table-cell-role="th">\( Y_r \)</td>
+<td data-quarto-table-cell-role="th">\( \sum \)</td>
+</tr>
+<tr class="even">
+<td>\( X_1 \)</td>
+<td>\( n_{11} \)</td>
+<td>\( n_{12} \)</td>
+<td>\(\dots\)</td>
+<td>\( n_{1r} \)</td>
+<td>\( n_{1.} \)</td>
+</tr>
+<tr class="odd">
+<td>\( X_2 \)</td>
+<td>\( n_{21} \)</td>
+<td>\( n_{22} \)</td>
+<td>\(\dots\)</td>
+<td>\( n_{2r} \)</td>
+<td>\( n_{2.} \)</td>
+</tr>
+<tr class="even">
+<td>\( \vdots \)</td>
+<td>\( \vdots \)</td>
+<td>\( \vdots \)</td>
+<td>\( \ddots \)</td>
+<td>\( \vdots \)</td>
+<td>\( \vdots \)</td>
+</tr>
+<tr class="odd">
+<td>\( X_m \)</td>
+<td>\( n_{m1} \)</td>
+<td>\( n_{m2} \)</td>
+<td>\(\dots\)</td>
+<td>\( n_{mr} \)</td>
+<td>\( n_{m.} \)</td>
+</tr>
+<tr class="even">
+<td>\( \sum \)</td>
+<td>\( n_{.1} \)</td>
+<td>\( n_{.2} \)</td>
+<td>\(\dots\)</td>
+<td>\( n_{.r} \)</td>
+<td>\( n \)</td>
+</tr>
+</tbody>
+</table>
+<p>Für die Zeilen und Spalten der Kontingenztafel werden die Randhäufigkeiten berechnet:</p>
+<p><span class="math display">\[
+n_{i.} = \sum_{j=1}^{r} n_{ij} \quad \text{und} \quad n_{.j} = \sum_{i=1}^{m} n_{ij}
+\]</span></p>
+<p>Die erwarteten Häufigkeiten <span class="math inline">\(p_{ij}\)</span> für jede Zelle der Kontingenztafel werden berechnet als das Produkt der Randhäufigkeiten geteilt durch die Gesamtanzahl der Beobachtungen:</p>
+<p><span class="math display">\[
+p_{ij} = \frac{n_{i.} \cdot n_{.j}}{n},
+\]</span></p>
+<p>und die relativen Randhäufigkeiten als</p>
+<p><span class="math display">\[
+p_{i.} = \frac{n_{i.}}{n} \quad \text{und} \quad p_{.j} = \frac{n_{.j}}{n}.
+\]</span></p>
+<p>Aus den Rechenregeln der Wahrscheinlichkeit in Kapitel <a href="sampling.html" class="quarto-xref"><span>Chapter 3</span></a> folgt für unabhängige Ereignisse, dass die Wahrscheinlichkeit des gemeinsamen Eintretens der beiden Ereignisse gleich dem Produkt der Einzelwahrscheinlichkeiten ist:</p>
+<p><span class="math display">\[
+P(A \cap B) = P(A) \cdot P(B).
+\]</span></p>
+<p>Für die Kontingenztafel bedeutet dies, dass die erwarteten Häufigkeiten <span class="math inline">\(p_{ij}\)</span> gleich dem Produkt der Randhäufigkeiten <span class="math inline">\(p_{i.}\)</span> und <span class="math inline">\(p_{.j}\)</span> sind, wenn die beiden Merkmale unabhängig voneinander sind. Wenn dies für alle Zellen nahezu zutrifft, dann können wir die Nullhypothese annehmen, dass die beiden Merkmale unabhängig voneinander sind.</p>
+<p>Die Testgröße <span class="math inline">\(\mathcal{X}^2\)</span> wird dann berechnet als die Summe der quadrierten Differenzen zwischen beobachteten und erwarteten Häufigkeiten, normiert durch die erwarteten Häufigkeiten:</p>
+<p><span class="math display">\[
+\mathcal{X}^2 = \sum_{i=1}^{m} \sum_{j=1}^{r} \frac{(n_{ij} - p_{ij})^2}{p_{ij}}.
+\]</span></p>
+<p>Die Testgröße <span class="math inline">\(\mathcal{X}^2\)</span> folgt einer Chi-Quadrat-Verteilung mit <span class="math inline">\((m-1)(r-1)\)</span> Freiheitsgraden.</p>
+</section>
+<section id="homogenitätstest" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="homogenitätstest"><span class="header-section-number">6.3.3</span> Homogenitätstest</h3>
+<p>Auf ähnliche Weise kann der Chi-Quadrat-Test auch verwendet werden, um zu prüfen, ob zwei oder mehr Stichproben derselben Verteilung bzw. einer homogenen Grundgesamtheit entstammen. In diesem Fall wird eine Kontingenztafel erstellt, die die Häufigkeiten der Kombinationen der Stichproben enthält. Die Testgröße <span class="math inline">\(\mathcal{X}^2\)</span> wird dann berechnet als die Summe der quadrierten Differenzen zwischen beobachteten und erwarteten Häufigkeiten, normiert durch die erwarteten Häufigkeiten.</p>
+</section>
+</section>
+<section id="kolmogorov-smirnov-test" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="kolmogorov-smirnov-test"><span class="header-section-number">6.4</span> Kolmogorov-Smirnov-Test</h2>
+<p>Der <span class="math inline">\(\mathcal{X}^2\)</span>-Test funktionier auf der Basis von Häufigkeiten und ist daher nur für diskrete Daten geeignet. Der Kolmogorov-Smirnov-Test hingegen kann auch für kontinuierliche Daten verwendet werden. Der Kolmogorov-Smirnov-Test, kann z.B. angewendet werden, um zu prüfen ob,</p>
+<ul>
+<li>zwei Zufallsvariablen eine identische Verteilung besitzen oder</li>
+<li>eine Zufallsvariable einer zuvor angenommenen Wahrscheinlichkeitsverteilung folgt.</li>
+</ul>
+</section>
+<section id="übersicht-über-statistische-tests" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="übersicht-über-statistische-tests"><span class="header-section-number">6.5</span> Übersicht über Statistische Tests</h2>
+<p>Grundsätzlich setzen wir statischtische Tests ein, wenn wir eine Hypothese über eine Grundgesamtheit aufstellen und diese Hypothese auf Basis einer Stichprobe überprüfen wollen. Die Hypothese wird in eine Nullhypothese <span class="math inline">\(H_0\)</span> und eine Alternativhypothese <span class="math inline">\(H_1\)</span> aufgeteilt. Die Nullhypothese ist die Hypothese, die wir widerlegen wollen, während die Alternativhypothese die Hypothese ist, die wir annehmen, wenn die Nullhypothese widerlegt wird.</p>
+<p>Test ermöglichen und zu unterschieden, ob die durch uns auf Grund der Stichprobe getroffene Aussage auf die Grundgesamtheit übertragbar oder möglicherweise nur Zufall sind.</p>
+
+
+</section>
+</div>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Inductiveload_TwoSampleTTest" class="csl-entry" role="listitem">
+Inductiveload, based on original work by Jhguch. n.d. <span>“Two Sample t-Test.”</span> <a href="https://commons.wikimedia.org/wiki/File:Two_sample_ttest.svg">https://commons.wikimedia.org/wiki/File:Two_sample_ttest.svg</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/jhumci\.github\.io\/MECH-B-4-MLDS-MLDS1");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../statistics/interference_basics.html" class="pagination-link" aria-label="Interferenz">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interferenz</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../statistics/tutorial_2.html" class="pagination-link" aria-label="Tutorial 2: Understanding Patterns in Grid Loads">
+        <span class="nav-page-text">Tutorial 2: Understanding Patterns in Grid Loads</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Machine Learning and Data Science 1 SoSe 2025 (MECH-B-4-MLDS-MLDS1)</p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> Julian Huber</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/statistics/interference_advanced.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

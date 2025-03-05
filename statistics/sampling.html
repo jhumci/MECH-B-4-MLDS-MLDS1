@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Stichproben und Zufallsvariablen – Machine Learning and Data Science 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../statistics/distributions.html" rel="next">
+<link href="../statistics/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2bcf7be291d79734ada0dea710dd8908.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-6bb28caf545b74723fac9b4cde4209ed.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.35.2.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/sampling.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stichproben und Zufallsvariablen</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Machine Learning and Data Science 1</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Einleitung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../dataexploratory/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Umgang mit Daten und Explorative Analyse</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/data_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science, Statisik, und Machine Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/data_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Sets</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial: Getting Data Tidy and finding Correlation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistik</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/sampling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stichproben und Zufallsvariablen</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Verteilungen</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial: Monte Carlo Simulation of Equipment Failure Time</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/interference_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interferenz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/interference_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tutorial_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 2: Understanding Patterns in Grid Loads</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressions-Analyse</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressions-Analyse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/basic_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/advanced_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/expansions_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Interkationsterme</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/statistical_learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">statistical_learning.html</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/tutorial2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">tutorial2.html</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sampling-aus-einer-population" id="toc-sampling-aus-einer-population" class="nav-link active" data-scroll-target="#sampling-aus-einer-population"><span class="header-section-number">3.1</span> Sampling aus einer Population</a></li>
+  <li><a href="#gruppieren-von-daten" id="toc-gruppieren-von-daten" class="nav-link" data-scroll-target="#gruppieren-von-daten"><span class="header-section-number">3.2</span> Gruppieren von Daten</a>
+  <ul class="collapse">
+  <li><a href="#boxplot" id="toc-boxplot" class="nav-link" data-scroll-target="#boxplot"><span class="header-section-number">3.2.1</span> Boxplot</a></li>
+  <li><a href="#experimente" id="toc-experimente" class="nav-link" data-scroll-target="#experimente"><span class="header-section-number">3.2.2</span> Experimente</a></li>
+  </ul></li>
+  <li><a href="#blickpunkte-auf-variablen" id="toc-blickpunkte-auf-variablen" class="nav-link" data-scroll-target="#blickpunkte-auf-variablen"><span class="header-section-number">3.3</span> Blickpunkte auf Variablen</a>
+  <ul class="collapse">
+  <li><a href="#skalenniveaus" id="toc-skalenniveaus" class="nav-link" data-scroll-target="#skalenniveaus"><span class="header-section-number">3.3.1</span> Skalenniveaus</a></li>
+  <li><a href="#im-kontext-von-experimenten" id="toc-im-kontext-von-experimenten" class="nav-link" data-scroll-target="#im-kontext-von-experimenten"><span class="header-section-number">3.3.2</span> Im Kontext von Experimenten</a></li>
+  </ul></li>
+  <li><a href="#wahrscheinlichkeitsrechnung" id="toc-wahrscheinlichkeitsrechnung" class="nav-link" data-scroll-target="#wahrscheinlichkeitsrechnung"><span class="header-section-number">3.4</span> Wahrscheinlichkeitsrechnung</a>
+  <ul class="collapse">
+  <li><a href="#zufallsvariablen" id="toc-zufallsvariablen" class="nav-link" data-scroll-target="#zufallsvariablen"><span class="header-section-number">3.4.1</span> Zufallsvariablen</a></li>
+  </ul></li>
+  <li><a href="#frequentischtische-definition-der-wahrscheinlichkeit" id="toc-frequentischtische-definition-der-wahrscheinlichkeit" class="nav-link" data-scroll-target="#frequentischtische-definition-der-wahrscheinlichkeit"><span class="header-section-number">3.5</span> Frequentischtische Definition der Wahrscheinlichkeit</a>
+  <ul class="collapse">
+  <li><a href="#disjunkte-bzw.-sich-ausschließende-ereignisse" id="toc-disjunkte-bzw.-sich-ausschließende-ereignisse" class="nav-link" data-scroll-target="#disjunkte-bzw.-sich-ausschließende-ereignisse"><span class="header-section-number">3.5.1</span> Disjunkte bzw. Sich-Ausschließende Ereignisse</a></li>
+  <li><a href="#das-komplement-eines-ereignisses" id="toc-das-komplement-eines-ereignisses" class="nav-link" data-scroll-target="#das-komplement-eines-ereignisses"><span class="header-section-number">3.5.2</span> Das Komplement eines Ereignisses</a></li>
+  <li><a href="#nicht-disjunkte-ereignisse" id="toc-nicht-disjunkte-ereignisse" class="nav-link" data-scroll-target="#nicht-disjunkte-ereignisse"><span class="header-section-number">3.5.3</span> Nicht-disjunkte Ereignisse</a></li>
+  </ul></li>
+  <li><a href="#unabhängige-ereignisse" id="toc-unabhängige-ereignisse" class="nav-link" data-scroll-target="#unabhängige-ereignisse"><span class="header-section-number">3.6</span> Unabhängige Ereignisse</a>
+  <ul class="collapse">
+  <li><a href="#beispiel-1-1" id="toc-beispiel-1-1" class="nav-link" data-scroll-target="#beispiel-1-1"><span class="header-section-number">3.6.1</span> Beispiel 1</a></li>
+  <li><a href="#beispiel-2" id="toc-beispiel-2" class="nav-link" data-scroll-target="#beispiel-2"><span class="header-section-number">3.6.2</span> Beispiel 2</a></li>
+  <li><a href="#bedingte-wahrscheinlichkeit" id="toc-bedingte-wahrscheinlichkeit" class="nav-link" data-scroll-target="#bedingte-wahrscheinlichkeit"><span class="header-section-number">3.6.3</span> Bedingte Wahrscheinlichkeit</a></li>
+  <li><a href="#beispiel-3" id="toc-beispiel-3" class="nav-link" data-scroll-target="#beispiel-3"><span class="header-section-number">3.6.4</span> Beispiel</a></li>
+  <li><a href="#satz-von-bayes" id="toc-satz-von-bayes" class="nav-link" data-scroll-target="#satz-von-bayes"><span class="header-section-number">3.6.5</span> Satz von Bayes</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/statistics/sampling.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/sampling.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stichproben und Zufallsvariablen</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-statistics-sampling" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stichproben und Zufallsvariablen</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In diesem Abschnitt werden wir uns mit Stichproben und Zufallsvariablen beschäftigen.</p>
+<p>Die Auswahl unserer <span class="math inline">\(n\)</span> Beobachtungen aus einer Grundgesamtheit wird als Stichprobe bezeichnet. Die Grundgesamtheit ist die Menge <span class="math inline">\(N\)</span> aller möglichen Beobachtungen, die wir untersuchen möchten. Die Stichprobe ist eine Teilmenge der Grundgesamtheit. Im besten Fall zwischen den Beobachtungen in der Stichprobe und der Grundgesamtheit besteht eine Beziehung, die es uns erlaubt, Rückschlüsse auf die Grundgesamtheit zu ziehen.</p>
+<section id="sampling-aus-einer-population" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sampling-aus-einer-population"><span class="header-section-number">3.1</span> Sampling aus einer Population</h2>
+<p>Als Grundgesamtheit (<em>population</em>) bezeichnen wir die Menge aller möglichen Beobachtungen, die wir untersuchen möchten. Die Stichprobe (<em>sample</em>) ist eine Teilmenge der Grundgesamtheit. Im besten Fall besteht eine Beziehung zwischen den Beobachtungen in der Stichprobe und der Grundgesamtheit, die es uns erlaubt, Rückschlüsse auf die Grundgesamtheit zu ziehen. In der Regel können wir nicht alle Daten einer Grundgesamtheit sammeln, da dies zu aufwändig und teuer wäre. Stattdessen sammeln wir eine Stichprobe von Daten und ziehen Rückschlüsse auf die Grundgesamtheit (vgl. Figure @ref(fig-sec-dataexploratory-sampling-sampling)). Die Stichprobe sollte möglichst repräsentativ für die Grundgesamtheit sein, damit wir verallgemeinern können. Hierzu kommen wir in der Regel, wenn wir eine große Stichprobe ziehen und diese zufällig auswählen.</p>
+<div id="cell-fig-sec-dataexploratory-sampling-sampling" class="cell" data-execution_count="1">
+<div id="fig-sec-dataexploratory-sampling-sampling" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sec-dataexploratory-sampling-sampling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>                            <div id="3ff041af-63ae-4379-8b99-90c02f4de6d3" class="plotly-graph-div" style="height:400px; width:700px;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("3ff041af-63ae-4379-8b99-90c02f4de6d3")) {                    Plotly.newPlot(                        "3ff041af-63ae-4379-8b99-90c02f4de6d3",                        [{"line":{"color":"black"},"mode":"lines","showlegend":false,"x":[[1.9,1.8981880088246958,1.8927593315477158,1.883735827536436,1.8711538312567206,1.855064005966851,1.8355311397144654,1.812633884457959,1.7864644393628064,1.757128179548063,1.7247432317779527,1.6894399988070803,1.651360634294563,1.610658470401419,1.5674974003760704,1.5220512186140782,1.4745029208494522,1.4250439672954145,1.3738735117016978,1.3211975994326848,1.2672283377954474,1.2121830419584845,1.1562833599002373,1.09975437991091,1.042823724241368,0.9857206325486728,0.9286750388288904,0.8719166455540432,0.8156739987413284,0.7601735676789685,0.7056388330143205,0.6522893868761842,0.6003400486548033,0.5499999999999998,0.5014719425205008,0.4549512815760999,0.4106253394492435,0.36867260106431077,0.32926199529182076,0.2925522147314912,0.2586910767131506,0.22781492808852066,0.20004809621056896,0.1755023883111374,0.15427664129268248,0.13645632374695238,0.12211319180313362,0.11130500019124512,0.10407526968422387,0.10045311185513339,0.10045311185513339,0.10407526968422387,0.11130500019124512,0.12211319180313362,0.13645632374695238,0.15427664129268237,0.1755023883111374,0.20004809621056885,0.22781492808852077,0.2586910767131505,0.2925522147314913,0.32926199529182065,0.3686726010643109,0.4106253394492433,0.4549512815761,0.5014719425205005,0.5500000000000003,0.6003400486548034,0.6522893868761842,0.7056388330143203,0.7601735676789688,0.8156739987413285,0.8719166455540432,0.9286750388288901,0.9857206325486731,1.042823724241368,1.0997543799109097,1.156283359900237,1.2121830419584847,1.2672283377954474,1.3211975994326846,1.373873511701698,1.4250439672954145,1.4745029208494522,1.5220512186140782,1.5674974003760704,1.610658470401419,1.651360634294563,1.68943999880708,1.724743231777953,1.757128179548063,1.7864644393628064,1.8126338844579588,1.8355311397144654,1.855064005966851,1.8711538312567206,1.8837358275364362,1.8927593315477158,1.8981880088246958,1.9]],"y":[[1.0,1.057081527690908,1.1139332082163744,1.1703261199243693,1.2260331884629714,1.2808301011286385,1.3344962100942948,1.3868154208802546,1.4375770624904218,1.4865767357100377,1.5336171361491764,1.5785088487178853,1.6210711103339008,1.66113253779178,1.6985318178625812,1.7331183568453021,1.764752886954563,1.7933080271028239,1.8186687958190664,1.840733074238596,1.8594120172996664,1.8746304114911876,1.8863269777109872,1.8944546180151287,1.8989806052647071,1.8998867149064875,1.897169298356748,1.8908392976928394,1.880922201593301,1.8674579427039477,1.8505007368432016,1.830118864694123,1.8063943968622023,1.7794228634059945,1.7493128691712942,1.716185656477749,1.6801746169188325,1.6414247542409766,1.6000921004646624,1.5563430875985445,1.5103538774764937,1.4623096524160657,1.4124038695546695,1.3608374818659523,1.3078181289931021,1.2535593011572868,1.1982794795078868,1.1422012563760149,1.0855504389737642,1.0285551401482609,0.9714448598517389,0.9144495610262356,0.8577987436239849,0.8017205204921135,0.7464406988427131,0.6921818710068982,0.6391625181340477,0.5875961304453308,0.5376903475839342,0.48964612252350637,0.4436569124014552,0.3999078995353377,0.35857524575902333,0.3198253830811676,0.2838143435222511,0.25068713082870586,0.22057713659400502,0.19360560313779762,0.16988113530587678,0.1494992631567985,0.13254205729605206,0.11907779840669908,0.10916070230716057,0.10283070164325192,0.10011328509351247,0.10101939473529287,0.10554538198487129,0.11367302228901266,0.12536958850881252,0.14058798270033346,0.1592669257614039,0.18133120418093363,0.20669197289717622,0.235247113045437,0.26688164315469776,0.301468182137419,0.33886746220822006,0.37892888966609917,0.42149115128211434,0.46638286385082384,0.5134232642899623,0.5624229375095781,0.6131845791197452,0.6655037899057055,0.7191698988713616,0.7739668115370285,0.8296738800756313,0.8860667917836259,0.942918472309092,0.9999999999999998]],"type":"scatter"},{"line":{"color":"black"},"mode":"lines","showlegend":false,"x":[[3.4,3.399194670588754,3.396781925132318,3.3927714789050825,3.3871794805585425,3.380028447096378,3.371347173206429,3.3611706153146486,3.349539750827914,3.3365014131324724,3.3221081030124235,3.3064177772475913,3.289493615242028,3.271403764622853,3.252221066833809,3.2320227638284793,3.210890187044201,3.1889084299090733,3.1661660052007545,3.142754488636749,3.11876815013131,3.094303574203771,3.0694592710667723,3.0443352799604044,3.019032766329497,2.993653614466077,2.9683000172572847,2.943074064690686,2.918077332773924,2.893410474523986,2.8691728146730315,2.8454619497227487,2.82237335495769,2.8,2.778431974453556,2.757756125144933,2.738055706421886,2.7194100449174714,2.7018942201296983,2.685578762102885,2.670529367428067,2.656806634706009,2.6444658205380307,2.633556617027172,2.624122951685637,2.616202810554201,2.6098280852458373,2.6050244445294424,2.601811230970766,2.600201383046726,2.600201383046726,2.601811230970766,2.6050244445294424,2.6098280852458373,2.616202810554201,2.624122951685637,2.633556617027172,2.6444658205380307,2.656806634706009,2.670529367428067,2.6855787621028853,2.7018942201296983,2.7194100449174714,2.738055706421886,2.757756125144933,2.778431974453556,2.8000000000000003,2.8223733549576906,2.8454619497227487,2.869172814673031,2.893410474523986,2.918077332773924,2.943074064690686,2.9683000172572847,2.993653614466077,3.019032766329497,3.0443352799604044,3.069459271066772,3.094303574203771,3.11876815013131,3.142754488636749,3.166166005200755,3.1889084299090733,3.210890187044201,3.2320227638284793,3.252221066833809,3.271403764622853,3.289493615242028,3.3064177772475913,3.3221081030124235,3.3365014131324724,3.349539750827914,3.3611706153146486,3.371347173206429,3.380028447096378,3.3871794805585425,3.392771478905083,3.396781925132318,3.399194670588754,3.4]],"y":[[1.0,1.0253695678626258,1.0506369814294998,1.075700497744164,1.1004591948724316,1.1248133782793948,1.148664982264131,1.1719179648356688,1.1944786944401875,1.216256326982239,1.237163171621856,1.2571150438746157,1.2760316045928448,1.2938366834630133,1.3104585857167028,1.3258303808201344,1.3398901719798058,1.3525813453790327,1.3638527981418074,1.3736591441060426,1.3819608965776295,1.3887246273294167,1.3939231012048832,1.3975353857845016,1.3995469356732033,1.3999496510695502,1.398741910380777,1.395928576752373,1.3915209784859115,1.3855368634239769,1.3780003274858674,1.3689417176418326,1.3583975097165344,1.3464101615137753,1.3330279418539086,1.3183047362123328,1.3022998297417034,1.285077668551545,1.2667076002065167,1.247263594488242,1.2268239455451084,1.2054709566293624,1.1832906086909643,1.1603722141626456,1.1368080573302675,1.112693022736572,1.0881242131146163,1.06320055838934,1.038022417321673,1.012691173399227,0.9873088266007729,0.961977582678327,0.93679944161066,0.9118757868853837,0.8873069772634281,0.8631919426697325,0.8396277858373544,0.8167093913090359,0.7945290433706375,0.7731760544548918,0.7527364055117579,0.7332923997934834,0.7149223314484547,0.6977001702582968,0.6816952637876672,0.6669720581460914,0.6535898384862244,0.6416024902834656,0.6310582823581674,0.6219996725141326,0.6144631365760231,0.6084790215140885,0.604071423247627,0.601258089619223,0.60005034893045,0.6004530643267968,0.6024646142154984,0.6060768987951167,0.6112753726705833,0.6180391034223705,0.6263408558939573,0.6361472018581926,0.6474186546209673,0.6601098280201942,0.6741696191798656,0.6895414142832974,0.7061633165369867,0.7239683954071552,0.7428849561253841,0.7628368283781439,0.783743673017761,0.8055213055598125,0.8280820351643312,0.8513350177358691,0.8751866217206051,0.8995408051275682,0.9242995022558361,0.9493630185705004,0.9746304321373742,0.9999999999999999]],"type":"scatter"},{"hoverinfo":"text","marker":{"color":"blue","opacity":0.5,"size":4},"mode":"markers","name":"Population","text":["good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math"],"x":[0.5925958844769439,1.0721239748253768,0.9835777491419941,0.34176559345393065,1.3038819043655188,1.004609689116224,1.0853099079354889,1.398202796952448,0.9963334325556866,0.9623128447254606,1.4897355536621542,1.6116096589636444,1.2905341640106018,1.0473175476293208,1.2662400890074867,1.0867608633791457,0.9021103342794765,0.3362691632699678,0.46797242468569555,0.8042145877966378,0.5483934033995383,1.3272798379928044,0.9779351978862576,0.7790265359138009,0.7703525600921408,1.0481391253008163,1.272315628128613,0.6476260951104459,0.328742325982605,1.5440037570692446,0.44186064589443586,1.2166258905566167,1.4764437178118346,1.4206014558910056,1.1716376840925107,1.2332574498017996,0.9149798066569844,1.0178910722520849,0.7667202709000166,0.8517378344489013,1.6095376606692606,0.14185847068172186,1.8042324962004406,1.280517001372243,0.9992329739548117,0.5635591430305749,0.8542935552090394,0.1369174694270685,0.16982574701587694,1.305538003182859,1.2601795696891873,1.054503967722247,1.711338870016779,1.2251859850828692,0.8754174312465277,1.4419482506126826,1.7156236144420083,1.2085506940191966,1.4924786106916381,0.9601328626291654,0.5764628179837005,0.8808329517729678,1.059859102626636,0.7100375969060836,0.8474852119992726,0.3571547495462565,1.3970514996763137,1.203652945921121,1.2886916289817019,1.2633363072746222,1.1014793604440258,1.2308931367260034,1.7798954141160341,1.328607976552533,0.8767720395725737,0.9406366490803656,1.0957341423019624,1.5227946097058482,0.6020058484231254,1.5346453094181,1.5225165861754006,0.7826134495258237,0.8354866100200318,1.0779282189941406,0.8054257525346483,0.9852811051088837,0.9464520324011627,0.6829565734967628,1.1957962995185392,0.47633277593678547,1.0200581939488376,0.9923061521749842,1.0501303865714804,0.6995602367069231,1.0150215945416419,0.5303381662225792,0.31406292763340604,0.825546071548674,1.5534666279230407,1.0598286830110617,1.0456095589269119,0.6869392757906057,0.8085676625551469,0.4271447210868905,1.5463350354513636,1.0039056885713424,0.6070679675685092,1.0101358547531398,1.0950559644422024,1.2157885803264261,0.9023467330184597,1.037376530864545,1.0206257427756438,1.3094015781583854,0.4968055572175206,1.4329566744085573,1.121781406270674,1.0605260880016854,1.109912027475204,0.7816274346694582,1.1745501486795185,1.510868275904775,0.7537754886694722,1.1940710932277125,1.1187607975201193,0.40433520618315566,1.2067818305941516,1.352876493179947,1.3772798305850287,0.7775502531005765,0.7218006260253029,1.1189215705300712,1.0094506595040482,0.945352549134486,1.0387671521360624,0.9837283943435361,0.2354452920454576,0.8157612773407178,0.7205476621035409,1.0866704406475345,1.4301950121254607,0.9952281456305623,0.8441416114625107,0.8772917110119207,0.9221128241330584,1.5394451029552245,0.5585910520265975,0.9592321675298441,1.3196681495541445,0.8991622732673075,1.37966446471106,1.0505190354102412,1.3636555077232841,0.8536809028909877,1.0632539041139195,1.0288495885214168,0.9887868527921044,1.0384555928652115,1.065663578275557,0.92933211938242,0.7644218028370158,0.6098309463956815,0.7244104537712845,0.5212981682742694,1.7145867236122525,1.1774561728280177,0.6278384674861492,1.31645283860455,1.1704605436782263,0.9474811806032755,0.9601303707078475,1.0163106512718267,0.9152465831538029,1.0904510318744145,0.9607861631491931,1.131347933682318,0.7242529998193261,0.9841390294592056,1.6758585967814361,1.1647196448642025,0.9424153711881844,1.4743228397224086,1.503857326180543,1.5665671362870275,0.9670025044584649,0.6124648476555516,1.104051188838773,0.8498138642026783,0.33613631155818935,1.0371580373235505,1.74322538597756,1.2965689385090955,1.27138806396636,0.5316744268160896,0.8372312541105231,0.5109948871033878,0.8837272967334826,1.3081853423754806,1.5127279429257223,1.126726853325761],"y":[1.4097653483792643,0.976922856329768,0.8554641184174039,0.53019028733775,1.4533633352652962,1.0068749713153813,1.0325939190255624,0.5550004982441458,0.9972966346320806,0.8602657731911254,1.063696094615288,0.8829701474817406,0.49021257224667003,1.1962177246090149,1.5830502569194387,1.1951028638829715,1.2760152782554974,0.895916356304807,1.2424566166554707,1.7387991588535843,0.6174561437379467,1.3930615590842566,1.0813686907297608,1.246363160281031,1.0650477744523257,0.7857508671265232,1.8322928125372975,0.9684002171713689,0.5595817318486052,1.1634381966596965,0.5525877537761634,1.39713335531833,1.2063590035743377,0.8600746803850898,0.9623494612303025,0.3930733324551656,1.2379630087377402,1.0126029827700471,0.4679713347329757,1.0585368806968738,1.5872634356242064,1.0260133999556686,1.1765257561232612,0.8202936916112483,1.0138897925329204,0.2875693613970579,1.3567581540641505,0.8905925406751999,0.7491073686193597,1.7042889214062482,0.949663998474604,0.6577244844167706,0.7157672516758584,0.82493625852964,0.9119733312118706,0.7637710074116397,1.4446968731754408,1.590692106846053,1.1438412510464062,1.077843823265144,1.3563505373257871,1.8830439296903292,0.8890407813392186,1.3654325709249329,1.7747669845766365,0.823285876458223,1.4856677574153836,0.40146225924811774,1.1460705051616802,0.9782540165535512,0.2786783115683693,1.691576580232525,1.0270704934487747,0.24663187864012603,0.5565967756590938,0.5525560889056791,0.2879410978475164,1.262436308892839,1.4906467442996216,1.4765669218767652,0.3928878859491557,0.7872135441867486,1.2952897111506376,1.032887729437679,1.4827124181274411,1.0288053856107682,0.5843972546986456,0.6285182947056598,0.8321620444489537,1.0923614167039464,1.0187398960789502,0.9672790076563756,0.26135867494145903,0.878249599005966,0.8866364497006735,1.0183183038978267,0.9013526942992411,1.0854083528399423,1.0891552192357525,1.048173876859357,1.0091256988708708,0.6384940443180547,1.4473316345870069,0.9691211775834258,0.6414515162308567,1.8782581870952182,1.2480381384194086,0.7095159556631561,1.7093267525957656,1.1133528841401445,1.3828152623483747,1.0599071948677568,0.9902463601541152,0.19074654195273422,0.44064842014612315,0.5473451696062853,0.6526734637401443,1.1437415701178815,0.91201073727308,0.944892430127711,0.5375406090611117,0.6093109366860636,1.5407592410327093,1.1606562478320321,1.8511331936820143,1.2936355900416794,0.5459503428917273,0.5774103404322721,1.0164906479299698,0.9849556966478105,1.1588883638170893,1.671614137024303,1.0088597275373354,1.0890318538054888,0.9854650488692109,1.0328464834253852,0.9093111071317348,0.3940998899510163,1.3225328746022416,0.9844704043808655,0.8965686306647995,1.426097874629768,1.0026947712631942,1.3706841663549854,1.3500949396071589,1.12731366363072,0.6368654018126996,0.9993136984336614,1.1071602029711907,1.5541744007860938,0.7532142002849049,1.7691836282636577,1.468182961003663,1.0097108248449853,0.9942814701910138,1.5774571410426534,0.9789388154448081,0.4742063874612409,1.8436557052903615,0.4869169857960861,1.257973613430698,0.5722593162688785,0.6931662853580902,0.8905482858196909,1.4553176509102712,0.7012354493455213,1.7809254168639221,1.7508541980306367,1.0446528778827155,0.9662557329751947,0.9185325883249903,1.0017061501838904,0.9935477654773806,1.6080149631253149,0.9493323360336251,1.255267579260744,0.29137233495240755,1.013678882912976,0.7162115690298241,1.1929133250620285,1.0894090654182145,1.4101541327030662,0.7420489009292313,0.4498482399888869,1.6607405021894173,0.3894775957051472,0.7684755192147569,0.9457155096860902,0.8748711363156475,1.7251999313416442,1.49224727431,0.776500389207471,0.8039121160711313,0.4813932155818186,1.2599720145155033,1.6801356121277422,0.23622821142587558,0.7674255948757631,0.5597795796368649,0.332840638827537],"type":"scatter"},{"hoverinfo":"text","marker":{"color":"blue","opacity":0.5,"size":4},"mode":"markers","showlegend":false,"text":["good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math"],"x":[0.4271447210868905,1.4206014558910056,0.33613631155818935,0.8372312541105231,0.7205476621035409],"y":[0.9691211775834258,0.8600746803850898,0.8748711363156475,1.2599720145155033,1.3225328746022416],"type":"scatter"},{"hoverinfo":"text","marker":{"color":"red","size":8},"mode":"markers","name":"Samples","text":["good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math","good at math","bad at math"],"x":[2.4271447210868904,3.4206014558910054,2.3361363115581892,2.837231254110523,2.7205476621035407],"y":[0.9691211775834258,0.8600746803850898,0.8748711363156475,1.2599720145155033,1.3225328746022416],"type":"scatter"},{"mode":"text","showlegend":false,"text":["Population","Samples"],"textposition":"top center","x":[0.2,3.2],"y":[1.8,1.8],"type":"scatter"},{"line":{"color":"black","width":2},"mode":"lines","showlegend":false,"x":[0.4271447210868905,2.4271447210868904],"y":[0.9691211775834258,0.9691211775834258],"type":"scatter"},{"line":{"color":"black","width":2},"mode":"lines","showlegend":false,"x":[1.4206014558910056,3.4206014558910054],"y":[0.8600746803850898,0.8600746803850898],"type":"scatter"},{"line":{"color":"black","width":2},"mode":"lines","showlegend":false,"x":[0.33613631155818935,2.3361363115581892],"y":[0.8748711363156475,0.8748711363156475],"type":"scatter"},{"line":{"color":"black","width":2},"mode":"lines","showlegend":false,"x":[0.8372312541105231,2.837231254110523],"y":[1.2599720145155033,1.2599720145155033],"type":"scatter"},{"line":{"color":"black","width":2},"mode":"lines","showlegend":false,"x":[0.7205476621035409,2.7205476621035407],"y":[1.3225328746022416,1.3225328746022416],"type":"scatter"}],                        {"height":400,"showlegend":true,"width":700,"xaxis":{"visible":false},"yaxis":{"visible":false},"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('3ff041af-63ae-4379-8b99-90c02f4de6d3');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-sampling-sampling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Sampling from a population.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Allerdings kommt es hier zu einen Unterschied zwischen der Sichtweise der <em>klassischen Statistik</em> und dem Ansatz den den viele <em>Data Scientists</em> verfolgen. In der klassischen Statistik wird die Stichprobe so gewählt, dass sie repräsentativ für die Grundgesamtheit ist.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Wenn wir die Leistungsfähigkeit in Mathematik unter Studierenden auswerten wollen, dann sollten wir unsere Stichprobe nicht nur im Studiengang Mechatronik nachfragen.</p>
+</div>
+</div>
+<p>Als <em>Data Scientist</em> hingegen, sind wir oft an den Daten interessiert, die uns zur Verfügung stehen. Wir haben keine Möglichkeit, die Grundgesamtheit zu beeinflussen. Wir müssen also mit den Daten arbeiten, die wir haben und uns dabei bewusst sein, dass wir einem <em>Sampling-Bias</em> unterliegen.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Wenn wir die die Lebensdauer eines Werkzeugs auf einer 5-Achs-Fräsmaschinene prognostizieren wollen, können wir die Modelle nicht zwischen Betrieben vergleichen, die die Maschine regelmäßig warten und solchen, die das nicht tun.</p>
+</div>
+</div>
+</section>
+<section id="gruppieren-von-daten" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="gruppieren-von-daten"><span class="header-section-number">3.2</span> Gruppieren von Daten</h2>
+<p>Wir könnten in unserem Beispiel von letztem Mal bewusst einen Bias (Verzerrung) bei der Auswahl der Daten einführen.</p>
+<p>Wenn wir Beispielweise nur die Einkommen von personen mit einem Kredit auf ihr Haus laufen haben (<code>mortgage</code>) nach ihrem Einkommen fragen und nicht die von Personen die zur Miete wohnen (<code>rent</code>), dann haben wir einen Bias in unseren Daten und erhalten keine repräsentative Stichprobe.</p>
+<div id="469f7341" class="cell styled-output" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lesen der CSV-Datei in einen DataFrame</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"../_assets/dataexploratory/loan50.csv"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df.columns</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"annual_income"</span>, bins<span class="op">=</span><span class="dv">30</span>, hue<span class="op">=</span><span class="st">"homeownership"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="sampling_files/figure-html/cell-3-output-1.png" width="576" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="e7641210" class="cell styled-output" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"homeownership"</span>)[<span class="st">"annual_income"</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>homeownership
+mortgage    99807.692308
+own         67666.666667
+rent        71928.571429
+Name: annual_income, dtype: float64</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Inwiefern entsprechen die Daten hier unten Erwartungen?</p>
+</div>
+</div>
+<p>Im vorliegenden beispiel haben wir Beobachtungen, die eine ordinal skalierte Variable (<code>homeownership</code>) und eine metrisch skalierte Variable (<code>annual_income</code>) enthalten. Wir interessieren und für den Zusammenhang. Die in der letzten Einheit besprochenen Metriken Korrelation und Kausalität sind hier nicht anwendbar, da die Variable <code>homeownership</code> eine ordinal Variable ist.</p>
+<section id="boxplot" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="boxplot"><span class="header-section-number">3.2.1</span> Boxplot</h3>
+<p>Für den Vergleich von ordinalen und metrischen Variablen eignet sich der Boxplot. Hier können wir die Verteilung der metrischen Variable für die verschiedenen Ausprägungen der ordinalen Variable darstellen. Die Box zeigt den Median und das erste und dritte Quartil. Die Whisker zeigen die Ausdehnung der Daten und die Punkte sind Ausreißer. Die Whisker werden in der Regel als 1.5-fache der Interquartilsdistanz definiert und starten am 1. bzw. 3. Quartil.</p>
+<div id="1c4d2bf8" class="cell styled-output" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Box plot</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"homeownership"</span>, y<span class="op">=</span><span class="st">"annual_income"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Actual observations</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>sns.stripplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"homeownership"</span>, y<span class="op">=</span><span class="st">"annual_income"</span>, color<span class="op">=</span><span class="st">"black"</span>, size<span class="op">=</span><span class="dv">3</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="sampling_files/figure-html/cell-5-output-1.png" width="618" height="429" class="figure-img"></p>
+<figcaption>Boxplot der jährlichen Einkommen nach Art des Wohneigentums.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Der Boxplot lässt sich einfach berechnen und interpretieren. Allerdings ist er nicht sehr aussagekräftig, wenn die Verteilungen der Daten sehr unterschiedlich sind. In diesem Fall ist es sinnvoll, die Daten zu transformieren oder eine andere Visualisierung zu wählen.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Eine moderne Alternative zum Boxplot ist der Violinplot. Dieser zeigt die Verteilung der Daten als geschätzte Wahrscheinlichkeitsdichte (für uns bisher geglättetes Histogram). Der Violinplot ist informativer als der Boxplot, da er die Verteilung der Daten besser darstellt. <img src="https://imgs.xkcd.com/comics/violin_plots_2x.png" id="fig-violin-plot" class="img-fluid" alt="xkcd violiolin-plots"></p>
+</div>
+</div>
+</section>
+<section id="experimente" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="experimente"><span class="header-section-number">3.2.2</span> Experimente</h3>
+<p>In der Statistik unterscheiden wir zwischen <em>Beobachtungsstudien</em> und <em>Experimenten</em>. In <em>Beobachtungsstudien</em> beobachten wir die Daten, ohne sie zu beeinflussen. In <em>Experimenten</em> hingegen manipulieren wir die Daten, um einen Effekt zu beobachten. In der Regel sind Experimente aufwendiger und teurer als Beobachtungsstudien, aber sie erlauben uns, Kausalzusammenhänge zu untersuchen.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Eine Beobachtungsstudie könnte longitudinal sein, d.h. über einen längeren Zeitraum Beobachtungen sammeln: z.B. wie sich die <a href="https://media.licdn.com/dms/image/v2/C4E12AQELtqr71MWseQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1618928075307?e=1743638400&amp;v=beta&amp;t=rCguWezdBwq7diYbJUz-XXecyGSKu4_pTm_j1fD2mEE">Leistungsfähigkeit im Mathematik von Studierenden über die Zeit</a> verändert. Oder Querschnittsstudien, bei denen wir zu einem bestimmten Zeitpunkt Daten sammeln: z.B. wie die Leistungsfähigkeit in Mathematik von Studierenden in verschiedenen Studiengängen ist.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Wenn wir klären wollen, ob unterschiedliche Studiengänge eine Auswirkung auf die Leistungsfähigkeit in Mathematik haben, könnten wir eine experimentelle Studie durchführen, bei der wir Studierende zufällig verschiedenen Studiengängen zuweisen und ihre Leistungsfähigkeit in Mathematik messen. Hierzu müssten wir die Studierenden zufällig auswählen und ihnen zufällig einen Studiengang zuweisen (<em>ethische Bedenken beachten</em>) und ihre Leistungsfähigkeit in Mathematik vor und nach dem Studium messen. Die Messung vor dem Studium könnten wir uns sparen, wenn wir die Studierenden zufällig zuweisen. Gute wissenschaftliche Praxis erfordert, wäre es auch noch eine Kontrollgruppe zu haben, die keinen Studiengang zugeteilt bekommt. Damit kann ausgeschlossen werden, dass die Leistungsfähigkeit in Mathematik durch andere Faktoren (z.B. Alter) beeinflusst wird.</p>
+</div>
+</div>
+<p>Experimente sind der Goldstandard, um Kausalzusammenhänge zu untersuchen, da hierbei versucht wird einen <code>unabhängigen</code> (welches Studium wird abgeschlossen) zu identifizieren und gezielt zu manipulieren. Alle anderen Variablen werden konstant gehalten oder durch große Stichproben ausgeglichen. Finden wir dann eine <strong>Korrelation</strong> zwischen dem <code>unabhängigen</code> Variable (Studiengang) und einen <code>abhängigen</code> Variable (Leistungsfähigkeit in Mathe) können wir einen Kausalzusammenhang vermuten.</p>
+<p>Im bereich von Data Science gilt häufig ein pragmatischerer <em>but it works</em> Ansatz. Hier wird oft versucht, mit den vorhandenen Daten zu arbeiten und Rückschlüsse zu ziehen. Dies ist in der Regel einfacher und schneller, aber auch weniger zuverlässig.</p>
+<section id="beispiel-ist-ein-würfel-gezinkt" class="level4" data-number="3.2.2.1">
+<h4 data-number="3.2.2.1" class="anchored" data-anchor-id="beispiel-ist-ein-würfel-gezinkt"><span class="header-section-number">3.2.2.1</span> Beispiel: Ist ein Würfel gezinkt?</h4>
+<p>Stellen wir uns vor, unsere Kolleg:in besteht darauf mit ihrem selbst mitgebrachten Würfel zu spielen. Wir sind uns aber nicht sicher, ob der Würfel gezinkt ist. Wir könnten nun eine Beobachtungsstudie durchführen, indem wir die Augenzahlen des Würfels beobachten und mit unserer Erwartung oder einem fairen Würfel vergleichen. um eine Stichprobe zu erstellen, können wir beide Würfel 1000 mal werfen. Die Würfe des fairen Würfeln nennen wir dabei die <strong>Kontrollgruppe</strong>.</p>
+<p>Wenn wir ein eine Häufigkeitsverteilung, wie in Histogram <a href="#fig-sec-dataexploratory-sampling-dice-rolls-manipulated" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> beobachten würden, würden wir misstrauisch werden.</p>
+<div id="cell-fig-sec-dataexploratory-sampling-dice-rolls-manipulated" class="cell styled-output" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Würfeln</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>fair_dice_rolls <span class="op">=</span> np.random.randint(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1000</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># A manipulated dice that has a higher probability of rolling a 6</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>other_dice_rolls <span class="op">=</span> np.random.choice([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>], <span class="dv">1000</span>, p<span class="op">=</span>[<span class="fl">1.9</span><span class="op">/</span><span class="dv">12</span>, <span class="fl">1.9</span><span class="op">/</span><span class="dv">12</span>, <span class="fl">1.9</span><span class="op">/</span><span class="dv">12</span>, <span class="fl">1.9</span><span class="op">/</span><span class="dv">12</span>, <span class="fl">1.9</span><span class="op">/</span><span class="dv">12</span>, <span class="fl">2.5</span><span class="op">/</span><span class="dv">12</span>])</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogramm</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>sns.histplot(fair_dice_rolls, bins<span class="op">=</span><span class="dv">6</span>, discrete<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">"lightblue"</span>, alpha <span class="op">=</span> <span class="fl">0.2</span>, label<span class="op">=</span><span class="st">"Fair Dice"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>sns.histplot(other_dice_rolls, bins<span class="op">=</span><span class="dv">6</span>, discrete<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">"red"</span>, alpha <span class="op">=</span> <span class="fl">0.2</span>, label<span class="op">=</span><span class="st">"Manipulated Dice"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Add ledgend</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-sec-dataexploratory-sampling-dice-rolls-manipulated" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sec-dataexploratory-sampling-dice-rolls-manipulated-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="sampling_files/figure-html/fig-sec-dataexploratory-sampling-dice-rolls-manipulated-output-1.png" width="593" height="411" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-sampling-dice-rolls-manipulated-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Verteilung der Würfelergebnisse.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="blickpunkte-auf-variablen" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="blickpunkte-auf-variablen"><span class="header-section-number">3.3</span> Blickpunkte auf Variablen</h2>
+<p>Wie haben uns nun Variablen (Spalten in tidy data) angeschaut und gesehen und können diese aus verschiedenen Blickwinkeln betrachten.</p>
+<section id="skalenniveaus" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="skalenniveaus"><span class="header-section-number">3.3.1</span> Skalenniveaus</h3>
+<p>Skalenniveaus sind eine Möglichkeit, Variablen zu klassifizieren. Es gibt vier Skalenniveaus: nominal, ordinal, metrisch und verhältnisskaliert. Diese Skalenniveaus geben uns Hinweise darauf, welche statistischen Methoden wir verwenden können, um die Daten zu analysieren.</p>
+</section>
+<section id="im-kontext-von-experimenten" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="im-kontext-von-experimenten"><span class="header-section-number">3.3.2</span> Im Kontext von Experimenten</h3>
+<p>Im Kontext von Experimenten und Beobachtungsstudien unterscheiden wir zwischen <em>unabhängigen</em> und <em>abhängigen</em> Variablen. Die unabhängige Variable ist die Variable, welche uns als Einflussgröße interessiert. Die abhängige Variable ist die Variable, die wir messen, um den Effekt zu beobachten. Leider gibt es hier je nach Sprache und Fachgebiet unterschiedliche Bezeichnungen. Die folgende Tabelle gibt einen Überblick über verschiedene Bezeichnungen. Später werden wir merken, dass es nicht immer nur genau eine unabhängige und eine abhängige Variable gibt, sondern auch mehrere unabhängige und abhängige Variablen geben kann. Der Einfacheit halber sprechen wir aber zunächst nur im Singular.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Anwendungsfeld</th>
+<th>Unabhängige Variable</th>
+<th>Abhängige Variable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Statistik</td>
+<td>Explanatory Variable</td>
+<td>Response Variable</td>
+</tr>
+<tr class="even">
+<td>Machine Learning</td>
+<td>Features</td>
+<td>Target</td>
+</tr>
+<tr class="odd">
+<td>Experimente</td>
+<td>Treatment</td>
+<td>Outcome</td>
+</tr>
+<tr class="even">
+<td>Psychologie</td>
+<td>Independent Variable</td>
+<td>Dependent Variable</td>
+</tr>
+<tr class="odd">
+<td>Forecasts</td>
+<td>Predictor</td>
+<td>Predicted Variable</td>
+</tr>
+<tr class="even">
+<td>Ökonometrie</td>
+<td>Explanatory Variable</td>
+<td>Dependent Variable</td>
+</tr>
+<tr class="odd">
+<td>Informatik</td>
+<td>Input</td>
+<td>Output</td>
+</tr>
+<tr class="even">
+<td>Programming</td>
+<td>Argument</td>
+<td>Return Value</td>
+</tr>
+<tr class="odd">
+<td>Programming</td>
+<td><code>X</code></td>
+<td><code>y</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="wahrscheinlichkeitsrechnung" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="wahrscheinlichkeitsrechnung"><span class="header-section-number">3.4</span> Wahrscheinlichkeitsrechnung</h2>
+<p>Eine weitere Betrachtunsweise von Variablen sind die Prozesse, die zu den Beobachtungen führen. Hierbei unterscheiden wir zwischen <em>deterministischen</em> und <em>zufälligen</em> Prozessen. Deterministische Prozesse führen immer zum gleichen Ergebnis, wenn wir die gleichen Bedingungen haben. Zufällige Prozesse führen zu unterschiedlichen Ergebnissen, auch wenn die Bedingungen gleich sind. Zufällige Prozesse können durch Wahrscheinlichkeiten beschrieben werden.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hierbei ist es irrelevant, ob ob wir uns das Universum als vorherbestimmt (deteministisch) oder zufällig vorstellen. Zufälligkeit bedeutet uns in der Folge nur, dass wir das Ergebnis nicht a-priori vorhersagen können. Die Zufälligkeit durch einen echten Zufallsprozess (z.B. Würfeln) oder durch eine unvollständige Modellierung (z.B. durch fehlende Variablen) entsteht.</p>
+</div>
+</div>
+<section id="zufallsvariablen" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="zufallsvariablen"><span class="header-section-number">3.4.1</span> Zufallsvariablen</h3>
+<p>Eine Zufallsvariable ist eine Variable, die zufällig einen von mehreren verschiedenen Werten annimmt. Wenn wir eine Münze werfen, ist die Zahl, die auf dem Würfel erscheint, eine Zufallsvariable. Zufallsvariablen können diskret oder kontinuierlich sein. Diskrete Zufallsvariablen können nur bestimmte Werte annehmen, während kontinuierliche Zufallsvariablen jeden Wert in einem Intervall annehmen können.</p>
+<p>Die Augenzahl eines Würfels ist eine diskrete Zufallsvariable, da sie nur die Werte 1, 2, 3, 4, 5 oder 6 annehmen kann. Wenn wir den Würfel werfen, ist die Augenzahl jedes mal eine zufällige Realisierung der Zufallsvariable.</p>
+<div id="cell-fig-sec-dataexploratory-sampling-dice-rolls" class="cell styled-output" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Würfeln</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>dice_rolls <span class="op">=</span> np.random.randint(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1000</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogramm</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>sns.histplot(dice_rolls, bins<span class="op">=</span><span class="dv">6</span>, discrete<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-sec-dataexploratory-sampling-dice-rolls" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sec-dataexploratory-sampling-dice-rolls-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="sampling_files/figure-html/fig-sec-dataexploratory-sampling-dice-rolls-output-1.png" width="593" height="411" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-sampling-dice-rolls-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: Verteilung der Würfelergebnisse.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Änlich verhält es sich bei einem Münzwurf. Hier ist die Zufallsvariable die Seite der Münze, die oben liegt. Diese kann entweder Kopf oder Zahl sein. Damit wir sinnvoll mit dem katregorischen Datentyp umgehen können, können wir die Werte in 0 und 1 umwandeln. Das bedeutet, dass wird aus dem Sample Space (Kopf, Zahl) einen numerischen Wert (0, 1) machen.</p>
+<p>Hierzu definieren wir nun einige Begriffe:</p>
+<ul>
+<li><strong>Zufallsexperiment/-Prozess</strong>: Ein Experiment, bei dem das Ergebnis zufällig ist. Zufällig bedeutet, dass wir das Ergebnis nicht vorhersagen können. Zum Beispiel das <em>Werfen einer Münze</em>, eines Würfels oder das Ziehen einer Karte aus einem Kartenspiel.</li>
+<li><strong>Ereignisraum</strong> (<em>sample space</em>): Die Menge aller möglichen Ergebnisse (outcomes) eines Zufallsexperiments. <em>Zum Beispiel beim Werfen einer Münze ist der Ereignisraum <span class="math inline">\({\text{Kopf}, \text{Zahl}}\)</span>.</em></li>
+<li>(messbare) <strong>Zufallsvariable</strong>: Eine Funktion, die jedem Ergebnis eines Zufallsexperiments eine Zahl zuordnet. <em>Zum Beispiel die <span class="math inline">\(1\)</span> für Kopf und <span class="math inline">\(0\)</span> für Zahl beim Münzwurf.</em></li>
+</ul>
+</section>
+</section>
+<section id="frequentischtische-definition-der-wahrscheinlichkeit" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="frequentischtische-definition-der-wahrscheinlichkeit"><span class="header-section-number">3.5</span> Frequentischtische Definition der Wahrscheinlichkeit</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die <strong>Wahrscheinlichkeit</strong> eines Ergebnisses ist der Anteil, wie oft das Ergebnis eintreten würde, wenn wir den Zufallsprozess unendlich oft beobachten würden. Die Wahrscheinlichkeit ist als Anteil definiert und nimmt immer Werte zwischen 0 und 1 (einschließlich) an. Sie kann auch als Prozentsatz zwischen 0% und 100% angezeigt werden.</p>
+</div>
+</div>
+<p>In Figure <a href="#fig-sec-dataexploratory-sampling-dice-rolls" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> kam die Augenzahl 2 in etwa 167/1000 der Fälle vor. Die Wahrscheinlichkeit, dass die Augenzahl 1 beträgt, ist also 1/6 oder etwa 0,167. Gleiches gibt für die anderen Augenzahlen.</p>
+<p>Es is offentsichtlich, dass das bei einer endlichen Anzahl von Beobachtungen nicht immer so sein muss. Werfen wir den Würfel nur einmal, so kann die Augenzahl nur entweder 1, 2, 3, 4, 5 oder 6 sein. Für eine endliche Anzahl von Beobachtungen kann die Wahrscheinlichkeit also nur eine Schätzung sein. Umgekehrt ist die Wahrscheinlichkeit eine Grenzwertbetrachtung, die nur für unendlich viele Beobachtungen gilt.</p>
+<div class="cell styled-output" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>nuber_of_rolls <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">12</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>dice_rolls <span class="op">=</span> np.random.randint(<span class="dv">1</span>, <span class="dv">7</span>, nuber_of_rolls)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Anteil der 1er bei jedem Schritt</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>proportion_ones <span class="op">=</span> np.cumsum(dice_rolls <span class="op">==</span> <span class="dv">1</span>) <span class="op">/</span> np.arange(<span class="dv">1</span>, nuber_of_rolls<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>np.arange(<span class="dv">1</span>, nuber_of_rolls<span class="op">+</span><span class="dv">1</span>), y<span class="op">=</span>proportion_ones)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>[<span class="dv">1</span>, nuber_of_rolls<span class="op">+</span><span class="dv">1</span>], y<span class="op">=</span>[<span class="dv">1</span><span class="op">/</span><span class="dv">6</span>, <span class="dv">1</span><span class="op">/</span><span class="dv">6</span>], color<span class="op">=</span><span class="st">"red"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$n$ - Number of rolls"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$\hat</span><span class="sc">{p}</span><span class="st">_n$ - Proportion of 1s "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:18: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:18: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_2919/1774020984.py:18: SyntaxWarning:
+
+invalid escape sequence '\h'
+</code></pre>
+</div>
+<div id="fig-sec-dataexploratory-sampling-dice-rolls-proportion" class="cell styled-output quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="7">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sec-dataexploratory-sampling-dice-rolls-proportion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="fig-sec-dataexploratory-sampling-dice-rolls-proportion-1" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="7">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-sec-dataexploratory-sampling-dice-rolls-proportion-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<pre id="fig-sec-dataexploratory-sampling-dice-rolls-proportion-1" class="cell-output cell-output-display" data-execution_count="7"><code>Text(0, 0.5, '$\\hat{p}_n$ - Proportion of 1s ')</code></pre>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-sec-dataexploratory-sampling-dice-rolls-proportion-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Der Anteil der Würfelergebnisse, die 1 sind, bei jedem Schritt einer Simulation.
+</figcaption>
+</figure>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-sec-dataexploratory-sampling-dice-rolls-proportion-2" class="quarto-float quarto-figure quarto-figure-center anchored" height="429" width="610">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-sec-dataexploratory-sampling-dice-rolls-proportion-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="sampling_files/figure-html/fig-sec-dataexploratory-sampling-dice-rolls-proportion-output-3.png" id="fig-sec-dataexploratory-sampling-dice-rolls-proportion-2" data-ref-parent="fig-sec-dataexploratory-sampling-dice-rolls-proportion" width="610" height="429" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-sec-dataexploratory-sampling-dice-rolls-proportion-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-sec-dataexploratory-sampling-dice-rolls-proportion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.4
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Figure <a href="#fig-sec-dataexploratory-sampling-dice-rolls-proportion" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> zeigt den Anteil <span class="math inline">\(\hat{p}_n\)</span> der Augenzahl 1 bei jedem Schritt <span class="math inline">\(n\)</span> einer Simulation. Der Anteil konvergiert gegen die Wahrscheinlichkeit von 1/6 oder etwa 0,167.</p>
+<p>Der beobeachtete Anteil <span class="math inline">\(\hat{p}_n\)</span> ist eine Schätzung der Wahrscheinlichkeit <span class="math inline">\(p\)</span> und wird genauer, je mehr Beobachtungen wir haben. Die Wahrscheinlichkeit <span class="math inline">\(p\)</span> ist der Grenzwert des Anteils.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Wir werden in der Statistik oft mit Schätzungen arbeiten, da wir nicht unendlich viele Beobachtungen haben. Es ist wichtig, die Unsicherheit unserer Schätzungen zu kennen und zu berücksichtigen. Schätzungen kennzeichnen wir oft mit einem Dach über dem Symbol, z.B. <span class="math inline">\(\hat{p}\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Gesetz der großen Zahlen</strong>: Mit zunehmender Anzahl von Beobachtungen konvergiert der Anteil der Beobachtungen mit einem bestimmten Ergebnis gegen die Wahrscheinlichkeit dieses Ergebnisses.</p>
+</div>
+</div>
+<p>Da wir verschiedene Ergebnisse haben, führen wir eine neue Schreibweise ein. Wir schreiben <span class="math inline">\(P(X = x)\)</span> für die Wahrscheinlichkeit, dass die Zufallsvariable <span class="math inline">\(X\)</span> (z.B. Münzwürf) den Wert <span class="math inline">\(x\)</span> annimmt.</p>
+<p>Für einen fairen Münzwurf ist <span class="math display">\[
+P(X = \text{Kopf}) = 0.5,
+\]</span></p>
+<p>und</p>
+<p><span class="math display">\[
+P(X = \text{Zahl}) = 0.5.
+\]</span></p>
+<p>bzw.</p>
+<p><span class="math display">\[
+P(X = 1) = 0.5,
+\]</span></p>
+<p>und</p>
+<p><span class="math display">\[
+P(X = 0) = 0.5.
+\]</span></p>
+<p>Für einen fairen Würfelwurf ist <span class="math display">\[
+P(X = 1) = P(X = 2) = P(X = 3) = P(X = 4) = P(X = 5) = P(X = 6) = 1/6.
+\]</span></p>
+<p>Die Summe der Wahrscheinlichkeiten aller möglichen Ergebnisse eines Zufallsexperiments ist immer 1. Das bedeutet, dass mindestens eines der möglichen Ergebnisse eintreten muss. Vergleicher dies mit der Fläche unter einem normalisieren Histogramm oder einer Dichtefunktion.</p>
+<section id="disjunkte-bzw.-sich-ausschließende-ereignisse" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="disjunkte-bzw.-sich-ausschließende-ereignisse"><span class="header-section-number">3.5.1</span> Disjunkte bzw. Sich-Ausschließende Ereignisse</h3>
+<p>Zwei Ereignisse <span class="math inline">\(A\)</span> und <span class="math inline">\(B\)</span> sind disjunkt oder sich ausschließend, wenn sie nicht gleichzeitig eintreten können. Das bedeutet, dass wenn <span class="math inline">\(A\)</span> eintritt, <span class="math inline">\(B\)</span> nicht eintreten kann und umgekehrt. Beispielsweise kann bei einem Wurf mit einem fairen Würfel die Augenzahl nicht gleichzeitig 1 und 2 sein. Die Ereignisse “Augenzahl ist 1” und “Augenzahl ist 2” sind sich ausschließend.</p>
+<p>Die Wahrscheinlichkeit, dass eines der beiden Ereignisse auftritt, ist die Summe der Wahrscheinlichkeiten der beiden Ereignisse. Als Notation schreiben wir <span class="math inline">\(P(A \cup B)\)</span> für die Wahrscheinlichkeit, dass eines der beiden Ereignisse eintritt. Dies entspricht einem logischen <em>oder</em>. Wir lesen <em>A vereinigt B</em>.</p>
+<p>Für disjunkte Ereignisse gilt:</p>
+<p><span class="math display">\[
+P(X=1 \cup X=2) = P(X=1) + P(X=2) = \frac{1}{6} + \frac{1}{6} = \frac{1}{3}.
+\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die <strong>Additionsregel</strong> besagt, dass die Wahrscheinlichkeit, dass eines von zwei sich ausschließenden Ereignissen (<span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>) eintritt, die Summe der Wahrscheinlichkeiten der beiden Ereignisse ist.</p>
+<p><span class="math display">\[
+P(A \cup B) = P(A) + P(B).
+\]</span></p>
+<p>Bzw. für mehrere sich ausschließende Ereignisse (<span class="math inline">\(A_*\)</span>):</p>
+<p><span class="math display">\[
+P(A_1 \cup A_2 \cup ... \cup A_n ) = P(A_1) + P(A_2) + ... + P(A_n).
+\]</span></p>
+</div>
+</div>
+<section id="beispiel" class="level4" data-number="3.5.1.1">
+<h4 data-number="3.5.1.1" class="anchored" data-anchor-id="beispiel"><span class="header-section-number">3.5.1.1</span> Beispiel</h4>
+<p>Im Datensatz der Kredite in Kapitel 2 beschreibt die Variable <code>homeownership</code>, ob der Kreditnehmer mietet, eine Hypothek hat oder Eigentümer seiner Immobilie ist. Von den 10.000 Kreditnehmern mieteten 3858, 4789 hatten eine Hypothek und 1353 besaßen ihr Zuhause.</p>
+<div id="151ddedb" class="cell styled-output" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"../_assets/dataexploratory/loan50.csv"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of Observations: </span><span class="sc">{</span>df[<span class="st">"homeownership"</span>]<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"homeownership"</span>].value_counts())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of Observations: 50
+homeownership
+mortgage    26
+rent        21
+own          3
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<ol type="1">
+<li>Sind die Ergebnisse Miete, Hypothek und Eigentum disjunkt?</li>
+<li>Bestimmen Sie den Anteil der Kredite mit dem Wert Hypothek und Eigentum separat.</li>
+<li>Verwenden Sie die Additionsregel für disjunkte Ergebnisse, um die Wahrscheinlichkeit zu berechnen, dass ein zufällig ausgewählter Kredit aus dem Datensatz für jemanden ist, der eine Hypothek hat oder Eigentümer seines Hauses ist.</li>
+</ol>
+<div class="tip" data-collapse="true">
+<ol type="1">
+<li>Ja, die Ergebnisse sind disjunkt, da ein Kreditnehmer nur eine der drei Kategorien haben kann.</li>
+<li>Der Anteil der Kredite mit Hypothek beträgt <span class="math inline">\(\frac{26}{50}\)</span> und der Anteil der Kredite mit Eigentum beträgt <span class="math inline">\(\frac{3}{50}\)</span>.</li>
+<li>Die Wahrscheinlichkeit, dass ein zufällig ausgewählter Kreditnehmer eine Hypothek hat oder Eigentümer seines Hauses ist, beträgt <span class="math inline">\(\frac{26}{50}\)</span> + <span class="math inline">\(\frac{3}{50}\)</span> = <span class="math inline">\(\frac{29}{50}\)</span>. Dies entspricht der Wahrscheinlichkeit, dass ein zufällig ausgewählter Kreditnehmer nicht mietet.</li>
+</ol>
+</div>
+</section>
+</section>
+<section id="das-komplement-eines-ereignisses" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="das-komplement-eines-ereignisses"><span class="header-section-number">3.5.2</span> Das Komplement eines Ereignisses</h3>
+<p>Das Komplement eines Ereignisses <span class="math inline">\(A\)</span> ist das Ereignis, dass <span class="math inline">\(A\)</span> nicht eintritt. Das Komplement von <span class="math inline">\(A\)</span> wird als <span class="math inline">\(A^c\)</span> oder <span class="math inline">\(\bar{A}\)</span> bezeichnet. Das Komplement eines Ereignisses ist das Ereignis, dass alle anderen Ergebnisse eintreten, die nicht <span class="math inline">\(A\)</span> sind. Das Komplement eines Ereignisses ist disjunkt zu diesem Ereignis.</p>
+<p>Die Wahrscheinlichkeit des Komplements eines Ereignisses ist die Wahrscheinlichkeit, dass das Ereignis nicht eintritt. Die Wahrscheinlichkeit des Komplements eines Ereignisses ist <span class="math inline">\(1 - P(A)\)</span>.</p>
+<p>Beispielsweise ist die Wahrscheinlichkeit, dass die Augenzahl eines fairen Würfels nicht 1 ist,</p>
+<p><span class="math display">\[
+1 - P(X=1) = 1 - \frac{1}{6} = \frac{5}{6}.
+\]</span></p>
+<p>Die Summe der Wahrscheinlichkeiten eines Ereignisses und seines Komplements ist immer 1. Das bedeutet, dass entweder das Ereignis oder sein Komplement eintreten muss.</p>
+</section>
+<section id="nicht-disjunkte-ereignisse" class="level3" data-number="3.5.3">
+<h3 data-number="3.5.3" class="anchored" data-anchor-id="nicht-disjunkte-ereignisse"><span class="header-section-number">3.5.3</span> Nicht-disjunkte Ereignisse</h3>
+<p>Nicht immer haben wir den Luxus, disjunkte Ereignisse zu betrachten. In diesem Fall können die Ereignisse überlappen. Beispielsweise wollen wir beim Kartenspiel wissen, wie hoch die Wahrscheinlichkeit ist, dass wir eine Karte mit einem Bild (Face) oder einer Karo-Farbe (Diamond) ziehen. Die Ereignisse “Bild” und “Karo” sind nicht disjunkt, da es Karten gibt, die beides sind. Wenn wird die Wahrscheinlichkeiten einfach addieren, zählen wir die Karten, die beides sind, doppelt und überschätzen die Wahrscheinlichkeit.</p>
+<div id="fig-card-deck" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-card-deck-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../_assets/dataexploratory/card_deck.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-card-deck-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.5: Deck of 52 Cards
+</figcaption>
+</figure>
+</div>
+<p>Um um das zu verbildlichen können wie die Ereignisse in einem Venn-Diagramm darstellen. Hierin werden alle Ereignisse (z.B. Farbe ist Karo bzw. Karte ist Bildkarte) in einem Diagramm dargestellt. Die Schnittmenge (als <span class="math inline">\(\cap\)</span> geschrieben) der beiden Ereignisse ist die Menge der Karten, die beides sind. Dies entspricht dem <em>logischen und</em> und wird als <em>Schnitt</em> bezeichnet.</p>
+<p>Die Vereinigungsmenge (logisches oder / <span class="math inline">\(\cup\)</span>) ist die Menge aller Karten, die entweder das eine oder das andere Ereignis sind.</p>
+<div id="fig-card-venn" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-card-venn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../_assets/dataexploratory/card_venn.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-card-venn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.6: Venn Diagramm of Cards
+</figcaption>
+</figure>
+</div>
+<p>Von den <span class="math inline">\(N=52\)</span> Karten sind <span class="math inline">\(12\)</span> Bildkarten (Bube, Dame, König) und <span class="math inline">\(13\)</span> Karo-Karten. Davon sind <span class="math inline">\(k=3\)</span> Karten sowohl Bildkarten als auch Karo-Karten. Die Wahrscheinlichkeit, dass eine Karte entweder eine Bildkarte oder eine Karo-Karte ist, ist die Summe der Wahrscheinlichkeiten der beiden Ereignisse abzüglich der Wahrscheinlichkeit des Schnitts:</p>
+<p><span class="math display">\[
+P(\text{Bild} \cup \text{Karo}) = P(\text{Bild}) + P(\text{Karo}) - P(\text{Bild} \cap \text{Karo}).
+= \frac{12}{52} + \frac{13}{52} - \frac{3}{52} = \frac{22}{52}.
+\]</span></p>
+<p>Hierraus können wir die <strong>Additionsregel</strong> für nicht-disjunkte Ereignisse formulieren:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die <strong>Generelle Additionsregel</strong> besagt, dass die Wahrscheinlichkeit, dass eines von zwei Ereignissen (<span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>) eintritt, die Summe der Wahrscheinlichkeiten der beiden Ereignisse ist, abzüglich der Wahrscheinlichkeit, dass beide Ereignisse eintreten.</p>
+<p><span class="math display">\[
+P(A \cup B) = P(A) + P(B) - P(A \cap B).
+\]</span></p>
+</div>
+</div>
+<section id="beispiel-1" class="level4" data-number="3.5.3.1">
+<h4 data-number="3.5.3.1" class="anchored" data-anchor-id="beispiel-1"><span class="header-section-number">3.5.3.1</span> Beispiel</h4>
+<p>Sei <span class="math inline">\(A\)</span> ein Ereignis, bei dem zwei faire Würfel geworfen werden und dabei die Summe der Augenzahl kleiner als 12 ist.</p>
+<ul>
+<li><ol type="1">
+<li>Was ist das Komplement von <span class="math inline">\(A\)</span>?</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Wie groß ist die Wahrscheinlichkeit von <span class="math inline">\(A\)</span>?</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>Was ist <span class="math inline">\(P(A^c)\)</span>?</li>
+</ol></li>
+</ul>
+<p>Let A represent the event where we roll two dice and their total is less than 12. (a) What does the event Ac represent? (b) Determine P(Ac) from Figure 3.5 on page 87. (c) Determine P(A).15</p>
+<div class="tip" data-collapse="true">
+<ul>
+<li><ol type="1">
+<li>Das Komplement von <span class="math inline">\(A\)</span> ist das Ereignis, bei dem die Summe der Augenzahl 12 oder mehr beträgt.</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Die Wahrscheinlichkeit von <span class="math inline">\(A\)</span> ist die Summe der Wahrscheinlichkeiten der Ergebnisse, bei denen die Summe der Augenzahl kleiner als 12 ist. Das sind die Ergebnisse 2 bis 11.</li>
+</ol></li>
+</ul>
+<p>Wir müssen die Wahrscheinlichkeiten der einzelnen Ergebnisse addieren:</p>
+<p>Sei <span class="math inline">\(W_1\)</span> das Ereignis von Würfel 1 und <span class="math inline">\(W_2\)</span> das Ereignis von Würfel 2. Wir können nun eine Tabelle bauen, in denen wir sammeln, welche Ereignisse für welche Augenzahlen sorgen:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 53%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(A = W_1 + W_2\)</span></th>
+<th>Mögliche Kombinationen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td><span class="math inline">\((W_1=1 \cap W_2=1)\)</span></td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td><span class="math inline">\((W_1=1 \cap W_2=2) \cup (W_1=2 \cap W_2=1)\)</span></td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td><span class="math inline">\((W_1=1 \cap W_2=3)  \cup (W_1=2 \cap W_2=2)  \cup  (W_1=3 \cap W_2=1)\)</span></td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td><span class="math inline">\((W_1=1 \cap W_2=4) \cup (W_1=2 \cap W_2=3) \cup (W_1=3 \cap W_2=2) \cup (W_1=4 \cap W_2=1)\)</span></td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td><span class="math inline">\((W_1=1 \cap W_2=5) \cup (W_1=2 \cap W_2=4) \cup (W_1=3 \cap W_2=3) \cup (W_1=4 \cap W_2=2) \cup (W_1=5 \cap W_2=1)\)</span></td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td><span class="math inline">\((W_1=1 \cap W_2=6) \cup (W_1=2 \cap W_2=5) \cup (W_1=3 \cap W_2=4) \cup (W_1=4 \cap W_2=3) \cup (W_1=5 \cap W_2=2) \cup (W_1=6 \cap W_2=1)\)</span></td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td><span class="math inline">\((W_1=2 \cap W_2=6) \cup (W_1=3 \cap W_2=5) \cup (W_1=4 \cap W_2=4) \cup (W_1=5 \cap W_2=3) \cup (W_1=6 \cap W_2=2)\)</span></td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td><span class="math inline">\((W_1=3 \cap W_2=6) \cup (W_1=4 \cap W_2=5) \cup (W_1=5 \cap W_2=4) \cup (W_1=6 \cap W_2=3)\)</span></td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td><span class="math inline">\((W_1=4 \cap W_2=6) \cup (W_1=5 \cap W_2=5) \cup (W_1=6 \cap W_2=4)\)</span></td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td><span class="math inline">\((W_1=5 \cap W_2=6) \cup (W_1=6 \cap W_2=5)\)</span></td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td><span class="math inline">\((W_1=6 \cap W_2=6)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Wir wissen, wie wir <span class="math inline">\(P(W_1=6)\)</span> und <span class="math inline">\(P(W_2=6)\)</span> einzeln ausrechen. Was uns aktuell noch fehlt ist wie wir die Wahrscheinlichkeit <span class="math inline">\(P(W_1=x \cap W_2=y)\)</span> ausrechnen, die uns sagt, wie wahrscheinlich es ist, dass zwei 6er gewürfelt werden. Wenn wir diese hätten könnten wie diese als Ereignisse zusammenzählen und die Wahrscheinlichkeit über die Additionregel berechnen. Was wird aber aus der Tabelle mitnehmen können ist, dass die Wahrscheinlichkeit für die Augenzahl <span class="math inline">\(P(A=2)=P(W_1=1) \cdot P(W_2=1)\)</span> ist und im vergleich zu <span class="math inline">\(P(A=7)\)</span> wohl eine kleinere Wahrscheinlichkeit hat.</p>
+</div>
+<p>Immer wenn die Wahrscheinlichkeitsberechung etwas schwieriger wird können wir auf die Simulation zurückgreifen. Bei einer sogenannten <strong>Monte-Carlo-Simulation</strong> führen wir das Experiment mehrfach durch und zählen die Anzahl der Fälle, die das Ereignis erfüllen. Die Wahrscheinlichkeit ist dann die Anzahl der Fälle, die das Ereignis erfüllen, geteilt durch die Anzahl der Durchläufe.</p>
+<div id="349d3ad1" class="cell styled-output" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(np.random.randint(<span class="dv">1</span>, <span class="dv">7</span>, (<span class="dv">10000</span>, <span class="dv">2</span>)), columns<span class="op">=</span>[<span class="st">"W1"</span>, <span class="st">"W2"</span>])</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Summe der Augenzahlen</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Sum"</span>] <span class="op">=</span> df[<span class="st">"W1"</span>] <span class="op">+</span> df[<span class="st">"W2"</span>]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Wahrscheinlichkeit</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> (df[<span class="st">"Sum"</span>] <span class="op">&lt;</span> <span class="dv">12</span>).mean()</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Die Wahrscheinlichkeit, dass die Summe der Augenzahlen kleiner als 12 ist, beträgt </span><span class="sc">{</span>p<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Die Wahrscheinlichkeit, dass die Summe der Augenzahlen kleiner als 12 ist, beträgt 0.97</code></pre>
+</div>
+</div>
+<div class="cell styled-output" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">"Sum"</span>], bins<span class="op">=</span><span class="dv">11</span>, discrete<span class="op">=</span><span class="va">True</span>, stat <span class="op">=</span> <span class="st">'density'</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">11</span>, color<span class="op">=</span><span class="st">"red"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sum of dice rolls"</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-sec-dataexploratory-sampling-dice-sum" class="cell styled-output quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="10">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sec-dataexploratory-sampling-dice-sum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="fig-sec-dataexploratory-sampling-dice-sum-1" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="10">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-sec-dataexploratory-sampling-dice-sum-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<pre id="fig-sec-dataexploratory-sampling-dice-sum-1" class="cell-output cell-output-display" data-execution_count="10"><code>Text(0, 0.5, 'Frequency')</code></pre>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-sec-dataexploratory-sampling-dice-sum-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Die Wahrscheinlichkeit, dass die Summe der Augenzahlen kleiner als 12 ist, beträgt 0.97.
+</figcaption>
+</figure>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-sec-dataexploratory-sampling-dice-sum-2" class="quarto-float quarto-figure quarto-figure-center anchored" height="429" width="597">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-sec-dataexploratory-sampling-dice-sum-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="sampling_files/figure-html/fig-sec-dataexploratory-sampling-dice-sum-output-2.png" id="fig-sec-dataexploratory-sampling-dice-sum-2" data-ref-parent="fig-sec-dataexploratory-sampling-dice-sum" width="597" height="429" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-sec-dataexploratory-sampling-dice-sum-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-sec-dataexploratory-sampling-dice-sum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.7
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Figure <a href="#fig-sec-dataexploratory-sampling-dice-sum" class="quarto-xref">Figure&nbsp;<span>3.7</span></a> zeigt die Verteilung der Summe der Augenzahlen bei einem Wurf mit zwei Würfeln. Die Wahrscheinlichkeit, dass die Summe der Augenzahlen kleiner als 12 ist, beträgt 0,97.</p>
+<ul>
+<li><ol start="3" type="1">
+<li>Die Wahrscheinlichkeit, dass die Summe der Augenzahlen 12 oder mehr beträgt, ist <span class="math inline">\(1 - P(A) = 1 - 0.97 = 0.03\)</span>.</li>
+</ol></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="unabhängige-ereignisse" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="unabhängige-ereignisse"><span class="header-section-number">3.6</span> Unabhängige Ereignisse</h2>
+<p>Zwei Ereignisse <span class="math inline">\(A\)</span> und <span class="math inline">\(B\)</span> sind unabhängig, wenn das Eintreten eines Ereignisses nicht das Eintreten des anderen Ereignisses beein. Das bedeutet, dass die Wahrscheinlichkeit eines Ereignisses nicht von dem anderen Ereignis abhängt. Ein typisches Beispiel für unabhängige Ereignisse ist das Werfen einer Münze und das Werfen eines Würfels. Das Ergebnis des Münzwurfs beeinflusst das Ergebnis des Würfelwurfs nicht. Gleiches gibt dafür, dass wird wie im Beispiel oben die Augenzahl zweiter Würfel betrachten. Das Ergebnis des ersten Würfels beeinflusst das Ergebnis des zweiten Würfels nicht.</p>
+<p>Die Wahrscheinlichkeit, dass zwei unabhängige Ereignisse eintreten, ist das Produkt der Wahrscheinlichkeiten der beiden Ereignisse. Die Wahrscheinlichkeit, dass zwei unabhängige Ereignisse eintreten, ist <span class="math inline">\(P(A \cap B) = P(A) \cdot P(B)\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die <strong>Multiplikationsregel für unabhängige Ereignisse</strong> besagt, dass die Wahrscheinlichkeit, dass zwei unabhängige Ereignisse (<span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>) eintreten, das Produkt der Wahrscheinlichkeiten der beiden Ereignisse ist.</p>
+<p><span class="math display">\[
+P(A \cap B) = P(A) \cdot P(B).
+\]</span></p>
+<p>Bzw. für mehrere unabhängige Ereignisse (<span class="math inline">\(A_*\)</span>):</p>
+<p><span class="math display">\[
+P(A_1 \cap A_2 \cap ... \cap A_n ) = P(A_1) \cdot P(A_2) \cdot ... \cdot P(A_n).
+\]</span></p>
+</div>
+</div>
+<section id="beispiel-1-1" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="beispiel-1-1"><span class="header-section-number">3.6.1</span> Beispiel 1</h3>
+<p>Mit diesem Puzzelstein können wir nun auch die Wahrscheinlichkeit jeder Augenzahl beim Würfeln berechnen. Die Ergebnisse der beiden Würfel 1 und 2 sind unabhängig und können deshalb multipliziert werden.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(A = W_1 + W_2\)</span></th>
+<th>Mögliche Kombinationen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td><span class="math inline">\(W_1=1, W_2=1\)</span></td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td><span class="math inline">\(W_1=1, W_2=2\)</span>, <span class="math inline">\(W_1=2, W_2=1\)</span></td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td><span class="math inline">\(W_1=1, W_2=3\)</span>, <span class="math inline">\(W_1=2, W_2=2\)</span>, <span class="math inline">\(W_1=3, W_2=1\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="beispiel-2" class="level3" data-number="3.6.2">
+<h3 data-number="3.6.2" class="anchored" data-anchor-id="beispiel-2"><span class="header-section-number">3.6.2</span> Beispiel 2</h3>
+<p>Wahr oder falsch. Bestimmen Sie, ob die folgenden Aussagen wahr oder falsch sind, und erklären Sie Ihre Begründung. - 1. Wenn eine faire Münze viele Male geworfen wird und die letzten acht Würfe alle Kopf sind, dann ist die Wahrscheinlichkeit, dass der nächste Wurf Kopf ist, etwas weniger als 50%. - 2. Das Ziehen einer Bildkarte (Bube, Dame oder König) und das Ziehen einer roten Karte aus einem vollständigen Kartenspiel sind sich gegenseitig ausschließende Ereignisse. - 3. Das Ziehen einer Bildkarte und das Ziehen eines Asses aus einem vollständigen Kartenspiel sind sich gegenseitig ausschließende Ereignisse.</p>
+<div class="tip" data-collapse="true">
+<ul>
+<li><ol type="1">
+<li>Falsch. Die Wahrscheinlichkeit, dass eine faire Münze Kopf zeigt, beträgt 50%. Die Ergebnisse der vorherigen Würfe beeinflussen die Wahrscheinlichkeit des nächsten Wurfs nicht, da die Würfe unabhängig sind.</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>Falsch. Bildkarten können rote oder schwarze Farben haben. Die Ereignisse “Bildkarte” und “rote Karte” sind nicht disjunkt.</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>Wahr, da ein Ass keine Bildkarte ist.</li>
+</ol></li>
+</ul>
+</div>
+</section>
+<section id="bedingte-wahrscheinlichkeit" class="level3" data-number="3.6.3">
+<h3 data-number="3.6.3" class="anchored" data-anchor-id="bedingte-wahrscheinlichkeit"><span class="header-section-number">3.6.3</span> Bedingte Wahrscheinlichkeit</h3>
+<p>Bedingte Wahrscheinlichkeiten geben uns die Wahrscheinlichkeit eines Ergebnisses unter der Bedinung an, dass ein anderes Ereignis eingetreten ist oder ebenfall eintreten würde.</p>
+<p>Wenn wir uns das das Kartenbeispiel vorstellen können wir uns Fragen, wie wahrscheinlich es ist eine Bildkarte zu ziehen, wenn wir schon wissen, dass die Karte eine Karo-Karte ist. Aus dem Venn-Diagramm ergibt sich, dass die Wahrscheinlichkeit hierfür wie folgt lautet:</p>
+<p><span class="math display">\[
+P(\text{Bild} | \text{Karo}) = \frac{3}{13}.
+\]</span></p>
+<p>Das <span class="math inline">\(|\)</span> wird hierbei als <em>“gegeben”</em> gelesen. Die Abhängigkeit lässt sich in einer Kreuztballe (<em>contingency table</em>) darstellen, die die Häufigkeiten aller Ereigniss-Kombinationen gegenüberstellt.</p>
+<div id="93c4e37a" class="cell styled-output" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"../_assets/dataexploratory/loan50.csv"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a contingency table</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="op">=</span> pd.crosstab(df[<span class="st">'homeownership'</span>], df[<span class="st">'has_second_income'</span>])</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the result</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(contingency_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>has_second_income  False  True 
+homeownership                  
+mortgage              20      6
+own                    3      0
+rent                  19      2</code></pre>
+</div>
+</div>
+<p>Hierraus lässt sich z.B. ablegen, dass es <code>26</code> Haus-Kredite gibt,bei denen der Kreditnehmer eine Hypothek hat. Von diesen haben <code>6</code> ein zweites Einkommen. Die bedingte Wahrscheinlichkeit, dass ein Kreditnehmer mit einer Hypothek ein zweites Einkommen hat, beträgt also <span class="math inline">\(P(\text{Zweiteinkommen} | \text{Hypothek}) = \frac{6}{26}\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die <strong>bedingte Wahrscheinlichkeit</strong> eines Ereignisses <span class="math inline">\(A\)</span> unter der Bedingung, dass ein anderes Ereignis <span class="math inline">\(B\)</span> eingetreten ist, ist die Wahrscheinlichkeit, dass <span class="math inline">\(A\)</span> eintritt, wenn wir wissen, dass <span class="math inline">\(B\)</span> eingetreten ist. Die bedingte Wahrscheinlichkeit wird als <span class="math inline">\(P(A|B)\)</span> geschrieben und berechnet sich als:</p>
+<p><span class="math display">\[
+P(A|B) = \frac{P(A \cap B)}{P(B)}.
+\]</span></p>
+<p>Im Fall unseres Beispiels ist die bedingte Wahrscheinlichkeit, dass ein Kreditnehmer ein zweites Einkommen hat, wenn er eine Hypothek hat,</p>
+<p><span class="math display">\[
+P(\text{Zweiteinkommen} | \text{Hypothek}) = \frac{\text{Zweiteinkommen} \cap \text{Hypothek}}{\text{Hypothek}}=\frac{\frac{6}{50}}{\frac{26}{50}} = \frac{6}{26}$.
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die Wahrscheinlichkeit von <span class="math inline">\(P(A \cap B)\)</span> kann nicht einfach mittels der Multiplikationsregel berechnet werden, da die Ereignisse nicht unabhängig sind. Stattdessen muss sie aus den beobachteten Häufigkeiten berechnet werden.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Summe von bedingten Wahrscheinlichkeiten</p>
+<p>Seien <span class="math inline">\(A_1, ..., A_k\)</span> alle disjunkten Ergebnisse für eine Variable oder einen Prozess. Dann gilt für ein Ereignis <span class="math inline">\(B\)</span>, möglicherweise für eine andere Variable oder einen anderen Prozess:</p>
+<p><span class="math display">\[
+P(A_1|B) + · · · + P(A_k|B) = 1
+\]</span></p>
+<p>Die Regel für Komplemente gilt auch, wenn ein Ereignis und sein Komplement unter denselben Informationen bedingt sind:</p>
+<p><span class="math display">\[
+P(A|B) = 1 − P(A^c|B).
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="beispiel-3" class="level3" data-number="3.6.4">
+<h3 data-number="3.6.4" class="anchored" data-anchor-id="beispiel-3"><span class="header-section-number">3.6.4</span> Beispiel</h3>
+<div id="fig-meme-test-cancer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-meme-test-cancer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://i.redd.it/mznyyv27gw9c1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-meme-test-cancer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.8: Meme Test Cancer
+</figcaption>
+</figure>
+</div>
+<p>Wie hoch ist die Wahrscheinlichkeit, dass ein Patient Krebs hat, wenn wir folgendes wissen:</p>
+<ul>
+<li>Die Wahrscheinlechkeit, dass eine Person Krebs hat, beträgt 0.1%.</li>
+<li>Im Falle, dass eine Person Krebs hat, beträgt die Wahrscheinlichkeit, dass der Test positiv ist, 99%. (dies nennt man auch ist die <em>Sensitivität</em> des Tests)</li>
+<li>Im Falle, dass eine Person keinen Krebs hat, beträgt die Wahrscheinlichkeit, dass der Test positiv ist, 5%. (dies nennt man auch ist die <em>Spezifität</em> des Tests)</li>
+</ul>
+<div class="tip" data-collapse="true">
+<p>Zunächst können wir das ganze als Baumdiagramm darstellen. Hierbei ist die Wahrscheinlichkeit, dass eine Person Krebs hat <span class="math inline">\(P(\text{Krebs}) = 0.001\)</span> und die Wahrscheinlichkeit, dass eine Person keinen Krebs hat <span class="math inline">\(P(\text{Kein Krebs}) = 0.999\)</span>. Die Wahrscheinlichkeit, dass der Test positiv ist, wenn eine Person Krebs hat, ist <span class="math inline">\(P(\text{Positiv} | \text{Krebs}) = 0.99\)</span> und die Wahrscheinlichkeit, dass der Test positiv ist, wenn eine Person keinen Krebs hat, ist <span class="math inline">\(P(\text{Positiv} | \text{Kein Krebs}) = 0.05\)</span>.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph LR
+    U[Person] --&gt;|0.001| A[Krebs] 
+    U[Person] --&gt;|0.999| D[Kein Krebs]
+    A[Krebs] --&gt;|0.99| B[Positiv]
+    A[Krebs] --&gt;|0.01| C[Negativ]
+    D[Kein Krebs] --&gt;|0.05| E[Positiv]
+    D[Kein Krebs] --&gt;|0.95| F[Negativ]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Wir können nun die alle Pfade, die mit einem positiven Test enden, zusammenzählen und die Wahrscheinlichkeit berechnen, dass eine Person Krebs hat, wenn der Test positiv ist. Wir dürfen dieses addieren, da die Pfade disjunkt sind.</p>
+<p>Für den oberen Pfad ist die Wahrscheinlichkeit, dass eine Person Krebs hat und der Test positiv ist, <span class="math inline">\(P(\text{Krebs} \cap \text{Positiv}) = P(\text{Krebs}) \cdot P(\text{Positiv} | \text{Krebs}) = 0.001 \cdot 0.99 = 0.00099\)</span>.</p>
+<p>Für den unteren Pfad ist die Wahrscheinlichkeit, dass eine Person keinen Krebs hat und der Test positiv ist, <span class="math inline">\(P(\text{Kein Krebs} \cap \text{Positiv}) = P(\text{Kein Krebs}) \cdot P(\text{Positiv} | \text{Kein Krebs}) = 0.999 \cdot 0.05 = 0.04995\)</span>.</p>
+<p>Die Wahrscheinlichkeit, dass der Test positiv ist, beträgt also <span class="math inline">\(P(\text{Positiv}) = 0.00099 + 0.04995 = 0.05094\)</span>.</p>
+<p>Trotz eines positiven Test ist es also sehr unwahrscheinlich, dass eine Person Krebs hat. Die Wahrscheinlichkeit, dass eine Person Krebs hat, wenn der Test positiv ist, beträgt <span class="math inline">\(P(\text{Krebs} | \text{Positiv}) = \frac{P(\text{Krebs} \cap \text{Positiv})}{P(\text{Positiv})} = \frac{0.00099}{0.05094} = 0.0194\)</span>.</p>
+<p>In der Realität werden Personen mit einem positiven Testergebnis oft weiteren Tests unterzogen, um die Wahrscheinlichkeit zu erhöhen, dass die Diagnose korrekt ist. Dies wird als <em>Bestätigungstest</em> bezeichnet. Zudem werden nur Personen getestet, wenn es schon Anzeichen für eine Erkrankung gibt. Dies wird als <em>Prävalenz</em> bezeichnet und ist dann in der Stichprobe höher als in der Gesamtbevölkerung.</p>
+</div>
+</section>
+<section id="satz-von-bayes" class="level3" data-number="3.6.5">
+<h3 data-number="3.6.5" class="anchored" data-anchor-id="satz-von-bayes"><span class="header-section-number">3.6.5</span> Satz von Bayes</h3>
+<p>Der Satz von Bayes ist ein mathematischer Satz, der uns erlaubt, die Wahrscheinlichkeit eines Ereignisses unter der Bedingung eines anderen Ereignisses zu berechnen. Der Satz von Bayes ist besonders nützlich, wenn wir die bedingte Wahrscheinlichkeit eines Ereignisses unter der Bedingung eines anderen Ereignisses kennen, aber die bedingte Wahrscheinlichkeit des anderen Ereignisses unter der Bedingung des ersten Ereignisses berechnen möchten.</p>
+<p>Der Satz von Bayes lautet:</p>
+<p><span class="math display">\[
+P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}.
+\]</span></p>
+<p>Der Satz von Bayes kann auch als Multiplikation der bedingten Wahrscheinlichkeit eines Ereignisses unter der Bedingung eines anderen Ereignisses und der Wahrscheinlichkeit des anderen Ereignisses geteilt durch die Wahrscheinlichkeit des ersten Ereignisses geschrieben werden.</p>
+<p>Der Satz von Bayes wird oft in der Medizin, der Wirtschaft und der Technik verwendet, um die Wahrscheinlichkeit eines Ereignisses zu berechnen, wenn wir die Wahrscheinlichkeit eines anderen Ereignisses kennen. Hierbei wird auch von Prior, Likelihood und Posterior gesprochen. Der Prior ist die Wahrscheinlichkeit des Ereignisses, bevor wir die Daten haben. Der Likelihood ist die Wahrscheinlichkeit der Daten unter der Bedingung des Ereignisses. Der Posterior ist die Wahrscheinlichkeit des Ereignisses unter der Bedingung der Daten.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Youtube-Videos: - <a href="https://www.youtube.com/watch?v=HZGCoVF3YvM">Three Blue One Brown: Bayes Theorem</a> - <a href="https://www.youtube.com/watch?v=R13BD8qKeTg">Veritasium: The Bayesian Trap</a></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Assoziationsanalyse mit A-Priori-Algorithmus
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die <a href="https://de.wikipedia.org/wiki/Assoziationsanalyse">Assoziationsanalyse</a> ist ein Verfahren, um Zusammenhänge in Daten zu finden. Ein bekannter Algorithmus ist der <a href="https://de.wikipedia.org/wiki/Apriori-Algorithmus">A-Priori-Algorithmus</a>, der z.B. in für Predictive Maintainance oder in der Warenkorbanalyse verwendet wird. Der A-Priori-Algorithmus findet heraus, welche Produkte oft zusammen gekauft werden. Ein Beispiel ist, dass Kunden, die Windeln kaufen, oft auch Bier kaufen.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/jhumci\.github\.io\/MECH-B-4-MLDS-MLDS1");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../statistics/index.html" class="pagination-link" aria-label="Statistik">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Statistik</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../statistics/distributions.html" class="pagination-link" aria-label="Verteilungen">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Verteilungen</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Machine Learning and Data Science 1 SoSe 2025 (MECH-B-4-MLDS-MLDS1)</p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> Julian Huber</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/statistics/sampling.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
