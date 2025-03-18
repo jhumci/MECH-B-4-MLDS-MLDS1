@@ -681,7 +681,7 @@ $$
 
 Wie hoch ist die Wahrscheinlichkeit, dass ein Patient Krebs hat, wenn wir folgendes wissen:
 
-- Die Wahrscheinlechkeit, dass eine Person Krebs hat, beträgt 0.1%.
+- Die Wahrscheinlichkeit, dass eine Person Krebs hat, beträgt 0.1%.
 - Im Falle, dass eine Person Krebs hat, beträgt die Wahrscheinlichkeit, dass der Test positiv ist, 99%. (dies nennt man auch ist die _Sensitivität_ des Tests)
 - Im Falle, dass eine Person keinen Krebs hat, beträgt die Wahrscheinlichkeit, dass der Test positiv ist, 5%. (dies nennt man auch ist die _Spezifität_ des Tests)
 
