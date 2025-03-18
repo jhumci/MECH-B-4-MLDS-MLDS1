@@ -596,11 +596,14 @@ Mit diesem Puzzelstein können wir nun auch die Wahrscheinlichkeit jeder Augenza
 ### Beispiel 2
 
 Wahr oder falsch. Bestimmen Sie, ob die folgenden Aussagen wahr oder falsch sind, und erklären Sie Ihre Begründung.
+
 - 1. Wenn eine faire Münze viele Male geworfen wird und die letzten acht Würfe alle Kopf sind, dann ist die Wahrscheinlichkeit, dass der nächste Wurf Kopf ist, etwas weniger als 50%.
 - 2. Das Ziehen einer Bildkarte (Bube, Dame oder König) und das Ziehen einer roten Karte aus einem vollständigen Kartenspiel sind sich gegenseitig ausschließende Ereignisse.
 - 3. Das Ziehen einer Bildkarte und das Ziehen eines Asses aus einem vollständigen Kartenspiel sind sich gegenseitig ausschließende Ereignisse.
 
-::: {.tip collapse="true"}
+
+
+:::::: {.callout-tip collapse="true"}
 - 1. Falsch. Die Wahrscheinlichkeit, dass eine faire Münze Kopf zeigt, beträgt 50%. Die Ergebnisse der vorherigen Würfe beeinflussen die Wahrscheinlichkeit des nächsten Wurfs nicht, da die Würfe unabhängig sind.
 - 2. Falsch. Bildkarten können rote oder schwarze Farben haben. Die Ereignisse "Bildkarte" und "rote Karte" sind nicht disjunkt.
 - 3. Wahr, da ein Ass keine Bildkarte ist.
