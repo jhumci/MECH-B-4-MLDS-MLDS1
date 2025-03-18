@@ -444,7 +444,7 @@ Daten in das Tidy-Format transformieren
 <section id="positive-beispiele-für-tidy-data" class="level3" data-number="2.1.2">
 <h3 data-number="2.1.2" class="anchored" data-anchor-id="positive-beispiele-für-tidy-data"><span class="header-section-number">2.1.2</span> Positive Beispiele für Tidy Data</h3>
 <p>Der folgende Beispielcode zeigt, wie Sie ein CSV-Datei laden und sich mit den ersten Zeilen vertraut machen können. Glücklicher Weise ist dieser Datensatz bereits im Tidy-Format. Jede Zeile repräsentiert eine Beobachtung (Kreditnehmer) und jede Spalte eine Variable (Attribut).</p>
-<div id="0964e3cb" class="cell styled-output" data-execution_count="1">
+<div id="ca8323f2" class="cell styled-output" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lesen der CSV-Datei in einen DataFrame</span></span>
@@ -492,7 +492,7 @@ Daten in das Tidy-Format transformieren
 <section id="negative-beispiele-für-tidy-data" class="level3" data-number="2.1.3">
 <h3 data-number="2.1.3" class="anchored" data-anchor-id="negative-beispiele-für-tidy-data"><span class="header-section-number">2.1.3</span> Negative Beispiele für Tidy Data</h3>
 <p>Folgendes Datenbeispiel zeigt, wie ein Datensatz <strong>nicht</strong> im Tidy-Format aussieht. Wir sehen die Strombedarfe von verschiedenen Netzgebieten <code>zone_id</code> zu verschiedenen Zeitpunkten. Allerdings ist es ungünstig, dass nicht jede Kombination aus Zone und Zeitpunkt eine eigene Zeile hat. Stattdessen sind die Werte für alle 24 Stunden in einer eigenen Spalte.</p>
-<div id="ce5838f4" class="cell styled-output" data-execution_count="2">
+<div id="8c0ea221" class="cell styled-output" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/dataexploratory/GEFCom2012/GEFCOM2012_Data/Load/Load_history.csv"</span>)</span>
@@ -567,7 +567,7 @@ sinnvoll in aufsteigender Reihenfolge anordnen?</li>
 <section id="nominale-variablen" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="nominale-variablen"><span class="header-section-number">2.2.1</span> Nominale Variablen</h3>
 <p><strong>Definition:</strong> Nominale Variablen kategorisieren Daten ohne eine festgelegte Reihenfolge.</p>
-<div id="69c3de03" class="cell styled-output" data-execution_count="3">
+<div id="c5454ce1" class="cell styled-output" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/dataexploratory/loan50.csv"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"state"</span>].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -579,7 +579,7 @@ sinnvoll in aufsteigender Reihenfolge anordnen?</li>
 Name: state, dtype: object</code></pre>
 </div>
 </div>
-<div id="4b102cb3" class="cell styled-output" data-execution_count="4">
+<div id="ba0fc766" class="cell styled-output" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"state"</span>].value_counts().head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>state
@@ -591,7 +591,7 @@ MD    3
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="b9300c81" class="cell styled-output" data-execution_count="5">
+<div id="fe43ef6a" class="cell styled-output" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"state"</span>].mode().head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0    CA
@@ -607,7 +607,7 @@ Name: state, dtype: object</code></pre>
 <section id="ordinale-variablen" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="ordinale-variablen"><span class="header-section-number">2.2.2</span> Ordinale Variablen</h3>
 <p>Ordinale Variablen haben eine natürliche Ordnung, aber der Abstand zwischen den Werten ist nicht zwingend gleichmäßig.</p>
-<div id="d9c75f02" class="cell styled-output" data-execution_count="6">
+<div id="b988225b" class="cell styled-output" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"grade"</span>].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0    B
@@ -618,7 +618,7 @@ Name: state, dtype: object</code></pre>
 Name: grade, dtype: object</code></pre>
 </div>
 </div>
-<div id="cd9d2e11" class="cell styled-output" data-execution_count="7">
+<div id="53b041a6" class="cell styled-output" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"grade"</span>].sort_values().head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>49    A
@@ -629,7 +629,7 @@ Name: grade, dtype: object</code></pre>
 Name: grade, dtype: object</code></pre>
 </div>
 </div>
-<div id="321685fd" class="cell styled-output" data-execution_count="8">
+<div id="b42fed0b" class="cell styled-output" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"grade"</span>].value_counts().head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>grade
@@ -641,14 +641,14 @@ E     2
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="d6884bd4" class="cell styled-output" data-execution_count="9">
+<div id="92ce66ee" class="cell styled-output" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"grade"</span>].mode())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0    B
 Name: grade, dtype: object</code></pre>
 </div>
 </div>
-<div id="b71a72e4" class="cell styled-output" data-execution_count="10">
+<div id="c077af52" class="cell styled-output" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the order for the categorical values</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>grade_order <span class="op">=</span> <span class="bu">sorted</span>(df[<span class="st">"grade"</span>].unique())</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -672,7 +672,7 @@ Name: grade, dtype: object</code></pre>
 <section id="intervallskalierte-variablen" class="level3" data-number="2.2.3">
 <h3 data-number="2.2.3" class="anchored" data-anchor-id="intervallskalierte-variablen"><span class="header-section-number">2.2.3</span> Intervallskalierte Variablen</h3>
 <p>Intervallskalierte Variablen haben geordnete Werte mit gleichmäßigen Abständen zwischen ihnen, aber sie besitzen keinen absoluten Nullpunkt. Ein Beispiel ist das jährliche Einkommen.</p>
-<div id="f0e7905c" class="cell styled-output" data-execution_count="11">
+<div id="aedce541" class="cell styled-output" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"annual_income"</span>].head())</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"annual_income"</span>].mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -783,7 +783,7 @@ Tip
 x^{max} = \max_i x_i,
 \]</span></li>
 </ul>
-<div id="c9c29e91" class="cell styled-output" data-execution_count="13">
+<div id="0c2131f3" class="cell styled-output" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>income_max <span class="op">=</span> df[<span class="st">"annual_income"</span>].<span class="bu">max</span>()</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>income_max<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -793,7 +793,7 @@ x^{max} = \max_i x_i,
 <ul>
 <li>der minimale Wert bzw. das <em>Minimum</em>:</li>
 </ul>
-<div id="9415e43c" class="cell styled-output" data-execution_count="14">
+<div id="b6e630f7" class="cell styled-output" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>income_min <span class="op">=</span> df[<span class="st">"annual_income"</span>].<span class="bu">min</span>()</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>income_min<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -805,7 +805,7 @@ x^{min} = \min_i x_i,
 \]</span> - der <em>arithmetische Mittelwert</em>: <span class="math display">\[
 \overline{x} = \frac1n \sum_{i=1}^n x_i = \frac{x_1 + x_2 + \cdots + x_n}{n},
 \]</span></p>
-<div id="351c3482" class="cell styled-output" data-execution_count="15">
+<div id="951a424b" class="cell styled-output" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>income_mean <span class="op">=</span> df[<span class="st">"annual_income"</span>].mean()</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>income_mean<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -821,7 +821,7 @@ x^{min} = \min_i x_i,
                 \frac{x_{n/2} + x_{n/2+1}}{2}&amp; n\quad \text{even}
                 \end{cases},
 \]</span></p>
-<div id="ec9e572a" class="cell styled-output" data-execution_count="16">
+<div id="042432d4" class="cell styled-output" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>income_median <span class="op">=</span> df[<span class="st">"annual_income"</span>].median()</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>income_median<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -831,7 +831,7 @@ x^{min} = \min_i x_i,
 <ul>
 <li>Verallgemeinert für <span class="math inline">\(p\in(0,1)\)</span> ist das <em>p-Quantil</em> <span class="math inline">\(\overline{x}_p\)</span> der Wert, der die Daten in zwei Teile teilt, wobei <span class="math inline">\(p\)</span> der Anteil der Daten ist, die kleiner oder gleich <span class="math inline">\(\overline{x}_p\)</span> sind.</li>
 </ul>
-<div id="ccd5974b" class="cell styled-output" data-execution_count="17">
+<div id="08474c91" class="cell styled-output" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>income_quartiles <span class="op">=</span> df[<span class="st">"annual_income"</span>].quantile([<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>])</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>income_quartiles<span class="op">=</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -865,7 +865,7 @@ Caution
 <section id="kumulative-histogramme-und-empirische-verteilungsfunktionen" class="level3" data-number="2.4.2">
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="kumulative-histogramme-und-empirische-verteilungsfunktionen"><span class="header-section-number">2.4.2</span> Kumulative Histogramme und Empirische Verteilungsfunktionen</h3>
 <p>Als Alternative haben sich kumulative Histogramme, wie in <span class="quarto-unresolved-ref">?fig-sec-dataexploratory-sets-kum-histogram</span>, etabliert, die die kumulative Verteilungsfunktion (Cumulative Density Function / CDF) visualisieren. Diese Funktion gibt an, wie viele Werte kleiner oder gleich einem bestimmten Wert sind. Zur Konstruktion der CDF werden die Daten in aufsteigender Reihenfolge sortiert und die relative Häufigkeit der Werte berechnet.</p>
-<div id="fa69774a" class="cell styled-output" data-execution_count="18">
+<div id="8a867411" class="cell styled-output" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -895,7 +895,7 @@ Caution
 \sigma = \sqrt{\operatorname{Var}(x)}.
 \]</span></p>
 <p>In Python können wir die Varianz und Standardabweichung mit <code>pandas</code> oder <code>numpy</code> berechnen:</p>
-<div id="d1f60979" class="cell styled-output" data-execution_count="19">
+<div id="a0addff9" class="cell styled-output" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Varianz: </span><span class="sc">{</span>df[<span class="st">'annual_income'</span>]<span class="sc">.</span>var()<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Standardabweichung: </span><span class="sc">{</span>df[<span class="st">'annual_income'</span>]<span class="sc">.</span>std()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -925,7 +925,7 @@ Korrigerte Stichproben-Varianz
 <p>In der Statistik beschreibt der Begriff <em>Korrelation</em> oder <em>Abhängigkeit</em> jede statistische Beziehung zwischen <em>bivariaten Daten</em> (gepaarte Daten) oder <em>Zufallsvariablen</em>.</p>
 <p>In unserem Datensatz können wir beispielsweise untersuchen: - <code>emp_length</code>: Anzahl der Jahre im Beruf - <code>annual_income</code>: Jährliches Einkommen - <code>debt_to_income</code>: Schulden-Einkommens-Verhältnis</p>
 <p>Um die Daten besser zu verstehen können wir zunächst einen Scatterplot <span class="quarto-unresolved-ref">?fig-sec-dataexploratory-sets-scatterplot</span> erstellen:</p>
-<div id="a06b8027" class="cell styled-output" data-execution_count="20">
+<div id="6a28c1f1" class="cell styled-output" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>df_reduced <span class="op">=</span> df[[<span class="st">"emp_length"</span>, <span class="st">"annual_income"</span>, <span class="st">"debt_to_income"</span>]]</span>
@@ -960,7 +960,7 @@ Diskussion
 \operatorname{cov}(x, y) = \frac1n \sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y}).
 \]</span></p>
 <p>In Python können wir die Kovarianz-Matrix mit <code>pandas</code> direkt berechnen:</p>
-<div id="8308ed1e" class="cell styled-output" data-execution_count="21">
+<div id="701447bd" class="cell styled-output" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df_reduced.cov()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <div>
@@ -1010,7 +1010,7 @@ Diskussion
 \]</span></p>
 <p>wobei <span class="math inline">\(\sigma_x\)</span> und <span class="math inline">\(\sigma_y\)</span> die Standardabweichungen der Variablen sind.</p>
 <p>In Python können wir den Korrelationskoeffizienten mit <code>numpy</code> berechnen:</p>
-<div id="12a9fb39" class="cell styled-output" data-execution_count="22">
+<div id="1a3f2be5" class="cell styled-output" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df_reduced.corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <div>
