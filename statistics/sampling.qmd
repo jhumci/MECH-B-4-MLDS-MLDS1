@@ -7,7 +7,7 @@ Die Auswahl unserer $n$ Beobachtungen aus einer Grundgesamtheit wird als Stichpr
 ## Sampling aus einer Population
 
 Als Grundgesamtheit (_population_) bezeichnen wir die Menge aller möglichen Beobachtungen, die wir untersuchen möchten. Die Stichprobe (_sample_) ist eine Teilmenge der Grundgesamtheit. Im besten Fall besteht eine Beziehung zwischen den Beobachtungen in der Stichprobe und der Grundgesamtheit, die es uns erlaubt, Rückschlüsse auf die Grundgesamtheit zu ziehen.
-In der Regel können wir nicht alle Daten einer Grundgesamtheit sammeln, da dies zu aufwändig und teuer wäre. Stattdessen sammeln wir eine Stichprobe von Daten und ziehen Rückschlüsse auf die Grundgesamtheit (vgl. Figure \@ref(fig-sec-dataexploratory-sampling-sampling)). Die Stichprobe sollte möglichst repräsentativ für die Grundgesamtheit sein, damit wir verallgemeinern können. Hierzu kommen wir in der Regel, wenn wir eine große Stichprobe ziehen und diese zufällig auswählen.
+In der Regel können wir nicht alle Daten einer Grundgesamtheit sammeln, da dies zu aufwändig und teuer wäre. Stattdessen sammeln wir eine Stichprobe von Daten und ziehen Rückschlüsse auf die Grundgesamtheit (vgl. Figure \@fig-sec-dataexploratory-sampling-sampling). Die Stichprobe sollte möglichst repräsentativ für die Grundgesamtheit sein, damit wir verallgemeinern können. Hierzu kommen wir in der Regel, wenn wir eine große Stichprobe ziehen und diese zufällig auswählen.
 
 
 ```{python}
@@ -348,7 +348,7 @@ __Gesetz der großen Zahlen__: Mit zunehmender Anzahl von Beobachtungen konvergi
 
 Da wir verschiedene Ergebnisse haben, führen wir eine neue Schreibweise ein. Wir schreiben $P(X = x)$ für die Wahrscheinlichkeit, dass die Zufallsvariable $X$ (z.B. Münzwürf) den Wert $x$ annimmt. 
 
-Für einen fairen Münzwurf ist 
+__Für einen fairen Münzwurf ist:__
 $$
 P(X = \text{Kopf}) = 0.5,
 $$ 
@@ -371,20 +371,20 @@ $$
 P(X = 0) = 0.5.
 $$
 
-Für einen fairen Würfelwurf ist 
+__Für einen fairen Würfelwurf ist:__
 $$
 P(X = 1) = P(X = 2) = P(X = 3) = P(X = 4) = P(X = 5) = P(X = 6) = 1/6.
 $$
 
 
-Die Summe der Wahrscheinlichkeiten aller möglichen Ergebnisse eines Zufallsexperiments ist immer 1. Das bedeutet, dass mindestens eines der möglichen Ergebnisse eintreten muss. Vergleicher dies mit der Fläche unter einem normalisieren Histogramm oder einer Dichtefunktion.
+Die Summe der Wahrscheinlichkeiten aller möglichen Ergebnisse eines Zufallsexperiments ist immer 1. Das bedeutet, dass mindestens eines der möglichen Ergebnisse eintreten muss. Vergleiche dies mit der Fläche unter einem normalisieren Histogramm oder einer Dichtefunktion.
 
 
 
 ### Disjunkte bzw. Sich-Ausschließende Ereignisse
 
-Zwei Ereignisse $A$ und $B$ sind disjunkt oder sich ausschließend, wenn sie nicht gleichzeitig eintreten können. Das bedeutet, dass wenn $A$ eintritt, $B$ nicht eintreten kann und umgekehrt.
-Beispielsweise kann bei einem Wurf mit einem fairen Würfel die Augenzahl nicht gleichzeitig 1 und 2 sein. Die Ereignisse "Augenzahl ist 1" und "Augenzahl ist 2" sind sich ausschließend.
+Zwei Ereignisse $A$ und $B$ sind __disjunkt__ oder sich ausschließend, wenn sie nicht gleichzeitig eintreten können. Das bedeutet, dass wenn $A$ eintritt, $B$ nicht eintreten kann und umgekehrt.
+Beispielsweise kann bei einem Wurf mit einem fairen Würfel die Augenzahl nicht gleichzeitig 1 und 2 sein. Die Ereignisse _"Augenzahl ist 1"_ und _"Augenzahl ist 2"_ sind sich ausschließend.
 
 Die Wahrscheinlichkeit, dass eines der beiden Ereignisse auftritt, ist die Summe der Wahrscheinlichkeiten der beiden Ereignisse. Als Notation schreiben wir $P(A \cup B)$ für die Wahrscheinlichkeit, dass eines der beiden Ereignisse eintritt. Dies entspricht einem logischen _oder_. Wir lesen _A vereinigt B_. 
 
@@ -488,13 +488,11 @@ Sei $A$ ein Ereignis, bei dem zwei faire Würfel geworfen werden und dabei die S
 
 - 1. Was ist das Komplement von $A$?
 - 2. Wie groß ist die Wahrscheinlichkeit von $A$?
-- 3. Was ist $P(A^c)$?
-
-Let A represent the event where we roll two dice and their total is less than 12. (a) What does the
-event Ac represent? (b) Determine P(Ac) from Figure 3.5 on page 87. (c) Determine P(A).15
 
 
-::: {.tip collapse="true"}
+
+:::::: {.callout-tip}
+
 - 1. Das Komplement von $A$ ist das Ereignis, bei dem die Summe der Augenzahl 12 oder mehr beträgt.
 - 2. Die Wahrscheinlichkeit von $A$ ist die Summe der Wahrscheinlichkeiten der Ergebnisse, bei denen die Summe der Augenzahl kleiner als 12 ist. Das sind die Ergebnisse 2 bis 11. 
 
@@ -518,7 +516,7 @@ Sei $W_1$ das Ereignis von Würfel 1 und $W_2$ das Ereignis von Würfel 2. Wir k
 
 
 Wir wissen, wie wir $P(W_1=6)$ und $P(W_2=6)$ einzeln ausrechen. Was uns aktuell noch fehlt ist wie wir die Wahrscheinlichkeit $P(W_1=x \cap W_2=y)$ ausrechnen, die uns sagt, wie wahrscheinlich es ist, dass zwei 6er gewürfelt werden. Wenn wir diese hätten könnten wie diese als Ereignisse zusammenzählen und die Wahrscheinlichkeit über die Additionregel berechnen. Was wird aber aus der Tabelle mitnehmen können ist, dass die Wahrscheinlichkeit für die Augenzahl $P(A=2)=P(W_1=1) \cdot P(W_2=1)$ ist und im vergleich zu $P(A=7)$ wohl eine kleinere Wahrscheinlichkeit hat.
-:::
+::::::
 
 Immer wenn die Wahrscheinlichkeitsberechung etwas schwieriger wird können wir auf die Simulation zurückgreifen. Bei einer sogenannten __Monte-Carlo-Simulation__ führen wir das Experiment mehrfach durch und zählen die Anzahl der Fälle, die das Ereignis erfüllen. Die Wahrscheinlichkeit ist dann die Anzahl der Fälle, die das Ereignis erfüllen, geteilt durch die Anzahl der Durchläufe.
 
@@ -647,7 +645,7 @@ $$
 Im Fall unseres Beispiels ist die bedingte Wahrscheinlichkeit, dass ein Kreditnehmer ein zweites Einkommen hat, wenn er eine Hypothek hat, 
 
 $$
-P(\text{Zweiteinkommen} | \text{Hypothek}) = \frac{\text{Zweiteinkommen} \cap \text{Hypothek}}{\text{Hypothek}}=\frac{\frac{6}{50}}{\frac{26}{50}} = \frac{6}{26}$.
+P(\text{Zweiteinkommen} | \text{Hypothek}) = \frac{\text{Zweiteinkommen} \cap \text{Hypothek}}{\text{Hypothek}}=\frac{\frac{6}{50}}{\frac{26}{50}} = \frac{6}{26}.
 $$
 
 :::
