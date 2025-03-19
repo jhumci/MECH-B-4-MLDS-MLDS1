@@ -483,7 +483,7 @@ Important
 <section id="binomialverteilung" class="level3" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="binomialverteilung"><span class="header-section-number">4.1.2</span> Binomialverteilung</h3>
 <p>Stellen wir uns vor, dass wird nun den Wurf einer Münze <span class="math inline">\(n\)</span>-mal wiederholen. Die Würfe sind unabhängig voneinander. Die Wahrscheinlichkeit, dass die Münze Kopf zeigt, ist zudem immer <span class="math inline">\(p\)</span>. Die Wahrscheinlichkeit, dass die Münze Zahl zeigt, ist <span class="math inline">\(1-p\)</span>. Wir Interessieren uns nun dafür, wie oft die Münze Kopf zeigt. Die Anzahl der Kopfwürfe ist eine Zufallsvariable <span class="math inline">\(Y\)</span>. Die Zufallsvariable <span class="math inline">\(Y\)</span> ist binomialverteilt. Die Binomialverteilung beschreibt die Anzahl der Erfolge in <span class="math inline">\(n\)</span> unabhängigen Bernoulli-Experimenten.</p>
-<div id="25caf5cd" class="cell styled-output" data-execution_count="2">
+<div id="d3cb83ff" class="cell styled-output" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -528,7 +528,7 @@ P(Y=y) = \binom{n}{y} \cdot p^y \cdot (1-p)^{n-y}.
 <p>Wenn wir die Werte anpassen und z.B. ein Los ziehen, dann ist die Wahrscheinlichkeit, dass wir ein Gewinnlos ziehen <span class="math inline">\(p=0.1\)</span>. Die Wahrscheinlichkeitsfunktion der Binomialverteilung für das Ziehen eines Gewinnloses aus 10 Losen ist gegeben durch:</p>
 <p><span class="math inline">\(Y \sim \text{Bin}(n=10, p=0.1)\)</span></p>
 <p>Die folgende Abbildung zeigt die Wahrscheinlichkeitsverteilung der Binomialverteilung für das Ziehen eines Gewinnloses aus 10 Losen.</p>
-<div id="e1947798" class="cell styled-output" data-execution_count="3">
+<div id="59909513" class="cell styled-output" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>binomial_distribution(n <span class="op">=</span> <span class="dv">10</span>, p <span class="op">=</span> <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -558,7 +558,7 @@ E(Y) = n \cdot p.
 P(X=x) = \frac{1}{n},
 \]</span></p>
 <p>für <span class="math inline">\(x=1, 2, \ldots, n\)</span>. Die Zufallsvariable <span class="math inline">\(X\)</span> wird als <span class="math inline">\(X \sim \text{DU}(n)\)</span> bezeichnet, um auszudrücken, dass <span class="math inline">\(X\)</span> eine diskret gleichverteilte Zufallsvariable auf dem Intervall <span class="math inline">\([1, n]\)</span> ist.</p>
-<div id="9bd9e24b" class="cell styled-output" data-execution_count="4">
+<div id="87c02bc9" class="cell styled-output" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -615,7 +615,7 @@ f(x) = \begin{cases}
 \]</span></p>
 <p>Die Zufallsvariable <span class="math inline">\(X\)</span> wird als <span class="math inline">\(X \sim \text{U}(a, b)\)</span> bezeichnet, um auszudrücken, dass <span class="math inline">\(X\)</span> eine stetig gleichverteilte Zufallsvariable auf dem Intervall <span class="math inline">\([a, b]\)</span> ist.</p>
 <p>Bei stetigen Verteilungen geben die Wahrscheinlichkeitsdichten die Wahrscheinlichkeiten an. Die Wahrscheinlichkeiten werden durch die Fläche unter der Wahrscheinlichkeitsdichte bestimmt. Die Fläche unter der Wahrscheinlichkeitsdichte ist gleich 1.</p>
-<div id="2a110737" class="cell styled-output" data-execution_count="5">
+<div id="86b5229c" class="cell styled-output" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -687,7 +687,7 @@ f(x) = \frac{1}{\sqrt{2\pi} \sigma} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right
 \]</span></p>
 <p>für <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span>. Die Zufallsvariable <span class="math inline">\(X\)</span> wird als <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span> bezeichnet, um auszudrücken, dass <span class="math inline">\(X\)</span> eine normalverteilte Zufallsvariable mit Erwartungswert <span class="math inline">\(\mu\)</span> und Varianz <span class="math inline">\(\sigma^2\)</span> ist.</p>
 <p>Sofern <span class="math inline">\(\mu=0\)</span> und <span class="math inline">\(\sigma=1\)</span> ist, spricht man von einer Standardnormalverteilung. <span class="math inline">\(X \sim \mathcal{N}(0, 1)\)</span>. Die Standardnormalverteilung ist eine spezielle Form der Normalverteilung. Die Standardnormalverteilung hat einen Erwartungswert von 0 und eine Varianz von 1.</p>
-<div id="e2b04c92" class="cell styled-output" data-execution_count="6">
+<div id="24dc97af" class="cell styled-output" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -777,7 +777,7 @@ P(X \geq 130) = 1 - \int_{-\infty}^{130} \frac{1}{\sqrt{2\pi} \cdot 15} \exp\lef
 <section id="berechnung-von-wahrscheinlichkeiten-mit-python" class="level4" data-number="4.2.2.3">
 <h4 data-number="4.2.2.3" class="anchored" data-anchor-id="berechnung-von-wahrscheinlichkeiten-mit-python"><span class="header-section-number">4.2.2.3</span> Berechnung von Wahrscheinlichkeiten mit Python</h4>
 <p>Im Python kommen wir z.B. das Modul <code>scipy.stats</code> verwenden, um die Wahrscheinlichkeit zu berechnen. Hier gibt es die Funktion <code>norm.cdf(x, loc=mu, scale=sigma)</code>, die die kumulative Verteilungsfunktion der Normalverteilung berechnet. Die kumulative Verteilungsfunktion gibt die Wahrscheinlichkeit an, dass eine Zufallsvariable einen Wert kleiner oder gleich einem bestimmten Wert annimmt.</p>
-<div id="517b5359" class="cell styled-output" data-execution_count="7">
+<div id="5d7d8f07" class="cell styled-output" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -801,7 +801,7 @@ P(X \geq 130) = 1 - \int_{-\infty}^{130} \frac{1}{\sqrt{2\pi} \cdot 15} \exp\lef
 <p><span class="math display">\[
 P(\mu - \sigma \leq X \leq \mu + \sigma) = P(X \leq \mu + \sigma) - P(X \leq \mu - \sigma) = \text{cdf}(\mu + \sigma) - \text{cdf}(\mu - \sigma).
 \]</span></p>
-<div id="abc99033" class="cell styled-output" data-execution_count="8">
+<div id="978d2b13" class="cell styled-output" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
@@ -871,7 +871,7 @@ Tip
 <h2 data-number="4.4" class="anchored" data-anchor-id="fitting-von-verteilungen"><span class="header-section-number">4.4</span> Fitting von Verteilungen</h2>
 <p>In der Praxis ist es oft notwendig, die Verteilung von Daten zu bestimmen. Dieser Prozess wird als <strong>Fitting</strong> bezeichnet. Das Ziel des Fittings ist es, die Verteilung zu finden, die die Daten am besten beschreibt. Es gibt verschiedene Methoden, um die Verteilung von Daten zu bestimmen. Dazu gehören die Methode der kleinsten Quadrate, Maximum-Likelihood-Schätzung und die Methode der Momente.</p>
 <p>Als Beispiel nehmen wir unsere Lottrie-Daten, wobei die Anzahl der Gewinnlose <span class="math inline">\(X \sim \text{Bin}(10, 0.1)\)</span> binomialverteilt ist. Wir können nun die Verteilung der Daten bestimmen, indem wir die Binomialverteilung anpassen.</p>
-<div id="12eb1d18" class="cell styled-output" data-execution_count="9">
+<div id="e03c0fcf" class="cell styled-output" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -965,7 +965,7 @@ E(aX + bY) = aE(X) + bE(Y).
 <section id="beispiel-summen-von-zufallsvariablen-aus-verschiedenen-verteilungen" class="level3" data-number="4.5.2">
 <h3 data-number="4.5.2" class="anchored" data-anchor-id="beispiel-summen-von-zufallsvariablen-aus-verschiedenen-verteilungen"><span class="header-section-number">4.5.2</span> Beispiel: Summen von Zufallsvariablen aus verschiedenen Verteilungen</h3>
 <p>Es existieren auch Verallgemeinerungen, z.B., dass die Zufallsvariablen nicht <strong>identisch</strong> verteilt sein müssen. So zeigt, das folgende Beispiel, dass auch die Summe von Zufallsvariablen aus verschiedenen Verteilungen einer Normalverteilung folgen kann, wenn die Anzahl der Zufallsvariablen groß genug ist.</p>
-<div id="d45f8da3" class="cell styled-output" data-execution_count="10">
+<div id="e770dcea" class="cell styled-output" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1016,7 +1016,7 @@ E(aX + bY) = aE(X) + bE(Y).
 </div>
 </div>
 </div>
-<div id="c0836f5b" class="cell styled-output" data-execution_count="11">
+<div id="9202ab4a" class="cell styled-output" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>X_sum_mu, X_sum_sigma <span class="op">=</span> norm.fit(X_sum)</span>
