@@ -357,7 +357,7 @@ print(df["homeownership"].value_counts())
 
 1. Ja, die Kategorien sind disjunkt, da ein Kreditnehmer nur eine davon haben kann.
 2. Anteil Hypothek: $\frac{26}{50}$, Anteil Eigentum: $\frac{3}{50}$.
-3. Wahrscheinlichkeit (Hypothek oder Eigentum): $\frac{26}{50} + \frac{3}{50} = \frac{29}{50}$. Dies entspricht der Wahrscheinlichkeit, nicht zu mieten. ::::::
+3. Wahrscheinlichkeit (Hypothek oder Eigentum): $\frac{26}{50} + \frac{3}{50} = \frac{29}{50}$. Dies entspricht der Wahrscheinlichkeit, nicht zu mieten.
 
 ::::::
 
