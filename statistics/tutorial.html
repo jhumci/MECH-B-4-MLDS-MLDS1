@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Tutorial: Monte Carlo Simulation of Equipment Failure Time – Machine Learning and Data Science 1</title>
+<title>Tutorial: Monte Carlo Simulation of Vehicle Component Failure – Machine Learning and Data Science 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -71,6 +105,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,7 +146,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/tutorial.html">Tutorial: Monte Carlo Simulation of Equipment Failure Time</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/tutorial.html">Tutorial: Monte Carlo Simulation of Vehicle Component Failure</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -182,7 +245,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../statistics/tutorial.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Tutorial: Monte Carlo Simulation of Equipment Failure Time</span></a>
+ <span class="menu-text">Tutorial: Monte Carlo Simulation of Vehicle Component Failure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -244,22 +307,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
-  <li><a href="#story-and-use-case" id="toc-story-and-use-case" class="nav-link" data-scroll-target="#story-and-use-case">Story and Use Case</a>
+  <li><a href="#sec-monte-carlo-objective" id="toc-sec-monte-carlo-objective" class="nav-link active" data-scroll-target="#sec-monte-carlo-objective">Ziel</a></li>
+  <li><a href="#sec-monte-carlo-story" id="toc-sec-monte-carlo-story" class="nav-link" data-scroll-target="#sec-monte-carlo-story">Szenario und Anwendungsfall</a>
   <ul class="collapse">
-  <li><a href="#story" id="toc-story" class="nav-link" data-scroll-target="#story">Story:</a></li>
-  <li><a href="#use-case" id="toc-use-case" class="nav-link" data-scroll-target="#use-case">Use Case:</a></li>
+  <li><a href="#szenario" id="toc-szenario" class="nav-link" data-scroll-target="#szenario">Szenario</a></li>
+  <li><a href="#anwendungsfall" id="toc-anwendungsfall" class="nav-link" data-scroll-target="#anwendungsfall">Anwendungsfall</a></li>
   </ul></li>
-  <li><a href="#application-of-bayes-theorem" id="toc-application-of-bayes-theorem" class="nav-link" data-scroll-target="#application-of-bayes-theorem">Application of Bayes Theorem</a></li>
+  <li><a href="#sec-monte-carlo-simulation" id="toc-sec-monte-carlo-simulation" class="nav-link" data-scroll-target="#sec-monte-carlo-simulation">Simulation</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/statistics/tutorial.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/tutorial.html">Tutorial: Monte Carlo Simulation of Equipment Failure Time</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/tutorial.html">Tutorial: Monte Carlo Simulation of Vehicle Component Failure</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Tutorial: Monte Carlo Simulation of Equipment Failure Time</h1>
+<h1 class="title">Tutorial: Monte Carlo Simulation of Vehicle Component Failure</h1>
 </div>
 
 
@@ -276,40 +339,124 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="objective" class="level2">
-<h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<p>Students will build a Monte Carlo simulation to model the time until equipment failure in machinery. The goal is to understand probability concepts like conditional probability, addition and multiplication laws, statistical independence, and to visualize the results using a <strong>histogram</strong>.</p>
+<section id="sec-monte-carlo-objective" class="level2">
+<h2 class="anchored" data-anchor-id="sec-monte-carlo-objective">Ziel</h2>
+<p>In dieser Übung erstellen Studierende eine Monte-Carlo-Simulation zur Modellierung der Ausfallzeit von Fahrzeugkomponenten. Dabei werden Wahrscheinlichkeitskonzepte wie bedingte Wahrscheinlichkeit, Additions- und Multiplikationsregeln, statistische Unabhängigkeit sowie Visualisierung durch ein <strong>Histogramm</strong> vertieft.</p>
 </section>
-<section id="story-and-use-case" class="level2">
-<h2 class="anchored" data-anchor-id="story-and-use-case">Story and Use Case</h2>
-<section id="story" class="level3">
-<h3 class="anchored" data-anchor-id="story">Story:</h3>
-<p>A manufacturing plant relies on an automated production line with <em>three robotic arms</em>. Each robotic arm consists of several critical components: <em>motors</em>, <em>sensors</em>, and <em>control units</em>. If any of the <em>motors</em> or <em>control units</em> fail, the robotic arm stops functioning, leading to production downtime. The factory manager wants to estimate the expected downtime caused by failures and identify weak points in the system to optimize maintenance schedules.</p>
+<section id="sec-monte-carlo-story" class="level2">
+<h2 class="anchored" data-anchor-id="sec-monte-carlo-story">Szenario und Anwendungsfall</h2>
+<section id="szenario" class="level3">
+<h3 class="anchored" data-anchor-id="szenario">Szenario</h3>
+<p>Ein Auto besteht aus kritischen Komponenten: <em>Motor</em>, <em>Sensoren</em> und <em>Steuereinheit</em>. Fällt der <em>Motor</em> oder die <em>Steuereinheit</em> aus, stoppt das Fahrzeug. Der Besitzer möchte die erwartete Betriebsdauer bis zum Ausfall abschätzen, um Wartungsintervalle zu planen.</p>
 </section>
-<section id="use-case" class="level3">
-<h3 class="anchored" data-anchor-id="use-case">Use Case:</h3>
-<p>The students must develop a simulation that models the failure behavior of a robotic arm in the production line. Each robotic arm consists of four components:</p>
-<ul>
-<li><strong>Motor</strong> fail according to an <a href="https://numpy.org/doc/2.1/reference/random/generated/numpy.random.exponential.html">exponential distribution</a> with a mean failure time of 500 hours.</li>
-<li><strong>Sensor 1</strong> fail according to a <a href="https://numpy.org/doc/2.1/reference/random/generated/numpy.random.normal.html">normal distribution</a> with a mean of 600 hours and a standard deviation of 100 hours.</li>
-<li><strong>Sensor 2</strong> fail according to a <a href="https://numpy.org/doc/2.1/reference/random/generated/numpy.random.normal.html">normal distribution</a> with a mean of 600 hours and a standard deviation of 100 hours.</li>
-<li><strong>Control Unit</strong> fail according to a <a href="https://numpy.org/doc/2.1/reference/random/generated/numpy.random.uniform.html">uniform distribution</a> between 400 and 800 hours.</li>
-<li>If a <strong>Sensor</strong> fails before the <strong>Motor</strong>, the the failure time of the motor is reduced by 100 hours.</li>
-<li>If a <strong>Control Unit</strong> or <strong>Motor</strong> fails, the robotic arm stops working.</li>
-</ul>
+<section id="anwendungsfall" class="level3">
+<h3 class="anchored" data-anchor-id="anwendungsfall">Anwendungsfall</h3>
+<p>Die Studierenden simulieren das Ausfallverhalten eines Fahrzeugs mit drei Komponenten:<br>
+- <strong>Motor</strong>: Ausfallzeit folgt einer <a href="https://de.wikipedia.org/wiki/Poisson-Verteilung">Poissonverteilung</a> mit Mittelwert 5000 Stunden.<br>
+- <strong>Sensor</strong>: Ausfallzeit folgt einer Normalverteilung mit <span class="math inline">\(\mu = 6000\)</span> Stunden, <span class="math inline">\(\sigma = 100\)</span> Stunden.<br>
+- <strong>Steuereinheit</strong>: Ausfallzeit folgt einer Gleichverteilung zwischen 4000 und 8000 Stunden.<br>
+- <strong>Bedingung</strong>: Fällt der Sensor vor dem Motor aus, verkürzt sich die Motor-Ausfallzeit um 1000 Stunden.<br>
+- <strong>Stopp</strong>: Das Fahrzeug stoppt, wenn Motor oder Steuereinheit ausfällt.</p>
+<section id="aufgaben" class="level4">
+<h4 class="anchored" data-anchor-id="aufgaben">Aufgaben</h4>
+<section id="simulation" class="level5">
+<h5 class="anchored" data-anchor-id="simulation">Simulation</h5>
 <ol type="1">
-<li>Simulate random failure times for each component.</li>
-<li>Determine the time untils the first robitic arm fails, stopping the production line.</li>
-<li>Repeat the process for 10,000 trials.</li>
-<li>Plot the histogram of failure times.</li>
-<li>Analyze the contingency tables of the variables (<code>motor_fails</code>, <code>sensor_1_fails</code>, <code>sensor_1_fails</code>, <code>control_unit_fails</code>, <code>line_fails</code>) and discuss the conditional probabilities and independence.</li>
-<li>Is there a correlation between the time-to-failure of the the Sensors and the Robotic Arm? Create the scatter plot of the time-to-failure of the Sensors and the Robotic Arm and compute the correlation coefficient.</li>
+<li>Simuliere Ausfallzeiten für jede Komponente des Fahrzeugs.</li>
+<li>Bestimme die Zeit bis zum Ausfall des Fahrzeugs.</li>
+<li>Wiederhole dies für 10.000 Durchläufe.</li>
+<li>Stelle die Ausfallzeiten in einem Histogramm dar (<a href="#fig-monte-carlo-failure-histogram" class="quarto-xref">Figure&nbsp;<span>1</span></a>).</li>
+</ol>
+</section>
+<section id="analyse" class="level5">
+<h5 class="anchored" data-anchor-id="analyse">Analyse</h5>
+<p>Für die weitere Anaylse nehmen wir an, dass wir den Zufallsprozess der Ausfälle nicht kennen. Wir können jedoch die Ausfallereignisse aufzeichnen und analysieren. Wir interessieren uns nur für Ausfälle, die zu einem Stopp des Fahrzeugs vor 5000 Stunden führen.</p>
+<ol start="5" type="1">
+<li>Berechne für jede Komponente die Wahrscheinlichkeit, dass sie ausgefallen ist, gegen das Fahrzeug fällt vor 5000 Stunden aus.</li>
+<li>Gibt es eine Korrelation zwischen allen Ausfallzeiten aller Komponenten und des Fahrzeugs? Berechne die Korrelationskoeffizienten und visualisiere es in einer Scatterplot-Matrix.</li>
+<li>Wie hoch ist die Wahrscheinlichkeit, dass die Steuereinheit den ausgefallen ist, wenn das Fahrzeug vor 5000 Stunden ausgefallen ist.</li>
 </ol>
 </section>
 </section>
-<section id="application-of-bayes-theorem" class="level2">
-<h2 class="anchored" data-anchor-id="application-of-bayes-theorem">Application of Bayes Theorem</h2>
-<p>Can You use Bayes Theorem to compute the probability a Control Unit causes the failure, given that the robotic arm has stopped working.</p>
+</section>
+</section>
+<section id="sec-monte-carlo-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="sec-monte-carlo-simulation">Simulation</h2>
+<p>Zuerst erstellen wir einen leeren DataFrame, um die Struktur der simulierten Ausfallzeiten zu zeigen:</p>
+<div id="6a9e2def" class="cell styled-output" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>n_trials <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Leerer DataFrame für Ausfallzeiten</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>columns <span class="op">=</span> [<span class="st">'motor'</span>, <span class="st">'sensor'</span>, <span class="st">'control'</span>, <span class="st">'vehicle_failure'</span>]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(index<span class="op">=</span><span class="bu">range</span>(n_trials), columns<span class="op">=</span>columns)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Leerer DataFrame (Auszug):"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Leerer DataFrame (Auszug):
+  motor sensor control vehicle_failure
+0   NaN    NaN     NaN             NaN
+1   NaN    NaN     NaN             NaN
+2   NaN    NaN     NaN             NaN
+3   NaN    NaN     NaN             NaN
+4   NaN    NaN     NaN             NaN</code></pre>
+</div>
+</div>
+<p>Nun simulieren wir die Ausfallzeiten und berechnen die Zeit bis zum Fahrzeugausfall:</p>
+<div id="cell-fig-monte-carlo-failure-histogram" class="cell styled-output" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> trial <span class="kw">in</span> <span class="bu">range</span>(n_trials):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ausfallzeiten für das Fahrzeug</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    motor_time <span class="op">=</span> np.random.poisson(<span class="dv">5000</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    sensor_time <span class="op">=</span> np.random.normal(<span class="dv">6000</span>, <span class="dv">100</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    control_time <span class="op">=</span> np.random.uniform(<span class="dv">4000</span>, <span class="dv">8000</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Bedingung: Sensor-Ausfall verkürzt Motorzeit</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sensor_time <span class="op">&lt;</span> motor_time:</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        motor_time <span class="op">-=</span> <span class="dv">1000</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ausfallzeit des Fahrzeugs (Motor oder Steuereinheit)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    vehicle_failure <span class="op">=</span> <span class="bu">min</span>(motor_time, control_time)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Daten in DataFrame speichern</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    df.loc[trial, <span class="st">'motor'</span>] <span class="op">=</span> motor_time</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    df.loc[trial, <span class="st">'sensor'</span>] <span class="op">=</span> sensor_time</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    df.loc[trial, <span class="st">'control'</span>] <span class="op">=</span> control_time</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    df.loc[trial, <span class="st">'vehicle_failure'</span>] <span class="op">=</span> vehicle_failure</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"DataFrame mit simulierten Ausfallzeiten (Auszug):"</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plt.hist(df[<span class="st">'vehicle_failure'</span>], bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'skyblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Ausfallzeit des Fahrzeugs (Stunden)'</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Verteilung der Ausfallzeiten (Fahrzeug)'</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame mit simulierten Ausfallzeiten (Auszug):
+  motor       sensor      control vehicle_failure
+0  4974  6064.768854  4624.074562     4624.074562
+1  4919  6152.302986  7464.704583            4919
+2  5020  5953.052561  4727.299869     4727.299869
+3  4928  6054.256004  6099.025727            4928
+4  4986  5898.716888  5168.578594            4986</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-monte-carlo-failure-histogram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-monte-carlo-failure-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tutorial_files/figure-html/fig-monte-carlo-failure-histogram-output-2.png" width="606" height="449" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monte-carlo-failure-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Histogramm der Ausfallzeiten des Fahrzeugs (10.000 Durchläufe).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
