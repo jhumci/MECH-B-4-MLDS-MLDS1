@@ -333,7 +333,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/distributions.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Verteilungen</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-statistics-distributions" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Verteilungen</span></span></h1>
+<h1 class="title"><span id="sec-statistik-verteilungen" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Verteilungen</span></span></h1>
 </div>
 
 
@@ -350,25 +350,24 @@ window.Quarto = {
 </header>
 
 
-<p>In diesem Abschnitt werden die Verteilungen der einzelnen Variablen untersucht. Dazu werden die Verteilungen der einzelnen Variablen in Form von Histogrammen dargestellt. Die Histogramme zeigen die Häufigkeitsverteilung der einzelnen Variablen. Die Verteilungen der einzelnen Variablen werden in den folgenden Abbildungen dargestellt.</p>
+<p>In diesem Abschnitt untersuchen wir die Verteilungen einzelner Variablen. Dazu stellen wir die Verteilungen in Form von Histogrammen dar, welche die Häufigkeitsverteilung der jeweiligen Variablen veranschaulichen. Die Verteilungen der einzelnen Variablen werden in den folgenden Abbildungen dargestellt.</p>
 <section id="diskrete-verteilungen" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="diskrete-verteilungen"><span class="header-section-number">4.1</span> Diskrete Verteilungen</h2>
-<p>Diskrete Verteilungen sind Wahrscheinlichkeitsverteilungen, die nur diskrete Werte annehmen können. Die diskreten Verteilungen, die in diesem Abschnitt untersucht werden, sind die Bernoulli-Verteilung, die Binomialverteilung und die Poisson-Verteilung.</p>
+<p>Diskrete Verteilungen sind Wahrscheinlichkeitsverteilungen, die nur diskrete Werte annehmen können. In diesem Abschnitt betrachten wir die Bernoulli-Verteilung, die Binomialverteilung und die Poisson-Verteilung.</p>
 <section id="bernoulli-verteilung" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="bernoulli-verteilung"><span class="header-section-number">4.1.1</span> Bernoulli-Verteilung</h3>
-<p>Die Bernoulli-Verteilung ist eine diskrete Wahrscheinlichkeitsverteilung, die nur zwei mögliche Werte annehmen kann. Ein typisches Beispiel für eine Bernoulli-Verteilung ist das Werfen einer Münze. Die Münze kann entweder Kopf oder Zahl zeigen. Die Wahrscheinlichkeit, dass die Münze Kopf zeigt, wird mit <span class="math inline">\(p\)</span> bezeichnet. Die Wahrscheinlichkeit, dass die Münze Zahl zeigt, wird mit <span class="math inline">\(1-p\)</span> bezeichnet. Die Wahrscheinlichkeitsfunktion der Bernoulli-Verteilung ist gegeben durch:</p>
-<p>Nun können wir die Wahrscheinlichsverteilung durch eine Formel darstellen.</p>
+<p>Die Bernoulli-Verteilung ist eine diskrete Wahrscheinlichkeitsverteilung, die nur zwei mögliche Ergebnisse modelliert. Ein typisches Beispiel ist der Münzwurf, bei dem entweder “Kopf” oder “Zahl” eintritt. Die Wahrscheinlichkeit für “Kopf” wird mit <span class="math inline">\(p\)</span> bezeichnet, die Wahrscheinlichkeit für “Zahl” mit <span class="math inline">\(1-p\)</span>. Die Wahrscheinlichkeitsfunktion der Bernoulli-Verteilung ist wie folgt definiert:</p>
 <p><span class="math display">\[
 P(X=x) = \begin{cases}
 p &amp; \text{für } x=1, \\
 1-p &amp; \text{für } x=0.
 \end{cases}
 \]</span></p>
-<p>Wir schreiben eine Zufallsvariable <span class="math inline">\(X\)</span> als <span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span>, um auszudrücken, dass <span class="math inline">\(X\)</span> eine Bernoulli-verteilte Zufallsvariable mit Parameter <span class="math inline">\(p\)</span> ist.</p>
-<p>Für den Wurf einer fairen Münze nimmt den Wert 1 an, wenn die Münze Kopf zeigt, und den Wert 0 an, wenn die Münze Zahl zeigt. Die Wahrscheinlichkeitsfunktion der Bernoulli-Verteilung für die faire Münze ist gegeben durch:</p>
+<p>Wir schreiben <span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span>, um auszudrücken, dass <span class="math inline">\(X\)</span> eine Bernoulli-verteilte Zufallsvariable mit Parameter <span class="math inline">\(p\)</span> ist.</p>
+<p>Beim Wurf einer fairen Münze nehmen wir an, dass “Kopf” den Wert 1 und “Zahl” den Wert 0 annimmt. Die Wahrscheinlichkeitsfunktion der Bernoulli-Verteilung für die faire Münze ist dann:</p>
 <p><span class="math inline">\(X \sim \text{Bernoulli}(p=0.5)\)</span></p>
-<p>Die folgende Abbildung zeigt die Wahrscheinlichkeitsverteilung der Bernoulli-Verteilung für die faire Münze.</p>
-<div id="c20b5535" class="cell styled-output" data-execution_count="1">
+<p>Die folgende Abbildung zeigt die Wahrscheinlichkeitsverteilung der Bernoulli-Verteilung für eine faire Münze.</p>
+<div id="cell-fig:sec-dataexploratory-verteilungen-bernoulli-verteilung" class="cell styled-output" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -390,14 +389,15 @@ p &amp; \text{für } x=1, \\
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.xticks(x)</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div>
+<div id="figsec-dataexploratory-verteilungen-bernoulli-verteilung" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="distributions_files/figure-html/cell-2-output-1.png" width="589" height="449" class="figure-img"></p>
+<p><img src="distributions_files/figure-html/figsec-dataexploratory-verteilungen-bernoulli-verteilung-output-1.png" width="589" height="449" class="figure-img"></p>
+<figcaption>Wahrscheinlichkeitsverteilung der Bernoulli-Verteilung für eine faire Münze</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>In der Abbildung <span class="citation" data-cites="fig:sec-dataexploratory-distributions-bernoulli-distribution">(<a href="../references.html#ref-fig:sec-dataexploratory-distributions-bernoulli-distribution" role="doc-biblioref"><strong>fig:sec-dataexploratory-distributions-bernoulli-distribution?</strong></a>)</span> wird nun jeder möglichen Realisierung der Zufallsvariablen <span class="math inline">\(X\)</span> die entsprechende Wahrscheinlichkeit zugeordnet. Im Gegensatz zu, Histogrammen, in denen reale Häufigkeiten dargestellt werden, zeigt die Abbildung die theoretischen Wahrscheinlichkeiten der Zufallsvariablen.</p>
+<p>In Abbildung <span class="citation" data-cites="ref">(<a href="../references.html#ref-ref" role="doc-biblioref"><strong>ref?</strong></a>)</span>(fig:sec-dataexploratory-verteilungen-bernoulli-verteilung) wird jeder möglichen Realisierung der Zufallsvariablen <span class="math inline">\(X\)</span> die entsprechende Wahrscheinlichkeit zugeordnet. Im Gegensatz zu Histogrammen, die reale Häufigkeiten darstellen, zeigt diese Abbildung die theoretischen Wahrscheinlichkeiten der Zufallsvariablen.</p>
 <section id="erwartungswert-und-varianz-der-bernoulli-verteilung" class="level4" data-number="4.1.1.1">
 <h4 data-number="4.1.1.1" class="anchored" data-anchor-id="erwartungswert-und-varianz-der-bernoulli-verteilung"><span class="header-section-number">4.1.1.1</span> Erwartungswert und Varianz der Bernoulli-Verteilung</h4>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -410,8 +410,8 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Der <strong>Erwartungswert</strong> einer Verteilung ist ein Maß für die zentrale Tendenz der Verteilung. Er gibt den durchschnittlichen Wert der Zufallsvariablen an. Der Erwartungswert einer Zufallsvariablen <span class="math inline">\(X\)</span> wird durch <span class="math inline">\(E(X)\)</span> bezeichnet. Allgemein ergibt sich der Erwartungswert einer Zufallsvariablen <span class="math inline">\(X\)</span> durch die Summe der Produkte der Werte der Zufallsvariablen und deren Wahrscheinlichkeiten.</p>
-<p>Der <strong>Erwartungswert</strong> einer diskreten Zufallsvariablen <span class="math inline">\(X\)</span> ist definiert als:</p>
+<p>Der Erwartungswert einer Verteilung ist ein Maß für die zentrale Tendenz der Verteilung. Er gibt den durchschnittlichen Wert der Zufallsvariablen an. Der Erwartungswert einer Zufallsvariablen <span class="math inline">\(X\)</span> wird mit <span class="math inline">\(E(X)\)</span> bezeichnet. Allgemein ergibt sich der Erwartungswert einer Zufallsvariablen <span class="math inline">\(X\)</span> durch die Summe der Produkte der Werte der Zufallsvariablen und deren Wahrscheinlichkeiten.</p>
+<p>Der Erwartungswert einer diskreten Zufallsvariablen <span class="math inline">\(X\)</span> ist definiert als:</p>
 <p><span class="math display">\[
 E(X) = \sum_{x} x \cdot P(X=x),
 \]</span></p>
@@ -434,7 +434,11 @@ Important
 <div class="callout-body-container callout-body">
 <p>Grundsätzlich berechnet sich der Erwartungswert einer diskreten Zufallsvariablen <span class="math inline">\(X\)</span> durch die Summe der Produkte der Werte der Zufallsvariablen und deren Wahrscheinlichkeiten. Für die Bernoulli-Verteilung ist der Erwartungswert gleich dem Parameter <span class="math inline">\(p\)</span>.</p>
 <p><span class="math display">\[
-E(X) = \sum_{x} x \cdot P(X=x) = 0 \cdot (1-p) + 1 \cdot p = p.
+E(X) = \sum_{x} x \cdot P(X=x).
+\]</span></p>
+<p>Für die Bernoulli-Verteilung ergibt sich der Erwartungswert zu:</p>
+<p><span class="math display">\[
+E(X) = 0 \cdot (1-p) + 1 \cdot p = p.
 \]</span></p>
 </div>
 </div>
@@ -451,7 +455,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Die <strong>Varianz</strong> einer Verteilung ist ein Maß für die Streuung der Verteilung. Sie gibt an, wie weit die Werte der Zufallsvariablen von ihrem Erwartungswert abweichen. Die Varianz einer Zufallsvariablen <span class="math inline">\(X\)</span> wird durch <span class="math inline">\(\text{Var}(X)\)</span> bezeichnet.</p>
+<p>Die Varianz einer Verteilung ist ein Maß für die Streuung der Verteilung. Sie gibt an, wie weit die Werte der Zufallsvariablen von ihrem Erwartungswert abweichen. Die Varianz einer Zufallsvariablen <span class="math inline">\(X\)</span> wird mit <span class="math inline">\(\text{Var}(X)\)</span> bezeichnet.</p>
 </div>
 </div>
 <p>Die Varianz der Bernoulli-Verteilung ist gegeben durch:</p>
@@ -468,7 +472,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Grundsätzlich berechnet sich die Varianz einer Zufallsvariablen <span class="math inline">\(X\)</span> durch die Summe der quadrierten Abweichungen der Werte der Zufallsvariablen von ihrem Erwartungswert, gewichtet mit den Wahrscheinlichkeiten der Zufallsvariablen. Für die Bernoulli-Verteilung ist die Varianz gleich <span class="math inline">\(p \cdot (1-p)\)</span>.</p>
+<p>Die Varianz einer Bernoulli-verteilten Zufallsvariablen berechnet sich als <span class="math inline">\(p \cdot (1-p)\)</span>. Dies lässt sich wie folgt zeigen:</p>
 <p><span class="math display">\[
 \text{Var}(X) = \sum_{x} (x - E(X))^2 \cdot P(X=x) = (0 - p)^2 \cdot (1-p) + (1 - p)^2 \cdot p = p \cdot (1-p).
 \]</span></p>
@@ -479,7 +483,7 @@ Important
 <section id="binomialverteilung" class="level3" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="binomialverteilung"><span class="header-section-number">4.1.2</span> Binomialverteilung</h3>
 <p>Stellen wir uns vor, dass wird nun den Wurf einer Münze <span class="math inline">\(n\)</span>-mal wiederholen. Die Würfe sind unabhängig voneinander. Die Wahrscheinlichkeit, dass die Münze Kopf zeigt, ist zudem immer <span class="math inline">\(p\)</span>. Die Wahrscheinlichkeit, dass die Münze Zahl zeigt, ist <span class="math inline">\(1-p\)</span>. Wir Interessieren uns nun dafür, wie oft die Münze Kopf zeigt. Die Anzahl der Kopfwürfe ist eine Zufallsvariable <span class="math inline">\(Y\)</span>. Die Zufallsvariable <span class="math inline">\(Y\)</span> ist binomialverteilt. Die Binomialverteilung beschreibt die Anzahl der Erfolge in <span class="math inline">\(n\)</span> unabhängigen Bernoulli-Experimenten.</p>
-<div id="8f639edd" class="cell styled-output" data-execution_count="2">
+<div id="b3b962b4" class="cell styled-output" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -524,7 +528,7 @@ P(Y=y) = \binom{n}{y} \cdot p^y \cdot (1-p)^{n-y}.
 <p>Wenn wir die Werte anpassen und z.B. ein Los ziehen, dann ist die Wahrscheinlichkeit, dass wir ein Gewinnlos ziehen <span class="math inline">\(p=0.1\)</span>. Die Wahrscheinlichkeitsfunktion der Binomialverteilung für das Ziehen eines Gewinnloses aus 10 Losen ist gegeben durch:</p>
 <p><span class="math inline">\(Y \sim \text{Bin}(n=10, p=0.1)\)</span></p>
 <p>Die folgende Abbildung zeigt die Wahrscheinlichkeitsverteilung der Binomialverteilung für das Ziehen eines Gewinnloses aus 10 Losen.</p>
-<div id="a93a5ab8" class="cell styled-output" data-execution_count="3">
+<div id="73b13ba3" class="cell styled-output" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>binomial_distribution(n <span class="op">=</span> <span class="dv">10</span>, p <span class="op">=</span> <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -554,7 +558,7 @@ E(Y) = n \cdot p.
 P(X=x) = \frac{1}{n},
 \]</span></p>
 <p>für <span class="math inline">\(x=1, 2, \ldots, n\)</span>. Die Zufallsvariable <span class="math inline">\(X\)</span> wird als <span class="math inline">\(X \sim \text{DU}(n)\)</span> bezeichnet, um auszudrücken, dass <span class="math inline">\(X\)</span> eine diskret gleichverteilte Zufallsvariable auf dem Intervall <span class="math inline">\([1, n]\)</span> ist.</p>
-<div id="79cfbd27" class="cell styled-output" data-execution_count="4">
+<div id="ed901495" class="cell styled-output" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -611,7 +615,7 @@ f(x) = \begin{cases}
 \]</span></p>
 <p>Die Zufallsvariable <span class="math inline">\(X\)</span> wird als <span class="math inline">\(X \sim \text{U}(a, b)\)</span> bezeichnet, um auszudrücken, dass <span class="math inline">\(X\)</span> eine stetig gleichverteilte Zufallsvariable auf dem Intervall <span class="math inline">\([a, b]\)</span> ist.</p>
 <p>Bei stetigen Verteilungen geben die Wahrscheinlichkeitsdichten die Wahrscheinlichkeiten an. Die Wahrscheinlichkeiten werden durch die Fläche unter der Wahrscheinlichkeitsdichte bestimmt. Die Fläche unter der Wahrscheinlichkeitsdichte ist gleich 1.</p>
-<div id="2d025674" class="cell styled-output" data-execution_count="5">
+<div id="b8259679" class="cell styled-output" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -683,7 +687,7 @@ f(x) = \frac{1}{\sqrt{2\pi} \sigma} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right
 \]</span></p>
 <p>für <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span>. Die Zufallsvariable <span class="math inline">\(X\)</span> wird als <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span> bezeichnet, um auszudrücken, dass <span class="math inline">\(X\)</span> eine normalverteilte Zufallsvariable mit Erwartungswert <span class="math inline">\(\mu\)</span> und Varianz <span class="math inline">\(\sigma^2\)</span> ist.</p>
 <p>Sofern <span class="math inline">\(\mu=0\)</span> und <span class="math inline">\(\sigma=1\)</span> ist, spricht man von einer Standardnormalverteilung. <span class="math inline">\(X \sim \mathcal{N}(0, 1)\)</span>. Die Standardnormalverteilung ist eine spezielle Form der Normalverteilung. Die Standardnormalverteilung hat einen Erwartungswert von 0 und eine Varianz von 1.</p>
-<div id="ae9e9ee2" class="cell styled-output" data-execution_count="6">
+<div id="44528002" class="cell styled-output" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -773,7 +777,7 @@ P(X \geq 130) = 1 - \int_{-\infty}^{130} \frac{1}{\sqrt{2\pi} \cdot 15} \exp\lef
 <section id="berechnung-von-wahrscheinlichkeiten-mit-python" class="level4" data-number="4.2.2.3">
 <h4 data-number="4.2.2.3" class="anchored" data-anchor-id="berechnung-von-wahrscheinlichkeiten-mit-python"><span class="header-section-number">4.2.2.3</span> Berechnung von Wahrscheinlichkeiten mit Python</h4>
 <p>Im Python kommen wir z.B. das Modul <code>scipy.stats</code> verwenden, um die Wahrscheinlichkeit zu berechnen. Hier gibt es die Funktion <code>norm.cdf(x, loc=mu, scale=sigma)</code>, die die kumulative Verteilungsfunktion der Normalverteilung berechnet. Die kumulative Verteilungsfunktion gibt die Wahrscheinlichkeit an, dass eine Zufallsvariable einen Wert kleiner oder gleich einem bestimmten Wert annimmt.</p>
-<div id="bde23628" class="cell styled-output" data-execution_count="7">
+<div id="fa0235ba" class="cell styled-output" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -797,7 +801,7 @@ P(X \geq 130) = 1 - \int_{-\infty}^{130} \frac{1}{\sqrt{2\pi} \cdot 15} \exp\lef
 <p><span class="math display">\[
 P(\mu - \sigma \leq X \leq \mu + \sigma) = P(X \leq \mu + \sigma) - P(X \leq \mu - \sigma) = \text{cdf}(\mu + \sigma) - \text{cdf}(\mu - \sigma).
 \]</span></p>
-<div id="e6106df1" class="cell styled-output" data-execution_count="8">
+<div id="61893115" class="cell styled-output" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
@@ -867,7 +871,7 @@ Tip
 <h2 data-number="4.4" class="anchored" data-anchor-id="fitting-von-verteilungen"><span class="header-section-number">4.4</span> Fitting von Verteilungen</h2>
 <p>In der Praxis ist es oft notwendig, die Verteilung von Daten zu bestimmen. Dieser Prozess wird als <strong>Fitting</strong> bezeichnet. Das Ziel des Fittings ist es, die Verteilung zu finden, die die Daten am besten beschreibt. Es gibt verschiedene Methoden, um die Verteilung von Daten zu bestimmen. Dazu gehören die Methode der kleinsten Quadrate, Maximum-Likelihood-Schätzung und die Methode der Momente.</p>
 <p>Als Beispiel nehmen wir unsere Lottrie-Daten, wobei die Anzahl der Gewinnlose <span class="math inline">\(X \sim \text{Bin}(10, 0.1)\)</span> binomialverteilt ist. Wir können nun die Verteilung der Daten bestimmen, indem wir die Binomialverteilung anpassen.</p>
-<div id="d7520b1c" class="cell styled-output" data-execution_count="9">
+<div id="ed028465" class="cell styled-output" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -961,7 +965,7 @@ E(aX + bY) = aE(X) + bE(Y).
 <section id="beispiel-summen-von-zufallsvariablen-aus-verschiedenen-verteilungen" class="level3" data-number="4.5.2">
 <h3 data-number="4.5.2" class="anchored" data-anchor-id="beispiel-summen-von-zufallsvariablen-aus-verschiedenen-verteilungen"><span class="header-section-number">4.5.2</span> Beispiel: Summen von Zufallsvariablen aus verschiedenen Verteilungen</h3>
 <p>Es existieren auch Verallgemeinerungen, z.B., dass die Zufallsvariablen nicht <strong>identisch</strong> verteilt sein müssen. So zeigt, das folgende Beispiel, dass auch die Summe von Zufallsvariablen aus verschiedenen Verteilungen einer Normalverteilung folgen kann, wenn die Anzahl der Zufallsvariablen groß genug ist.</p>
-<div id="c51f3d74" class="cell styled-output" data-execution_count="10">
+<div id="a31c2a07" class="cell styled-output" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1012,7 +1016,7 @@ E(aX + bY) = aE(X) + bE(Y).
 </div>
 </div>
 </div>
-<div id="876d9f50" class="cell styled-output" data-execution_count="11">
+<div id="552c0b65" class="cell styled-output" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>X_sum_mu, X_sum_sigma <span class="op">=</span> norm.fit(X_sum)</span>
