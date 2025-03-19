@@ -35,6 +35,7 @@ Für die weitere Anaylse nehmen wir an, dass wir den Zufallsprozess der Ausfäll
 5. Berechne für jede Komponente die Wahrscheinlichkeit, dass sie ausgefallen ist, gegen das Fahrzeug fällt vor 5000 Stunden aus. 
 6. Gibt es eine Korrelation zwischen allen Ausfallzeiten aller Komponenten und des Fahrzeugs? Berechne die Korrelationskoeffizienten und visualisiere es in einer Scatterplot-Matrix.
 7. Wie hoch ist die Wahrscheinlichkeit, dass die Steuereinheit den ausgefallen ist, wenn das Fahrzeug vor 5000 Stunden ausgefallen ist.
+8. Wähle eine Verteilung für die Ausfallzeit des Fahrzeugs fitte diese. Vergleiche die Verteilung mit dem Histogramm.
 
 ## Simulation {#sec-monte-carlo-simulation}
 
