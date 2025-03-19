@@ -1,20 +1,17 @@
 # Stichproben und Zufallsvariablen {#sec-statistics-sampling}
 
-In diesem Abschnitt werden wir uns mit Stichproben und Zufallsvariablen beschäftigen.
+In diesem Abschnitt {#sec-statistics-sampling} behandeln wir Stichproben und Zufallsvariablen.
 
-Die Auswahl unserer $n$ Beobachtungen aus einer Grundgesamtheit wird als Stichprobe bezeichnet. Die Grundgesamtheit ist die Menge $N$ aller möglichen Beobachtungen, die wir untersuchen möchten. Die Stichprobe ist eine Teilmenge der Grundgesamtheit. Im besten Fall zwischen den Beobachtungen in der Stichprobe und der Grundgesamtheit besteht eine Beziehung, die es uns erlaubt, Rückschlüsse auf die Grundgesamtheit zu ziehen.
+Eine Stichprobe umfasst $n$ Beobachtungen aus einer Grundgesamtheit, der Menge $N$ aller möglichen Beobachtungen. Sie ist eine Teilmenge der Grundgesamtheit und sollte idealerweise Rückschlüsse auf diese ermöglichen.
 
-## Sampling aus einer Population
+## Stichprobenziehung aus einer Grundgesamtheit {#sec-sampling-population}
 
-Als Grundgesamtheit (_population_) bezeichnen wir die Menge aller möglichen Beobachtungen, die wir untersuchen möchten. Die Stichprobe (_sample_) ist eine Teilmenge der Grundgesamtheit. Im besten Fall besteht eine Beziehung zwischen den Beobachtungen in der Stichprobe und der Grundgesamtheit, die es uns erlaubt, Rückschlüsse auf die Grundgesamtheit zu ziehen.
-In der Regel können wir nicht alle Daten einer Grundgesamtheit sammeln, da dies zu aufwändig und teuer wäre. Stattdessen sammeln wir eine Stichprobe von Daten und ziehen Rückschlüsse auf die Grundgesamtheit (vgl. Figure \@fig-sec-dataexploratory-sampling-sampling). Die Stichprobe sollte möglichst repräsentativ für die Grundgesamtheit sein, damit wir verallgemeinern können. Hierzu kommen wir in der Regel, wenn wir eine große Stichprobe ziehen und diese zufällig auswählen.
-
+Die Grundgesamtheit (_population_) ist die Gesamtheit aller untersuchbaren Beobachtungen, die Stichprobe (_sample_) eine Teilmenge davon. Eine repräsentative Stichprobe erlaubt Verallgemeinerungen. Da die vollständige Datenerhebung der Grundgesamtheit oft zu aufwendig und kostspielig ist, ziehen wir Rückschlüsse aus Stichproben (siehe Figure \@ref(fig:fig-sampling-population)). Dies gelingt am besten mit einer großen, zufällig ausgewählten Stichprobe.
 
 ```{python}
 #| echo: false
-#| label: fig-sec-dataexploratory-sampling-sampling
-#| fig-cap: "Sampling from a population."
-#| 
+#| label: fig-sampling-population
+#| fig-cap: "Visualisierung der Stichprobenziehung aus einer Grundgesamtheit."
 import plotly.graph_objects as go
 import numpy as np
 
@@ -32,16 +29,16 @@ y_sample = y_population[sample_indices]
 
 # Kreise für Grundgesamtheit und Stichprobe
 circle1 = go.Scatter(
-    x=[1 + 0.9 * np.cos(np.linspace(0, 2*np.pi, 100))],
-    y=[1 + 0.9 * np.sin(np.linspace(0, 2*np.pi, 100))],
+    x=1 + 0.9 * np.cos(np.linspace(0, 2*np.pi, 100)),
+    y=1 + 0.9 * np.sin(np.linspace(0, 2*np.pi, 100)),
     mode="lines",
     line=dict(color="black"),
     showlegend=False
 )
 
 circle2 = go.Scatter(
-    x=[3 + 0.4 * np.cos(np.linspace(0, 2*np.pi, 100))],
-    y=[1 + 0.4 * np.sin(np.linspace(0, 2*np.pi, 100))],
+    x=3 + 0.4 * np.cos(np.linspace(0, 2*np.pi, 100)),
+    y=1 + 0.4 * np.sin(np.linspace(0, 2*np.pi, 100)),
     mode="lines",
     line=dict(color="black"),
     showlegend=False
@@ -51,43 +48,33 @@ circle2 = go.Scatter(
 population_points = go.Scatter(
     x=x_population, y=y_population,
     mode="markers", marker=dict(color="blue", opacity=0.5, size=4),
-    name="Population",
-    text=["good at math" if i % 2 == 0 else "bad at math" for i in range(len(x_population))],
+    name="Grundgesamtheit",
+    text=["gut in Mathe" if i % 2 == 0 else "schlecht in Mathe" for i in range(len(x_population))],
     hoverinfo="text"
 )
 
 # Stichprobenpunkte (rot)
-sample_points_1 = go.Scatter(
-    x=x_sample, y=y_sample,
-    mode="markers", marker=dict(color="blue", opacity=0.5, size=4),
-    showlegend=False,
-    text=["good at math" if i % 2 == 0 else "bad at math" for i in range(len(x_population))],
-    hoverinfo="text"
-)
-
-sample_points_2 = go.Scatter(
+sample_points = go.Scatter(
     x=x_sample + 2, y=y_sample,
     mode="markers", marker=dict(color="red", size=8),
-    name="Samples",
-    text=["good at math" if i % 2 == 0 else "bad at math" for i in range(len(x_population))],
+    name="Stichprobe",
+    text=["gut in Mathe" if i % 2 == 0 else "schlecht in Mathe" for i in range(len(x_sample))],
     hoverinfo="text"
 )
 
-# Pfeile (als Linien)
-arrows = []
-for i in range(len(x_sample)):
-    arrows.append(go.Scatter(
-        x=[x_sample[i], x_sample[i] + 2],
-        y=[y_sample[i], y_sample[i]],
-        mode="lines",
-        line=dict(color="black", width=2),
-        showlegend=False
-    ))
+# Pfeile zwischen Grundgesamtheit und Stichprobe
+arrows = [go.Scatter(
+    x=[x_sample[i], x_sample[i] + 2],
+    y=[y_sample[i], y_sample[i]],
+    mode="lines",
+    line=dict(color="black", width=2),
+    showlegend=False
+) for i in range(len(x_sample))]
 
-# Labels
+# Beschriftungen
 text_labels = go.Scatter(
     x=[0.2, 3.2], y=[1.8, 1.8],
-    text=["Population", "Samples"],
+    text=["Grundgesamtheit", "Stichprobe"],
     mode="text",
     textposition="top center",
     showlegend=False
@@ -103,10 +90,9 @@ layout = go.Layout(
 )
 
 # Plot erstellen
-fig = go.Figure(data=[circle1, circle2, population_points, sample_points_1, sample_points_2, text_labels] + arrows, layout=layout)
+fig = go.Figure(data=[circle1, circle2, population_points, sample_points, text_labels] + arrows, layout=layout)
 fig.show()
 ```
-
 
 
 Allerdings kommt es hier zu einen Unterschied zwischen der Sichtweise der _klassischen Statistik_ und dem Ansatz den den viele _Data Scientists_ verfolgen. 
@@ -125,21 +111,30 @@ Wenn wir die die Lebensdauer eines Werkzeugs auf einer 5-Achs-Fräsmaschinene pr
 
 
 
-## Gruppieren von Daten
+## Unterschied zwischen klassischer Statistik und Data Science {#sec-classical-vs-datascience}
 
-Wir könnten in unserem Beispiel von letztem Mal bewusst einen Bias (Verzerrung) bei der Auswahl der Daten einführen.
+Die _klassische Statistik_ wählt Stichproben so, dass sie die Grundgesamtheit repräsentieren, während _Data Scientists_ oft mit verfügbaren Daten arbeiten und keinen Einfluss auf die Grundgesamtheit haben. Dies führt zu einem möglichen _Sampling-Bias_.
 
-Wenn wir Beispielweise nur die Einkommen von personen mit einem Kredit auf ihr Haus laufen haben (`mortgage`) nach ihrem Einkommen fragen und nicht die von Personen die zur Miete wohnen (`rent`), dann haben wir einen Bias in unseren Daten und erhalten keine repräsentative Stichprobe.
+:::::: {.callout-note}
+Zur Bewertung der Mathematikleistung von Studierenden wäre eine Stichprobe nur aus Mechatronik nicht repräsentativ.
+::::::
+
+:::::: {.callout-note}
+Bei der Prognose der Werkzeuglebensdauer einer 5-Achs-Fräsmaschine sind Vergleiche zwischen gewarteten und ungewarteten Maschinen verzerrt.
+::::::
+
+## Gruppieren von Daten {#sec-grouping-data}
+
+Ein bewusster Bias kann bei der Datenauswahl entstehen. Fragen wir z. B. nur Personen mit Hypothek (`mortgage`) nach ihrem Einkommen und nicht Mieter (`rent`), ist die Stichprobe nicht repräsentativ (siehe Figure \@ref(fig:fig-income-distribution)).
 
 ```{python}
 #| classes: styled-output
+#| label: fig-income-distribution
+#| fig-cap: "Verteilung des jährlichen Einkommens nach Wohneigentum."
 import pandas as pd
 import seaborn as sns
 
-# Lesen der CSV-Datei in einen DataFrame
 df = pd.read_csv("../_assets/dataexploratory/loan50.csv")
-df.columns
-
 sns.histplot(data=df, x="annual_income", bins=30, hue="homeownership")
 ```
 
@@ -148,321 +143,251 @@ sns.histplot(data=df, x="annual_income", bins=30, hue="homeownership")
 df.groupby("homeownership")["annual_income"].mean()
 ```
 
+## Analyse der Daten {#sec-data-analysis}
+
 :::::: {.callout-note}
-Inwiefern entsprechen die Daten hier unten Erwartungen?
-:::
+Inwiefern entsprechen die Daten den Erwartungen?
+::::::
 
-Im vorliegenden beispiel haben wir Beobachtungen, die eine ordinal skalierte Variable (`homeownership`) und eine metrisch skalierte Variable (`annual_income`) enthalten. Wir interessieren und für den Zusammenhang. Die in der letzten Einheit besprochenen Metriken Korrelation und Kausalität sind hier nicht anwendbar, da die Variable `homeownership` eine ordinal Variable ist.
+Im Beispiel haben wir eine ordinal skalierte Variable (`homeownership`) und eine metrisch skalierte Variable (`annual_income`). Wir untersuchen ihren Zusammenhang. Korrelation und Kausalität, wie in der letzten Einheit besprochen, sind hier nicht anwendbar, da `homeownership` ordinal ist.
 
-### Boxplot
+### Boxplot {#sec-boxplot}
 
-Für den Vergleich von ordinalen und metrischen Variablen eignet sich der Boxplot. Hier können wir die Verteilung der metrischen Variable für die verschiedenen Ausprägungen der ordinalen Variable darstellen. Die Box zeigt den Median und das erste und dritte Quartil. Die Whisker zeigen die Ausdehnung der Daten und die Punkte sind Ausreißer. Die Whisker werden in der Regel als 1.5-fache der Interquartilsdistanz definiert und starten am 1. bzw. 3. Quartil.
-
+Ein Boxplot eignet sich zum Vergleich ordinaler und metrischer Variablen. Er zeigt die Verteilung der metrischen Variable (`annual_income`) für die Ausprägungen der ordinalen Variable (`homeownership`). Die Box umfasst Median sowie erstes und drittes Quartil, die Whisker die Datenreichweite (1,5-fache Interquartilsdistanz ab den Quartilen), und Punkte markieren Ausreißer (siehe Figure \@ref(fig:fig-boxplot-income)).
 
 ```{python}
 #| classes: styled-output
-#| fig-cap: "Boxplot der jährlichen Einkommen nach Art des Wohneigentums."
+#| label: fig-boxplot-income
+#| fig-cap: "Boxplot des jährlichen Einkommens nach Wohneigentum."
+import pandas as pd
+import seaborn as sns
 
-# Box plot
+df = pd.read_csv("../_assets/dataexploratory/loan50.csv")
 sns.boxplot(data=df, x="homeownership", y="annual_income")
-
-# Actual observations
 sns.stripplot(data=df, x="homeownership", y="annual_income", color="black", size=3, alpha=0.5)
 ```
 
-Der Boxplot lässt sich einfach berechnen und interpretieren. Allerdings ist er nicht sehr aussagekräftig, wenn die Verteilungen der Daten sehr unterschiedlich sind. In diesem Fall ist es sinnvoll, die Daten zu transformieren oder eine andere Visualisierung zu wählen.
+
+Der Boxplot ist einfach zu erstellen und zu interpretieren, jedoch bei stark unterschiedlichen Verteilungen wenig aussagekräftig. Hier können Daten transformationen oder alternative Visualisierungen helfen.
 
 :::::: {.callout-tip}
-Eine moderne Alternative zum Boxplot ist der Violinplot. Dieser zeigt die Verteilung der Daten als geschätzte Wahrscheinlichkeitsdichte (für uns bisher geglättetes Histogram). Der Violinplot ist informativer als der Boxplot, da er die Verteilung der Daten besser darstellt.
-![xkcd violiolin-plots](https://imgs.xkcd.com/comics/violin_plots_2x.png){#fig-violin-plot}
-:::
+Eine moderne Alternative zum Boxplot ist der Violinplot. Er zeigt die Verteilung als geschätzte Wahrscheinlichkeitsdichte (bisher für uns ein geglättetes Histogramm) und ist informativer, da er die Datenverteilung detaillierter darstellt (siehe Figure \@ref(fig:fig-violin-plot)).
+![xkcd Violinplot](https://imgs.xkcd.com/comics/violin_plots_2x.png){#fig-violin-plot}
+::::::
 
-### Experimente
+### Experimente {#sec-experiments}
 
-In der Statistik unterscheiden wir zwischen _Beobachtungsstudien_ und _Experimenten_. In _Beobachtungsstudien_ beobachten wir die Daten, ohne sie zu beeinflussen. In _Experimenten_ hingegen manipulieren wir die Daten, um einen Effekt zu beobachten. In der Regel sind Experimente aufwendiger und teurer als Beobachtungsstudien, aber sie erlauben uns, Kausalzusammenhänge zu untersuchen.
-
-:::::: {.callout-note}
-Eine Beobachtungsstudie könnte longitudinal sein, d.h. über einen längeren Zeitraum Beobachtungen sammeln: z.B. wie sich die [Leistungsfähigkeit im Mathematik von Studierenden über die Zeit](https://media.licdn.com/dms/image/v2/C4E12AQELtqr71MWseQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1618928075307?e=1743638400&v=beta&t=rCguWezdBwq7diYbJUz-XXecyGSKu4_pTm_j1fD2mEE) verändert. Oder Querschnittsstudien, bei denen wir zu einem bestimmten Zeitpunkt Daten sammeln: z.B. wie die Leistungsfähigkeit in Mathematik von Studierenden in verschiedenen Studiengängen ist.
-:::
-
+In der Statistik unterscheiden wir _Beobachtungsstudien_, bei denen Daten ohne Eingriff beobachtet werden, von _Experimenten_, bei denen Daten manipuliert werden, um Effekte zu prüfen. Experimente sind aufwendiger und teurer, ermöglichen aber die Untersuchung von Kausalzusammenhängen.
 
 :::::: {.callout-note}
-Wenn wir klären wollen, ob unterschiedliche Studiengänge eine Auswirkung auf die Leistungsfähigkeit in Mathematik haben, könnten wir eine experimentelle Studie durchführen, bei der wir Studierende zufällig verschiedenen Studiengängen zuweisen und ihre Leistungsfähigkeit in Mathematik messen. Hierzu müssten wir die Studierenden zufällig auswählen und ihnen zufällig einen Studiengang zuweisen (_ethische Bedenken beachten_) und ihre Leistungsfähigkeit in Mathematik vor und nach dem Studium messen. Die Messung vor dem Studium könnten wir uns sparen, wenn wir die Studierenden zufällig zuweisen. Gute wissenschaftliche Praxis erfordert, wäre es auch noch eine Kontrollgruppe zu haben, die keinen Studiengang zugeteilt bekommt. Damit kann ausgeschlossen werden, dass die Leistungsfähigkeit in Mathematik durch andere Faktoren (z.B. Alter) beeinflusst wird.
-:::
+Beobachtungsstudien können longitudinal sein, z. B. die [Mathematikleistung von Studierenden über die Zeit](https://media.licdn.com/dms/image/v2/C4E12AQELtqr71MWseQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1618928075307?e=1743638400&v=beta&t=rCguWezdBwq7diYbJUz-XXecyGSKu4_pTm_j1fD2mEE), oder Querschnittsstudien, z. B. die Leistung nach Studiengängen zu einem Zeitpunkt.
+::::::
 
-Experimente sind der Goldstandard, um Kausalzusammenhänge zu untersuchen, da hierbei versucht wird einen `unabhängigen` (welches Studium wird abgeschlossen) zu identifizieren und gezielt zu manipulieren. Alle anderen Variablen werden konstant gehalten oder durch große Stichproben ausgeglichen. 
-Finden wir dann eine __Korrelation__ zwischen dem `unabhängigen` Variable (Studiengang) und einen `abhängigen` Variable (Leistungsfähigkeit in Mathe) können wir einen Kausalzusammenhang vermuten.
+:::::: {.callout-note}
+Um die Wirkung von Studiengängen auf die Mathematikleistung zu prüfen, könnten wir ein Experiment durchführen: Studierende zufällig Studiengängen zuweisen und ihre Leistung messen. Dies erfordert Zufallsauswahl und -zuweisung (ethische Bedenken beachten). Eine Kontrollgruppe ohne Studiengang schließt externe Einflüsse (z. B. Alter) aus. Eine Messung vor dem Studium ist bei zufälliger Zuweisung entbehrlich.
+::::::
 
-Im bereich von Data Science gilt häufig ein pragmatischerer _but it works_ Ansatz. Hier wird oft versucht, mit den vorhandenen Daten zu arbeiten und Rückschlüsse zu ziehen. Dies ist in der Regel einfacher und schneller, aber auch weniger zuverlässig.
+Experimente sind der Goldstandard für Kausalität. Eine unabhängige Variable (z. B. Studiengang) wird manipuliert, andere Variablen konstant gehalten oder durch große Stichproben ausgeglichen. Findet sich eine Korrelation zur abhängigen Variable (z. B. Mathematikleistung), ist Kausalität plausibel. Im Data Science wird oft pragmatisch mit vorhandenen Daten gearbeitet – schneller, aber weniger zuverlässig.
 
+#### Beispiel: Ist ein Würfel gezinkt? {#sec-dice-example}
 
-#### Beispiel: Ist ein Würfel gezinkt?
-
-Stellen wir uns vor, unsere Kolleg:in besteht darauf mit ihrem selbst mitgebrachten Würfel zu spielen. Wir sind uns aber nicht sicher, ob der Würfel gezinkt ist. Wir könnten nun eine Beobachtungsstudie durchführen, indem wir die Augenzahlen des Würfels beobachten und mit unserer Erwartung oder einem fairen Würfel vergleichen. um eine Stichprobe zu erstellen, können wir beide Würfel 1000 mal werfen. Die Würfe des fairen Würfeln nennen wir dabei die __Kontrollgruppe__. 
-
-Wenn wir ein eine Häufigkeitsverteilung, wie in Histogram @fig-sec-dataexploratory-sampling-dice-rolls-manipulated beobachten würden, würden wir misstrauisch werden.
+Stellen wir uns vor, eine Kollegin besteht auf ihrem eigenen Würfel. Ist er gezinkt? Eine Beobachtungsstudie könnte die Augenzahlen mit einem fairen Würfel (Kontrollgruppe) vergleichen. Wir werfen beide Würfel 1000-mal und prüfen die Verteilung (siehe Figure \@ref(fig:fig-dice-rolls-manipulated)). Auffällige Abweichungen machen misstrauisch.
 
 ```{python}
 #| classes: styled-output
-#| fig-cap: "Verteilung der Würfelergebnisse."
-#| label: fig-sec-dataexploratory-sampling-dice-rolls-manipulated
-
+#| label: fig-dice-rolls-manipulated
+#| fig-cap: "Verteilung der Würfelergebnisse: fairer vs. manipulierter Würfel."
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Würfeln
 np.random.seed(42)
 fair_dice_rolls = np.random.randint(1, 7, 1000)
-# A manipulated dice that has a higher probability of rolling a 6
-other_dice_rolls = np.random.choice([1, 2, 3, 4, 5, 6], 1000, p=[1.9/12, 1.9/12, 1.9/12, 1.9/12, 1.9/12, 2.5/12])
+manipulated_dice_rolls = np.random.choice([1, 2, 3, 4, 5, 6], 1000, p=[1.9/12, 1.9/12, 1.9/12, 1.9/12, 1.9/12, 2.5/12])
 
-# Histogramm
-sns.histplot(fair_dice_rolls, bins=6, discrete=True, color="lightblue", alpha = 0.2, label="Fair Dice")
-sns.histplot(other_dice_rolls, bins=6, discrete=True, color="red", alpha = 0.2, label="Manipulated Dice")
-
-# Add ledgend
+sns.histplot(fair_dice_rolls, bins=6, discrete=True, color="lightblue", alpha=0.2, label="Fairer Würfel")
+sns.histplot(manipulated_dice_rolls, bins=6, discrete=True, color="red", alpha=0.2, label="Manipulierter Würfel")
 plt.legend()
 ```
 
 
 
-## Blickpunkte auf Variablen
+## Blickpunkte auf Variablen {#sec-variable-perspectives}
 
-Wie haben uns nun Variablen (Spalten in tidy data) angeschaut und gesehen und können diese aus verschiedenen Blickwinkeln betrachten.
+Wir haben Variablen (Spalten in _tidy data_) untersucht und betrachten sie aus verschiedenen Perspektiven.
 
-### Skalenniveaus
+### Skalenniveaus {#sec-scale-levels}
 
-Skalenniveaus sind eine Möglichkeit, Variablen zu klassifizieren. Es gibt vier Skalenniveaus: nominal, ordinal, metrisch und verhältnisskaliert. Diese Skalenniveaus geben uns Hinweise darauf, welche statistischen Methoden wir verwenden können, um die Daten zu analysieren.
+Skalenniveaus klassifizieren Variablen in nominal, ordinal, metrisch und verhältnisskaliert. Sie bestimmen, welche statistischen Methoden zur Analyse geeignet sind.
 
-### Im Kontext von Experimenten
+### Im Kontext von Experimenten {#sec-experiment-context}
 
-Im Kontext von Experimenten und Beobachtungsstudien unterscheiden wir zwischen _unabhängigen_ und _abhängigen_ Variablen. Die unabhängige Variable ist die Variable, welche uns als Einflussgröße interessiert. Die abhängige Variable ist die Variable, die wir messen, um den Effekt zu beobachten. Leider gibt es hier je nach Sprache und Fachgebiet unterschiedliche Bezeichnungen. Die folgende Tabelle gibt einen Überblick über verschiedene Bezeichnungen. Später werden wir merken, dass es nicht immer nur genau eine unabhängige und eine abhängige Variable gibt, sondern auch mehrere unabhängige und abhängige Variablen geben kann. Der Einfacheit halber sprechen wir aber zunächst nur im Singular.
+In Experimenten und Beobachtungsstudien unterscheiden wir _unabhängige_ (Einflussgröße) und _abhängige_ (gemessene Effekte) Variablen. Bezeichnungen variieren je nach Fachgebiet (siehe Table \@ref(tab:tab-variable-terms)). Später erkennen wir, dass mehrere unabhängige und abhängige Variablen möglich sind, doch zunächst bleiben wir bei Singular.
 
+| Anwendungsfeld   | Unabhängige Variable | Abhängige Variable |
+|------------------|----------------------|--------------------|
+| Statistik        | Explanatory Variable | Response Variable  |
+| Machine Learning | Features             | Target             |
+| Experimente      | Treatment            | Outcome            |
+| Psychologie      | Independent Variable | Dependent Variable |
+| Forecasts        | Predictor            | Predicted Variable |
+| Ökonometrie      | Explanatory Variable | Dependent Variable |
+| Informatik       | Input                | Output             |
+| Programming      | Argument             | Return Value       |
+| Programming      | `X`                  | `y`                |
 
-| Anwendungsfeld | Unabhängige Variable | Abhängige Variable |
-|----------------|----------------------|--------------------|
-| Statistik      | Explanatory Variable | Response Variable  |
-| Machine Learning | Features | Target |
-| Experimente | Treatment | Outcome |
-| Psychologie | Independent Variable | Dependent Variable |
-| Forecasts | Predictor | Predicted Variable |
-| Ökonometrie | Explanatory Variable | Dependent Variable |
-| Informatik | Input | Output |
-| Programming | Argument | Return Value |
-| Programming | `X` | `y` |
+## Wahrscheinlichkeitsrechnung {#sec-probability}
 
-
-## Wahrscheinlichkeitsrechnung
-
-Eine weitere Betrachtunsweise von Variablen sind die Prozesse, die zu den Beobachtungen führen. Hierbei unterscheiden wir zwischen _deterministischen_ und _zufälligen_ Prozessen. Deterministische Prozesse führen immer zum gleichen Ergebnis, wenn wir die gleichen Bedingungen haben. Zufällige Prozesse führen zu unterschiedlichen Ergebnissen, auch wenn die Bedingungen gleich sind. Zufällige Prozesse können durch Wahrscheinlichkeiten beschrieben werden.
+Eine weitere Perspektive sind Prozesse hinter Beobachtungen: _deterministisch_ (gleiches Ergebnis bei gleichen Bedingungen) oder _zufällig_ (unterschiedliche Ergebnisse trotz gleicher Bedingungen). Zufällige Prozesse werden durch Wahrscheinlichkeiten beschrieben.
 
 :::::: {.callout-important}
-Hierbei ist es irrelevant, ob ob wir uns das Universum als vorherbestimmt (deteministisch) oder zufällig vorstellen. Zufälligkeit bedeutet uns in der Folge nur, dass wir das Ergebnis nicht a-priori vorhersagen können. Die Zufälligkeit durch einen echten Zufallsprozess (z.B. Würfeln) oder durch eine unvollständige Modellierung (z.B. durch fehlende Variablen) entsteht.
-:::
+Ob das Universum deterministisch oder zufällig ist, spielt keine Rolle. Zufälligkeit bedeutet hier, dass Ergebnisse nicht a priori vorhersagbar sind – sei es durch echte Zufallsprozesse (z. B. Würfeln) oder unvollständige Modellierung (z. B. fehlende Variablen).
+::::::
 
-### Zufallsvariablen
+### Zufallsvariablen {#sec-random-variables}
 
-Eine Zufallsvariable ist eine Variable, die zufällig einen von mehreren verschiedenen Werten annimmt. Wenn wir eine Münze werfen, ist die Zahl, die auf dem Würfel erscheint, eine Zufallsvariable. Zufallsvariablen können diskret oder kontinuierlich sein. Diskrete Zufallsvariablen können nur bestimmte Werte annehmen, während kontinuierliche Zufallsvariablen jeden Wert in einem Intervall annehmen können.
-
-Die Augenzahl eines Würfels ist eine diskrete Zufallsvariable, da sie nur die Werte 1, 2, 3, 4, 5 oder 6 annehmen kann. Wenn wir den Würfel werfen, ist die Augenzahl jedes mal eine zufällige Realisierung der Zufallsvariable.
+Eine Zufallsvariable nimmt zufällig Werte an – diskret (bestimmte Werte, z. B. Würfelaugenzahl: 1–6) oder kontinuierlich (Werte in einem Intervall, z. B. Temperatur). Die Augenzahl eines Würfels ist eine diskrete Zufallsvariable; jeder Wurf ist eine Realisierung (siehe Figure \@ref(fig:fig-dice-rolls)).
 
 ```{python}
 #| classes: styled-output
-#| fig-cap: "Verteilung der Würfelergebnisse."
-#| label: fig-sec-dataexploratory-sampling-dice-rolls
-#| 
+#| label: fig-dice-rolls
+#| fig-cap: "Verteilung der Würfelergebnisse bei 1000 Würfen."
 import numpy as np
 import seaborn as sns
 
-# Würfeln
 np.random.seed(42)
 dice_rolls = np.random.randint(1, 7, 1000)
-
-# Histogramm
 sns.histplot(dice_rolls, bins=6, discrete=True)
 ```
 
 
-Änlich verhält es sich bei einem Münzwurf. Hier ist die Zufallsvariable die Seite der Münze, die oben liegt. Diese kann entweder Kopf oder Zahl sein. Damit wir sinnvoll mit dem katregorischen Datentyp umgehen können, können wir die Werte in 0 und 1 umwandeln. Das bedeutet, dass wird aus dem Sample Space (Kopf, Zahl) einen numerischen Wert (0, 1) machen.
+## Zufallsvariablen und Münzwurf {#sec-random-variables-coin}
 
+Ähnlich wie beim Würfel ist beim Münzwurf die Zufallsvariable die Seite, die oben liegt (Kopf oder Zahl). Für numerische Analysen wandeln wir diese kategorialen Werte in 0 (Zahl) und 1 (Kopf) um, wodurch der Ereignisraum {Kopf, Zahl} zu {0, 1} wird.
 
+### Begriffe der Wahrscheinlichkeit {#sec-probability-terms}
 
-Hierzu definieren wir nun einige Begriffe:
+Wir definieren:
+- __Zufallsexperiment/-prozess__: Ein Prozess mit unvorhersagbarem Ergebnis, z. B. Münzwurf, Würfeln oder Kartenziehen.
+- __Ereignisraum__ (_sample space_): Alle möglichen Ergebnisse eines Zufallsexperiments, z. B. {Kopf, Zahl} beim Münzwurf.
+- __Zufallsvariable__: Eine Funktion, die jedem Ergebnis eine Zahl zuordnet, z. B. 1 für Kopf und 0 für Zahl.
 
-- __Zufallsexperiment/-Prozess__: Ein Experiment, bei dem das Ergebnis zufällig ist. Zufällig bedeutet, dass wir das Ergebnis nicht vorhersagen können. Zum Beispiel das _Werfen einer Münze_, eines Würfels oder das Ziehen einer Karte aus einem Kartenspiel.
-- __Ereignisraum__ (_sample space_): Die Menge aller möglichen Ergebnisse (outcomes) eines Zufallsexperiments. _Zum Beispiel beim Werfen einer Münze ist der Ereignisraum ${\text{Kopf}, \text{Zahl}}$._
-- (messbare) __Zufallsvariable__: Eine Funktion, die jedem Ergebnis eines Zufallsexperiments eine Zahl zuordnet. _Zum Beispiel die $1$ für Kopf und $0$ für Zahl beim Münzwurf._
-
-## Frequentischtische Definition der Wahrscheinlichkeit
+## Frequentistische Wahrscheinlichkeit {#sec-frequentist-probability}
 
 :::::: {.callout-important}
-Die __Wahrscheinlichkeit__ eines Ergebnisses ist der Anteil, wie oft das Ergebnis eintreten würde, wenn wir den Zufallsprozess unendlich oft beobachten würden. Die Wahrscheinlichkeit ist als Anteil definiert und nimmt immer Werte zwischen 0 und 1 (einschließlich) an. Sie kann auch als Prozentsatz zwischen 0% und 100% angezeigt werden. 
-:::
+Die __Wahrscheinlichkeit__ eines Ergebnisses ist der Anteil, wie oft es bei unendlich vielen Wiederholungen eines Zufallsprozesses eintritt. Sie liegt zwischen 0 und 1 und kann als Prozentsatz (0–100 %) angegeben werden.
+::::::
 
-In Figure @fig-sec-dataexploratory-sampling-dice-rolls kam die Augenzahl 2 in etwa 167/1000 der Fälle vor. Die Wahrscheinlichkeit, dass die Augenzahl 1 beträgt, ist also 1/6 oder etwa 0,167. Gleiches gibt für die anderen Augenzahlen. 
-
-Es is offentsichtlich, dass das bei einer endlichen Anzahl von Beobachtungen nicht immer so sein muss. Werfen wir den Würfel nur einmal, so kann die Augenzahl nur entweder 1, 2, 3, 4, 5 oder 6 sein. Für eine endliche Anzahl von Beobachtungen kann die Wahrscheinlichkeit also nur eine Schätzung sein. Umgekehrt ist die Wahrscheinlichkeit eine Grenzwertbetrachtung, die nur für unendlich viele Beobachtungen gilt. 
-
-
+In Figure \@ref(fig:fig-dice-rolls) trat die Augenzahl 2 etwa 167-mal in 1000 Würfen auf, was einer Wahrscheinlichkeit von ca. 1/6 (0,167) entspricht – ebenso für die anderen Augenzahlen. Bei endlichen Beobachtungen ist dies eine Schätzung; die exakte Wahrscheinlichkeit gilt nur für unendlich viele Versuche (siehe Figure \@ref(fig:fig-dice-rolls-proportion)).
 
 ```{python}
 #| classes: styled-output
-#| fig-cap: "Der Anteil der Würfelergebnisse, die 1 sind, bei jedem Schritt einer Simulation."
-#| label: fig-sec-dataexploratory-sampling-dice-rolls-proportion
-
+#| label: fig-dice-rolls-proportion
+#| fig-cap: "Anteil der Würfelergebnisse '1' über die Anzahl der Würfe."
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-nuber_of_rolls = 1000
-np.random.seed(12)
-dice_rolls = np.random.randint(1, 7, nuber_of_rolls)
+number_of_rolls = 1000
+np.random.seed(10)
+dice_rolls = np.random.randint(1, 7, number_of_rolls)
 
-# Anteil der 1er bei jedem Schritt
-proportion_ones = np.cumsum(dice_rolls == 1) / np.arange(1, nuber_of_rolls+1)
+proportion_ones = np.cumsum(dice_rolls == 1) / np.arange(1, number_of_rolls + 1)
 
-# Plot
-
-sns.lineplot(x=np.arange(1, nuber_of_rolls+1), y=proportion_ones)
-sns.lineplot(x=[1, nuber_of_rolls+1], y=[1/6, 1/6], color="red", linestyle="--")
-
-plt.xlabel("$n$ - Number of rolls")
-plt.ylabel("$\hat{p}_n$ - Proportion of 1s ")
+sns.lineplot(x=np.arange(1, number_of_rolls + 1), y=proportion_ones)
+sns.lineplot(x=[1, number_of_rolls + 1], y=[1/6, 1/6], color="red", linestyle="--")
+plt.xlabel("$n$ - Anzahl der Würfe")
+plt.ylabel("$\hat{p}_n$ - Anteil der 1en")
 ```
 
-Figure @fig-sec-dataexploratory-sampling-dice-rolls-proportion zeigt den Anteil $\hat{p}_n$ der Augenzahl 1 bei jedem Schritt $n$ einer Simulation. Der Anteil konvergiert gegen die Wahrscheinlichkeit von 1/6 oder etwa 0,167.
+### Konvergenz und Schätzungen {#sec-convergence-estimates}
 
-Der beobeachtete Anteil $\hat{p}_n$ ist eine Schätzung der Wahrscheinlichkeit $p$ und wird genauer, je mehr Beobachtungen wir haben. Die Wahrscheinlichkeit $p$ ist der Grenzwert des Anteils. 
-
-::: {.callout-important}
-Wir werden in der Statistik oft mit Schätzungen arbeiten, da wir nicht unendlich viele Beobachtungen haben. Es ist wichtig, die Unsicherheit unserer Schätzungen zu kennen und zu berücksichtigen. Schätzungen kennzeichnen wir oft mit einem Dach über dem Symbol, z.B. $\hat{p}$.
-:::
-
-
+Figure \@ref(fig:fig-dice-rolls-proportion) zeigt den Anteil $\hat{p}_n$ der Augenzahl 1 bei jedem Schritt $n$ einer Simulation. Er konvergiert gegen die Wahrscheinlichkeit 1/6 (ca. 0,167). Der beobachtete Anteil $\hat{p}_n$ schätzt die Wahrscheinlichkeit $p$ und wird mit mehr Beobachtungen genauer; $p$ ist der Grenzwert.
 
 :::::: {.callout-important}
-__Gesetz der großen Zahlen__: Mit zunehmender Anzahl von Beobachtungen konvergiert der Anteil der Beobachtungen mit einem bestimmten Ergebnis gegen die Wahrscheinlichkeit dieses Ergebnisses.
-:::
-
-
-Da wir verschiedene Ergebnisse haben, führen wir eine neue Schreibweise ein. Wir schreiben $P(X = x)$ für die Wahrscheinlichkeit, dass die Zufallsvariable $X$ (z.B. Münzwürf) den Wert $x$ annimmt. 
-
-__Für einen fairen Münzwurf ist:__
-$$
-P(X = \text{Kopf}) = 0.5,
-$$ 
-
-und 
-
-$$
-P(X = \text{Zahl}) = 0.5.
-$$
-
-bzw. 
-
-$$
-P(X = 1) = 0.5,
-$$
-
-und 
-
-$$
-P(X = 0) = 0.5.
-$$
-
-__Für einen fairen Würfelwurf ist:__
-$$
-P(X = 1) = P(X = 2) = P(X = 3) = P(X = 4) = P(X = 5) = P(X = 6) = 1/6.
-$$
-
-
-Die Summe der Wahrscheinlichkeiten aller möglichen Ergebnisse eines Zufallsexperiments ist immer 1. Das bedeutet, dass mindestens eines der möglichen Ergebnisse eintreten muss. Vergleiche dies mit der Fläche unter einem normalisieren Histogramm oder einer Dichtefunktion.
-
-
-
-### Disjunkte bzw. Sich-Ausschließende Ereignisse
-
-Zwei Ereignisse $A$ und $B$ sind __disjunkt__ oder sich ausschließend, wenn sie nicht gleichzeitig eintreten können. Das bedeutet, dass wenn $A$ eintritt, $B$ nicht eintreten kann und umgekehrt.
-Beispielsweise kann bei einem Wurf mit einem fairen Würfel die Augenzahl nicht gleichzeitig 1 und 2 sein. Die Ereignisse _"Augenzahl ist 1"_ und _"Augenzahl ist 2"_ sind sich ausschließend.
-
-Die Wahrscheinlichkeit, dass eines der beiden Ereignisse auftritt, ist die Summe der Wahrscheinlichkeiten der beiden Ereignisse. Als Notation schreiben wir $P(A \cup B)$ für die Wahrscheinlichkeit, dass eines der beiden Ereignisse eintritt. Dies entspricht einem logischen _oder_. Wir lesen _A vereinigt B_. 
-
-Für disjunkte Ereignisse gilt:
-
-$$
-P(X=1 \cup X=2) = P(X=1) + P(X=2) = \frac{1}{6} + \frac{1}{6} = \frac{1}{3}.
-$$
+In der Statistik arbeiten wir oft mit Schätzungen, da unendlich viele Beobachtungen fehlen. Die Unsicherheit der Schätzungen muss berücksichtigt werden. Schätzungen kennzeichnen wir mit $\hat{p}$.
+::::::
 
 :::::: {.callout-important}
-Die __Additionsregel__ besagt, dass die Wahrscheinlichkeit, dass eines von zwei sich ausschließenden Ereignissen ($A$, $B$) eintritt, die Summe der Wahrscheinlichkeiten der beiden Ereignisse ist.
+__Gesetz der großen Zahlen__: Mit steigender Beobachtungszahl konvergiert der Anteil eines Ergebnisses gegen dessen Wahrscheinlichkeit.
+::::::
 
-$$
-P(A \cup B) = P(A) + P(B).
-$$
+### Wahrscheinlichkeitsnotation {#sec-probability-notation}
 
-Bzw. für mehrere sich ausschließende Ereignisse ($A_*$):
+Für verschiedene Ergebnisse schreiben wir $P(X = x)$ als Wahrscheinlichkeit, dass die Zufallsvariable $X$ (z. B. Münzwurf) den Wert $x$ annimmt.  
+- Für einen fairen Münzwurf:  
+  $P(X = \text{Kopf}) = 0.5$, $P(X = \text{Zahl}) = 0.5$  
+  oder: $P(X = 1) = 0.5$, $P(X = 0) = 0.5$.  
+- Für einen fairen Würfelwurf:  
+  $P(X = 1) = P(X = 2) = P(X = 3) = P(X = 4) = P(X = 5) = P(X = 6) = 1/6$.
 
-$$
-P(A_1 \cup A_2 \cup ... \cup A_n ) = P(A_1) + P(A_2) + ... + P(A_n).
-$$
+Die Summe der Wahrscheinlichkeiten aller Ergebnisse eines Zufallsexperiments ist stets 1, da mindestens ein Ergebnis eintritt. Dies entspricht der Fläche unter einem normalisierten Histogramm oder einer Dichtefunktion.
 
-:::
+### Disjunkte Ereignisse {#sec-disjoint-events}
 
-#### Beispiel
+Zwei Ereignisse $A$ und $B$ sind __disjunkt__ (sich ausschließend), wenn sie nicht gleichzeitig eintreten können. Beispiel: Bei einem Würfelwurf sind „Augenzahl 1“ und „Augenzahl 2“ disjunkt. Die Wahrscheinlichkeit, dass eines von beiden eintritt, ist $P(A \cup B)$ (logisches „oder“, „A vereinigt B“):  
+$$P(X=1 \cup X=2) = P(X=1) + P(X=2) = \frac{1}{6} + \frac{1}{6} = \frac{1}{3}.$$
 
-Im Datensatz der Kredite in Kapitel 2 beschreibt die Variable `homeownership`, ob der Kreditnehmer
-mietet, eine Hypothek hat oder Eigentümer seiner Immobilie ist. Von den 10.000 Kreditnehmern mieteten 3858,
-4789 hatten eine Hypothek und 1353 besaßen ihr Zuhause.
+:::::: {.callout-important}
+__Additionsregel__: Für sich ausschließende Ereignisse $A$ und $B$ gilt:  
+$$P(A \cup B) = P(A) + P(B).$$  
+Für mehrere disjunkte Ereignisse $A_1, \ldots, A_n$:  
+$$P(A_1 \cup A_2 \cup \ldots \cup A_n) = P(A_1) + P(A_2) + \ldots + P(A_n).$$
+::::::
+#### Beispiel: Kreditnehmer-Datensatz {#sec-loan-example}
+
+Im Datensatz aus Kapitel 2 beschreibt `homeownership`, ob ein Kreditnehmer mietet, eine Hypothek hat oder Eigentümer ist. Von 50 Kreditnehmern (siehe Code-Ausgabe) sind die Verteilungen: Miete (21), Hypothek (26), Eigentum (3).
 
 ```{python}
 #| classes: styled-output
+#| label: tab-loan-homeownership
+#| tbl-cap: "Verteilung der Wohneigentumsarten im Kreditnehmer-Datensatz."
 import pandas as pd
 
 df = pd.read_csv("../_assets/dataexploratory/loan50.csv")
-print(f"Number of Observations: {df["homeownership"].shape[0]}")
+print(f"Anzahl Beobachtungen: {df['homeownership'].shape[0]}")
 print(df["homeownership"].value_counts())
 ```
 
-1. Sind die Ergebnisse Miete, Hypothek und Eigentum disjunkt?
-2. Bestimmen Sie den Anteil der Kredite mit dem Wert Hypothek und Eigentum separat.
-3. Verwenden Sie die Additionsregel für disjunkte Ergebnisse, um die Wahrscheinlichkeit zu berechnen, dass ein zufällig ausgewählter Kredit aus dem Datensatz für jemanden ist, der eine Hypothek hat oder Eigentümer seines Hauses ist.
+1. Sind Miete, Hypothek und Eigentum disjunkt?
+2. Bestimmen Sie den Anteil der Kredite mit Hypothek und Eigentum separat.
+3. Nutzen Sie die Additionsregel für disjunkte Ereignisse, um die Wahrscheinlichkeit zu berechnen, dass ein zufällig ausgewählter Kreditnehmer eine Hypothek hat oder Eigentümer ist.
 
-::: {.tip collapse="true"}
+:::::: {.callout-tip collapse="true"}
 
-1. Ja, die Ergebnisse sind disjunkt, da ein Kreditnehmer nur eine der drei Kategorien haben kann.
-2. Der Anteil der Kredite mit Hypothek beträgt $\frac{26}{50}$ und der Anteil der Kredite mit Eigentum beträgt  $\frac{3}{50}$.
-3. Die Wahrscheinlichkeit, dass ein zufällig ausgewählter Kreditnehmer eine Hypothek hat oder Eigentümer seines Hauses ist, beträgt  $\frac{26}{50}$ + $\frac{3}{50}$ =  $\frac{29}{50}$. Dies entspricht der Wahrscheinlichkeit, dass ein zufällig ausgewählter Kreditnehmer nicht mietet. 
-:::
+1. Ja, die Kategorien sind disjunkt, da ein Kreditnehmer nur eine davon haben kann.
+2. Anteil Hypothek: $\frac{26}{50}$, Anteil Eigentum: $\frac{3}{50}$.
+3. Wahrscheinlichkeit (Hypothek oder Eigentum): $\frac{26}{50} + \frac{3}{50} = \frac{29}{50}$. Dies entspricht der Wahrscheinlichkeit, nicht zu mieten. ::::::
 
-### Das Komplement eines Ereignisses
+### Das Komplement eines Ereignisses {#sec-complement}
 
-Das Komplement eines Ereignisses $A$ ist das Ereignis, dass $A$ nicht eintritt. Das Komplement von $A$ wird als $A^c$ oder $\bar{A}$ bezeichnet. Das Komplement eines Ereignisses ist das Ereignis, dass alle anderen Ergebnisse eintreten, die nicht $A$ sind. Das Komplement eines Ereignisses ist disjunkt zu diesem Ereignis.
-
-Die Wahrscheinlichkeit des Komplements eines Ereignisses ist die Wahrscheinlichkeit, dass das Ereignis nicht eintritt. Die Wahrscheinlichkeit des Komplements eines Ereignisses ist $1 - P(A)$.
-
-Beispielsweise ist die Wahrscheinlichkeit, dass die Augenzahl eines fairen Würfels nicht 1 ist, 
+Das Komplement eines Ereignisses $A$, bezeichnet als $A^c$ oder $\bar{A}$, ist das Nicht-Eintreten von $A$. Es umfasst alle Ergebnisse außer $A$ und ist zu $A$ disjunkt. Die Wahrscheinlichkeit des Komplements ist:
 
 $$
-1 - P(X=1) = 1 - \frac{1}{6} = \frac{5}{6}.
+P(A^c) = 1 - P(A)
 $$
 
-Die Summe der Wahrscheinlichkeiten eines Ereignisses und seines Komplements ist immer 1. Das bedeutet, dass entweder das Ereignis oder sein Komplement eintreten muss.
+Beispiel: Die Wahrscheinlichkeit, dass ein Würfel nicht 1 zeigt:
 
-### Nicht-disjunkte Ereignisse
 
-Nicht immer haben wir den Luxus, disjunkte Ereignisse zu betrachten. In diesem Fall können die Ereignisse überlappen. Beispielsweise wollen wir beim Kartenspiel wissen, wie hoch die Wahrscheinlichkeit ist, dass wir eine Karte mit einem Bild (Face) oder einer Karo-Farbe (Diamond) ziehen. Die Ereignisse "Bild" und "Karo" sind nicht disjunkt, da es Karten gibt, die beides sind. Wenn wird die Wahrscheinlichkeiten einfach addieren, zählen wir die Karten, die beides sind, doppelt und überschätzen die Wahrscheinlichkeit.
+$$
+1 - P(X \neq 1) =1-P(X=1) = 1 - \frac{1}{6} = \frac{5}{6}.
+$$
+
+Die Summe $P(A) + P(A^c) = 1$ gilt stets, da entweder $A$ oder $A^c$ eintritt.
+
+### Nicht-disjunkte Ereignisse {#sec-non-disjoint-events}
+
+Nicht-disjunkte Ereignisse können überlappen. Beispiel: Bei einem Kartenspiel (siehe Figure @ref(fig:fig-card-deck)) interessiert die Wahrscheinlichkeit, eine Bildkarte (Bube, Dame, König) oder eine Karo-Karte zu ziehen. *Bild* und *Karo* sind nicht disjunkt, da Bildkarten in Karo beide Eigenschaften haben. Einfaches Addieren überschätzt die Wahrscheinlichkeit durch doppelte Zählung.
 
 ![Deck of 52 Cards](../_assets/dataexploratory/card_deck.png){#fig-card-deck}
 
 
-Um um das zu verbildlichen können wie die Ereignisse in einem Venn-Diagramm darstellen. Hierin werden alle Ereignisse (z.B. Farbe ist Karo bzw. Karte ist Bildkarte) in einem Diagramm dargestellt. Die Schnittmenge (als $\cap$ geschrieben) der beiden Ereignisse ist die Menge der Karten, die beides sind. Dies entspricht dem _logischen und_ und wird als _Schnitt_ bezeichnet.
-
-Die Vereinigungsmenge (logisches oder / $\cup$) ist die Menge aller Karten, die entweder das eine oder das andere Ereignis sind.
+Ein Venn-Diagramm (siehe Figure @ref(fig:fig-card-venn)) zeigt: Die Schnittmenge ($A \cap B$, logisches „und“) sind Karten, die beide Eigenschaften haben; die Vereinigung ($A \cup B$, logisches „oder“) umfasst alle Karten mit mindestens einer Eigenschaft.
 
 ![Venn Diagramm of Cards](../_assets/dataexploratory/card_venn.png){#fig-card-venn}
 
-Von den $N=52$ Karten sind $12$ Bildkarten (Bube, Dame, König) und $13$ Karo-Karten. Davon sind $k=3$ Karten sowohl Bildkarten als auch Karo-Karten. Die Wahrscheinlichkeit, dass eine Karte entweder eine Bildkarte oder eine Karo-Karte ist, ist die Summe der Wahrscheinlichkeiten der beiden Ereignisse abzüglich der Wahrscheinlichkeit des Schnitts:
+Von 52 Karten sind 12 Bildkarten, 13 Karo-Karten und 3 sowohl Bild- als auch Karo-Karten. Die Wahrscheinlichkeit für „Bild oder Karo“ ist:
 
 $$
 P(\text{Bild} \cup \text{Karo}) = P(\text{Bild}) + P(\text{Karo}) - P(\text{Bild} \cap \text{Karo}).
@@ -473,38 +398,31 @@ $$
 Hierraus können wir die __Additionsregel__ für nicht-disjunkte Ereignisse formulieren:
 
 :::::: {.callout-important}
-Die __Generelle Additionsregel__ besagt, dass die Wahrscheinlichkeit, dass eines von zwei Ereignissen ($A$, $B$) eintritt, die Summe der Wahrscheinlichkeiten der beiden Ereignisse ist, abzüglich der Wahrscheinlichkeit, dass beide Ereignisse eintreten.
+Generelle Additionsregel: Für nicht-disjunkte Ereignisse $A$ und $B$ gilt:
 
 $$
 P(A \cup B) = P(A) + P(B) - P(A \cap B).
 $$
-:::
+::::::
 
 
+#### Beispiel: Summe zweier Würfel {#sec-dice-sum-example}
 
-#### Beispiel
+Sei $A$ das Ereignis, dass die Summe der Augenzahlen zweier fairer Würfel kleiner als 12 ist.
 
-Sei $A$ ein Ereignis, bei dem zwei faire Würfel geworfen werden und dabei die Summe der Augenzahl kleiner als 12 ist.
+1. Was ist das Komplement von $A$?
+2. Wie groß ist $P(A)$?
 
-- 1. Was ist das Komplement von $A$?
-- 2. Wie groß ist die Wahrscheinlichkeit von $A$?
+:::::: {.callout-tip collapse="true"}
+1. Das Komplement $A^c$ ist die Summe $\geq 12$, also genau 12 (da die maximale Summe 12 beträgt).
+2. $P(A)$ ist die Summe der Wahrscheinlichkeiten für Summen 2 bis 11.  
+   Mögliche Summen und Kombinationen (siehe Table \@ref(tab:tab-dice-sums)):  
 
-
-
-:::::: {.callout-tip}
-
-- 1. Das Komplement von $A$ ist das Ereignis, bei dem die Summe der Augenzahl 12 oder mehr beträgt.
-- 2. Die Wahrscheinlichkeit von $A$ ist die Summe der Wahrscheinlichkeiten der Ergebnisse, bei denen die Summe der Augenzahl kleiner als 12 ist. Das sind die Ergebnisse 2 bis 11. 
-
-Wir müssen die Wahrscheinlichkeiten der einzelnen Ergebnisse addieren:
-
-Sei $W_1$ das Ereignis von Würfel 1 und $W_2$ das Ereignis von Würfel 2. Wir können nun eine Tabelle bauen, in denen wir sammeln, welche Ereignisse für welche Augenzahlen sorgen:
-
-| $A = W_1 + W_2$ | Mögliche Kombinationen| 
-|-----------------|---------------|
+| $A = W_1 + W_2$ | Mögliche Kombinationen |
+|-----------------|-----------------------|
 | 2               | $(W_1=1 \cap W_2=1)$ |
 | 3               | $(W_1=1 \cap W_2=2) \cup (W_1=2 \cap W_2=1)$ |
-| 4               | $(W_1=1 \cap W_2=3)  \cup (W_1=2 \cap W_2=2)  \cup  (W_1=3 \cap W_2=1)$ |
+| 4               | $(W_1=1 \cap W_2=3) \cup (W_1=2 \cap W_2=2) \cup (W_1=3 \cap W_2=1)$ |
 | 5               | $(W_1=1 \cap W_2=4) \cup (W_1=2 \cap W_2=3) \cup (W_1=3 \cap W_2=2) \cup (W_1=4 \cap W_2=1)$ |
 | 6               | $(W_1=1 \cap W_2=5) \cup (W_1=2 \cap W_2=4) \cup (W_1=3 \cap W_2=3) \cup (W_1=4 \cap W_2=2) \cup (W_1=5 \cap W_2=1)$ |
 | 7               | $(W_1=1 \cap W_2=6) \cup (W_1=2 \cap W_2=5) \cup (W_1=3 \cap W_2=4) \cup (W_1=4 \cap W_2=3) \cup (W_1=5 \cap W_2=2) \cup (W_1=6 \cap W_2=1)$ |
@@ -512,182 +430,161 @@ Sei $W_1$ das Ereignis von Würfel 1 und $W_2$ das Ereignis von Würfel 2. Wir k
 | 9               | $(W_1=3 \cap W_2=6) \cup (W_1=4 \cap W_2=5) \cup (W_1=5 \cap W_2=4) \cup (W_1=6 \cap W_2=3)$ |
 | 10              | $(W_1=4 \cap W_2=6) \cup (W_1=5 \cap W_2=5) \cup (W_1=6 \cap W_2=4)$ |
 | 11              | $(W_1=5 \cap W_2=6) \cup (W_1=6 \cap W_2=5)$ |
-| 12              | $(W_1=6 \cap W_2=6)$ |   
+| 12              | $(W_1=6 \cap W_2=6)$ |
 
-
-Wir wissen, wie wir $P(W_1=6)$ und $P(W_2=6)$ einzeln ausrechen. Was uns aktuell noch fehlt ist wie wir die Wahrscheinlichkeit $P(W_1=x \cap W_2=y)$ ausrechnen, die uns sagt, wie wahrscheinlich es ist, dass zwei 6er gewürfelt werden. Wenn wir diese hätten könnten wie diese als Ereignisse zusammenzählen und die Wahrscheinlichkeit über die Additionregel berechnen. Was wird aber aus der Tabelle mitnehmen können ist, dass die Wahrscheinlichkeit für die Augenzahl $P(A=2)=P(W_1=1) \cdot P(W_2=1)$ ist und im vergleich zu $P(A=7)$ wohl eine kleinere Wahrscheinlichkeit hat.
+Die Gesamtzahl der Kombinationen beträgt $6 \times 6 = 36$. Für $A^c$ (Summe = 12) gibt es 1 Fall, also $P(A^c) = \frac{1}{36}$ und $P(A) = 1 - P(A^c) = \frac{35}{36}$.
 ::::::
 
-Immer wenn die Wahrscheinlichkeitsberechung etwas schwieriger wird können wir auf die Simulation zurückgreifen. Bei einer sogenannten __Monte-Carlo-Simulation__ führen wir das Experiment mehrfach durch und zählen die Anzahl der Fälle, die das Ereignis erfüllen. Die Wahrscheinlichkeit ist dann die Anzahl der Fälle, die das Ereignis erfüllen, geteilt durch die Anzahl der Durchläufe.
+Bei komplexeren Berechnungen hilft eine __Monte-Carlo-Simulation__: Das Experiment wird mehrfach simuliert, und die Wahrscheinlichkeit ergibt sich aus dem Anteil der Treffer (siehe Code-Ausgabe).
 
 ```{python}
 #| classes: styled-output
+#| label: tab-dice-simulation
+#| tbl-cap: "Monte-Carlo-Simulation der Wahrscheinlichkeit, dass die Summe zweier Würfel < 12 ist."
 import numpy as np
 import pandas as pd
+
 df = pd.DataFrame(np.random.randint(1, 7, (10000, 2)), columns=["W1", "W2"])
-
-# Summe der Augenzahlen
-
 df["Sum"] = df["W1"] + df["W2"]
-
-# Wahrscheinlichkeit
-
 p = (df["Sum"] < 12).mean()
 
-print(f"Die Wahrscheinlichkeit, dass die Summe der Augenzahlen kleiner als 12 ist, beträgt {p:.2f}")
+print(f"Die Wahrscheinlichkeit, dass die Summe < 12 ist, beträgt {p:.3f}")
 ```
 
+#### Simulation der Würfelsumme (Fortsetzung) {#sec-dice-sum-simulation}
+
+Die Verteilung der Summen zweier Würfel kann auch grafisch dargestellt werden (siehe Figure \@ref(fig:fig-dice-sum)). Die Simulation bestätigt, dass die Wahrscheinlichkeit für eine Summe < 12 hoch ist.
 
 ```{python}
 #| classes: styled-output
-#| fig-cap: "Die Wahrscheinlichkeit, dass die Summe der Augenzahlen kleiner als 12 ist, beträgt 0.97."
-#| label: fig-sec-dataexploratory-sampling-dice-sum
-
+#| label: fig-dice-sum
+#| fig-cap: "Verteilung der Summen zweier Würfel bei 10.000 Würfen; rote Linie markiert Summe = 11."
 import seaborn as sns
 import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
 
-sns.histplot(df["Sum"], bins=11, discrete=True, stat = 'density')
+df = pd.DataFrame(np.random.randint(1, 7, (10000, 2)), columns=["W1", "W2"])
+df["Sum"] = df["W1"] + df["W2"]
+
+sns.histplot(df["Sum"], bins=11, discrete=True, stat='density')
 plt.axvline(11, color="red", linestyle="--")
-
-plt.xlabel("Sum of dice rolls")
-plt.ylabel("Frequency")
+plt.xlabel("Summe der Augenzahlen")
+plt.ylabel("Dichte")
+plt.show()
 ```
+### Wahrscheinlichkeit der Würfelsumme (Fortsetzung) {#sec-dice-sum-probability}
 
-Figure @fig-sec-dataexploratory-sampling-dice-sum zeigt die Verteilung der Summe der Augenzahlen bei einem Wurf mit zwei Würfeln. Die Wahrscheinlichkeit, dass die Summe der Augenzahlen kleiner als 12 ist, beträgt 0,97.
+Figure \@ref(fig:fig-dice-sum) zeigt die Verteilung der Summen zweier Würfel. Die Wahrscheinlichkeit, dass die Summe < 12 ist, beträgt ca. 0,97 (Monte-Carlo-Schätzung).  
+- 3. Die Wahrscheinlichkeit für eine Summe $\geq 12$ ist:  
+  $$P(A^c) = 1 - P(A) = 1 - \frac{35}{36} = \frac{1}{36} \approx 0.03.$$
 
-- 3. Die Wahrscheinlichkeit, dass die Summe der Augenzahlen 12 oder mehr beträgt, ist $1 - P(A) = 1 - 0.97 = 0.03$.
+## Unabhängige Ereignisse {#sec-independent-events}
 
+Zwei Ereignisse $A$ und $B$ sind unabhängig, wenn das Eintreten des einen das andere nicht beeinflusst (vgl. Korrelation und Kausalität in @sec-dataexploratory-data_sets). Die Wahrscheinlichkeit eines Ereignisses hängt nicht vom anderen ab. Beispiele: Münzwurf und Würfelwurf oder die Ergebnisse zweier Würfel – das Ergebnis des ersten Würfels beeinflusst den zweiten nicht.
 
-## Unabhängige Ereignisse
-
-Zwei Ereignisse $A$ und $B$ sind unabhängig, wenn das Eintreten eines Ereignisses nicht das Eintreten des anderen Ereignisses beeinflusst (vgl. Korrelation und Kausalität in @sec-dataexploratory-data_sets). Das bedeutet, dass die Wahrscheinlichkeit eines Ereignisses nicht von dem anderen Ereignis abhängt. Ein typisches Beispiel für unabhängige Ereignisse ist das Werfen einer Münze und das Werfen eines Würfels. Das Ergebnis des Münzwurfs beeinflusst das Ergebnis des Würfelwurfs nicht. Gleiches gibt dafür, dass wird wie im Beispiel oben die Augenzahl zweiter Würfel betrachten. Das Ergebnis des ersten Würfels beeinflusst das Ergebnis des zweiten Würfels nicht.
-
-Die Wahrscheinlichkeit, dass zwei unabhängige Ereignisse eintreten, ist das Produkt der Wahrscheinlichkeiten der beiden Ereignisse. Die Wahrscheinlichkeit, dass zwei unabhängige Ereignisse eintreten, ist $P(A \cap B) = P(A) \cdot P(B)$.
-
+Die Wahrscheinlichkeit, dass zwei unabhängige Ereignisse gleichzeitig eintreten, ist:  
+$$P(A \cap B) = P(A) \cdot P(B).$$
 
 :::::: {.callout-important}
-Die __Multiplikationsregel für unabhängige Ereignisse__ besagt, dass die Wahrscheinlichkeit, dass zwei unabhängige Ereignisse ($A$, $B$) eintreten, das Produkt der Wahrscheinlichkeiten der beiden Ereignisse ist.
+__Multiplikationsregel für unabhängige Ereignisse__: Für unabhängige Ereignisse $A$ und $B$ gilt:  
+$$P(A \cap B) = P(A) \cdot P(B).$$  
+Für mehrere unabhängige Ereignisse $A_1, \ldots, A_n$:  
+$$P(A_1 \cap A_2 \cap \ldots \cap A_n) = P(A_1) \cdot P(A_2) \cdot \ldots \cdot P(A_n).$$
+::::::
 
-$$
-P(A \cap B) = P(A) \cdot P(B).
-$$
+### Beispiel 1: Würfelsummen {#sec-dice-sum-example-1}
 
-Bzw. für mehrere unabhängige Ereignisse ($A_*$):
-
-$$
-P(A_1 \cap A_2 \cap ... \cap A_n ) = P(A_1) \cdot P(A_2) \cdot ... \cdot P(A_n).
-$$
-
-:::
-
-### Beispiel 1
-
-Mit diesem Puzzelstein können wir nun auch die Wahrscheinlichkeit jeder Augenzahl beim Würfeln berechnen. Die Ergebnisse der beiden Würfel 1 und 2 sind unabhängig und können deshalb multipliziert werden.
-
-
-| $A = W_1 + W_2$ | Mögliche Kombinationen | P(A) |
-|-----------------|---------------|
-| 2               | $W_1=1, W_2=1$ | $P(A=2) = P("W_1=1") \cdot P("W_2=1") = \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}$ |
-| 3               | $W_1=1, W_2=2$, $W_1=2, W_2=1$ | $P(A=3) = P("W_1=1") \cdot P("W_2=2") + P("W_1=2") \cdot P("W_2=1") = \frac{1}{6} \cdot \frac{1}{6} + \frac{1}{6} \cdot \frac{1}{6} = \frac{2}{36}$ |
-| 4               | $W_1=1, W_2=3$, $W_1=2, W_2=2$, $W_1=3, W_2=1$ | $P(A=4) = P("W_1=1") \cdot P("W_2=3") + P("W_1=2") \cdot P("W_2=2") + P("W_1=3") \cdot P("W_2=1") = \frac{1}{6} \cdot \frac{1}{6} + \frac{1}{6} \cdot \frac{1}{6} + \frac{1}{6} \cdot \frac{1}{6} = \frac{3}{36}$ |
+Da die Ergebnisse zweier Würfel unabhängig sind, können wir die Wahrscheinlichkeiten multiplizieren (siehe Table \@ref(tab:tab-dice-sum-probabilities)).  
 
 
 
-### Beispiel 2
+| $A = W_1 + W_2$ | Mögliche Kombinationen         | $P(A)$                                                                 |
+|-----------------|--------------------------------|------------------------------------------------------------------------|
+| 2               | $W_1=1, W_2=1$                | $P(A=2) = P(W_1=1) \cdot P(W_2=1) = \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}$ |
+| 3               | $W_1=1, W_2=2$, $W_1=2, W_2=1$ | $P(A=3) = P(W_1=1) \cdot P(W_2=2) + P(W_1=2) \cdot P(W_2=1) = \frac{1}{6} \cdot \frac{1}{6} + \frac{1}{6} \cdot \frac{1}{6} = \frac{2}{36}$ |
+| 4               | $W_1=1, W_2=3$, $W_1=2, W_2=2$, $W_1=3, W_2=1$ | $P(A=4) = P(W_1=1) \cdot P(W_2=3) + P(W_1=2) \cdot P(W_2=2) + P(W_1=3) \cdot P(W_2=1) = \frac{1}{6} \cdot \frac{1}{6} + \frac{1}{6} \cdot \frac{1}{6} + \frac{1}{6} \cdot \frac{1}{6} = \frac{3}{36}$ |
+| 5               | $W_1=1, W_2=4$, $W_1=2, W_2=3$, $W_1=3, W_2=2$, $W_1=4, W_2=1$ | $P(A=5) = P(W_1=1) \cdot P(W_2=4) + P(W_1=2) \cdot P(W_2=3) + P(W_1=3) \cdot P(W_2=2) + P(W_1=4) \cdot P(W_2=1) =
+\frac{4}{36}$ |
+| 6               | $W_1=1, W_2=5$, $W_1=2, W_2=4$, $W_1=3, W_2=3$, $W_1=4, W_2=2$, $W_1=5, W_2=1$ | $P(A=6) = P(W_1=1) \cdot P(W_2=5) + P(W_1=2) \cdot P(W_2=4) + P(W_1=3) \cdot P(W_2=3) + P(W_1=4) \cdot P(W_2=2) + P(W_1=5) \cdot P(W_2=1) =
+\frac{5}{36}$ |
+| 7               | $W_1=1, W_2=6$, $W_1=2, W_2=5$, $W_1=3, W_2=4$, $W_1=4, W_2=3$, $W_1=5, W_2=2$, $W_1=6, W_2=1$ | $P(A=7) = P(W_1=1) \cdot P(W_2=6) + P(W_1=2) \cdot P(W_2=5) + P(W_1=3) \cdot P(W_2=4) + P(W_1=4) \cdot P(W_2=3) + P(W_1=5) \cdot P(W_2=2) + P(W_1=6) \cdot P(W_2=1) = \frac{6}{36}$ |
+| 8               | $W_1=2, W_2=6$, $W_1=3, W_2=5$, $W_1=4, W_2=4$, $W_1=5, W_2=3$, $W_1=6, W_2=2$ | $P(A=8) = P(W_1=2) \cdot P(W_2=6) + P(W_1=3) \cdot P(W_2=5) + P(W_1=4) \cdot P(W_2=4) + P(W_1=5) \cdot P(W_2=3) + P(W_1=6) \cdot P(W_2=2) = \frac{5}{36}$ |
+| 9               | $W_1=3, W_2=6$, $W_1=4, W_2=5$, $W_1=5, W_2=4$, $W_1=6, W_2=3$ | $P(A=9) = P(W_1=3) \cdot P(W_2=6) + P(W_1=4) \cdot P(W_2=5) + P(W_1=5) \cdot P(W_2=4) + P(W_1=6) \cdot P(W_2=3) = \frac{4}{36}$ |
+| 10              | $W_1=4, W_2=6$, $W_1=5, W_2=5$, $W_1=6, W_2=4$ | $P(A=10) = P(W_1=4) \cdot P(W_2=6) + P(W_1=5) \cdot P(W_2=5) + P(W_1=6) \cdot P(W_2=4) = \frac{3}{36}$ |
+| 11              | $W_1=5, W_2=6$, $W_1=6, W_2=5$ | $P(A=11) = P(W_1=5) \cdot P(W_2=6) + P(W_1=6) \cdot P(W_2=5) = \frac{2}{36}$ |
+| 12              | $W_1=6, W_2=6$ | $P(A=12) = P(W_1=6) \cdot P(W_2=6) = \frac{1}{36}$ |
 
-Wahr oder falsch. Bestimmen Sie, ob die folgenden Aussagen wahr oder falsch sind, und erklären Sie Ihre Begründung.
 
-- 1. Wenn eine faire Münze viele Male geworfen wird und die letzten acht Würfe alle Kopf sind, dann ist die Wahrscheinlichkeit, dass der nächste Wurf Kopf ist, etwas weniger als 50%.
-- 2. Das Ziehen einer Bildkarte (Bube, Dame oder König) und das Ziehen einer roten Karte aus einem vollständigen Kartenspiel sind sich gegenseitig ausschließende Ereignisse.
-- 3. Das Ziehen einer Bildkarte und das Ziehen eines Asses aus einem vollständigen Kartenspiel sind sich gegenseitig ausschließende Ereignisse.
+### Beispiel 2: Wahr oder Falsch {#sec-example-2-true-false}
 
+Bestimmen Sie, ob die folgenden Aussagen wahr oder falsch sind, und begründen Sie Ihre Antwort.
 
+1. Wenn eine faire Münze oft geworfen wird und die letzten acht Würfe Kopf waren, ist die Wahrscheinlichkeit, dass der nächste Wurf Kopf ist, etwas weniger als 50 %.
+2. Das Ziehen einer Bildkarte (Bube, Dame, König) und das Ziehen einer roten Karte aus einem vollständigen Kartenspiel sind sich gegenseitig ausschließende Ereignisse.
+3. Das Ziehen einer Bildkarte und das Ziehen eines Asses aus einem vollständigen Kartenspiel sind sich gegenseitig ausschließende Ereignisse.
 
 :::::: {.callout-tip collapse="true"}
-- 1. Falsch. Die Wahrscheinlichkeit, dass eine faire Münze Kopf zeigt, beträgt 50%. Die Ergebnisse der vorherigen Würfe beeinflussen die Wahrscheinlichkeit des nächsten Wurfs nicht, da die Würfe unabhängig sind.
-- 2. Falsch. Bildkarten können rote oder schwarze Farben haben. Die Ereignisse "Bildkarte" und "rote Karte" sind nicht disjunkt.
-- 3. Wahr, da ein Ass keine Bildkarte ist.
-:::
+1. Falsch. Bei einer fairen Münze ist $P(\text{Kopf}) = 0.5$. Vorherige Würfe beeinflussen den nächsten nicht, da sie unabhängig sind.
+2. Falsch. Bildkarten können rot sein (z. B. Karo-Dame). „Bildkarte“ und „rote Karte“ sind nicht disjunkt.
+3. Wahr. Eine Bildkarte (Bube, Dame, König) kann kein Ass sein; die Ereignisse sind disjunkt.
+::::::
 
+### Bedingte Wahrscheinlichkeit {#sec-conditional-probability}
 
-### Bedingte Wahrscheinlichkeit
+Bedingte Wahrscheinlichkeit beschreibt die Wahrscheinlichkeit eines Ereignisses $A$, gegeben dass ein anderes Ereignis $B$ eingetreten ist, notiert als $P(A | B)$ („$A$ gegeben $B$“). Beispiel: Wie wahrscheinlich ist eine Bildkarte, wenn die Karte eine Karo-Karte ist? Aus Figure \@ref(fig:fig-card-venn):  
+$$P(\text{Bild} | \text{Karo}) = \frac{3}{13},$$  
+da von 13 Karo-Karten 3 Bildkarten sind.
 
-Bedingte Wahrscheinlichkeiten geben uns die Wahrscheinlichkeit eines Ergebnisses unter der Bedinung an, dass ein anderes Ereignis eingetreten ist oder ebenfall eintreten würde.
-
-Wenn wir uns das das Kartenbeispiel vorstellen können wir uns Fragen, wie wahrscheinlich es ist eine Bildkarte zu ziehen, wenn wir schon wissen, dass die Karte eine Karo-Karte ist. Aus dem Venn-Diagramm ergibt sich, dass die Wahrscheinlichkeit hierfür wie folgt lautet:
-
-
-$$
-P(\text{Bild} | \text{Karo}) = \frac{3}{13}.
-$$
-
-Das $|$ wird hierbei als _"gegeben"_ gelesen. Die Abhängigkeit lässt sich in einer Kreuztballe (*contingency table*) darstellen, die die Häufigkeiten aller Ereigniss-Kombinationen gegenüberstellt. 
+Eine Kreuztabelle (_contingency table_) zeigt die Häufigkeiten von Ereigniskombinationen, z. B. im `loan50`-Datensatz (siehe Table \@ref(tab:tab-contingency-loan)).
 
 ```{python}
 #| classes: styled-output
+#| label: tab-contingency-loan
+#| tbl-cap: "Kreuztabelle von Wohneigentum und zweitem Einkommen im loan50-Datensatz."
 import pandas as pd
 
 df = pd.read_csv("../_assets/dataexploratory/loan50.csv")
-
-# Create a contingency table
 contingency_table = pd.crosstab(df['homeownership'], df['has_second_income'])
-
-# Display the result
 print(contingency_table)
 ```
+### Bedingte Wahrscheinlichkeit (Fortsetzung) {#sec-conditional-probability-cont}
 
-Hierraus lässt sich z.B. ablegen, dass es `26` Haus-Kredite gibt,bei denen der Kreditnehmer eine Hypothek hat. Von diesen haben `6` ein zweites Einkommen. Die bedingte Wahrscheinlichkeit, dass ein Kreditnehmer mit einer Hypothek ein zweites Einkommen hat, beträgt also $P(\text{Zweiteinkommen} | \text{Hypothek}) = \frac{6}{26}$.
+Aus der Kreuztabelle (Table \@ref(tab:tab-contingency-loan)) ergibt sich: Von 26 Kreditnehmern mit Hypothek haben 6 ein zweites Einkommen. Die bedingte Wahrscheinlichkeit ist:  
+$$P(\text{Zweiteinkommen} | \text{Hypothek}) = \frac{6}{26}.$$
 
 :::::: {.callout-important}
-Die __bedingte Wahrscheinlichkeit__ eines Ereignisses $A$ unter der Bedingung, dass ein anderes Ereignis $B$ eingetreten ist, ist die Wahrscheinlichkeit, dass $A$ eintritt, wenn wir wissen, dass $B$ eingetreten ist. Die bedingte Wahrscheinlichkeit wird als $P(A|B)$ geschrieben und berechnet sich als:
-
-$$
-P(A|B) = \frac{P(A \cap B)}{P(B)}.
-$$
-
-Im Fall unseres Beispiels ist die bedingte Wahrscheinlichkeit, dass ein Kreditnehmer ein zweites Einkommen hat, wenn er eine Hypothek hat, 
-
-$$
-P(\text{Zweiteinkommen} | \text{Hypothek}) = \frac{\text{Zweiteinkommen} \cap \text{Hypothek}}{\text{Hypothek}}=\frac{\frac{6}{50}}{\frac{26}{50}} = \frac{6}{26}.
-$$
-
-:::
+Die __bedingte Wahrscheinlichkeit__ $P(A|B)$ ist die Wahrscheinlichkeit von $A$, gegeben dass $B$ eingetreten ist. Sie wird berechnet als:  
+$$P(A|B) = \frac{P(A \cap B)}{P(B)}.$$  
+Im Beispiel:  
+$$P(\text{Zweiteinkommen} | \text{Hypothek}) = \frac{P(\text{Zweiteinkommen} \cap \text{Hypothek})}{P(\text{Hypothek})} = \frac{\frac{6}{50}}{\frac{26}{50}} = \frac{6}{26}.$$
+::::::
 
 :::::: {.callout-warning}
-Die Wahrscheinlichkeit von $P(A \cap B)$ kann nicht einfach mittels der Multiplikationsregel berechnet werden, da die Ereignisse nicht unabhängig sind. Stattdessen muss sie aus den beobachteten Häufigkeiten berechnet werden.
-:::
+$P(A \cap B)$ kann hier nicht via Multiplikationsregel berechnet werden, da die Ereignisse nicht unabhängig sind. Stattdessen werden beobachtete Häufigkeiten verwendet.
+::::::
 
 :::::: {.callout-important}
-Summe von bedingten Wahrscheinlichkeiten
-
-Seien $A_1, ..., A_k$ alle disjunkten Ergebnisse für eine Variable oder einen Prozess. Dann gilt für ein Ereignis $B$, möglicherweise für eine andere Variable oder einen anderen Prozess:
-
-$$
-P(A_1|B) + · · · + P(A_k|B) = 1
-$$
-
-Die Regel für Komplemente gilt auch, wenn ein Ereignis und sein Komplement unter denselben Informationen bedingt sind:
-
-$$
-P(A|B) = 1 − P(A^c|B).
-$$
-
-:::
+__Summe bedingter Wahrscheinlichkeiten__: Sind $A_1, \ldots, A_k$ alle disjunkten Ergebnisse einer Variable, gilt für ein Ereignis $B$:  
+$$P(A_1|B) + \cdots + P(A_k|B) = 1.$$  
+Für ein Ereignis und sein Komplement:  
+$$P(A|B) = 1 - P(A^c|B).$$
+::::::
 
 
-### Beispiel
 
-![Meme Test Cancer](https://i.redd.it/mznyyv27gw9c1.png){#fig-meme-test-cancer}
 
-Wie hoch ist die Wahrscheinlichkeit, dass ein Patient Krebs hat, wenn wir folgendes wissen:
+### Beispiel: AIDS-Test {#sec-aids-test-example}
 
-- Die Wahrscheinlichkeit, dass eine Person Krebs hat, beträgt 0.1%.
-- Im Falle, dass eine Person Krebs hat, beträgt die Wahrscheinlichkeit, dass der Test positiv ist, 99%. (dies nennt man auch ist die _Sensitivität_ des Tests)
-- Im Falle, dass eine Person keinen Krebs hat, beträgt die Wahrscheinlichkeit, dass der Test positiv ist, 5%. (dies nennt man auch ist die _Spezifität_ des Tests)
+![Meme AIDS Test](https://preview.redd.it/wait-how-does-this-math-work-v0-dh4j1hy9qu6e1.jpeg?auto=webp&s=7e663ac296036ba082fbe3091a82f9946323e025){#fig-meme-test-aids}
 
-::: {.tip collapse="true"}
+Wie hoch ist die Wahrscheinlichkeit, dass eine Person AIDS hat, wenn folgendes bekannt ist:
+- Die Wahrscheinlichkeit, dass eine Person AIDS hat, beträgt 0,1 % ($P(\text{AIDS}) = 0.001$).
+- Bei AIDS beträgt die Wahrscheinlichkeit eines positiven Tests 99 % ($P(\text{Positiv} | \text{AIDS}) = 0.99$, Sensitivität).
+- Ohne AIDS beträgt die Wahrscheinlichkeit eines positiven Tests 5 % ($P(\text{Positiv} | \text{Kein AIDS}) = 0.05$, falsch-positiv, 1 - Spezifität).
 
-Zunächst können wir das ganze als Baumdiagramm darstellen. Hierbei ist die Wahrscheinlichkeit, dass eine Person Krebs hat $P(\text{Krebs}) = 0.001$ und die Wahrscheinlichkeit, dass eine Person keinen Krebs hat $P(\text{Kein Krebs}) = 0.999$. Die Wahrscheinlichkeit, dass der Test positiv ist, wenn eine Person Krebs hat, ist $P(\text{Positiv} | \text{Krebs}) = 0.99$ und die Wahrscheinlichkeit, dass der Test positiv ist, wenn eine Person keinen Krebs hat, ist $P(\text{Positiv} | \text{Kein Krebs}) = 0.05$.
+:::::: {.callout-tip collapse="true"}
+Ein Baumdiagramm hilft: $P(\text{AIDS}) = 0.001$, $P(\text{Kein AIDS}) = 0.999$, $P(\text{Positiv} | \text{AIDS}) = 0.99$, $P(\text{Positiv} | \text{Kein AIDS}) = 0.05$.
 
 
 ```{mermaid}
@@ -700,42 +597,66 @@ graph LR
     D[Kein Krebs] -->|0.95| F[Negativ]
 ```
 
+Pfade mit positivem Test (disjunkt):
 
-Wir können nun die alle Pfade, die mit einem positiven Test enden, zusammenzählen und die Wahrscheinlichkeit berechnen, dass eine Person Krebs hat, wenn der Test positiv ist. Wir dürfen dieses addieren, da die Pfade disjunkt sind.
-
-Für den oberen Pfad ist die Wahrscheinlichkeit, dass eine Person Krebs hat und der Test positiv ist, $P(\text{Krebs} \cap \text{Positiv}) = P(\text{Krebs}) \cdot P(\text{Positiv} | \text{Krebs}) = 0.001 \cdot 0.99 = 0.00099$.
-
-Für den unteren Pfad ist die Wahrscheinlichkeit, dass eine Person keinen Krebs hat und der Test positiv ist, $P(\text{Kein Krebs} \cap \text{Positiv}) = P(\text{Kein Krebs}) \cdot P(\text{Positiv} | \text{Kein Krebs}) = 0.999 \cdot 0.05 = 0.04995$.
-
-Die Wahrscheinlichkeit, dass der Test positiv ist, beträgt also $P(\text{Positiv}) = 0.00099 + 0.04995 = 0.05094$.
-
-Trotz eines positiven Test ist es also sehr unwahrscheinlich, dass eine Person Krebs hat. Die Wahrscheinlichkeit, dass eine Person Krebs hat, wenn der Test positiv ist, beträgt $P(\text{Krebs} | \text{Positiv}) = \frac{P(\text{Krebs} \cap \text{Positiv})}{P(\text{Positiv})} = \frac{0.00099}{0.05094} = 0.0194$.
-
-In der Realität werden Personen mit einem positiven Testergebnis oft weiteren Tests unterzogen, um die Wahrscheinlichkeit zu erhöhen, dass die Diagnose korrekt ist. Dies wird als _Bestätigungstest_ bezeichnet. Zudem werden nur Personen getestet, wenn es schon Anzeichen für eine Erkrankung gibt. Dies wird als _Prävalenz_ bezeichnet und ist dann in der Stichprobe höher als in der Gesamtbevölkerung.
-
-:::
+- Oberer Pfad: $P(\text{AIDS} \cap \text{Positiv}) = P(\text{AIDS}) \cdot P(\text{Positiv} | \text{AIDS}) = 0.001 \cdot 0.99 = 0.00099$.
+- Unterer Pfad: $P(\text{Kein AIDS} \cap \text{Positiv}) = P(\text{Kein AIDS}) \cdot P(\text{Positiv} | \text{Kein AIDS}) = 0.999 \cdot 0.05 = 0.04995$.
+- Gesamt: $P(\text{Positiv}) = 0.00099 + 0.04995 = 0.05094$.
 
 
-### Satz von Bayes
-
-Der Satz von Bayes ist ein mathematischer Satz, der uns erlaubt, die Wahrscheinlichkeit eines Ereignisses unter der Bedingung eines anderen Ereignisses zu berechnen. Der Satz von Bayes ist besonders nützlich, wenn wir die bedingte Wahrscheinlichkeit eines Ereignisses unter der Bedingung eines anderen Ereignisses kennen, aber die bedingte Wahrscheinlichkeit des anderen Ereignisses unter der Bedingung des ersten Ereignisses berechnen möchten.
-
-Der Satz von Bayes lautet:
+Bedingte Wahrscheinlichkeit:
 
 $$
-P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}.
+P(\text{AIDS} | \text{Positiv}) = \frac{P(\text{AIDS} \cap \text{Positiv})}{P(\text{Positiv})} = \frac{0.00099}{0.05094} = 0.0194.
 $$
 
-Der Satz von Bayes kann auch als Multiplikation der bedingten Wahrscheinlichkeit eines Ereignisses unter der Bedingung eines anderen Ereignisses und der Wahrscheinlichkeit des anderen Ereignisses geteilt durch die Wahrscheinlichkeit des ersten Ereignisses geschrieben werden.
+Trotz positivem Test ist die Wahrscheinlichkeit für AIDS gering (ca. 1,94 %). In der Praxis folgen Bestätigungstests, und die Prävalenz in Risikogruppen ist höher als 0,1 %.
+::::::
 
-Der Satz von Bayes wird oft in der Medizin, der Wirtschaft und der Technik verwendet, um die Wahrscheinlichkeit eines Ereignisses zu berechnen, wenn wir die Wahrscheinlichkeit eines anderen Ereignisses kennen. Hierbei wird auch von Prior, Likelihood und Posterior gesprochen. Der Prior ist die Wahrscheinlichkeit des Ereignisses, bevor wir die Daten haben. Der Likelihood ist die Wahrscheinlichkeit der Daten unter der Bedingung des Ereignisses. Der Posterior ist die Wahrscheinlichkeit des Ereignisses unter der Bedingung der Daten.
+### Satz von Bayes {#sec-bayes-theorem}
+
+Im AIDS-Test-Beispiel kennen wir $P(\text{Positiv} | \text{AIDS})$ – die Wahrscheinlichkeit eines positiven Tests bei AIDS – und möchten die Umkehrung, $P(\text{AIDS} | \text{Positiv})$ – die Wahrscheinlichkeit von AIDS bei einem positiven Test. Diese Umkehrung nennt sich _bedingte Wahrscheinlichkeit_ in umgekehrter Richtung. Doch wie gelangen wir von der einen zur anderen? Der Satz von Bayes liefert die Lösung, indem er bedingte Wahrscheinlichkeiten umkehrt.
+
+#### Motivation und Herleitung
+
+Stellen wir uns vor, wir wollen $P(\text{AIDS} | \text{Positiv})$ berechnen. Aus der Definition der bedingten Wahrscheinlichkeit wissen wir:  
+$$P(\text{AIDS} | \text{Positiv}) = \frac{P(\text{AIDS} \cap \text{Positiv})}{P(\text{Positiv})}.$$  
+Gleichzeitig gilt für die umgekehrte Richtung:  
+$$P(\text{Positiv} | \text{AIDS}) = \frac{P(\text{Positiv} \cap \text{AIDS})}{P(\text{AIDS})}.$$  
+Da $P(\text{AIDS} \cap \text{Positiv}) = P(\text{Positiv} \cap \text{AIDS})$ (Schnittmengen sind symmetrisch), können wir die zweite Gleichung umstellen:  
+$$P(\text{AIDS} \cap \text{Positiv}) = P(\text{Positiv} | \text{AIDS}) \cdot P(\text{AIDS}).$$  
+Setzen wir dies in die erste Gleichung ein:  
+$$P(\text{AIDS} | \text{Positiv}) = \frac{P(\text{Positiv} | \text{AIDS}) \cdot P(\text{AIDS})}{P(\text{Positiv})}.$$  
+Das ist der Satz von Bayes! Er verbindet die bekannte Bedingung ($P(\text{Positiv} | \text{AIDS})$) mit der gesuchten ($P(\text{AIDS} | \text{Positiv})$), wobei $P(\text{Positiv})$ die Gesamtwahrscheinlichkeit eines positiven Tests ist.
+
+#### Formale Definition
+
+Der Satz von Bayes lautet allgemein:  
+$$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)},$$  
+wobei:  
+- $P(A|B)$ die _Posterior_-Wahrscheinlichkeit ist (z. B. AIDS bei positivem Test),  
+- $P(B|A)$ die _Likelihood_ (z. B. positiver Test bei AIDS),  
+- $P(A)$ der _Prior_ (z. B. Grundwahrscheinlichkeit für AIDS),  
+- $P(B)$ die _Normalisierungskonstante_ (z. B. Gesamtwahrscheinlichkeit eines positiven Tests).
+
+#### Anwendung
+
+Im AIDS-Beispiel:  
+- $P(\text{Positiv} | \text{AIDS}) = 0.99$,  
+- $P(\text{AIDS}) = 0.001$,  
+- $P(\text{Positiv}) = P(\text{Positiv} | \text{AIDS}) \cdot P(\text{AIDS}) + P(\text{Positiv} | \text{Kein AIDS}) \cdot P(\text{Kein AIDS}) = 0.00099 + 0.04995 = 0.05094$.  
+Damit:  
+$$P(\text{AIDS} | \text{Positiv}) = \frac{0.99 \cdot 0.001}{0.05094} \approx 0.01943.$$  
+Der Satz von Bayes ist in Medizin, Wirtschaft und Technik essenziell, um aus bekannten Daten (z. B. Testresultaten) auf Ursachen (z. B. Krankheiten) zu schließen.
 
 
 ::: {.callout-tip}
 Youtube-Videos:
+
 - [Three Blue One Brown: Bayes Theorem](https://www.youtube.com/watch?v=HZGCoVF3YvM)
 - [Veritasium: The Bayesian Trap
 ](https://www.youtube.com/watch?v=R13BD8qKeTg)
+
 :::
 
 

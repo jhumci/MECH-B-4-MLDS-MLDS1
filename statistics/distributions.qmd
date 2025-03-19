@@ -1,17 +1,14 @@
-# Verteilungen {#sec-statistics-distributions}
+# Verteilungen {#sec-statistik-verteilungen}
 
-In diesem Abschnitt werden die Verteilungen der einzelnen Variablen untersucht. Dazu werden die Verteilungen der einzelnen Variablen in Form von Histogrammen dargestellt. Die Histogramme zeigen die Häufigkeitsverteilung der einzelnen Variablen. Die Verteilungen der einzelnen Variablen werden in den folgenden Abbildungen dargestellt.
+In diesem Abschnitt untersuchen wir die Verteilungen einzelner Variablen. Dazu stellen wir die Verteilungen in Form von Histogrammen dar, welche die Häufigkeitsverteilung der jeweiligen Variablen veranschaulichen. Die Verteilungen der einzelnen Variablen werden in den folgenden Abbildungen dargestellt.
 
 ## Diskrete Verteilungen
 
-Diskrete Verteilungen sind Wahrscheinlichkeitsverteilungen, die nur diskrete Werte annehmen können. Die diskreten Verteilungen, die in diesem Abschnitt untersucht werden, sind die Bernoulli-Verteilung, die Binomialverteilung und die Poisson-Verteilung.
-
+Diskrete Verteilungen sind Wahrscheinlichkeitsverteilungen, die nur diskrete Werte annehmen können. In diesem Abschnitt betrachten wir die Bernoulli-Verteilung, die Binomialverteilung und die Poisson-Verteilung.
 
 ### Bernoulli-Verteilung
 
-Die Bernoulli-Verteilung ist eine diskrete Wahrscheinlichkeitsverteilung, die nur zwei mögliche Werte annehmen kann. Ein typisches Beispiel für eine Bernoulli-Verteilung ist das Werfen einer Münze. Die Münze kann entweder Kopf oder Zahl zeigen. Die Wahrscheinlichkeit, dass die Münze Kopf zeigt, wird mit $p$ bezeichnet. Die Wahrscheinlichkeit, dass die Münze Zahl zeigt, wird mit $1-p$ bezeichnet. Die Wahrscheinlichkeitsfunktion der Bernoulli-Verteilung ist gegeben durch:
-
-Nun können wir die Wahrscheinlichsverteilung durch eine Formel darstellen.
+Die Bernoulli-Verteilung ist eine diskrete Wahrscheinlichkeitsverteilung, die nur zwei mögliche Ergebnisse modelliert. Ein typisches Beispiel ist der Münzwurf, bei dem entweder "Kopf" oder "Zahl" eintritt. Die Wahrscheinlichkeit für "Kopf" wird mit $p$ bezeichnet, die Wahrscheinlichkeit für "Zahl" mit $1-p$. Die Wahrscheinlichkeitsfunktion der Bernoulli-Verteilung ist wie folgt definiert:
 
 $$
 P(X=x) = \begin{cases}
@@ -20,18 +17,18 @@ p & \text{für } x=1, \\
 \end{cases}
 $$
 
-Wir schreiben eine Zufallsvariable $X$ als $X \sim \text{Bernoulli}(p)$, um auszudrücken, dass $X$ eine Bernoulli-verteilte Zufallsvariable mit Parameter $p$ ist.
+Wir schreiben $X \sim \text{Bernoulli}(p)$, um auszudrücken, dass $X$ eine Bernoulli-verteilte Zufallsvariable mit Parameter $p$ ist.
 
-Für den Wurf einer fairen Münze nimmt den Wert 1 an, wenn die Münze Kopf zeigt, und den Wert 0 an, wenn die Münze Zahl zeigt. Die Wahrscheinlichkeitsfunktion der Bernoulli-Verteilung für die faire Münze ist gegeben durch:
+Beim Wurf einer fairen Münze nehmen wir an, dass "Kopf" den Wert 1 und "Zahl" den Wert 0 annimmt. Die Wahrscheinlichkeitsfunktion der Bernoulli-Verteilung für die faire Münze ist dann:
 
 $X \sim \text{Bernoulli}(p=0.5)$
 
-Die folgende Abbildung zeigt die Wahrscheinlichkeitsverteilung der Bernoulli-Verteilung für die faire Münze.
+Die folgende Abbildung zeigt die Wahrscheinlichkeitsverteilung der Bernoulli-Verteilung für eine faire Münze.
 
 ```{python}
 #| classes: styled-output
-#| #| fig-cap: Verteilung der Bernoulli-Verteilung für eine faire Münze
-#| #| label: fig:sec-dataexploratory-distributions-bernoulli-distribution
+#| fig-cap: Wahrscheinlichkeitsverteilung der Bernoulli-Verteilung für eine faire Münze
+#| label: fig:sec-dataexploratory-verteilungen-bernoulli-verteilung
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -54,19 +51,19 @@ plt.xticks(x)
 plt.show()
 ```
 
-In der Abbildung @fig:sec-dataexploratory-distributions-bernoulli-distribution wird nun jeder möglichen Realisierung der Zufallsvariablen $X$ die entsprechende Wahrscheinlichkeit zugeordnet. Im Gegensatz zu, Histogrammen, in denen reale Häufigkeiten dargestellt werden, zeigt die Abbildung die theoretischen Wahrscheinlichkeiten der Zufallsvariablen.
+In Abbildung @ref(fig:sec-dataexploratory-verteilungen-bernoulli-verteilung) wird jeder möglichen Realisierung der Zufallsvariablen $X$ die entsprechende Wahrscheinlichkeit zugeordnet. Im Gegensatz zu Histogrammen, die reale Häufigkeiten darstellen, zeigt diese Abbildung die theoretischen Wahrscheinlichkeiten der Zufallsvariablen.
 
 #### Erwartungswert und Varianz der Bernoulli-Verteilung
 
-:::::: {.callout-important}
-Der __Erwartungswert__ einer Verteilung ist ein Maß für die zentrale Tendenz der Verteilung. Er gibt den durchschnittlichen Wert der Zufallsvariablen an. Der Erwartungswert einer Zufallsvariablen $X$ wird durch $E(X)$ bezeichnet. Allgemein ergibt sich der Erwartungswert einer Zufallsvariablen $X$ durch die Summe der Produkte der Werte der Zufallsvariablen und deren Wahrscheinlichkeiten.
 
-Der __Erwartungswert__ einer diskreten Zufallsvariablen $X$ ist definiert als:
+:::::: {.callout-important}
+Der Erwartungswert einer Verteilung ist ein Maß für die zentrale Tendenz der Verteilung. Er gibt den durchschnittlichen Wert der Zufallsvariablen an. Der Erwartungswert einer Zufallsvariablen $X$ wird mit $E(X)$ bezeichnet. Allgemein ergibt sich der Erwartungswert einer Zufallsvariablen $X$ durch die Summe der Produkte der Werte der Zufallsvariablen und deren Wahrscheinlichkeiten.
+
+Der Erwartungswert einer diskreten Zufallsvariablen $X$ ist definiert als:
 
 $$
 E(X) = \sum_{x} x \cdot P(X=x),
 $$
-
 :::
 
 Der Erwartungswert und die Varianz der Bernoulli-Verteilung können durch die folgenden Formeln berechnet werden:
@@ -81,14 +78,20 @@ $$
 Grundsätzlich berechnet sich der Erwartungswert einer diskreten Zufallsvariablen $X$ durch die Summe der Produkte der Werte der Zufallsvariablen und deren Wahrscheinlichkeiten. Für die Bernoulli-Verteilung ist der Erwartungswert gleich dem Parameter $p$.
 
 $$
-E(X) = \sum_{x} x \cdot P(X=x) = 0 \cdot (1-p) + 1 \cdot p = p.
+E(X) = \sum_{x} x \cdot P(X=x).
+$$
+
+Für die Bernoulli-Verteilung ergibt sich der Erwartungswert zu:
+
+$$
+E(X) = 0 \cdot (1-p) + 1 \cdot p = p.
 $$
 :::
 
 #### Varianz der Bernoulli-Verteilung
 
 :::::: {.callout-important}
-Die __Varianz__ einer Verteilung ist ein Maß für die Streuung der Verteilung. Sie gibt an, wie weit die Werte der Zufallsvariablen von ihrem Erwartungswert abweichen. Die Varianz einer Zufallsvariablen $X$ wird durch $\text{Var}(X)$ bezeichnet.
+Die Varianz einer Verteilung ist ein Maß für die Streuung der Verteilung. Sie gibt an, wie weit die Werte der Zufallsvariablen von ihrem Erwartungswert abweichen. Die Varianz einer Zufallsvariablen $X$ wird mit $\text{Var}(X)$ bezeichnet.
 :::
 
 Die Varianz der Bernoulli-Verteilung ist gegeben durch:
@@ -98,7 +101,7 @@ $$
 $$
 
 :::::: {.callout-important}
-Grundsätzlich berechnet sich die Varianz einer Zufallsvariablen $X$ durch die Summe der quadrierten Abweichungen der Werte der Zufallsvariablen von ihrem Erwartungswert, gewichtet mit den Wahrscheinlichkeiten der Zufallsvariablen. Für die Bernoulli-Verteilung ist die Varianz gleich $p \cdot (1-p)$.
+Die Varianz einer Bernoulli-verteilten Zufallsvariablen berechnet sich als $p \cdot (1-p)$. Dies lässt sich wie folgt zeigen:
 
 $$
 \text{Var}(X) = \sum_{x} (x - E(X))^2 \cdot P(X=x) = (0 - p)^2 \cdot (1-p) + (1 - p)^2 \cdot p = p \cdot (1-p).
