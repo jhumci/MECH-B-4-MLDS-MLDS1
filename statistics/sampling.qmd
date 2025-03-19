@@ -359,6 +359,8 @@ print(df["homeownership"].value_counts())
 2. Anteil Hypothek: $\frac{26}{50}$, Anteil Eigentum: $\frac{3}{50}$.
 3. Wahrscheinlichkeit (Hypothek oder Eigentum): $\frac{26}{50} + \frac{3}{50} = \frac{29}{50}$. Dies entspricht der Wahrscheinlichkeit, nicht zu mieten. ::::::
 
+::::::
+
 ### Das Komplement eines Ereignisses {#sec-complement}
 
 Das Komplement eines Ereignisses $A$, bezeichnet als $A^c$ oder $\bar{A}$, ist das Nicht-Eintreten von $A$. Es umfasst alle Ergebnisse außer $A$ und ist zu $A$ disjunkt. Die Wahrscheinlichkeit des Komplements ist:
