@@ -581,11 +581,12 @@ $$P(A|B) = 1 - P(A^c|B).$$
 ![Meme AIDS Test](https://preview.redd.it/wait-how-does-this-math-work-v0-dh4j1hy9qu6e1.jpeg?auto=webp&s=7e663ac296036ba082fbe3091a82f9946323e025){#fig-meme-test-aids}
 
 Wie hoch ist die Wahrscheinlichkeit, dass eine Person AIDS hat, wenn folgendes bekannt ist:
+
 - Die Wahrscheinlichkeit, dass eine Person AIDS hat, beträgt 0,1 % ($P(\text{AIDS}) = 0.001$).
 - Bei AIDS beträgt die Wahrscheinlichkeit eines positiven Tests 99 % ($P(\text{Positiv} | \text{AIDS}) = 0.99$, Sensitivität).
 - Ohne AIDS beträgt die Wahrscheinlichkeit eines positiven Tests 5 % ($P(\text{Positiv} | \text{Kein AIDS}) = 0.05$, falsch-positiv, 1 - Spezifität).
 
-:::::: {.callout-tip collapse="true"}
+
 Ein Baumdiagramm hilft: $P(\text{AIDS}) = 0.001$, $P(\text{Kein AIDS}) = 0.999$, $P(\text{Positiv} | \text{AIDS}) = 0.99$, $P(\text{Positiv} | \text{Kein AIDS}) = 0.05$.
 
 
@@ -613,7 +614,6 @@ P(\text{AIDS} | \text{Positiv}) = \frac{P(\text{AIDS} \cap \text{Positiv})}{P(\t
 $$
 
 Trotz positivem Test ist die Wahrscheinlichkeit für AIDS gering (ca. 1,94 %). In der Praxis folgen Bestätigungstests, und die Prävalenz in Risikogruppen ist höher als 0,1 %.
-::::::
 
 ### Satz von Bayes {#sec-bayes-theorem}
 
