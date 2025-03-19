@@ -6,7 +6,7 @@ Eine Stichprobe umfasst $n$ Beobachtungen aus einer Grundgesamtheit, der Menge $
 
 ## Stichprobenziehung aus einer Grundgesamtheit {#sec-sampling-population}
 
-Die Grundgesamtheit (_population_) ist die Gesamtheit aller untersuchbaren Beobachtungen, die Stichprobe (_sample_) eine Teilmenge davon. Eine repräsentative Stichprobe erlaubt Verallgemeinerungen. Da die vollständige Datenerhebung der Grundgesamtheit oft zu aufwendig und kostspielig ist, ziehen wir Rückschlüsse aus Stichproben (siehe Figure \@ref(fig:fig-sampling-population)). Dies gelingt am besten mit einer großen, zufällig ausgewählten Stichprobe.
+Die Grundgesamtheit (_population_) ist die Gesamtheit aller untersuchbaren Beobachtungen, die Stichprobe (_sample_) eine Teilmenge davon. Eine repräsentative Stichprobe erlaubt Verallgemeinerungen. Da die vollständige Datenerhebung der Grundgesamtheit oft zu aufwendig und kostspielig ist, ziehen wir Rückschlüsse aus Stichproben (siehe Figure @fig-sampling-population). Dies gelingt am besten mit einer großen, zufällig ausgewählten Stichprobe.
 
 ```{python}
 #| echo: false
@@ -125,7 +125,7 @@ Bei der Prognose der Werkzeuglebensdauer einer 5-Achs-Fräsmaschine sind Verglei
 
 ## Gruppieren von Daten {#sec-grouping-data}
 
-Ein bewusster Bias kann bei der Datenauswahl entstehen. Fragen wir z. B. nur Personen mit Hypothek (`mortgage`) nach ihrem Einkommen und nicht Mieter (`rent`), ist die Stichprobe nicht repräsentativ (siehe Figure \@ref(fig:fig-income-distribution)).
+Ein bewusster Bias kann bei der Datenauswahl entstehen. Fragen wir z. B. nur Personen mit Hypothek (`mortgage`) nach ihrem Einkommen und nicht Mieter (`rent`), ist die Stichprobe nicht repräsentativ (siehe Figure @fig-income-distribution).
 
 ```{python}
 #| classes: styled-output
@@ -153,7 +153,7 @@ Im Beispiel haben wir eine ordinal skalierte Variable (`homeownership`) und eine
 
 ### Boxplot {#sec-boxplot}
 
-Ein Boxplot eignet sich zum Vergleich ordinaler und metrischer Variablen. Er zeigt die Verteilung der metrischen Variable (`annual_income`) für die Ausprägungen der ordinalen Variable (`homeownership`). Die Box umfasst Median sowie erstes und drittes Quartil, die Whisker die Datenreichweite (1,5-fache Interquartilsdistanz ab den Quartilen), und Punkte markieren Ausreißer (siehe Figure \@ref(fig:fig-boxplot-income)).
+Ein Boxplot eignet sich zum Vergleich ordinaler und metrischer Variablen. Er zeigt die Verteilung der metrischen Variable (`annual_income`) für die Ausprägungen der ordinalen Variable (`homeownership`). Die Box umfasst Median sowie erstes und drittes Quartil, die Whisker die Datenreichweite (1,5-fache Interquartilsdistanz ab den Quartilen), und Punkte markieren Ausreißer (siehe Figure @fig-boxplot-income).
 
 ```{python}
 #| classes: styled-output
@@ -171,7 +171,7 @@ sns.stripplot(data=df, x="homeownership", y="annual_income", color="black", size
 Der Boxplot ist einfach zu erstellen und zu interpretieren, jedoch bei stark unterschiedlichen Verteilungen wenig aussagekräftig. Hier können Daten transformationen oder alternative Visualisierungen helfen.
 
 :::::: {.callout-tip}
-Eine moderne Alternative zum Boxplot ist der Violinplot. Er zeigt die Verteilung als geschätzte Wahrscheinlichkeitsdichte (bisher für uns ein geglättetes Histogramm) und ist informativer, da er die Datenverteilung detaillierter darstellt (siehe Figure \@ref(fig:fig-violin-plot)).
+Eine moderne Alternative zum Boxplot ist der Violinplot. Er zeigt die Verteilung als geschätzte Wahrscheinlichkeitsdichte (bisher für uns ein geglättetes Histogramm) und ist informativer, da er die Datenverteilung detaillierter darstellt (siehe Figure @fig-violin-plot).
 ![xkcd Violinplot](https://imgs.xkcd.com/comics/violin_plots_2x.png){#fig-violin-plot}
 ::::::
 
@@ -191,7 +191,7 @@ Experimente sind der Goldstandard für Kausalität. Eine unabhängige Variable (
 
 #### Beispiel: Ist ein Würfel gezinkt? {#sec-dice-example}
 
-Stellen wir uns vor, eine Kollegin besteht auf ihrem eigenen Würfel. Ist er gezinkt? Eine Beobachtungsstudie könnte die Augenzahlen mit einem fairen Würfel (Kontrollgruppe) vergleichen. Wir werfen beide Würfel 1000-mal und prüfen die Verteilung (siehe Figure \@ref(fig:fig-dice-rolls-manipulated)). Auffällige Abweichungen machen misstrauisch.
+Stellen wir uns vor, eine Kollegin besteht auf ihrem eigenen Würfel. Ist er gezinkt? Eine Beobachtungsstudie könnte die Augenzahlen mit einem fairen Würfel (Kontrollgruppe) vergleichen. Wir werfen beide Würfel 1000-mal und prüfen die Verteilung (siehe Figure @fig-dice-rolls-manipulated). Auffällige Abweichungen machen misstrauisch.
 
 ```{python}
 #| classes: styled-output
@@ -222,7 +222,7 @@ Skalenniveaus klassifizieren Variablen in nominal, ordinal, metrisch und verhäl
 
 ### Im Kontext von Experimenten {#sec-experiment-context}
 
-In Experimenten und Beobachtungsstudien unterscheiden wir _unabhängige_ (Einflussgröße) und _abhängige_ (gemessene Effekte) Variablen. Bezeichnungen variieren je nach Fachgebiet (siehe Table \@ref(tab:tab-variable-terms)). Später erkennen wir, dass mehrere unabhängige und abhängige Variablen möglich sind, doch zunächst bleiben wir bei Singular.
+In Experimenten und Beobachtungsstudien unterscheiden wir _unabhängige_ (Einflussgröße) und _abhängige_ (gemessene Effekte) Variablen. Bezeichnungen variieren je nach Fachgebiet (siehe Table @tab-variable-terms). Später erkennen wir, dass mehrere unabhängige und abhängige Variablen möglich sind, doch zunächst bleiben wir bei Singular.
 
 | Anwendungsfeld   | Unabhängige Variable | Abhängige Variable |
 |------------------|----------------------|--------------------|
@@ -246,7 +246,7 @@ Ob das Universum deterministisch oder zufällig ist, spielt keine Rolle. Zufäll
 
 ### Zufallsvariablen {#sec-random-variables}
 
-Eine Zufallsvariable nimmt zufällig Werte an – diskret (bestimmte Werte, z. B. Würfelaugenzahl: 1–6) oder kontinuierlich (Werte in einem Intervall, z. B. Temperatur). Die Augenzahl eines Würfels ist eine diskrete Zufallsvariable; jeder Wurf ist eine Realisierung (siehe Figure \@ref(fig:fig-dice-rolls)).
+Eine Zufallsvariable nimmt zufällig Werte an – diskret (bestimmte Werte, z. B. Würfelaugenzahl: 1–6) oder kontinuierlich (Werte in einem Intervall, z. B. Temperatur). Die Augenzahl eines Würfels ist eine diskrete Zufallsvariable; jeder Wurf ist eine Realisierung (siehe Figure @fig-dice-rolls).
 
 ```{python}
 #| classes: styled-output
@@ -278,7 +278,7 @@ Wir definieren:
 Die __Wahrscheinlichkeit__ eines Ergebnisses ist der Anteil, wie oft es bei unendlich vielen Wiederholungen eines Zufallsprozesses eintritt. Sie liegt zwischen 0 und 1 und kann als Prozentsatz (0–100 %) angegeben werden.
 ::::::
 
-In Figure \@ref(fig:fig-dice-rolls) trat die Augenzahl 2 etwa 167-mal in 1000 Würfen auf, was einer Wahrscheinlichkeit von ca. 1/6 (0,167) entspricht – ebenso für die anderen Augenzahlen. Bei endlichen Beobachtungen ist dies eine Schätzung; die exakte Wahrscheinlichkeit gilt nur für unendlich viele Versuche (siehe Figure \@ref(fig:fig-dice-rolls-proportion)).
+In Figure @fig-dice-rolls trat die Augenzahl 2 etwa 167-mal in 1000 Würfen auf, was einer Wahrscheinlichkeit von ca. 1/6 (0,167) entspricht – ebenso für die anderen Augenzahlen. Bei endlichen Beobachtungen ist dies eine Schätzung; die exakte Wahrscheinlichkeit gilt nur für unendlich viele Versuche (siehe Figure @fig-dice-rolls-proportion).
 
 ```{python}
 #| classes: styled-output
@@ -302,7 +302,7 @@ plt.ylabel("$\hat{p}_n$ - Anteil der 1en")
 
 ### Konvergenz und Schätzungen {#sec-convergence-estimates}
 
-Figure \@ref(fig:fig-dice-rolls-proportion) zeigt den Anteil $\hat{p}_n$ der Augenzahl 1 bei jedem Schritt $n$ einer Simulation. Er konvergiert gegen die Wahrscheinlichkeit 1/6 (ca. 0,167). Der beobachtete Anteil $\hat{p}_n$ schätzt die Wahrscheinlichkeit $p$ und wird mit mehr Beobachtungen genauer; $p$ ist der Grenzwert.
+Figure @fig-dice-rolls-proportion zeigt den Anteil $\hat{p}_n$ der Augenzahl 1 bei jedem Schritt $n$ einer Simulation. Er konvergiert gegen die Wahrscheinlichkeit 1/6 (ca. 0,167). Der beobachtete Anteil $\hat{p}_n$ schätzt die Wahrscheinlichkeit $p$ und wird mit mehr Beobachtungen genauer; $p$ ist der Grenzwert.
 
 :::::: {.callout-important}
 In der Statistik arbeiten wir oft mit Schätzungen, da unendlich viele Beobachtungen fehlen. Die Unsicherheit der Schätzungen muss berücksichtigt werden. Schätzungen kennzeichnen wir mit $\hat{p}$.
@@ -315,6 +315,7 @@ __Gesetz der großen Zahlen__: Mit steigender Beobachtungszahl konvergiert der A
 ### Wahrscheinlichkeitsnotation {#sec-probability-notation}
 
 Für verschiedene Ergebnisse schreiben wir $P(X = x)$ als Wahrscheinlichkeit, dass die Zufallsvariable $X$ (z. B. Münzwurf) den Wert $x$ annimmt.  
+
 - Für einen fairen Münzwurf:  
   $P(X = \text{Kopf}) = 0.5$, $P(X = \text{Zahl}) = 0.5$  
   oder: $P(X = 1) = 0.5$, $P(X = 0) = 0.5$.  
@@ -380,12 +381,12 @@ Die Summe $P(A) + P(A^c) = 1$ gilt stets, da entweder $A$ oder $A^c$ eintritt.
 
 ### Nicht-disjunkte Ereignisse {#sec-non-disjoint-events}
 
-Nicht-disjunkte Ereignisse können überlappen. Beispiel: Bei einem Kartenspiel (siehe Figure @ref(fig:fig-card-deck)) interessiert die Wahrscheinlichkeit, eine Bildkarte (Bube, Dame, König) oder eine Karo-Karte zu ziehen. *Bild* und *Karo* sind nicht disjunkt, da Bildkarten in Karo beide Eigenschaften haben. Einfaches Addieren überschätzt die Wahrscheinlichkeit durch doppelte Zählung.
+Nicht-disjunkte Ereignisse können überlappen. Beispiel: Bei einem Kartenspiel (siehe Figure @fig-card-deck) interessiert die Wahrscheinlichkeit, eine Bildkarte (Bube, Dame, König) oder eine Karo-Karte zu ziehen. *Bild* und *Karo* sind nicht disjunkt, da Bildkarten in Karo beide Eigenschaften haben. Einfaches Addieren überschätzt die Wahrscheinlichkeit durch doppelte Zählung.
 
 ![Deck of 52 Cards](../_assets/dataexploratory/card_deck.png){#fig-card-deck}
 
 
-Ein Venn-Diagramm (siehe Figure @ref(fig:fig-card-venn)) zeigt: Die Schnittmenge ($A \cap B$, logisches „und“) sind Karten, die beide Eigenschaften haben; die Vereinigung ($A \cup B$, logisches „oder“) umfasst alle Karten mit mindestens einer Eigenschaft.
+Ein Venn-Diagramm (siehe Figure @fig-card-venn) zeigt: Die Schnittmenge ($A \cap B$, logisches „und“) sind Karten, die beide Eigenschaften haben; die Vereinigung ($A \cup B$, logisches „oder“) umfasst alle Karten mit mindestens einer Eigenschaft.
 
 ![Venn Diagramm of Cards](../_assets/dataexploratory/card_venn.png){#fig-card-venn}
 
@@ -418,7 +419,7 @@ Sei $A$ das Ereignis, dass die Summe der Augenzahlen zweier fairer Würfel klein
 :::::: {.callout-tip collapse="true"}
 1. Das Komplement $A^c$ ist die Summe $\geq 12$, also genau 12 (da die maximale Summe 12 beträgt).
 2. $P(A)$ ist die Summe der Wahrscheinlichkeiten für Summen 2 bis 11.  
-   Mögliche Summen und Kombinationen (siehe Table \@ref(tab:tab-dice-sums)):  
+   Mögliche Summen und Kombinationen (siehe Table @tab-dice-sums):  
 
 | $A = W_1 + W_2$ | Mögliche Kombinationen |
 |-----------------|-----------------------|
@@ -455,7 +456,7 @@ print(f"Die Wahrscheinlichkeit, dass die Summe < 12 ist, beträgt {p:.3f}")
 
 #### Simulation der Würfelsumme (Fortsetzung) {#sec-dice-sum-simulation}
 
-Die Verteilung der Summen zweier Würfel kann auch grafisch dargestellt werden (siehe Figure \@ref(fig:fig-dice-sum)). Die Simulation bestätigt, dass die Wahrscheinlichkeit für eine Summe < 12 hoch ist.
+Die Verteilung der Summen zweier Würfel kann auch grafisch dargestellt werden (siehe Figure @fig-dice-sum). Die Simulation bestätigt, dass die Wahrscheinlichkeit für eine Summe < 12 hoch ist.
 
 ```{python}
 #| classes: styled-output
@@ -477,7 +478,7 @@ plt.show()
 ```
 ### Wahrscheinlichkeit der Würfelsumme (Fortsetzung) {#sec-dice-sum-probability}
 
-Figure \@ref(fig:fig-dice-sum) zeigt die Verteilung der Summen zweier Würfel. Die Wahrscheinlichkeit, dass die Summe < 12 ist, beträgt ca. 0,97 (Monte-Carlo-Schätzung).  
+Figure @fig-dice-sum zeigt die Verteilung der Summen zweier Würfel. Die Wahrscheinlichkeit, dass die Summe < 12 ist, beträgt ca. 0,97 (Monte-Carlo-Schätzung).  
 - 3. Die Wahrscheinlichkeit für eine Summe $\geq 12$ ist:  
   $$P(A^c) = 1 - P(A) = 1 - \frac{35}{36} = \frac{1}{36} \approx 0.03.$$
 
@@ -497,7 +498,7 @@ $$P(A_1 \cap A_2 \cap \ldots \cap A_n) = P(A_1) \cdot P(A_2) \cdot \ldots \cdot 
 
 ### Beispiel 1: Würfelsummen {#sec-dice-sum-example-1}
 
-Da die Ergebnisse zweier Würfel unabhängig sind, können wir die Wahrscheinlichkeiten multiplizieren (siehe Table \@ref(tab:tab-dice-sum-probabilities)).  
+Da die Ergebnisse zweier Würfel unabhängig sind, können wir die Wahrscheinlichkeiten multiplizieren (siehe Table @tab-dice-sum-probabilities).  
 
 
 
@@ -534,11 +535,11 @@ Bestimmen Sie, ob die folgenden Aussagen wahr oder falsch sind, und begründen S
 
 ### Bedingte Wahrscheinlichkeit {#sec-conditional-probability}
 
-Bedingte Wahrscheinlichkeit beschreibt die Wahrscheinlichkeit eines Ereignisses $A$, gegeben dass ein anderes Ereignis $B$ eingetreten ist, notiert als $P(A | B)$ („$A$ gegeben $B$“). Beispiel: Wie wahrscheinlich ist eine Bildkarte, wenn die Karte eine Karo-Karte ist? Aus Figure \@ref(fig:fig-card-venn):  
+Bedingte Wahrscheinlichkeit beschreibt die Wahrscheinlichkeit eines Ereignisses $A$, gegeben dass ein anderes Ereignis $B$ eingetreten ist, notiert als $P(A | B)$ („$A$ gegeben $B$“). Beispiel: Wie wahrscheinlich ist eine Bildkarte, wenn die Karte eine Karo-Karte ist? Aus Figure @fig-card-venn:  
 $$P(\text{Bild} | \text{Karo}) = \frac{3}{13},$$  
 da von 13 Karo-Karten 3 Bildkarten sind.
 
-Eine Kreuztabelle (_contingency table_) zeigt die Häufigkeiten von Ereigniskombinationen, z. B. im `loan50`-Datensatz (siehe Table \@ref(tab:tab-contingency-loan)).
+Eine Kreuztabelle (_contingency table_) zeigt die Häufigkeiten von Ereigniskombinationen, z. B. im `loan50`-Datensatz (siehe Table @tab-contingency-loan).
 
 ```{python}
 #| classes: styled-output
@@ -552,7 +553,7 @@ print(contingency_table)
 ```
 ### Bedingte Wahrscheinlichkeit (Fortsetzung) {#sec-conditional-probability-cont}
 
-Aus der Kreuztabelle (Table \@ref(tab:tab-contingency-loan)) ergibt sich: Von 26 Kreditnehmern mit Hypothek haben 6 ein zweites Einkommen. Die bedingte Wahrscheinlichkeit ist:  
+Aus der Kreuztabelle (Table @tab-contingency-loan) ergibt sich: Von 26 Kreditnehmern mit Hypothek haben 6 ein zweites Einkommen. Die bedingte Wahrscheinlichkeit ist:  
 $$P(\text{Zweiteinkommen} | \text{Hypothek}) = \frac{6}{26}.$$
 
 :::::: {.callout-important}
@@ -592,12 +593,12 @@ Ein Baumdiagramm hilft: $P(\text{AIDS}) = 0.001$, $P(\text{Kein AIDS}) = 0.999$,
 
 ```{mermaid}
 graph LR
-    U[Person] -->|0.001| A[Krebs] 
-    U[Person] -->|0.999| D[Kein Krebs]
-    A[Krebs] -->|0.99| B[Positiv]
-    A[Krebs] -->|0.01| C[Negativ]
-    D[Kein Krebs] -->|0.05| E[Positiv]
-    D[Kein Krebs] -->|0.95| F[Negativ]
+    U[Person] -->|0.001| A[AIDS] 
+    U[Person] -->|0.999| D[Kein AIDS]
+    A[AIDS] -->|0.99| B[Positiv]
+    A[AIDS] -->|0.01| C[Negativ]
+    D[Kein AIDS] -->|0.05| E[Positiv]
+    D[Kein AIDS] -->|0.95| F[Negativ]
 ```
 
 Pfade mit positivem Test (disjunkt):
@@ -636,14 +637,18 @@ Das ist der Satz von Bayes! Er verbindet die bekannte Bedingung ($P(\text{Positi
 Der Satz von Bayes lautet allgemein:  
 $$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)},$$  
 wobei:  
+
 - $P(A|B)$ die _Posterior_-Wahrscheinlichkeit ist (z. B. AIDS bei positivem Test),  
 - $P(B|A)$ die _Likelihood_ (z. B. positiver Test bei AIDS),  
 - $P(A)$ der _Prior_ (z. B. Grundwahrscheinlichkeit für AIDS),  
 - $P(B)$ die _Normalisierungskonstante_ (z. B. Gesamtwahrscheinlichkeit eines positiven Tests).
 
+Wir können also unser Vorwissen (Prior) mit neuen Daten (Likelihood) kombinieren, um die Wahrscheinlichkeit für ein Ereignis zu aktualisieren (Posterior).
+
 #### Anwendung
 
 Im AIDS-Beispiel:  
+
 - $P(\text{Positiv} | \text{AIDS}) = 0.99$,  
 - $P(\text{AIDS}) = 0.001$,  
 - $P(\text{Positiv}) = P(\text{Positiv} | \text{AIDS}) \cdot P(\text{AIDS}) + P(\text{Positiv} | \text{Kein AIDS}) \cdot P(\text{Kein AIDS}) = 0.00099 + 0.04995 = 0.05094$.  
