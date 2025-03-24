@@ -310,25 +310,23 @@ window.Quarto = {
   <li><a href="#sec-discrete-distributions" id="toc-sec-discrete-distributions" class="nav-link active" data-scroll-target="#sec-discrete-distributions"><span class="header-section-number">4.1</span> Diskrete Verteilungen</a>
   <ul class="collapse">
   <li><a href="#sec-bernoulli-distribution" id="toc-sec-bernoulli-distribution" class="nav-link" data-scroll-target="#sec-bernoulli-distribution"><span class="header-section-number">4.1.1</span> Bernoulli-Verteilung</a></li>
-  <li><a href="#sec-bernoulli-distribution-cont" id="toc-sec-bernoulli-distribution-cont" class="nav-link" data-scroll-target="#sec-bernoulli-distribution-cont"><span class="header-section-number">4.1.2</span> Bernoulli-Verteilung (Fortsetzung)</a></li>
-  <li><a href="#sec-binomial-distribution" id="toc-sec-binomial-distribution" class="nav-link" data-scroll-target="#sec-binomial-distribution"><span class="header-section-number">4.1.3</span> Binomialverteilung</a></li>
-  <li><a href="#sec-binomial-distribution-cont" id="toc-sec-binomial-distribution-cont" class="nav-link" data-scroll-target="#sec-binomial-distribution-cont"><span class="header-section-number">4.1.4</span> Binomialverteilung (Fortsetzung)</a></li>
-  <li><a href="#sec-discrete-uniform-distribution" id="toc-sec-discrete-uniform-distribution" class="nav-link" data-scroll-target="#sec-discrete-uniform-distribution"><span class="header-section-number">4.1.5</span> Diskrete Gleichverteilung</a></li>
+  <li><a href="#sec-binomial-distribution" id="toc-sec-binomial-distribution" class="nav-link" data-scroll-target="#sec-binomial-distribution"><span class="header-section-number">4.1.2</span> Binomialverteilung</a></li>
+  <li><a href="#sec-discrete-uniform-distribution" id="toc-sec-discrete-uniform-distribution" class="nav-link" data-scroll-target="#sec-discrete-uniform-distribution"><span class="header-section-number">4.1.3</span> Diskrete Gleichverteilung</a></li>
   </ul></li>
   <li><a href="#sec-continuous-distributions" id="toc-sec-continuous-distributions" class="nav-link" data-scroll-target="#sec-continuous-distributions"><span class="header-section-number">4.2</span> Stetige Verteilungen</a>
   <ul class="collapse">
   <li><a href="#sec-continuous-uniform-distribution" id="toc-sec-continuous-uniform-distribution" class="nav-link" data-scroll-target="#sec-continuous-uniform-distribution"><span class="header-section-number">4.2.1</span> Stetige Gleichverteilung</a></li>
   <li><a href="#sec-normal-distribution" id="toc-sec-normal-distribution" class="nav-link" data-scroll-target="#sec-normal-distribution"><span class="header-section-number">4.2.2</span> Normalverteilung</a></li>
   </ul></li>
-  <li><a href="#sec-other-distributions" id="toc-sec-other-distributions" class="nav-link" data-scroll-target="#sec-other-distributions"><span class="header-section-number">4.3</span> Weitere Verteilungen</a></li>
-  <li><a href="#sec-distribution-fitting" id="toc-sec-distribution-fitting" class="nav-link" data-scroll-target="#sec-distribution-fitting"><span class="header-section-number">4.4</span> Fitting von Verteilungen</a>
+  <li><a href="#sec-other-distributions" id="toc-sec-other-distributions" class="nav-link" data-scroll-target="#sec-other-distributions"><span class="header-section-number">4.3</span> Weitere Verteilungen</a>
   <ul class="collapse">
-  <li><a href="#beispiel-lotterie-daten" id="toc-beispiel-lotterie-daten" class="nav-link" data-scroll-target="#beispiel-lotterie-daten"><span class="header-section-number">4.4.1</span> Beispiel: Lotterie-Daten</a></li>
+  <li><a href="#sec-exponential-distribution" id="toc-sec-exponential-distribution" class="nav-link" data-scroll-target="#sec-exponential-distribution"><span class="header-section-number">4.3.1</span> Exponentialverteilung</a></li>
   </ul></li>
-  <li><a href="#sec-computing-distributions" id="toc-sec-computing-distributions" class="nav-link" data-scroll-target="#sec-computing-distributions"><span class="header-section-number">4.5</span> Rechnen mit Verteilungen und Zufallsvariablen</a>
+  <li><a href="#sec-fitting-distributions" id="toc-sec-fitting-distributions" class="nav-link" data-scroll-target="#sec-fitting-distributions"><span class="header-section-number">4.4</span> Fitting von Verteilungen</a></li>
+  <li><a href="#sec-computing-distributions" id="toc-sec-computing-distributions" class="nav-link" data-scroll-target="#sec-computing-distributions"><span class="header-section-number">4.5</span> Rechnen mit Verteilungen, Zufallsvariablen und Erwartungswert</a>
   <ul class="collapse">
   <li><a href="#sec-expectation-variance-rules" id="toc-sec-expectation-variance-rules" class="nav-link" data-scroll-target="#sec-expectation-variance-rules"><span class="header-section-number">4.5.1</span> Rechenregeln für Erwartungswert und Varianz</a></li>
-  <li><a href="#sec-sum-different-distributions" id="toc-sec-sum-different-distributions" class="nav-link" data-scroll-target="#sec-sum-different-distributions"><span class="header-section-number">4.5.2</span> Beispiel: Summen aus verschiedenen Verteilungen</a></li>
+  <li><a href="#sec-sum-example" id="toc-sec-sum-example" class="nav-link" data-scroll-target="#sec-sum-example"><span class="header-section-number">4.5.2</span> Beispiel: Summe von Zufallsvariablen aus verschiedenen Verteilungen</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/statistics/distributions.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -355,54 +353,51 @@ window.Quarto = {
 </header>
 
 
-<p>In diesem Abschnitt untersuchen wir Verteilungen einzelner Variablen. Histogramme veranschaulichen die Häufigkeitsverteilung, wie in den folgenden Abbildungen dargestellt.</p>
+<p>In diesem Abschnitt untersuchen wir Verteilungen einzelner Variablen. Histogramme und Balkendiagramme veranschaulichen die Häufigkeits- oder Wahrscheinlichkeitsverteilung, wie in den folgenden Abbildungen dargestellt. Verteilungen sind die Grundlage für Simulationen, z. B. in der Monte-Carlo-Methode, wie im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial zur Fahrzeugausfallzeit</a> gezeigt.</p>
 <section id="sec-discrete-distributions" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sec-discrete-distributions"><span class="header-section-number">4.1</span> Diskrete Verteilungen</h2>
-<p>Diskrete Verteilungen modellieren Zufallsvariablen mit abzählbaren Werten. Wir betrachten die Bernoulli-, Binomial- und Poisson-Verteilung.</p>
+<p>Diskrete Verteilungen beschreiben Zufallsvariablen mit abzählbaren Werten. Wir betrachten die <strong>Bernoulli-Verteilung</strong>, <strong>Binomial-Verteilung</strong> und <strong>Poisson-Verteilung</strong>, die häufig in der Statistik und realen Anwendungen vorkommen.</p>
 <section id="sec-bernoulli-distribution" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="sec-bernoulli-distribution"><span class="header-section-number">4.1.1</span> Bernoulli-Verteilung</h3>
-<p>Die Bernoulli-Verteilung beschreibt eine diskrete Zufallsvariable mit zwei Ergebnissen, z. B. Münzwurf („Kopf“ = 1, „Zahl“ = 0). Die Wahrscheinlichkeit für „Kopf“ ist <span class="math inline">\(p\)</span>, für „Zahl“ <span class="math inline">\(1-p\)</span>. Die Wahrscheinlichkeitsfunktion lautet:<br>
-<span class="math display">\[P(X=x) = \begin{cases}
-p &amp; \text{für } x=1, \\
-1-p &amp; \text{für } x=0.
+<p>Die <strong>Bernoulli-Verteilung</strong> modelliert eine Zufallsvariable mit genau zwei möglichen Ergebnissen, z. B. einen Münzwurf: „Kopf“ (<span class="math inline">\(X = 1\)</span>) mit Wahrscheinlichkeit <span class="math inline">\(p\)</span> oder „Zahl“ (<span class="math inline">\(X = 0\)</span>) mit Wahrscheinlichkeit <span class="math inline">\(1-p\)</span>. Die Wahrscheinlichkeitsfunktion lautet:<br>
+<span class="math display">\[P(X = x) = \begin{cases}
+p &amp; \text{für } x = 1, \\
+1-p &amp; \text{für } x = 0.
 \end{cases}\]</span><br>
-Wir notieren <span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span>. Für eine faire Münze gilt <span class="math inline">\(p = 0.5\)</span>, also:<br>
-<span class="math inline">\(X \sim \text{Bernoulli}(0.5)\)</span>.</p>
-<p>Die Verteilung einer fairen Münze ist in <a href="#fig-sec-dataexploratory-verteilungen-bernoulli-verteilung" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> dargestellt.</p>
+Wir schreiben <span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span>. Für eine faire Münze gilt <span class="math inline">\(p = 0.5\)</span>, also <span class="math inline">\(X \sim \text{Bernoulli}(0.5)\)</span>.</p>
+<p><a href="#fig-sec-dataexploratory-verteilungen-bernoulli-verteilung" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> zeigt die Verteilung für eine faire Münze. Diese einfache Verteilung ist die Basis für komplexere Modelle wie die Binomial-Verteilung und findet Anwendung in Entscheidungen mit Ja/Nein-Ergebnissen.</p>
 <div id="cell-fig-sec-dataexploratory-verteilungen-bernoulli-verteilung" class="cell styled-output" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.5</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>])</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>P_X <span class="op">=</span> np.array([<span class="dv">1</span><span class="op">-</span>p, p])</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>]  <span class="co"># Einfache Liste statt NumPy-Array für Klarheit</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>P_X <span class="op">=</span> [<span class="dv">1</span><span class="op">-</span>p, p]</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.bar(x, P_X, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Werte der Zufallsvariablen'</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.bar(x, P_X, color<span class="op">=</span><span class="st">'skyblue'</span>, width<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Ergebnis (0 = Zahl, 1 = Kopf)'</span>)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Wahrscheinlichkeit'</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Bernoulli-Verteilung (p = 0.5)'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Bernoulli-Verteilung ($p = 0.5$)'</span>)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.xticks(x)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sec-dataexploratory-verteilungen-bernoulli-verteilung" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sec-dataexploratory-verteilungen-bernoulli-verteilung-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="distributions_files/figure-html/fig-sec-dataexploratory-verteilungen-bernoulli-verteilung-output-1.png" width="589" height="449" class="figure-img">
+<img src="distributions_files/figure-html/fig-sec-dataexploratory-verteilungen-bernoulli-verteilung-output-1.png" width="589" height="450" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-verteilungen-bernoulli-verteilung-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.1: Wahrscheinlichkeitsverteilung der Bernoulli-Verteilung für eine faire Münze.
+Figure&nbsp;4.1: Wahrscheinlichkeitsverteilung der Bernoulli-Verteilung für eine faire Münze (p = 0.5).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="sec-bernoulli-distribution-cont" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="sec-bernoulli-distribution-cont"><span class="header-section-number">4.1.2</span> Bernoulli-Verteilung (Fortsetzung)</h3>
-<p>In <a href="#fig-sec-dataexploratory-verteilungen-bernoulli-verteilung" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> werden jedem möglichen Wert der Zufallsvariablen <span class="math inline">\(X\)</span> die theoretischen Wahrscheinlichkeiten zugeordnet – im Gegensatz zu Histogrammen, die beobachtete Häufigkeiten zeigen.</p>
-<section id="sec-bernoulli-expectation" class="level4" data-number="4.1.2.1">
-<h4 data-number="4.1.2.1" class="anchored" data-anchor-id="sec-bernoulli-expectation"><span class="header-section-number">4.1.2.1</span> Erwartungswert der Bernoulli-Verteilung</h4>
+<p>In <a href="#fig-sec-dataexploratory-verteilungen-bernoulli-verteilung" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> wird jeder möglichen Realisierung der Zufallsvariablen <span class="math inline">\(X\)</span> die theoretische Wahrscheinlichkeit zugeordnet. Im Gegensatz zu Histogrammen, die empirische Häufigkeiten darstellen, zeigt diese Abbildung die Wahrscheinlichkeitsverteilung direkt.</p>
+<section id="sec-bernoulli-expectation-variance" class="level4" data-number="4.1.1.1">
+<h4 data-number="4.1.1.1" class="anchored" data-anchor-id="sec-bernoulli-expectation-variance"><span class="header-section-number">4.1.1.1</span> Erwartungswert und Varianz der Bernoulli-Verteilung</h4>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -413,16 +408,13 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Der <strong>Erwartungswert</strong> <span class="math inline">\(E(X)\)</span> einer Verteilung beschreibt ihren durchschnittlichen Wert und misst die zentrale Tendenz. Für eine diskrete Zufallsvariable <span class="math inline">\(X\)</span> gilt:<br>
-<span class="math display">\[E(X) = \sum_{x} x \cdot P(X=x).\]</span><br>
-Bei der Bernoulli-Verteilung (<span class="math inline">\(X = 1\)</span> mit Wahrscheinlichkeit <span class="math inline">\(p\)</span>, <span class="math inline">\(X = 0\)</span> mit <span class="math inline">\(1-p\)</span>) ergibt sich:<br>
+<p>Der <strong>Erwartungswert</strong> <span class="math inline">\(E(X)\)</span> einer Verteilung beschreibt ihre zentrale Tendenz – den durchschnittlichen Wert der Zufallsvariablen. Für eine diskrete Zufallsvariable <span class="math inline">\(X\)</span> gilt:<br>
+<span class="math display">\[E(X) = \sum_{x} x \cdot P(X = x).\]</span><br>
+Bei der Bernoulli-Verteilung (<span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span>) ist:<br>
 <span class="math display">\[E(X) = 0 \cdot (1-p) + 1 \cdot p = p.\]</span><br>
 Für eine faire Münze (<span class="math inline">\(p = 0.5\)</span>) ist <span class="math inline">\(E(X) = 0.5\)</span>.</p>
 </div>
 </div>
-</section>
-<section id="sec-bernoulli-variance" class="level4" data-number="4.1.2.2">
-<h4 data-number="4.1.2.2" class="anchored" data-anchor-id="sec-bernoulli-variance"><span class="header-section-number">4.1.2.2</span> Varianz der Bernoulli-Verteilung</h4>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -433,132 +425,124 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Die <strong>Varianz</strong> <span class="math inline">\(\text{Var}(X)\)</span> misst die Streuung um den Erwartungswert. Sie wird berechnet als:<br>
-<span class="math display">\[\text{Var}(X) = \sum_{x} (x - E(X))^2 \cdot P(X=x).\]</span><br>
+<p>Die <strong>Varianz</strong> <span class="math inline">\(\text{Var}(X)\)</span> misst die Streuung der Verteilung – wie stark die Werte um den Erwartungswert schwanken. Sie wird berechnet als:<br>
+<span class="math display">\[\text{Var}(X) = \sum_{x} (x - E(X))^2 \cdot P(X = x).\]</span><br>
 Für die Bernoulli-Verteilung ergibt sich:<br>
-<span class="math display">\[\text{Var}(X) = (0 - p)^2 \cdot (1-p) + (1 - p)^2 \cdot p = p^2 \cdot (1-p) + (1-p)^2 \cdot p = p \cdot (1-p).\]</span><br>
+<span class="math display">\[\text{Var}(X) = (0 - p)^2 \cdot (1-p) + (1 - p)^2 \cdot p = p \cdot (1-p).\]</span><br>
 Bei <span class="math inline">\(p = 0.5\)</span> ist <span class="math inline">\(\text{Var}(X) = 0.5 \cdot 0.5 = 0.25\)</span>.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="sec-binomial-distribution" class="level3" data-number="4.1.3">
-<h3 data-number="4.1.3" class="anchored" data-anchor-id="sec-binomial-distribution"><span class="header-section-number">4.1.3</span> Binomialverteilung</h3>
-<p>Stellen wir uns vor, wir werfen eine Münze <span class="math inline">\(n\)</span>-mal, wobei jeder Wurf unabhängig ist und „Kopf“ die Wahrscheinlichkeit <span class="math inline">\(p\)</span> hat („Zahl“: <span class="math inline">\(1-p\)</span>). Die Zufallsvariable <span class="math inline">\(Y\)</span> zählt die Anzahl der Kopfwürfe. <span class="math inline">\(Y\)</span> folgt einer Binomialverteilung, die die Erfolge in <span class="math inline">\(n\)</span> unabhängigen Bernoulli-Experimenten beschreibt. Ihre Wahrscheinlichkeitsfunktion ist:<br>
+<section id="sec-binomial-distribution" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="sec-binomial-distribution"><span class="header-section-number">4.1.2</span> Binomialverteilung</h3>
+<p>Stellen wir uns vor, wir wiederholen einen Münzwurf <span class="math inline">\(n\)</span>-mal unabhängig mit der Wahrscheinlichkeit <span class="math inline">\(p\)</span> für „Kopf“. Die Zufallsvariable <span class="math inline">\(Y\)</span> zählt die Anzahl der Kopfwürfe und folgt einer <strong>Binomialverteilung</strong>: <span class="math inline">\(Y \sim \text{Bin}(n, p)\)</span>. Die Wahrscheinlichkeitsfunktion lautet:<br>
 <span class="math display">\[P(Y = k) = \binom{n}{k} p^k (1-p)^{n-k},\]</span><br>
-wobei <span class="math inline">\(\binom{n}{k}\)</span> die Anzahl der Möglichkeiten ist, <span class="math inline">\(k\)</span> Erfolge aus <span class="math inline">\(n\)</span> Versuchen zu wählen. Die Verteilung für <span class="math inline">\(n = 10\)</span>, <span class="math inline">\(p = 0.5\)</span> zeigt <a href="#fig-sec-dataexploratory-distributions-binomial-distribution" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>.</p>
+wobei <span class="math inline">\(\binom{n}{k}\)</span> die Anzahl der Möglichkeiten ist, <span class="math inline">\(k\)</span> Erfolge in <span class="math inline">\(n\)</span> Versuchen zu erzielen.</p>
+<p><a href="#fig-sec-dataexploratory-distributions-binomial-distribution" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> zeigt die Verteilung für <span class="math inline">\(n = 10\)</span> und <span class="math inline">\(p = 0.5\)</span>. Die Binomialverteilung ist eine Erweiterung der Bernoulli-Verteilung und nützlich, um Häufigkeiten in wiederholten Experimenten zu modellieren.</p>
 <div id="cell-fig-sec-dataexploratory-distributions-binomial-distribution" class="cell styled-output" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> binom</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.5</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.arange(<span class="dv">0</span>, n<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>P_Y <span class="op">=</span> np.array([math.comb(n, k) <span class="op">*</span> p<span class="op">**</span>k <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>p)<span class="op">**</span>(n<span class="op">-</span>k) <span class="cf">for</span> k <span class="kw">in</span> y])</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.arange(<span class="dv">0</span>, n <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>P_Y <span class="op">=</span> binom.pmf(y, n, p)</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.bar(y, P_Y, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.bar(y, P_Y, color<span class="op">=</span><span class="st">'skyblue'</span>, width<span class="op">=</span><span class="fl">0.8</span>)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Anzahl der Kopfwürfe ($Y$)'</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Wahrscheinlichkeit'</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Binomialverteilung (n = 10, p = 0.5)'</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Binomialverteilung ($n = </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">$, $p = </span><span class="sc">{</span>p<span class="sc">}</span><span class="ss">$)'</span>)</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>plt.xticks(y)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sec-dataexploratory-distributions-binomial-distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sec-dataexploratory-distributions-binomial-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-binomial-distribution-output-1.png" width="597" height="451" class="figure-img">
+<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-binomial-distribution-output-1.png" width="597" height="452" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-distributions-binomial-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.2: Binomialverteilung für eine faire Münze (n = 10, p = 0.5).
+Figure&nbsp;4.2: Wahrscheinlichkeitsverteilung der Binomialverteilung für eine faire Münze (n = 10, p = 0.5).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+<p>Stellen wir uns vor, wir wiederholen einen Münzwurf <span class="math inline">\(n\)</span>-mal. Die Würfe sind <strong>unabhängig und identisch verteilt</strong> (i.i.d.), d.&nbsp;h., jeder Wurf hat die gleiche Wahrscheinlichkeit <span class="math inline">\(p\)</span> für „Kopf“ und ist unbeeinflusst von den anderen. Die Zufallsvariable <span class="math inline">\(Y\)</span> zählt die Anzahl der Kopfwürfe und folgt einer <strong>Binomialverteilung</strong>: <span class="math inline">\(Y \sim \text{Bin}(n, p)\)</span>. Die Wahrscheinlichkeitsfunktion ist:<br>
+<span class="math display">\[P(Y = y) = \binom{n}{y} \cdot p^y \cdot (1-p)^{n-y},\]</span><br>
+wobei <span class="math inline">\(\binom{n}{y}\)</span> der Binomialkoeffizient ist. Dieser gibt an, auf wie viele Arten <span class="math inline">\(y\)</span> Erfolge in <span class="math inline">\(n\)</span> Versuchen auftreten können und wird definiert als:<br>
+<span class="math display">\[\binom{n}{y} = \frac{n!}{y! \cdot (n - y)!}.\]</span></p>
+<section id="beispiel-münzwurf" class="level4" data-number="4.1.2.1">
+<h4 data-number="4.1.2.1" class="anchored" data-anchor-id="beispiel-münzwurf"><span class="header-section-number">4.1.2.1</span> Beispiel: Münzwurf</h4>
+<p>Für <span class="math inline">\(n = 10\)</span> Würfe mit einer fairen Münze (<span class="math inline">\(p = 0.5\)</span>) ist <span class="math inline">\(Y \sim \text{Bin}(10, 0.5)\)</span>. Dies wurde in <a href="#fig-sec-dataexploratory-distributions-binomial-distribution" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> gezeigt.</p>
 </section>
-<section id="sec-binomial-distribution-cont" class="level3" data-number="4.1.4">
-<h3 data-number="4.1.4" class="anchored" data-anchor-id="sec-binomial-distribution-cont"><span class="header-section-number">4.1.4</span> Binomialverteilung (Fortsetzung)</h3>
-<p>Die Würfe sind unabhängig und identisch verteilt (i.i.d.), und die Zufallsvariable <span class="math inline">\(Y\)</span> – die Anzahl der Erfolge – folgt einer Binomialverteilung, notiert als <span class="math inline">\(Y \sim \text{Bin}(n, p)\)</span>. Ihre Wahrscheinlichkeitsfunktion lautet:<br>
-<span class="math display">\[P(Y=y) = \binom{n}{y} \cdot p^y \cdot (1-p)^{n-y},\]</span><br>
-wobei:<br>
-- <span class="math inline">\(n\)</span>: Anzahl der Versuche,<br>
-- <span class="math inline">\(p\)</span>: Erfolgswahrscheinlichkeit pro Versuch,<br>
-- <span class="math inline">\(\binom{n}{y}\)</span>: Binomialkoeffizient, die Anzahl der Möglichkeiten, <span class="math inline">\(y\)</span> Erfolge in <span class="math inline">\(n\)</span> Versuchen zu erzielen, definiert als:<br>
-<span class="math display">\[\binom{n}{y} = \frac{n!}{y! \cdot (n-y)!}.\]</span></p>
-<section id="beispiel-gewinnlose" class="level4" data-number="4.1.4.1">
-<h4 data-number="4.1.4.1" class="anchored" data-anchor-id="beispiel-gewinnlose"><span class="header-section-number">4.1.4.1</span> Beispiel: Gewinnlose</h4>
-<p>Betrachten wir ein neues Szenario: Beim Ziehen von 10 Losen ist die Wahrscheinlichkeit für ein Gewinnlos <span class="math inline">\(p = 0.1\)</span>. Die Anzahl der Gewinnlose <span class="math inline">\(Y\)</span> ist binomialverteilt: <span class="math inline">\(Y \sim \text{Bin}(n=10, p=0.1)\)</span>. Die Verteilung zeigt <a href="#fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets" class="quarto-xref">Figure&nbsp;<span>4.3</span></a>.</p>
+<section id="beispiel-gewinnlose" class="level4" data-number="4.1.2.2">
+<h4 data-number="4.1.2.2" class="anchored" data-anchor-id="beispiel-gewinnlose"><span class="header-section-number">4.1.2.2</span> Beispiel: Gewinnlose</h4>
+<p>Passen wir die Werte an: Beim Ziehen von 10 Losen, wobei die Wahrscheinlichkeit für ein Gewinnlos <span class="math inline">\(p = 0.1\)</span> beträgt, gilt <span class="math inline">\(Y \sim \text{Bin}(10, 0.1)\)</span>. Die Zufallsvariable <span class="math inline">\(Y\)</span> zählt die Anzahl der Gewinnlose. <a href="#fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> zeigt diese Verteilung. Solche Modelle sind nützlich, um Erfolge in wiederholten, unabhängigen Versuchen zu analysieren – ähnlich wie im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial zur Fahrzeugausfallzeit</a>, wo Verteilungen für Komponenten genutzt werden.</p>
 <div id="cell-fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets" class="cell styled-output" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> binom</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.arange(<span class="dv">0</span>, n<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>P_Y <span class="op">=</span> np.array([math.comb(n, k) <span class="op">*</span> p<span class="op">**</span>k <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>p)<span class="op">**</span>(n<span class="op">-</span>k) <span class="cf">for</span> k <span class="kw">in</span> y])</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.arange(<span class="dv">0</span>, n <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>P_Y <span class="op">=</span> binom.pmf(y, n, p)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.bar(y, P_Y, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.bar(y, P_Y, color<span class="op">=</span><span class="st">'skyblue'</span>, width<span class="op">=</span><span class="fl">0.8</span>)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Anzahl der Gewinnlose ($Y$)'</span>)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Wahrscheinlichkeit'</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Binomialverteilung (n = 10, p = 0.1)'</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Binomialverteilung ($n = </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">$, $p = </span><span class="sc">{</span>p<span class="sc">}</span><span class="ss">$)'</span>)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>plt.xticks(y)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets-output-1.png" width="597" height="450" class="figure-img">
+<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets-output-1.png" width="597" height="451" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.3: Binomialverteilung für das Ziehen von Gewinnlosen (n = 10, p = 0.1).
+Figure&nbsp;4.3: Wahrscheinlichkeitsverteilung der Binomialverteilung für das Ziehen von Gewinnlosen (n = 10, p = 0.1).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="sec-binomial-expectation-variance" class="level4" data-number="4.1.4.2">
-<h4 data-number="4.1.4.2" class="anchored" data-anchor-id="sec-binomial-expectation-variance"><span class="header-section-number">4.1.4.2</span> Erwartungswert und Varianz der Binomialverteilung</h4>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Der <strong>Erwartungswert</strong> <span class="math inline">\(E(Y)\)</span> der Binomialverteilung gibt die erwartete Anzahl der Erfolge in <span class="math inline">\(n\)</span> Versuchen an:<br>
+<section id="sec-binomial-expectation-variance" class="level4" data-number="4.1.2.3">
+<h4 data-number="4.1.2.3" class="anchored" data-anchor-id="sec-binomial-expectation-variance"><span class="header-section-number">4.1.2.3</span> Erwartungswert und Varianz der Binomialverteilung</h4>
+<p>Der <strong>Erwartungswert</strong> <span class="math inline">\(E(Y)\)</span> der Binomialverteilung (<span class="math inline">\(Y \sim \text{Bin}(n, p)\)</span>) gibt die erwartete Anzahl der Erfolge in <span class="math inline">\(n\)</span> Versuchen an:<br>
 <span class="math display">\[E(Y) = n \cdot p.\]</span><br>
-Die <strong>Varianz</strong> <span class="math inline">\(\text{Var}(Y)\)</span> misst die Streuung der Erfolge:<br>
+Für <span class="math inline">\(n = 10\)</span> und <span class="math inline">\(p = 0.1\)</span> (Gewinnlose) ist <span class="math inline">\(E(Y) = 10 \cdot 0.1 = 1\)</span>.</p>
+<p>Die <strong>Varianz</strong> <span class="math inline">\(\text{Var}(Y)\)</span> misst die Streuung um diesen Erwartungswert:<br>
 <span class="math display">\[\text{Var}(Y) = n \cdot p \cdot (1-p).\]</span><br>
-Beispiel: Bei <span class="math inline">\(n = 10\)</span>, <span class="math inline">\(p = 0.1\)</span> (Gewinnlose) ist <span class="math inline">\(E(Y) = 10 \cdot 0.1 = 1\)</span> und <span class="math inline">\(\text{Var}(Y) = 10 \cdot 0.1 \cdot 0.9 = 0.9\)</span>.</p>
-</div>
-</div>
+Im Beispiel ist <span class="math inline">\(\text{Var}(Y) = 10 \cdot 0.1 \cdot 0.9 = 0.9\)</span>. Diese Werte helfen, die Verteilung zu charakterisieren, z. B. in Simulationen wie im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a>.</p>
 </section>
 </section>
-<section id="sec-discrete-uniform-distribution" class="level3" data-number="4.1.5">
-<h3 data-number="4.1.5" class="anchored" data-anchor-id="sec-discrete-uniform-distribution"><span class="header-section-number">4.1.5</span> Diskrete Gleichverteilung</h3>
-<p>Die diskrete Gleichverteilung (auch Uniformverteilung) beschreibt eine Zufallsvariable, bei der alle Werte gleiche Wahrscheinlichkeit haben, z. B. beim Würfelwurf. Für <span class="math inline">\(n\)</span> mögliche Werte (<span class="math inline">\(x = 1, 2, \ldots, n\)</span>) ist die Wahrscheinlichkeitsfunktion:<br>
-<span class="math display">\[P(X=x) = \frac{1}{n}.\]</span><br>
-Wir notieren <span class="math inline">\(X \sim \text{DU}(n)\)</span>. Beim Würfelwurf (<span class="math inline">\(n = 6\)</span>) ist <span class="math inline">\(P(X=x) = \frac{1}{6}\)</span>. Die Verteilung zeigt <a href="#fig-sec-dataexploratory-distributions-discrete-uniform-distribution" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>.</p>
+<section id="sec-discrete-uniform-distribution" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="sec-discrete-uniform-distribution"><span class="header-section-number">4.1.3</span> Diskrete Gleichverteilung</h3>
+<p>Die <strong>diskrete Gleichverteilung</strong> (auch Uniformverteilung) beschreibt eine Zufallsvariable, bei der alle möglichen Werte die gleiche Wahrscheinlichkeit haben – etwa beim Würfeln eines fairen Würfels. Für <span class="math inline">\(n\)</span> mögliche Werte (<span class="math inline">\(x = 1, 2, \ldots, n\)</span>) ist die Wahrscheinlichkeitsfunktion:<br>
+<span class="math display">\[P(X = x) = \frac{1}{n}.\]</span><br>
+Wir notieren <span class="math inline">\(X \sim \text{DU}(n)\)</span>, wobei <span class="math inline">\([1, n]\)</span> das Intervall der Werte ist.</p>
+<p><a href="#fig-sec-dataexploratory-distributions-discrete-uniform-distribution" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> zeigt die Verteilung für einen Würfel (<span class="math inline">\(n = 6\)</span>). Im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial zur Fahrzeugausfallzeit</a> wird eine stetige Gleichverteilung für die Steuereinheit (<span class="math inline">\(4000\)</span> bis <span class="math inline">\(8000\)</span> Stunden) verwendet – die diskrete Variante ist hier eine einfache Entsprechung.</p>
 <div id="cell-fig-sec-dataexploratory-distributions-discrete-uniform-distribution" class="cell styled-output" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">6</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">1</span>, n<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>P_X <span class="op">=</span> np.array([<span class="dv">1</span><span class="op">/</span>n <span class="cf">for</span> _ <span class="kw">in</span> x])</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">1</span>, n <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>P_X <span class="op">=</span> np.full(n, <span class="dv">1</span><span class="op">/</span>n)  <span class="co"># Array mit konstanter Wahrscheinlichkeit 1/n</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.bar(x, P_X, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Augenzahl ($X$)'</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.bar(x, P_X, color<span class="op">=</span><span class="st">'skyblue'</span>, width<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Würfelzahl ($X$)'</span>)</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Wahrscheinlichkeit'</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Diskrete Gleichverteilung (n = 6)'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Diskrete Gleichverteilung ($n = </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">$)'</span>)</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.xticks(x)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sec-dataexploratory-distributions-discrete-uniform-distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -566,99 +550,99 @@ Wir notieren <span class="math inline">\(X \sim \text{DU}(n)\)</span>. Beim Wür
 <img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-discrete-uniform-distribution-output-1.png" width="597" height="451" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-distributions-discrete-uniform-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.4: Diskrete Gleichverteilung für einen Würfelwurf (n = 6).
+Figure&nbsp;4.4: Wahrscheinlichkeitsverteilung der diskreten Gleichverteilung für einen Würfel (n = 6).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>In <a href="#fig-sec-dataexploratory-distributions-discrete-uniform-distribution" class="quarto-xref">Figure&nbsp;<span>4.4</span></a> ist ersichtlich, dass jede Augenzahl die gleiche Wahrscheinlichkeit <span class="math inline">\(\frac{1}{6}\)</span> hat.</p>
-<section id="sec-discrete-uniform-expectation-variance" class="level4" data-number="4.1.5.1">
-<h4 data-number="4.1.5.1" class="anchored" data-anchor-id="sec-discrete-uniform-expectation-variance"><span class="header-section-number">4.1.5.1</span> Erwartungswert und Varianz der diskreten Gleichverteilung</h4>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Der <strong>Erwartungswert</strong> <span class="math inline">\(E(X)\)</span> der diskreten Gleichverteilung (<span class="math inline">\(X = 1, 2, \ldots, n\)</span>) ist der Mittelwert der Werte:<br>
-<span class="math display">\[E(X) = \frac{n+1}{2}.\]</span><br>
-Die <strong>Varianz</strong> <span class="math inline">\(\text{Var}(X)\)</span> misst die Streuung:<br>
-<span class="math display">\[\text{Var}(X) = \frac{n^2-1}{12}.\]</span><br>
-Beispiel: Für einen Würfel (<span class="math inline">\(n=6\)</span>) ist <span class="math inline">\(E(X) = \frac{6+1}{2} = 3.5\)</span> und <span class="math inline">\(\text{Var}(X) = \frac{6^2-1}{12} = \frac{35}{12} \approx 2.9167\)</span>.</p>
-</div>
-</div>
+<p>In der Abbildung <span class="citation" data-cites="fig:sec-dataexploratory-distributions-discrete-uniform-distribution">(<a href="../references.html#ref-fig:sec-dataexploratory-distributions-discrete-uniform-distribution" role="doc-biblioref"><strong>fig:sec-dataexploratory-distributions-discrete-uniform-distribution?</strong></a>)</span> wird die Wahrscheinlichkeitsverteilung der diskreten Gleichverteilung für das Würfeln eines Würfels dargestellt. Die Wahrscheinlichkeitsverteilung zeigt, dass alle möglichen Werte der Zufallsvariablen die gleiche Wahrscheinlichkeit haben.</p>
+<section id="erwartungswert-und-varianz-der-diskreten-gleichverteilung" class="level4" data-number="4.1.3.1">
+<h4 data-number="4.1.3.1" class="anchored" data-anchor-id="erwartungswert-und-varianz-der-diskreten-gleichverteilung"><span class="header-section-number">4.1.3.1</span> Erwartungswert und Varianz der diskreten Gleichverteilung</h4>
+<p>Erwartungswert und Varianz der diskreten Gleichverteilung {#sec-discrete-uniform-expectation-variance} Der Erwartungswert <span class="math inline">\(E(X)\)</span> liegt in der Mitte des Intervalls:</p>
+<p><span class="math display">\[
+E(X) = \frac{n+1}{2}.
+\]</span> Für einen Würfel (<span class="math inline">\(n = 6\)</span>) ist <span class="math inline">\(E(X) = \frac{6 + 1}{2} = 3.5\)</span>.</p>
+<p>Die Varianz <span class="math inline">\(\text{Var}(X)\)</span> beschreibt die Streuung: <span class="math display">\[
+\text{Var}(X) = \frac{n^2-1}{12}.
+\]</span></p>
+<p>Bei <span class="math inline">\(n = 6\)</span> ist <span class="math inline">\(\text{Var}(X) = \frac{36 - 1}{12} = \frac{35}{12} \approx 2.9167\)</span>.</p>
 </section>
 </section>
 </section>
 <section id="sec-continuous-distributions" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="sec-continuous-distributions"><span class="header-section-number">4.2</span> Stetige Verteilungen</h2>
-<p>Stetige Verteilungen modellieren Zufallsvariablen mit kontinuierlichen Werten. Wir untersuchen die Normal-, Exponential- und stetige Gleichverteilung.</p>
+<p><strong>Stetige Verteilungen</strong> modellieren Zufallsvariablen, die kontinuierliche Werte annehmen können, z. B. Zeit oder Länge. Im Gegensatz zu diskreten Verteilungen gibt es hier unendlich viele mögliche Werte innerhalb eines Intervalls. Wir betrachten die Normalverteilung, Exponentialverteilung und stetige Gleichverteilung, die in Simulationen wie im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial zur Fahrzeugausfallzeit</a> eine Rolle spielen.</p>
 <section id="sec-continuous-uniform-distribution" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-continuous-uniform-distribution"><span class="header-section-number">4.2.1</span> Stetige Gleichverteilung</h3>
-<p>Die stetige Gleichverteilung beschreibt eine Zufallsvariable, bei der alle Werte im Intervall <span class="math inline">\([a, b]\)</span> gleich wahrscheinlich sind. Ihre Wahrscheinlichkeitsdichtefunktion lautet:<br>
+<p>Die <strong>stetige Gleichverteilung</strong> beschreibt eine Zufallsvariable, bei der alle Werte in einem Intervall <span class="math inline">\([a, b]\)</span> gleich wahrscheinlich sind. Die Wahrscheinlichkeitsdichtefunktion (Dichte) lautet:<br>
 <span class="math display">\[f(x) = \begin{cases}
-\frac{1}{b-a} &amp; \text{für } a \leq x \leq b, \\
+\frac{1}{b - a} &amp; \text{für } a \leq x \leq b, \\
 0 &amp; \text{sonst}.
 \end{cases}\]</span><br>
-Wir notieren <span class="math inline">\(X \sim \text{U}(a, b)\)</span>. Bei stetigen Verteilungen gibt die Fläche unter der Dichtefunktion die Wahrscheinlichkeit an und ist stets 1. Für <span class="math inline">\(a = 0\)</span>, <span class="math inline">\(b = 1\)</span> zeigt <a href="#fig-sec-dataexploratory-distributions-continuous-uniform-distribution" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> die Dichtefunktion.</p>
+Wir schreiben <span class="math inline">\(X \sim \text{U}(a, b)\)</span>. Bei stetigen Verteilungen wird die Wahrscheinlichkeit als Fläche unter der Dichte berechnet, wobei die Gesamtfläche stets 1 beträgt.</p>
+<p><a href="#fig-sec-dataexploratory-distributions-continuous-uniform-distribution" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> zeigt die Dichte für <span class="math inline">\(a = 0\)</span> und <span class="math inline">\(b = 1\)</span>. Im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a> wird die stetige Gleichverteilung für die Steuereinheit (<span class="math inline">\(X \sim \text{U}(4000, 8000)\)</span>) verwendet, um Ausfallzeiten zu modellieren.</p>
 <div id="cell-fig-sec-dataexploratory-distributions-continuous-uniform-distribution" class="cell styled-output" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(a<span class="op">-</span><span class="fl">0.5</span>, b<span class="op">+</span><span class="fl">0.5</span>, <span class="dv">1000</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>f_X <span class="op">=</span> np.array([<span class="dv">1</span><span class="op">/</span>(b<span class="op">-</span>a) <span class="cf">if</span> a <span class="op">&lt;=</span> x_i <span class="op">&lt;=</span> b <span class="cf">else</span> <span class="dv">0</span> <span class="cf">for</span> x_i <span class="kw">in</span> x])</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(a <span class="op">-</span> <span class="fl">0.5</span>, b <span class="op">+</span> <span class="fl">0.5</span>, <span class="dv">1000</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>f_X <span class="op">=</span> np.where((x <span class="op">&gt;=</span> a) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> b), <span class="dv">1</span> <span class="op">/</span> (b <span class="op">-</span> a), <span class="dv">0</span>)</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x, f_X, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Werte von $X$'</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Wahrscheinlichkeitsdichte'</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Stetige Gleichverteilung [0, 1]'</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x, f_X, color<span class="op">=</span><span class="st">'skyblue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, f_X, alpha<span class="op">=</span><span class="fl">0.2</span>, color<span class="op">=</span><span class="st">'skyblue'</span>)  <span class="co"># Fläche einfärben</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Werte der Zufallsvariablen ($X$)'</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Wahrscheinlichkeitsdichte'</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Stetige Gleichverteilung ($a = </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">$, $b = </span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">$)'</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sec-dataexploratory-distributions-continuous-uniform-distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sec-dataexploratory-distributions-continuous-uniform-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-continuous-uniform-distribution-output-1.png" width="589" height="449" class="figure-img">
+<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-continuous-uniform-distribution-output-1.png" width="589" height="451" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-distributions-continuous-uniform-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.5: Stetige Gleichverteilung auf dem Intervall [0, 1].
+Figure&nbsp;4.5: Wahrscheinlichkeitsdichte der stetigen Gleichverteilung auf dem Intervall [0, 1].
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Bei stetigen Verteilungen ist die Wahrscheinlichkeit eines einzelnen Wertes 0, da es unendlich viele mögliche Werte gibt. Stattdessen berechnen wir die Wahrscheinlichkeit für Intervalle:<br>
-<span class="math display">\[P(a \leq X \leq b) = \int_{a}^{b} f(x) \, dx,\]</span><br>
-wobei <span class="math inline">\(f(x)\)</span> die Dichtefunktion ist. Dies entspricht der Fläche unter der Kurve, wie in <a href="#fig-sec-dataexploratory-distributions-continuous-uniform-distribution" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> für <span class="math inline">\([0, 1]\)</span> gezeigt.</p>
-<section id="sec-uniform-example-component-failure" class="level4" data-number="4.2.1.1">
-<h4 data-number="4.2.1.1" class="anchored" data-anchor-id="sec-uniform-example-component-failure"><span class="header-section-number">4.2.1.1</span> Beispiel: Ausfallwahrscheinlichkeit eines Bauteils</h4>
-<p>Der Ausfallzeitpunkt eines elektronischen Bauteils folgt einer stetigen Gleichverteilung auf <span class="math inline">\([0, 3650]\)</span> Tagen (<span class="math inline">\(X \sim \text{U}(0, 3650)\)</span>). Wie hoch ist die Wahrscheinlichkeit, dass es innerhalb der ersten 1000 Tage ausfällt?</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<p>Bei stetigen Verteilungen ist die Wahrscheinlichkeit eines exakten Wertes 0, da es unendlich viele mögliche Werte gibt. Stattdessen berechnen wir die Wahrscheinlichkeit für einen Wertebereich als Fläche unter der Dichtefunktion:<br>
+<span class="math display">\[P(a \leq X \leq b) = \int_{a}^{b} f(x) \, dx.\]</span></p>
+<section id="sec-uniform-example" class="level4" data-number="4.2.1.1">
+<h4 data-number="4.2.1.1" class="anchored" data-anchor-id="sec-uniform-example"><span class="header-section-number">4.2.1.1</span> Beispiel: Ausfallwahrscheinlichkeit eines Bauteils</h4>
+<p>Der Ausfall eines elektronischen Bauteils folgt einer stetigen Gleichverteilung auf <span class="math inline">\([0, 3650]\)</span> Tagen (<span class="math inline">\(X \sim \text{U}(0, 3650)\)</span>). Wie hoch ist die Wahrscheinlichkeit, dass es innerhalb der ersten 1000 Tage ausfällt?</p>
+<p>Die Dichtefunktion ist:<br>
+<span class="math display">\[f(x) = \begin{cases}
+\frac{1}{3650 - 0} = \frac{1}{3650} &amp; \text{für } 0 \leq x \leq 3650, \\
+0 &amp; \text{sonst}.
+\end{cases}\]</span><br>
+Die Wahrscheinlichkeit ergibt sich durch Integration:<br>
+<span class="math display">\[P(0 \leq X \leq 1000) = \int_{0}^{1000} \frac{1}{3650} \, dx = \frac{1000}{3650} \approx 0.274.\]</span><br>
+Das Bauteil hat also eine 27,4 % Chance, innerhalb von 1000 Tagen auszusetzen. Dieses Prinzip wird im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a> bei der Steuereinheit (<span class="math inline">\(X \sim \text{U}(4000, 8000)\)</span>) angewendet.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Lösungsschritte">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+Lösungsschritte
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Die Dichtefunktion ist:<br>
-<span class="math display">\[f(x) = \begin{cases}
-\frac{1}{3650} &amp; \text{für } 0 \leq x \leq 3650, \\
-0 &amp; \text{sonst}.
-\end{cases}\]</span><br>
-Die Wahrscheinlichkeit für einen Ausfall in <span class="math inline">\([0, 1000]\)</span> beträgt:<br>
-<span class="math display">\[P(0 \leq X \leq 1000) = \int_{0}^{1000} \frac{1}{3650} \, dx = \left[ \frac{x}{3650} \right]_{0}^{1000} = \frac{1000}{3650} = \frac{100}{365} \approx 0.274.\]</span><br>
-Das Bauteil hat eine Chance von ca. 27,4 %, innerhalb von 1000 Tagen auszusetzen.</p>
+<ol type="1">
+<li>Dichte: <span class="math inline">\(f(x) = \frac{1}{3650}\)</span> für <span class="math inline">\(0 \leq x \leq 3650\)</span>.<br>
+</li>
+<li>Integral: <span class="math inline">\(P(0 \leq X \leq 1000) = \int_{0}^{1000} \frac{1}{3650} \, dx\)</span>.<br>
+</li>
+<li>Ergebnis: <span class="math inline">\(\frac{1000}{3650} = 0.274\)</span>.</li>
+</ol>
 </div>
 </div>
 </div>
@@ -666,10 +650,10 @@ Das Bauteil hat eine Chance von ca. 27,4 %, innerhalb von 1000 Tagen auszusetzen
 </section>
 <section id="sec-normal-distribution" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-normal-distribution"><span class="header-section-number">4.2.2</span> Normalverteilung</h3>
-<p>Die Normalverteilung ist eine stetige Wahrscheinlichkeitsverteilung, die in Statistik und Naturwissenschaften weit verbreitet ist – etwa für Körpergrößen oder Messfehler. Sie wird durch ihre symmetrische Glockenkurve charakterisiert, bei der die Werte um den Erwartungswert <span class="math inline">\(\mu\)</span> verteilt sind. Ihre Wahrscheinlichkeitsdichtefunktion lautet:<br>
-<span class="math display">\[f(x) = \frac{1}{\sqrt{2\pi} \sigma} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right),\]</span><br>
-für <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span>. Die Zufallsvariable <span class="math inline">\(X\)</span> folgt <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span>, wobei <span class="math inline">\(\mu\)</span> der Erwartungswert und <span class="math inline">\(\sigma^2\)</span> die Varianz ist.</p>
-<p>Falls <span class="math inline">\(\mu = 0\)</span> und <span class="math inline">\(\sigma = 1\)</span>, spricht man von der <strong>Standardnormalverteilung</strong>: <span class="math inline">\(X \sim \mathcal{N}(0, 1)\)</span>. Sie ist eine spezielle Form mit Erwartungswert 0 und Varianz 1, die oft als Referenz dient. Ihre Dichtefunktion zeigt <a href="#fig-sec-dataexploratory-distributions-normal-distribution" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>.</p>
+<p>Die <strong>Normalverteilung</strong> ist eine stetige Verteilung, die in Statistik und Naturwissenschaften weit verbreitet ist. Ihre Glockenform zeigt eine symmetrische Verteilung der Werte um den Erwartungswert. Die Dichtefunktion lautet:<br>
+<span class="math display">\[f(x) = \frac{1}{\sqrt{2\pi} \sigma} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right),\]</span><br>
+für <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span>. Wir schreiben <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span>, wobei <span class="math inline">\(\mu\)</span> der Erwartungswert und <span class="math inline">\(\sigma^2\)</span> die Varianz ist.</p>
+<p>Falls <span class="math inline">\(\mu = 0\)</span> und <span class="math inline">\(\sigma = 1\)</span>, spricht man von der <strong>Standardnormalverteilung</strong> (<span class="math inline">\(X \sim \mathcal{N}(0, 1)\)</span>), eine spezielle Form mit Erwartungswert 0 und Varianz 1. <a href="#fig-sec-dataexploratory-distributions-normal-distribution" class="quarto-xref">Figure&nbsp;<span>4.6</span></a> zeigt diese Verteilung. Im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a> wird die Normalverteilung für den Sensor (<span class="math inline">\(X \sim \mathcal{N}(6000, 100^2)\)</span>) genutzt, um Ausfallzeiten zu modellieren.</p>
 <div id="cell-fig-sec-dataexploratory-distributions-normal-distribution" class="cell styled-output" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -677,87 +661,94 @@ für <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span>. Die Zufall
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1000</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>f_X <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(np.sqrt(<span class="dv">2</span><span class="op">*</span>np.pi)<span class="op">*</span>sigma) <span class="op">*</span> np.exp(<span class="op">-</span>(x<span class="op">-</span>mu)<span class="op">**</span><span class="dv">2</span><span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>sigma<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>f_X <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi) <span class="op">*</span> sigma) <span class="op">*</span> np.exp(<span class="op">-</span>((x <span class="op">-</span> mu) <span class="op">**</span> <span class="dv">2</span>) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> sigma <span class="op">**</span> <span class="dv">2</span>))</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x, f_X, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Werte von $X$'</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Wahrscheinlichkeitsdichte'</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Standardnormalverteilung ($\mu = 0$, $\sigma = 1$)'</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x, f_X, color<span class="op">=</span><span class="st">'skyblue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, f_X, alpha<span class="op">=</span><span class="fl">0.2</span>, color<span class="op">=</span><span class="st">'skyblue'</span>)  <span class="co"># Fläche einfärben</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Werte der Zufallsvariablen ($X$)'</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Wahrscheinlichkeitsdichte'</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Standardnormalverteilung ($\mu = </span><span class="sc">{</span>mu<span class="sc">}</span><span class="ss">$, $\sigma = </span><span class="sc">{</span>sigma<span class="sc">}</span><span class="ss">$)'</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>&lt;&gt;:12: SyntaxWarning:
+<pre><code>&lt;&gt;:13: SyntaxWarning:
 
 invalid escape sequence '\m'
 
-&lt;&gt;:12: SyntaxWarning:
+&lt;&gt;:13: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+&lt;&gt;:13: SyntaxWarning:
 
 invalid escape sequence '\m'
 
-/tmp/ipykernel_3213/524867886.py:12: SyntaxWarning:
+&lt;&gt;:13: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+/tmp/ipykernel_3087/513147542.py:13: SyntaxWarning:
 
 invalid escape sequence '\m'
+
+/tmp/ipykernel_3087/513147542.py:13: SyntaxWarning:
+
+invalid escape sequence '\s'
 </code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-sec-dataexploratory-distributions-normal-distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sec-dataexploratory-distributions-normal-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-normal-distribution-output-2.png" width="597" height="450" class="figure-img">
+<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-normal-distribution-output-2.png" width="597" height="451" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-distributions-normal-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.6: Standardnormalverteilung mit <span class="math inline">\(\mu = 0\)</span> und <span class="math inline">\(\sigma = 1\)</span>.
+Figure&nbsp;4.6: Wahrscheinlichkeitsdichte der Standardnormalverteilung (<span class="math inline">\(\mu = 0\)</span>, <span class="math inline">\(\sigma = 1\)</span>).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Früher war die Berechnung der Fläche unter der Normalverteilungskurve (<span class="math inline">\(P(X \leq x)\)</span>) ohne Computer schwierig. Dafür nutzte man <a href="https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle">Z-Tabellen</a>, die die Wahrscheinlichkeit <span class="math inline">\(P(Z \leq z)\)</span> für eine Standardnormalverteilte Zufallsvariable <span class="math inline">\(Z \sim \mathcal{N}(0, 1)\)</span> angeben. Beispiele:<br>
-- <span class="math inline">\(P(Z \leq 0) = 0.5\)</span> (50 %),<br>
-- <span class="math inline">\(P(Z \leq 1) = 0.8413\)</span> (84,13 %),<br>
-- <span class="math inline">\(P(Z \leq -1) = 1 - P(Z \leq 1) = 0.1587\)</span> (15,87 %).<br>
-Umgekehrt: <span class="math inline">\(P(Z \leq 1.645) = 0.95\)</span> (95 %). Heute ersetzen Computerprogramme diese Tabellen.</p>
+<p>Früher, ohne Computer, war die Berechnung der Fläche unter der Normalverteilungskurve (<span class="math inline">\(P(X \leq x)\)</span>) schwierig. Man nutzte <a href="https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle"><span class="math inline">\(Z\)</span>-Wert-Tabellen</a>, um die Wahrscheinlichkeit für eine standardnormalverteilte Zufallsvariable <span class="math inline">\(Z \sim \mathcal{N}(0, 1)\)</span> nachzuschlagen. Beispiele:</p>
+<ul>
+<li><span class="math inline">\(P(Z \leq 0) = 0.5\)</span> (50 %).<br>
+</li>
+<li><span class="math inline">\(P(Z \leq 1) = 0.8413\)</span> (84,13 %).<br>
+</li>
+<li><span class="math inline">\(P(Z \leq -1) = 1 - P(Z \leq 1) = 0.1587\)</span> (15,87 %).<br>
+Umgekehrt: <span class="math inline">\(P(Z \leq 1.645) = 0.95\)</span> (95 %). Heute ersetzen Computerprogramme solche Tabellen, wie im Folgenden gezeigt.</li>
+</ul>
 <section id="sec-normal-expectation-variance" class="level4" data-number="4.2.2.1">
 <h4 data-number="4.2.2.1" class="anchored" data-anchor-id="sec-normal-expectation-variance"><span class="header-section-number">4.2.2.1</span> Erwartungswert und Varianz der Normalverteilung</h4>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Der <strong>Erwartungswert</strong> einer stetigen Zufallsvariable <span class="math inline">\(X\)</span> ist:<br>
-<span class="math display">\[E(X) = \mu = \int_{-\infty}^{\infty} x \cdot f(x) \, dx.\]</span><br>
-Die <strong>Varianz</strong> ist:<br>
-<span class="math display">\[\text{Var}(X) = \sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 \cdot f(x) \, dx.\]</span><br>
-Für <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span> sind <span class="math inline">\(E(X) = \mu\)</span> und <span class="math inline">\(\text{Var}(X) = \sigma^2\)</span> direkt gegeben.</p>
-</div>
-</div>
+<p>Der <strong>Erwartungswert</strong> <span class="math inline">\(E(X)\)</span> einer normalverteilten Zufallsvariable <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span> ist:<br>
+<span class="math display">\[E(X) = \mu.\]</span><br>
+Die <strong>Varianz</strong> <span class="math inline">\(\text{Var}(X)\)</span> beträgt:<br>
+<span class="math display">\[\text{Var}(X) = \sigma^2.\]</span><br>
+Für die Standardnormalverteilung (<span class="math inline">\(X \sim \mathcal{N}(0, 1)\)</span>) gilt <span class="math inline">\(E(X) = 0\)</span> und <span class="math inline">\(\text{Var}(X) = 1\)</span>. Im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a> wird dies für den Sensor (<span class="math inline">\(X \sim \mathcal{N}(6000, 100^2)\)</span>) genutzt.</p>
+<section id="sec-normal-standardization" class="level5" data-number="4.2.2.1.1">
+<h5 data-number="4.2.2.1.1" class="anchored" data-anchor-id="sec-normal-standardization"><span class="header-section-number">4.2.2.1.1</span> Standardisierung der Normalverteilung</h5>
+<p>Viele Zufallsvariablen folgen keiner Standardnormalverteilung, sondern haben andere Werte für <span class="math inline">\(\mu\)</span> und <span class="math inline">\(\sigma\)</span>. Um diese auf <span class="math inline">\(Z \sim \mathcal{N}(0, 1)\)</span> zu überführen, wird standardisiert:<br>
+<span class="math display">\[Z = \frac{X - \mu}{\sigma}.\]</span><br>
+<span class="math inline">\(Z\)</span> hat dann <span class="math inline">\(E(Z) = 0\)</span> und <span class="math inline">\(\text{Var}(Z) = 1\)</span>, sodass <span class="math inline">\(Z\)</span>-Tabellen oder Software genutzt werden können.</p>
 </section>
-<section id="sec-normal-standardization" class="level4" data-number="4.2.2.2">
-<h4 data-number="4.2.2.2" class="anchored" data-anchor-id="sec-normal-standardization"><span class="header-section-number">4.2.2.2</span> Standardisierung der Normalverteilung</h4>
-<p>Viele Zufallsvariablen folgen einer Normalverteilung mit <span class="math inline">\(\mu \neq 0\)</span> und <span class="math inline">\(\sigma \neq 1\)</span>. Um diese auf die Standardnormalverteilung <span class="math inline">\(Z \sim \mathcal{N}(0, 1)\)</span> abzubilden, wird standardisiert:<br>
-<span class="math display">\[Z = \frac{X - \mu}{\sigma},\]</span><br>
-wobei <span class="math inline">\(Z\)</span> dann Erwartungswert 0 und Varianz 1 hat. Die <span class="math inline">\(Z\)</span>-Werte können in Tabellen nachgeschlagen oder heute per Software berechnet werden.</p>
 </section>
-<section id="sec-normal-iq-example" class="level4" data-number="4.2.2.3">
-<h4 data-number="4.2.2.3" class="anchored" data-anchor-id="sec-normal-iq-example"><span class="header-section-number">4.2.2.3</span> Beispiel: Intelligenzquotient (IQ)</h4>
-<p>Der IQ ist normalverteilt mit <span class="math inline">\(\mu = 100\)</span> und <span class="math inline">\(\sigma = 15\)</span>: <span class="math inline">\(X \sim \mathcal{N}(100, 15^2)\)</span>. Wie wahrscheinlich ist ein IQ <span class="math inline">\(\geq 130\)</span>?</p>
-<section id="analytische-berechnung" class="level5" data-number="4.2.2.3.1">
-<h5 data-number="4.2.2.3.1" class="anchored" data-anchor-id="analytische-berechnung"><span class="header-section-number">4.2.2.3.1</span> Analytische Berechnung</h5>
-<p>Die Dichtefunktion lautet:<br>
-<span class="math display">\[f(x) = \frac{1}{\sqrt{2\pi} \cdot 15} \exp\left(-\frac{(x-100)^2}{2 \cdot 15^2}\right).\]</span><br>
-Gesucht ist:<br>
+<section id="sec-normal-iq-example" class="level4" data-number="4.2.2.2">
+<h4 data-number="4.2.2.2" class="anchored" data-anchor-id="sec-normal-iq-example"><span class="header-section-number">4.2.2.2</span> Beispiel: Intelligenz-Quotient (IQ)</h4>
+<p>Der IQ ist normalverteilt mit <span class="math inline">\(X \sim \mathcal{N}(100, 15^2)\)</span> (<span class="math inline">\(\mu = 100\)</span>, <span class="math inline">\(\sigma = 15\)</span>). Wie wahrscheinlich ist ein IQ von 130 oder mehr (<span class="math inline">\(P(X \geq 130)\)</span>)?</p>
+<section id="analytische-berechnung" class="level5" data-number="4.2.2.2.1">
+<h5 data-number="4.2.2.2.1" class="anchored" data-anchor-id="analytische-berechnung"><span class="header-section-number">4.2.2.2.1</span> Analytische Berechnung</h5>
+<p>Die Dichtefunktion ist:<br>
+<span class="math display">\[f(x) = \frac{1}{\sqrt{2\pi} \cdot 15} \exp\left(-\frac{(x - 100)^2}{2 \cdot 15^2}\right).\]</span><br>
+Die Wahrscheinlichkeit <span class="math inline">\(P(X \geq 130)\)</span> ergibt sich als:<br>
 <span class="math display">\[P(X \geq 130) = 1 - P(X \leq 130) = 1 - \int_{-\infty}^{130} f(x) \, dx.\]</span><br>
-Standardisierung: <span class="math inline">\(Z = \frac{130 - 100}{15} = 2\)</span>. Für <span class="math inline">\(Z \sim \mathcal{N}(0, 1)\)</span> ist <span class="math inline">\(P(Z \leq 2) \approx 0.97725\)</span> (aus Tabellen oder Software), also:<br>
-<span class="math display">\[P(X \geq 130) = 1 - P(Z \leq 2) = 1 - 0.97725 = 0.02275.\]</span><br>
-Die Wahrscheinlichkeit beträgt ca. 2,275 %.</p>
+Mit Standardisierung:<br>
+<span class="math display">\[Z = \frac{130 - 100}{15} = 2, \quad P(X \leq 130) = P(Z \leq 2).\]</span><br>
+Aus Tabellen oder Software: <span class="math inline">\(P(Z \leq 2) \approx 0.9772\)</span>, also:<br>
+<span class="math display">\[P(X \geq 130) = 1 - 0.9772 = 0.0228 \text{ (2,28 %)}.\]</span></p>
 </section>
-<section id="berechnung-mit-python" class="level5" data-number="4.2.2.3.2">
-<h5 data-number="4.2.2.3.2" class="anchored" data-anchor-id="berechnung-mit-python"><span class="header-section-number">4.2.2.3.2</span> Berechnung mit Python</h5>
-<p>Mit <code>scipy.stats.norm</code> berechnen wir die kumulative Verteilungsfunktion <span class="math inline">\(P(X \leq x)\)</span>:</p>
+<section id="berechnung-mit-python" class="level5" data-number="4.2.2.2.2">
+<h5 data-number="4.2.2.2.2" class="anchored" data-anchor-id="berechnung-mit-python"><span class="header-section-number">4.2.2.2.2</span> Berechnung mit Python</h5>
+<p>Mit <code>scipy.stats.norm</code> können wir die kumulative Verteilungsfunktion (<code>cdf</code>) direkt berechnen:</p>
 <div id="fig-sec-dataexploratory-distributions-normal-distribution-iq-130" class="cell styled-output quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="7">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sec-dataexploratory-distributions-normal-distribution-iq-130-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -768,9 +759,9 @@ Die Wahrscheinlichkeit beträgt ca. 2,275 %.</p>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">15</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>P_X_geq_130 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> norm.cdf(<span class="dv">130</span>, loc<span class="op">=</span>mu, scale<span class="op">=</span>sigma)</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'P(X &gt;= 130) = </span><span class="sc">{</span>P_X_geq_130<span class="sc">:.5f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'P(X &gt;= 130) = </span><span class="sc">{</span>P_X_geq_130<span class="sc">:.4f}</span><span class="ss">'</span>)  <span class="co"># Ausgabe: 0.0228</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>P(X &gt;= 130) = 0.02275</code></pre>
+<pre><code>P(X &gt;= 130) = 0.0228</code></pre>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-sec-dataexploratory-distributions-normal-distribution-iq-130-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -780,14 +771,14 @@ Figure&nbsp;4.7
 </div>
 </section>
 </section>
-<section id="sec-normal-probability-visualization" class="level4" data-number="4.2.2.4">
-<h4 data-number="4.2.2.4" class="anchored" data-anchor-id="sec-normal-probability-visualization"><span class="header-section-number">4.2.2.4</span> Visualisierung der Wahrscheinlichkeiten</h4>
-<p>Häufig fragt man, welcher Anteil einer Population innerhalb von ein oder zwei Standardabweichungen vom Mittelwert liegt. Für <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span> berechnen wir:<br>
-<span class="math display">\[P(\mu - \sigma \leq X \leq \mu + \sigma) = P(X \leq \mu + \sigma) - P(X \leq \mu - \sigma) = \text{cdf}(\mu + \sigma) - \text{cdf}(\mu - \sigma).\]</span><br>
-Für die Standardnormalverteilung (<span class="math inline">\(Z \sim \mathcal{N}(0, 1)\)</span>) ist bekannt:<br>
-- <span class="math inline">\(P(-1 \leq Z \leq 1) \approx 0.6826\)</span> (ca. 68 %),<br>
-- <span class="math inline">\(P(-2 \leq Z \leq 2) \approx 0.9545\)</span> (ca. 95 %).<br>
-Dies überträgt sich auf jede Normalverteilung via Standardisierung. <a href="#fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma" class="quarto-xref">Figure&nbsp;<span>4.8</span></a> zeigt dies für den IQ (<span class="math inline">\(X \sim \mathcal{N}(100, 15^2)\)</span>).</p>
+<section id="sec-normal-probability-visualization" class="level4" data-number="4.2.2.3">
+<h4 data-number="4.2.2.3" class="anchored" data-anchor-id="sec-normal-probability-visualization"><span class="header-section-number">4.2.2.3</span> Visualisierung der Wahrscheinlichkeiten</h4>
+<p>Oft interessiert der Anteil einer Population innerhalb von ein oder zwei Standardabweichungen vom Mittelwert. Für eine normalverteilte Zufallsvariable <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span> berechnen wir:<br>
+<span class="math display">\[P(\mu - \sigma \leq X \leq \mu + \sigma) = P(X \leq \mu + \sigma) - P(X \leq \mu - \sigma),\]</span><br>
+wobei <span class="math inline">\(P(X \leq x)\)</span> die kumulative Verteilungsfunktion (CDF) ist. Für die Standardnormalverteilung gilt:<br>
+- <span class="math inline">\(P(\mu - \sigma \leq X \leq \mu + \sigma) \approx 0.6826\)</span> (ca. 68 %),<br>
+- <span class="math inline">\(P(\mu - 2\sigma \leq X \leq \mu + 2\sigma) \approx 0.9544\)</span> (ca. 95 %).</p>
+<p>Im IQ-Beispiel (<span class="math inline">\(X \sim \mathcal{N}(100, 15^2)\)</span>) prüfen wir den Bereich von zwei Standardabweichungen (<span class="math inline">\(\mu - 2\sigma = 70\)</span>, <span class="math inline">\(\mu + 2\sigma = 130\)</span>). <a href="#fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma" class="quarto-xref">Figure&nbsp;<span>4.8</span></a> zeigt diese Wahrscheinlichkeit. Solche Berechnungen sind im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a> nützlich, z. B. um Sensor-Ausfallzeiten zu analysieren.</p>
 <div id="cell-fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma" class="cell styled-output" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -796,34 +787,51 @@ Dies überträgt sich auf jede Normalverteilung via Standardisierung. <a href="#
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">15</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(mu <span class="op">-</span> <span class="dv">4</span><span class="op">*</span>sigma, mu <span class="op">+</span> <span class="dv">4</span><span class="op">*</span>sigma, <span class="dv">1000</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>f_X <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(np.sqrt(<span class="dv">2</span><span class="op">*</span>np.pi)<span class="op">*</span>sigma) <span class="op">*</span> np.exp(<span class="op">-</span>(x<span class="op">-</span>mu)<span class="op">**</span><span class="dv">2</span><span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>sigma<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>f_X <span class="op">=</span> norm.pdf(x, loc<span class="op">=</span>mu, scale<span class="op">=</span>sigma)</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>P_X_2_sigma <span class="op">=</span> norm.cdf(mu <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>sigma, loc<span class="op">=</span>mu, scale<span class="op">=</span>sigma) <span class="op">-</span> norm.cdf(mu <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>sigma, loc<span class="op">=</span>mu, scale<span class="op">=</span>sigma)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'P(</span><span class="sc">{</span>mu <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>sigma<span class="sc">}</span><span class="ss"> &lt;= X &lt;= </span><span class="sc">{</span>mu <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>sigma<span class="sc">}</span><span class="ss">) = </span><span class="sc">{</span>P_X_2_sigma<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.plot(x, f_X, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, f_X, where<span class="op">=</span>(x <span class="op">&gt;=</span> mu <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>sigma) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> mu <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>sigma), color<span class="op">=</span><span class="st">'lightblue'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'IQ-Werte ($X$)'</span>)</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Wahrscheinlichkeitsdichte'</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Normalverteilung: IQ ($\mu = 100$, $\sigma = 15$)'</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.text(mu, <span class="fl">0.015</span>, <span class="ss">f'P(</span><span class="sc">{</span>mu <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>sigma<span class="sc">}</span><span class="ss"> &lt;= X &lt;= </span><span class="sc">{</span>mu <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>sigma<span class="sc">}</span><span class="ss">) = </span><span class="sc">{</span>P_X_2_sigma<span class="sc">:.4f}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>)</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Wahrscheinlichkeit für μ ± 2σ</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>P_X_2_sigma <span class="op">=</span> norm.cdf(mu <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>sigma, loc<span class="op">=</span>mu, scale<span class="op">=</span>sigma) <span class="op">-</span> norm.cdf(mu <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>sigma, loc<span class="op">=</span>mu, scale<span class="op">=</span>sigma)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'P(</span><span class="sc">{</span>mu <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>sigma<span class="sc">}</span><span class="ss"> &lt;= X &lt;= </span><span class="sc">{</span>mu <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>sigma<span class="sc">}</span><span class="ss">) = </span><span class="sc">{</span>P_X_2_sigma<span class="sc">:.4f}</span><span class="ss">'</span>)  <span class="co"># Ausgabe: 0.9545</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.plot(x, f_X, color<span class="op">=</span><span class="st">'skyblue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, f_X, where<span class="op">=</span>(x <span class="op">&gt;=</span> mu <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>sigma) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> mu <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>sigma), color<span class="op">=</span><span class="st">'lightblue'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="ss">f'P = </span><span class="sc">{</span>P_X_2_sigma<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.axvline(mu <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>sigma, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>mu <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>sigma<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.axvline(mu <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>sigma, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>mu <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>sigma<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'IQ-Wert ($X$)'</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Wahrscheinlichkeitsdichte'</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'IQ-Verteilung ($\mu = </span><span class="sc">{</span>mu<span class="sc">}</span><span class="ss">$, $\sigma = </span><span class="sc">{</span>sigma<span class="sc">}</span><span class="ss">$)'</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:21: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:21: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+&lt;&gt;:21: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:21: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+/tmp/ipykernel_3087/3074097218.py:21: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+/tmp/ipykernel_3087/3074097218.py:21: SyntaxWarning:
+
+invalid escape sequence '\s'
+</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>P(70 &lt;= X &lt;= 130) = 0.9545</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>&lt;&gt;:17: SyntaxWarning:
-
-invalid escape sequence '\m'
-
-&lt;&gt;:17: SyntaxWarning:
-
-invalid escape sequence '\m'
-
-/tmp/ipykernel_3213/132208311.py:17: SyntaxWarning:
-
-invalid escape sequence '\m'
-</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -832,17 +840,12 @@ invalid escape sequence '\m'
 <img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma-output-3.png" width="606" height="451" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.8: Wahrscheinlichkeit eines IQ innerhalb von 2 Standardabweichungen (<span class="math inline">\(\mu = 100\)</span>, <span class="math inline">\(\sigma = 15\)</span>).
+Figure&nbsp;4.8: Wahrscheinlichkeit, dass ein IQ-Wert innerhalb von zwei Standardabweichungen liegt.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Hier ist der überarbeitete Abschnitt mit didaktischer Überprüfung, Anpassungen für Klarheit und Quarto-kompatiblen Referenzen:</p>
-<p>markdown</p>
-<p>Einklappen</p>
-<p>Zeilenumbruch</p>
-<p>Kopieren ### Normalverteilung (Fortsetzung) {#sec-normal-distribution-cont}</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -853,7 +856,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Der <a href="https://de.wikipedia.org/wiki/Intelligenzquotient">IQ</a> ist so skaliert, dass <span class="math inline">\(\mu = 100\)</span> und <span class="math inline">\(\sigma = 15\)</span>. Die Wahrscheinlichkeit für einen IQ <span class="math inline">\(\geq 130\)</span> beträgt ca. 2,28 % (siehe vorheriges Beispiel). Innerhalb von 2 Standardabweichungen (70 bis 130) liegen 95,45 % der Bevölkerung, wie in <a href="#fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma" class="quarto-xref">Figure&nbsp;<span>4.8</span></a> gezeigt.</p>
+<p>Der <a href="https://de.wikipedia.org/wiki/Intelligenzquotient">IQ</a> ist so skaliert, dass <span class="math inline">\(\mu = 100\)</span> und <span class="math inline">\(\sigma = 15\)</span>. Die Wahrscheinlichkeit für einen IQ <span class="math inline">\(\geq 130\)</span> beträgt etwa 2,28 %, während 95,45 % der Bevölkerung einen IQ zwischen 70 und 130 haben (innerhalb von <span class="math inline">\(\pm 2\sigma\)</span>). Dies zeigt die praktische Relevanz der Normalverteilung.</p>
 </div>
 </div>
 </section>
@@ -861,70 +864,116 @@ Tip
 </section>
 <section id="sec-other-distributions" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="sec-other-distributions"><span class="header-section-number">4.3</span> Weitere Verteilungen</h2>
-<p>Neben der Normalverteilung gibt es weitere wichtige Verteilungen in Statistik und Naturwissenschaften, z. B. für Zuverlässigkeitsanalysen oder Zufallsprozesse:<br>
-- <strong>Exponentialverteilung</strong>: Stetig, beschreibt die Zeit zwischen unabhängigen Ereignissen (z. B. Ausfallzeiten in der Zuverlässigkeitsanalyse).<br>
-- <strong>Poisson-Verteilung</strong>: Diskret, modelliert die Anzahl von Ereignissen in einem festen Intervall (z. B. Anrufe pro Stunde in der Warteschlangentheorie).</p>
-<p>Das Python-Modul <a href="https://docs.scipy.org/doc/scipy/reference/stats.html"><code>scipy.stats</code></a> bietet Funktionen zur Berechnung und Simulation solcher Verteilungen.</p>
+<p>Neben der Normalverteilung spielen weitere stetige und diskrete Verteilungen eine Rolle in Statistik und Simulationen, wie im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a> zur Fahrzeugausfallzeit genutzt:</p>
+<ul>
+<li>Die <strong>Exponentialverteilung</strong> modelliert die Zeit zwischen unabhängigen Ereignissen, z. B. in der Zuverlässigkeitsanalyse oder Warteschlangentheorie.<br>
+</li>
+<li>Die <strong>Poissonverteilung</strong> (diskret) beschreibt die Anzahl von Ereignissen in einem festen Zeitintervall, etwa in Zufallsprozessen.</li>
+</ul>
+<p>Diese Verteilungen sind im Python-Modul <a href="https://docs.scipy.org/doc/scipy/reference/stats.html"><code>scipy.stats</code></a> verfügbar, das Funktionen für Wahrscheinlichkeiten und Zufallszahlen bietet. Im Tutorial wird z. B. die Poissonverteilung für den Motor (<span class="math inline">\(X \sim \text{Poisson}(5000)\)</span>) eingesetzt.</p>
+<section id="sec-exponential-distribution" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="sec-exponential-distribution"><span class="header-section-number">4.3.1</span> Exponentialverteilung</h3>
+<p>Die Dichtefunktion der Exponentialverteilung ist:<br>
+<span class="math display">\[f(x) = \lambda e^{-\lambda x}, \quad x \geq 0,\]</span><br>
+wobei <span class="math inline">\(\lambda\)</span> die Rate ist. Wir schreiben <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, mit <span class="math inline">\(E(X) = \frac{1}{\lambda}\)</span> und <span class="math inline">\(\text{Var}(X) = \frac{1}{\lambda^2}\)</span>. Sie ist im Tutorial für Ausfallzeiten relevant, wenn Ereignisse exponentiell verteilt wären.</p>
 </section>
-<section id="sec-distribution-fitting" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="sec-distribution-fitting"><span class="header-section-number">4.4</span> Fitting von Verteilungen</h2>
-<p>In der Praxis müssen Verteilungen oft an Daten angepasst werden – dies nennt sich <strong>Fitting</strong>. Ziel ist, die Verteilung zu finden, die die Daten am besten beschreibt. Gängige Methoden sind:<br>
-- Methode der kleinsten Quadrate,<br>
-- Maximum-Likelihood-Schätzung,<br>
-- Methode der Momente.</p>
-<section id="beispiel-lotterie-daten" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="beispiel-lotterie-daten"><span class="header-section-number">4.4.1</span> Beispiel: Lotterie-Daten</h3>
-<p>Nehmen wir simulierte Lotterie-Daten: Die Anzahl der Gewinnlose folgt <span class="math inline">\(X \sim \text{Bin}(10, 0.1)\)</span>. Wir passen verschiedene Verteilungen an und vergleichen sie in <a href="#fig-sec-dataexploratory-distributions-binomial-fitting" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>.</p>
-<div id="cell-fig-sec-dataexploratory-distributions-binomial-fitting" class="cell styled-output" data-execution_count="9">
+</section>
+<section id="sec-fitting-distributions" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="sec-fitting-distributions"><span class="header-section-number">4.4</span> Fitting von Verteilungen</h2>
+<p>In der Praxis müssen wir oft die Verteilung von Daten bestimmen – ein Prozess namens <strong>Fitting</strong>. Ziel ist es, die Verteilung zu finden, die die Daten am besten beschreibt. Methoden wie Maximum-Likelihood-Schätzung oder die Methode der Momente werden dafür genutzt.</p>
+<p>Als Beispiel simulieren wir Lotterie-Daten mit <span class="math inline">\(X \sim \text{Bin}(10, 0.1)\)</span> und passen verschiedene Verteilungen an, um zu vergleichen, welche die Daten am besten modelliert.</p>
+<div id="cell-fig-sec-dataexploratory-distributions-binomial-fit" class="cell styled-output" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> binom, norm, uniform</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.binomial(n<span class="op">=</span><span class="dv">10</span>, p<span class="op">=</span><span class="fl">0.1</span>, size<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.binomial(n<span class="op">=</span><span class="dv">10</span>, p<span class="op">=</span><span class="fl">0.1</span>, size<span class="op">=</span><span class="dv">1000</span>)  <span class="co"># 1000 Ziehungen</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>n_est <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Bekannt aus Simulation</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>p_est <span class="op">=</span> np.mean(data) <span class="op">/</span> n_est</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>binom_x <span class="op">=</span> np.arange(<span class="dv">0</span>, n_est <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>binom_y <span class="op">=</span> binom.pmf(binom_x, n<span class="op">=</span>n_est, p<span class="op">=</span>p_est)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>mu, sigma <span class="op">=</span> norm.fit(data)</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>norm_x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1000</span>)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>norm_y <span class="op">=</span> norm.pdf(norm_x, mu, sigma)</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>a, b <span class="op">=</span> uniform.fit(data)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>uniform_x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1000</span>)</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>uniform_y <span class="op">=</span> uniform.pdf(uniform_x, a, b<span class="op">-</span>a)</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>plt.hist(data, bins<span class="op">=</span><span class="dv">11</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'skyblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'Daten'</span>)</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>plt.plot(binom_x, binom_y, <span class="st">'ro--'</span>, label<span class="op">=</span><span class="st">'Binomialverteilung'</span>)</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>plt.plot(norm_x, norm_y, <span class="st">'g-'</span>, label<span class="op">=</span><span class="st">'Normalverteilung'</span>)</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>plt.plot(uniform_x, uniform_y, <span class="st">'p-'</span>, label<span class="op">=</span><span class="st">'Gleichverteilung'</span>)</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Anzahl der Gewinnlose'</span>)</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Fitting von Verteilungen an Lotterie-Daten'</span>)</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div id="fig-sec-dataexploratory-distributions-binomial-fitting" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-sec-dataexploratory-distributions-binomial-fitting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-binomial-fitting-output-1.png" width="589" height="449" class="figure-img">
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Binomialverteilung schätzen</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>n_est <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Bekannt aus Simulation</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>p_est <span class="op">=</span> np.mean(data) <span class="op">/</span> n_est</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>binom_x <span class="op">=</span> np.arange(<span class="dv">0</span>, n_est <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>binom_y <span class="op">=</span> binom.pmf(binom_x, n<span class="op">=</span>n_est, p<span class="op">=</span>p_est)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalverteilung schätzen</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>mu, sigma <span class="op">=</span> norm.fit(data)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>norm_x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1000</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>norm_y <span class="op">=</span> norm.pdf(norm_x, mu, sigma)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Gleichverteilung schätzen</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>a, b <span class="op">=</span> uniform.fit(data)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>uniform_x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1000</span>)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>uniform_y <span class="op">=</span> uniform.pdf(uniform_x, a, b <span class="op">-</span> a)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>plt.hist(data, bins<span class="op">=</span><span class="bu">range</span>(<span class="dv">11</span>), density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'skyblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'Daten'</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>plt.plot(binom_x, binom_y, <span class="st">'ro--'</span>, label<span class="op">=</span><span class="ss">f'Binomial ($n=</span><span class="sc">{</span>n_est<span class="sc">}</span><span class="ss">$, $p=</span><span class="sc">{</span>p_est<span class="sc">:.2f}</span><span class="ss">$)'</span>)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>plt.plot(norm_x, norm_y, <span class="st">'g-'</span>, label<span class="op">=</span><span class="ss">f'Normal ($\mu=</span><span class="sc">{</span>mu<span class="sc">:.2f}</span><span class="ss">$, $\sigma=</span><span class="sc">{</span>sigma<span class="sc">:.2f}</span><span class="ss">$)'</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>plt.plot(uniform_x, uniform_y, <span class="st">'p-'</span>, label<span class="op">=</span><span class="ss">f'Gleichverteilung ($a=</span><span class="sc">{</span>a<span class="sc">:.2f}</span><span class="ss">$, $b=</span><span class="sc">{</span>b<span class="sc">:.2f}</span><span class="ss">$)'</span>)</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Anzahl der Gewinnlose ($X$)'</span>)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Fitting von Verteilungen an Binomialdaten'</span>)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:27: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:27: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+&lt;&gt;:27: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:27: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+/tmp/ipykernel_3087/1255964559.py:27: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+/tmp/ipykernel_3087/1255964559.py:27: SyntaxWarning:
+
+invalid escape sequence '\s'
+</code></pre>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-distributions-binomial-fitting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.9: Fitting von Verteilungen an simulierte Lotterie-Daten (n = 10, p = 0.1).
+<div class="cell-output cell-output-display">
+<div id="fig-sec-dataexploratory-distributions-binomial-fit" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sec-dataexploratory-distributions-binomial-fit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-binomial-fit-output-2.png" width="597" height="450" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-distributions-binomial-fit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.9: Fitting verschiedener Verteilungen an simulierte Binomialdaten (n = 10, p = 0.1).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-</section>
 <section id="sec-computing-distributions" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="sec-computing-distributions"><span class="header-section-number">4.5</span> Rechnen mit Verteilungen und Zufallsvariablen</h2>
-<p>Der <strong>zentrale Grenzwertsatz</strong> besagt, dass die Summe einer großen Anzahl unabhängiger, identisch verteilter (i.i.d.) Zufallsvariablen annähernd einer Normalverteilung folgt – unabhängig von deren ursprünglicher Verteilung. Dies ist eine Grundlage vieler statistischer Methoden, da es die Analyse von Summen erleichtert.</p>
+<h2 data-number="4.5" class="anchored" data-anchor-id="sec-computing-distributions"><span class="header-section-number">4.5</span> Rechnen mit Verteilungen, Zufallsvariablen und Erwartungswert</h2>
+<p>Der <strong>zentrale Grenzwertsatz</strong> besagt, dass die Summe einer großen Anzahl von <strong>unabhängigen</strong> und <strong>identisch verteilten</strong> (i.i.d.) Zufallsvariablen einer Normalverteilung folgt – unabhängig von ihrer ursprünglichen Verteilung. Dies ist ein Grundpfeiler der Statistik und erklärt, warum Normalverteilungen in Simulationen wie im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a> oft auftreten.</p>
 <section id="sec-expectation-variance-rules" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="sec-expectation-variance-rules"><span class="header-section-number">4.5.1</span> Rechenregeln für Erwartungswert und Varianz</h3>
+<p>Für unabhängige Zufallsvariablen <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> gelten folgende Regeln:</p>
+<ul>
+<li><p><strong>Erwartungswert</strong>: Die Summe der Erwartungswerte gilt immer, auch ohne Unabhängigkeit:<br>
+<span class="math display">\[E(X_1 + X_2 + \cdots + X_n) = E(X_1) + E(X_2) + \cdots + E(X_n).\]</span></p></li>
+<li><p><strong>Varianz</strong>: Bei Unabhängigkeit (Kovarianz = 0) ist die Varianz die Summe der Varianzen:<br>
+<span class="math display">\[\text{Var}(X_1 + X_2 + \cdots + X_n) = \text{Var}(X_1) + \text{Var}(X_2) + \cdots + \text{Var}(X_n).\]</span><br>
+Andernfalls: <span class="math inline">\(\text{Var}(X_1 + X_2) = \text{Var}(X_1) + \text{Var}(X_2) + 2 \text{Cov}(X_1, X_2)\)</span>.</p></li>
+<li><p><strong>Linearkombinationen</strong>: Für <span class="math inline">\(aX + bY\)</span>:<br>
+<span class="math display">\[E(aX + bY) = aE(X) + bE(Y),\]</span><br>
+<span class="math display">\[\text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \text{Cov}(X, Y),\]</span><br>
+wobei <span class="math inline">\(\text{Cov}(X, Y) = 0\)</span> bei Unabhängigkeit.</p></li>
+</ul>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -935,57 +984,45 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Für Zufallsvariablen <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> gelten:<br>
-- <strong>Erwartungswert der Summe</strong>: Immer, auch bei Abhängigkeit:<br>
-<span class="math display">\[E(X_1 + X_2 + \cdots + X_n) = E(X_1) + E(X_2) + \cdots + E(X_n).\]</span><br>
-- <strong>Varianz der Summe</strong>: Bei Unabhängigkeit (Kovarianz = 0):<br>
-<span class="math display">\[\text{Var}(X_1 + X_2) = \text{Var}(X_1) + \text{Var}(X_2).\]</span><br>
-Allgemein:<br>
-<span class="math display">\[\text{Var}(X_1 + X_2) = \text{Var}(X_1) + \text{Var}(X_2) + 2 \text{Cov}(X_1, X_2).\]</span><br>
-- <strong>Linearkombinationen</strong> <span class="math inline">\(aX + bY\)</span>:<br>
-<span class="math display">\[E(aX + bY) = aE(X) + bE(Y),\]</span><br>
-<span class="math display">\[\text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \text{Cov}(X, Y),\]</span><br>
-wobei <span class="math inline">\(\text{Cov}(X, Y) = 0\)</span>, wenn <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span> unabhängig sind.</p>
+<p>Die Kovarianz <span class="math inline">\(\text{Cov}(X, Y)\)</span> misst den linearen Zusammenhang zwischen <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span>. Bei Unabhängigkeit ist sie 0, was die Varianzberechnung vereinfacht.</p>
 </div>
 </div>
 </section>
-<section id="sec-sum-different-distributions" class="level3" data-number="4.5.2">
-<h3 data-number="4.5.2" class="anchored" data-anchor-id="sec-sum-different-distributions"><span class="header-section-number">4.5.2</span> Beispiel: Summen aus verschiedenen Verteilungen</h3>
-<p>Der zentrale Grenzwertsatz gilt auch, wenn die Zufallsvariablen nicht identisch verteilt sind, solange ihre Anzahl groß ist und sie unabhängig sind. <a href="#fig-sec-dataexploratory-distributions-sum-random-variables" class="quarto-xref">Figure&nbsp;<span>4.10</span></a> zeigt, wie die Summe unterschiedlicher Verteilungen normal wird.</p>
+<section id="sec-sum-example" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="sec-sum-example"><span class="header-section-number">4.5.2</span> Beispiel: Summe von Zufallsvariablen aus verschiedenen Verteilungen</h3>
+<p>Der zentrale Grenzwertsatz gilt auch, wenn die Zufallsvariablen nicht identisch verteilt sind, solange sie unabhängig sind und die Anzahl groß ist. <a href="#fig-sec-dataexploratory-distributions-sum-random-variables" class="quarto-xref">Figure&nbsp;<span>4.10</span></a> zeigt, wie die Summe von Uniform-, Exponential- und Binomialverteilungen einer Normalverteilung ähnelt – ein Prinzip, das in Monte-Carlo-Simulationen wie im Tutorial genutzt wird.</p>
 <div id="cell-fig-sec-dataexploratory-distributions-sum-random-variables" class="cell styled-output" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">10000</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Uniformverteilungen</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>X_uni_1 <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">10</span>, N)</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>X_uni_2 <span class="op">=</span> np.random.uniform(<span class="dv">2</span>, <span class="dv">8</span>, N)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Exponentialverteilungen</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>X_exp_1 <span class="op">=</span> np.random.exponential(<span class="dv">2</span>, N)</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>X_exp_2 <span class="op">=</span> np.random.exponential(<span class="dv">3</span>, N)</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Binomialverteilungen</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>X_bin_1 <span class="op">=</span> np.random.binomial(<span class="dv">20</span>, <span class="fl">0.3</span>, N)</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>X_bin_2 <span class="op">=</span> np.random.binomial(<span class="dv">30</span>, <span class="fl">0.2</span>, N)</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>X_sum <span class="op">=</span> X_uni_1 <span class="op">+</span> X_uni_2 <span class="op">+</span> X_exp_1 <span class="op">+</span> X_exp_2 <span class="op">+</span> X_bin_1 <span class="op">+</span> X_bin_2</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>plt.hist(X_uni_1, bins<span class="op">=</span><span class="dv">50</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Uniform [0, 10]'</span>, density<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>plt.hist(X_uni_2, bins<span class="op">=</span><span class="dv">50</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Uniform [2, 8]'</span>, density<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>plt.hist(X_exp_1, bins<span class="op">=</span><span class="dv">50</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Exponential (λ=0.5)'</span>, density<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>plt.hist(X_exp_2, bins<span class="op">=</span><span class="dv">50</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Exponential (λ=0.33)'</span>, density<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>plt.hist(X_bin_1, bins<span class="op">=</span><span class="dv">50</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Binomial (n=20, p=0.3)'</span>, density<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>plt.hist(X_bin_2, bins<span class="op">=</span><span class="dv">50</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Binomial (n=30, p=0.2)'</span>, density<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>plt.hist(X_sum, bins<span class="op">=</span><span class="dv">50</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'Summe'</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wert'</span>)</span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Zentraler Grenzwertsatz: Summe verschiedener Verteilungen'</span>)</span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Zufallsvariablen definieren</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>X_uni_1 <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">10</span>, N)      <span class="co"># Uniform [0, 10]</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>X_uni_2 <span class="op">=</span> np.random.uniform(<span class="dv">2</span>, <span class="dv">8</span>, N)       <span class="co"># Uniform [2, 8]</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>X_exp_1 <span class="op">=</span> np.random.exponential(<span class="dv">2</span>, N)      <span class="co"># Exponential, Scale = 2</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>X_exp_2 <span class="op">=</span> np.random.exponential(<span class="dv">3</span>, N)      <span class="co"># Exponential, Scale = 3</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>X_bin_1 <span class="op">=</span> np.random.binomial(<span class="dv">20</span>, <span class="fl">0.3</span>, N)   <span class="co"># Binomial (n=20, p=0.3)</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>X_bin_2 <span class="op">=</span> np.random.binomial(<span class="dv">15</span>, <span class="fl">0.4</span>, N)   <span class="co"># Binomial (n=15, p=0.4)</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>X_sum <span class="op">=</span> X_uni_1 <span class="op">+</span> X_uni_2 <span class="op">+</span> X_exp_1 <span class="op">+</span> X_exp_2 <span class="op">+</span> X_bin_1 <span class="op">+</span> X_bin_2</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>plt.hist(X_sum, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'skyblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'Summe'</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>plt.hist(X_uni_1, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="st">'Uniform 1'</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>plt.hist(X_uni_2, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="st">'Uniform 2'</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>plt.hist(X_exp_1, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="st">'Exponential 1'</span>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>plt.hist(X_exp_2, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="st">'Exponential 2'</span>)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>plt.hist(X_bin_1, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="st">'Binomial 1'</span>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>plt.hist(X_bin_2, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="st">'Binomial 2'</span>)</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wert'</span>)</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Summe von Zufallsvariablen aus verschiedenen Verteilungen'</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sec-dataexploratory-distributions-sum-random-variables" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -993,38 +1030,66 @@ wobei <span class="math inline">\(\text{Cov}(X, Y) = 0\)</span>, wenn <span clas
 <img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-sum-random-variables-output-1.png" width="961" height="523" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-distributions-sum-random-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.10: Summe von Zufallsvariablen aus verschiedenen Verteilungen.
+Figure&nbsp;4.10: Summe von Zufallsvariablen aus verschiedenen Verteilungen (N = 10.000).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Um den zentralen Grenzwertsatz zu verdeutlichen, passen wir eine Normalverteilung an die Summe der Zufallsvariablen aus <a href="#fig-sec-dataexploratory-distributions-sum-random-variables" class="quarto-xref">Figure&nbsp;<span>4.10</span></a> an. <a href="#fig-sec-dataexploratory-distributions-sum-random-variables-fit" class="quarto-xref">Figure&nbsp;<span>4.11</span></a> zeigt, wie gut die Summe durch eine Normalverteilung beschrieben wird.</p>
+<section id="normalverteilungs-fit-der-summe" class="level4" data-number="4.5.2.1">
+<h4 data-number="4.5.2.1" class="anchored" data-anchor-id="normalverteilungs-fit-der-summe"><span class="header-section-number">4.5.2.1</span> Normalverteilungs-Fit der Summe</h4>
+<p>Um den zentralen Grenzwertsatz zu veranschaulichen, passen wir eine Normalverteilung an die Summe an. <a href="#fig-sec-dataexploratory-distributions-sum-random-variables-fit" class="quarto-xref">Figure&nbsp;<span>4.11</span></a> zeigt, wie gut die Summe einer Normalverteilung entspricht.</p>
 <div id="cell-fig-sec-dataexploratory-distributions-sum-random-variables-fit" class="cell styled-output" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Annahme: X_sum aus vorherigem Code verfügbar</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>X_sum_mu, X_sum_sigma <span class="op">=</span> norm.fit(X_sum)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>plt.hist(X_sum, bins<span class="op">=</span><span class="dv">50</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'Summe'</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="bu">min</span>(X_sum), <span class="bu">max</span>(X_sum), <span class="dv">1000</span>)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, X_sum_mu, X_sum_sigma)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, <span class="st">'r-'</span>, label<span class="op">=</span><span class="st">'Normalverteilung'</span>)</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wert'</span>)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Fit der Summe mit einer Normalverteilung'</span>)</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalverteilung an Summe anpassen</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>X_sum_mu, X_sum_sigma <span class="op">=</span> norm.fit(X_sum)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>plt.hist(X_sum, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'skyblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'Summe'</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="bu">min</span>(X_sum), <span class="bu">max</span>(X_sum), <span class="dv">1000</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, X_sum_mu, X_sum_sigma)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, <span class="st">'r-'</span>, label<span class="op">=</span><span class="ss">f'Normal ($\mu=</span><span class="sc">{</span>X_sum_mu<span class="sc">:.1f}</span><span class="ss">$, $\sigma=</span><span class="sc">{</span>X_sum_sigma<span class="sc">:.1f}</span><span class="ss">$)'</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wert'</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Fit der Summe mit einer Normalverteilung'</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:10: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:10: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+&lt;&gt;:10: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:10: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+/tmp/ipykernel_3087/3238649060.py:10: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+/tmp/ipykernel_3087/3238649060.py:10: SyntaxWarning:
+
+invalid escape sequence '\s'
+</code></pre>
+</div>
 <div class="cell-output cell-output-display">
 <div id="fig-sec-dataexploratory-distributions-sum-random-variables-fit" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sec-dataexploratory-distributions-sum-random-variables-fit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-sum-random-variables-fit-output-1.png" width="597" height="449" class="figure-img">
+<img src="distributions_files/figure-html/fig-sec-dataexploratory-distributions-sum-random-variables-fit-output-2.png" width="597" height="449" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-dataexploratory-distributions-sum-random-variables-fit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.11: Fit einer Normalverteilung an die Summe verschiedener Verteilungen.
+Figure&nbsp;4.11: Fit der Summe von Zufallsvariablen mit einer Normalverteilung (N = 10.000).
 </figcaption>
 </figure>
 </div>
@@ -1032,6 +1097,7 @@ Figure&nbsp;4.11: Fit einer Normalverteilung an die Summe verschiedener Verteilu
 </div>
 
 
+</section>
 </section>
 </section>
 
