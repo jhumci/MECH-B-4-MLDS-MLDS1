@@ -1,301 +1,313 @@
 # Verteilungen {#sec-statistik-verteilungen}
 
-In diesem Abschnitt untersuchen wir Verteilungen einzelner Variablen. Histogramme veranschaulichen die Häufigkeitsverteilung, wie in den folgenden Abbildungen dargestellt.
+In diesem Abschnitt untersuchen wir Verteilungen einzelner Variablen. Histogramme und Balkendiagramme veranschaulichen die Häufigkeits- oder Wahrscheinlichkeitsverteilung, wie in den folgenden Abbildungen dargestellt. Verteilungen sind die Grundlage für Simulationen, z. B. in der Monte-Carlo-Methode, wie im [Tutorial zur Fahrzeugausfallzeit](#sec-monte-carlo-simulation) gezeigt.
 
 ## Diskrete Verteilungen {#sec-discrete-distributions}
 
-Diskrete Verteilungen modellieren Zufallsvariablen mit abzählbaren Werten. Wir betrachten die Bernoulli-, Binomial- und Poisson-Verteilung.
+Diskrete Verteilungen beschreiben Zufallsvariablen mit abzählbaren Werten. Wir betrachten die __Bernoulli-Verteilung__, __Binomial-Verteilung__ und __Poisson-Verteilung__, die häufig in der Statistik und realen Anwendungen vorkommen.
 
 ### Bernoulli-Verteilung {#sec-bernoulli-distribution}
 
-Die Bernoulli-Verteilung beschreibt eine diskrete Zufallsvariable mit zwei Ergebnissen, z. B. Münzwurf („Kopf“ = 1, „Zahl“ = 0). Die Wahrscheinlichkeit für „Kopf“ ist $p$, für „Zahl“ $1-p$. Die Wahrscheinlichkeitsfunktion lautet:  
-$$P(X=x) = \begin{cases} 
-p & \text{für } x=1, \\ 
-1-p & \text{für } x=0. 
+Die __Bernoulli-Verteilung__ modelliert eine Zufallsvariable mit genau zwei möglichen Ergebnissen, z. B. einen Münzwurf: „Kopf“ ($X = 1$) mit Wahrscheinlichkeit $p$ oder „Zahl“ ($X = 0$) mit Wahrscheinlichkeit $1-p$. Die Wahrscheinlichkeitsfunktion lautet:  
+$$P(X = x) = \begin{cases} 
+p & \text{für } x = 1, \\ 
+1-p & \text{für } x = 0. 
 \end{cases}$$  
-Wir notieren $X \sim \text{Bernoulli}(p)$. Für eine faire Münze gilt $p = 0.5$, also:  
-$X \sim \text{Bernoulli}(0.5)$.  
+Wir schreiben $X \sim \text{Bernoulli}(p)$. Für eine faire Münze gilt $p = 0.5$, also $X \sim \text{Bernoulli}(0.5)$.  
 
-Die Verteilung einer fairen Münze ist in @fig-sec-dataexploratory-verteilungen-bernoulli-verteilung dargestellt.
+@fig-sec-dataexploratory-verteilungen-bernoulli-verteilung zeigt die Verteilung für eine faire Münze. Diese einfache Verteilung ist die Basis für komplexere Modelle wie die Binomial-Verteilung und findet Anwendung in Entscheidungen mit Ja/Nein-Ergebnissen.
 
 ```{python}
 #| classes: styled-output
 #| label: fig-sec-dataexploratory-verteilungen-bernoulli-verteilung
-#| fig-cap: Wahrscheinlichkeitsverteilung der Bernoulli-Verteilung für eine faire Münze.
+#| fig-cap: Wahrscheinlichkeitsverteilung der Bernoulli-Verteilung für eine faire Münze (p = 0.5).
 import numpy as np
 import matplotlib.pyplot as plt
 
 p = 0.5
-x = np.array([0, 1])
-P_X = np.array([1-p, p])
+x = [0, 1]  # Einfache Liste statt NumPy-Array für Klarheit
+P_X = [1-p, p]
 
-plt.bar(x, P_X, color='skyblue')
-plt.xlabel('Werte der Zufallsvariablen')
+plt.bar(x, P_X, color='skyblue', width=0.6)
+plt.xlabel('Ergebnis (0 = Zahl, 1 = Kopf)')
 plt.ylabel('Wahrscheinlichkeit')
-plt.title('Bernoulli-Verteilung (p = 0.5)')
+plt.title('Bernoulli-Verteilung ($p = 0.5$)')
 plt.ylim(0, 1)
 plt.xticks(x)
+plt.grid(axis='y', alpha=0.3)
 plt.show()
 ```
+In @fig-sec-dataexploratory-verteilungen-bernoulli-verteilung wird jeder möglichen Realisierung der Zufallsvariablen $X$ die theoretische Wahrscheinlichkeit zugeordnet. Im Gegensatz zu Histogrammen, die empirische Häufigkeiten darstellen, zeigt diese Abbildung die Wahrscheinlichkeitsverteilung direkt.
 
-### Bernoulli-Verteilung (Fortsetzung) {#sec-bernoulli-distribution-cont}
-
-In @fig-sec-dataexploratory-verteilungen-bernoulli-verteilung werden jedem möglichen Wert der Zufallsvariablen $X$ die theoretischen Wahrscheinlichkeiten zugeordnet – im Gegensatz zu Histogrammen, die beobachtete Häufigkeiten zeigen.
-
-#### Erwartungswert der Bernoulli-Verteilung {#sec-bernoulli-expectation}
+#### Erwartungswert und Varianz der Bernoulli-Verteilung {#sec-bernoulli-expectation-variance}
 
 :::::: {.callout-important}
-Der __Erwartungswert__ $E(X)$ einer Verteilung beschreibt ihren durchschnittlichen Wert und misst die zentrale Tendenz. Für eine diskrete Zufallsvariable $X$ gilt:  
-$$E(X) = \sum_{x} x \cdot P(X=x).$$  
-Bei der Bernoulli-Verteilung ($X = 1$ mit Wahrscheinlichkeit $p$, $X = 0$ mit $1-p$) ergibt sich:  
+Der __Erwartungswert__ $E(X)$ einer Verteilung beschreibt ihre zentrale Tendenz – den durchschnittlichen Wert der Zufallsvariablen. Für eine diskrete Zufallsvariable $X$ gilt:  
+$$E(X) = \sum_{x} x \cdot P(X = x).$$  
+Bei der Bernoulli-Verteilung ($X \sim \text{Bernoulli}(p)$) ist:  
 $$E(X) = 0 \cdot (1-p) + 1 \cdot p = p.$$  
 Für eine faire Münze ($p = 0.5$) ist $E(X) = 0.5$.
 ::::::
 
-#### Varianz der Bernoulli-Verteilung {#sec-bernoulli-variance}
-
 :::::: {.callout-important}
-Die __Varianz__ $\text{Var}(X)$ misst die Streuung um den Erwartungswert. Sie wird berechnet als:  
-$$\text{Var}(X) = \sum_{x} (x - E(X))^2 \cdot P(X=x).$$  
+Die __Varianz__ $\text{Var}(X)$ misst die Streuung der Verteilung – wie stark die Werte um den Erwartungswert schwanken. Sie wird berechnet als:  
+$$\text{Var}(X) = \sum_{x} (x - E(X))^2 \cdot P(X = x).$$  
 Für die Bernoulli-Verteilung ergibt sich:  
-$$\text{Var}(X) = (0 - p)^2 \cdot (1-p) + (1 - p)^2 \cdot p = p^2 \cdot (1-p) + (1-p)^2 \cdot p = p \cdot (1-p).$$  
+$$\text{Var}(X) = (0 - p)^2 \cdot (1-p) + (1 - p)^2 \cdot p = p \cdot (1-p).$$  
 Bei $p = 0.5$ ist $\text{Var}(X) = 0.5 \cdot 0.5 = 0.25$.
 ::::::
 
 ### Binomialverteilung {#sec-binomial-distribution}
 
-Stellen wir uns vor, wir werfen eine Münze $n$-mal, wobei jeder Wurf unabhängig ist und „Kopf“ die Wahrscheinlichkeit $p$ hat („Zahl“: $1-p$). Die Zufallsvariable $Y$ zählt die Anzahl der Kopfwürfe. $Y$ folgt einer Binomialverteilung, die die Erfolge in $n$ unabhängigen Bernoulli-Experimenten beschreibt. Ihre Wahrscheinlichkeitsfunktion ist:  
+Stellen wir uns vor, wir wiederholen einen Münzwurf $n$-mal unabhängig mit der Wahrscheinlichkeit $p$ für „Kopf“. Die Zufallsvariable $Y$ zählt die Anzahl der Kopfwürfe und folgt einer __Binomialverteilung__: $Y \sim \text{Bin}(n, p)$. Die Wahrscheinlichkeitsfunktion lautet:  
 $$P(Y = k) = \binom{n}{k} p^k (1-p)^{n-k},$$  
-wobei $\binom{n}{k}$ die Anzahl der Möglichkeiten ist, $k$ Erfolge aus $n$ Versuchen zu wählen. Die Verteilung für $n = 10$, $p = 0.5$ zeigt @fig-sec-dataexploratory-distributions-binomial-distribution.
+wobei $\binom{n}{k}$ die Anzahl der Möglichkeiten ist, $k$ Erfolge in $n$ Versuchen zu erzielen.  
+
+@fig-sec-dataexploratory-distributions-binomial-distribution zeigt die Verteilung für $n = 10$ und $p = 0.5$. Die Binomialverteilung ist eine Erweiterung der Bernoulli-Verteilung und nützlich, um Häufigkeiten in wiederholten Experimenten zu modellieren.
 
 ```{python}
 #| classes: styled-output
 #| label: fig-sec-dataexploratory-distributions-binomial-distribution
-#| fig-cap: Binomialverteilung für eine faire Münze (n = 10, p = 0.5).
+#| fig-cap: Wahrscheinlichkeitsverteilung der Binomialverteilung für eine faire Münze (n = 10, p = 0.5).
 import numpy as np
-import math
 import matplotlib.pyplot as plt
+from scipy.stats import binom
 
 n = 10
 p = 0.5
-y = np.arange(0, n+1)
-P_Y = np.array([math.comb(n, k) * p**k * (1-p)**(n-k) for k in y])
+y = np.arange(0, n + 1)
+P_Y = binom.pmf(y, n, p)
 
-plt.bar(y, P_Y, color='skyblue')
+plt.bar(y, P_Y, color='skyblue', width=0.8)
 plt.xlabel('Anzahl der Kopfwürfe ($Y$)')
 plt.ylabel('Wahrscheinlichkeit')
-plt.title('Binomialverteilung (n = 10, p = 0.5)')
+plt.title(f'Binomialverteilung ($n = {n}$, $p = {p}$)')
 plt.xticks(y)
+plt.grid(axis='y', alpha=0.3)
 plt.show()
 ```
 
 
-### Binomialverteilung (Fortsetzung) {#sec-binomial-distribution-cont}
 
-Die Würfe sind unabhängig und identisch verteilt (i.i.d.), und die Zufallsvariable $Y$ – die Anzahl der Erfolge – folgt einer Binomialverteilung, notiert als $Y \sim \text{Bin}(n, p)$. Ihre Wahrscheinlichkeitsfunktion lautet:  
-$$P(Y=y) = \binom{n}{y} \cdot p^y \cdot (1-p)^{n-y},$$  
-wobei:  
-- $n$: Anzahl der Versuche,  
-- $p$: Erfolgswahrscheinlichkeit pro Versuch,  
-- $\binom{n}{y}$: Binomialkoeffizient, die Anzahl der Möglichkeiten, $y$ Erfolge in $n$ Versuchen zu erzielen, definiert als:  
-$$\binom{n}{y} = \frac{n!}{y! \cdot (n-y)!}.$$
+Stellen wir uns vor, wir wiederholen einen Münzwurf $n$-mal. Die Würfe sind __unabhängig und identisch verteilt__ (i.i.d.), d. h., jeder Wurf hat die gleiche Wahrscheinlichkeit $p$ für „Kopf“ und ist unbeeinflusst von den anderen. Die Zufallsvariable $Y$ zählt die Anzahl der Kopfwürfe und folgt einer __Binomialverteilung__: $Y \sim \text{Bin}(n, p)$. Die Wahrscheinlichkeitsfunktion ist:  
+$$P(Y = y) = \binom{n}{y} \cdot p^y \cdot (1-p)^{n-y},$$  
+wobei $\binom{n}{y}$ der Binomialkoeffizient ist. Dieser gibt an, auf wie viele Arten $y$ Erfolge in $n$ Versuchen auftreten können und wird definiert als:  
+$$\binom{n}{y} = \frac{n!}{y! \cdot (n - y)!}.$$
+
+#### Beispiel: Münzwurf
+Für $n = 10$ Würfe mit einer fairen Münze ($p = 0.5$) ist $Y \sim \text{Bin}(10, 0.5)$. Dies wurde in @fig-sec-dataexploratory-distributions-binomial-distribution gezeigt.
 
 #### Beispiel: Gewinnlose
-
-Betrachten wir ein neues Szenario: Beim Ziehen von 10 Losen ist die Wahrscheinlichkeit für ein Gewinnlos $p = 0.1$. Die Anzahl der Gewinnlose $Y$ ist binomialverteilt: $Y \sim \text{Bin}(n=10, p=0.1)$. Die Verteilung zeigt @fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets.
+Passen wir die Werte an: Beim Ziehen von 10 Losen, wobei die Wahrscheinlichkeit für ein Gewinnlos $p = 0.1$ beträgt, gilt $Y \sim \text{Bin}(10, 0.1)$. Die Zufallsvariable $Y$ zählt die Anzahl der Gewinnlose. @fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets zeigt diese Verteilung. Solche Modelle sind nützlich, um Erfolge in wiederholten, unabhängigen Versuchen zu analysieren – ähnlich wie im [Tutorial zur Fahrzeugausfallzeit](#sec-monte-carlo-simulation), wo Verteilungen für Komponenten genutzt werden.
 
 ```{python}
 #| classes: styled-output
 #| label: fig-sec-dataexploratory-distributions-binomial-distribution-10-tickets
-#| fig-cap: Binomialverteilung für das Ziehen von Gewinnlosen (n = 10, p = 0.1).
+#| fig-cap: Wahrscheinlichkeitsverteilung der Binomialverteilung für das Ziehen von Gewinnlosen (n = 10, p = 0.1).
 import numpy as np
-import math
 import matplotlib.pyplot as plt
+from scipy.stats import binom
 
 n = 10
 p = 0.1
-y = np.arange(0, n+1)
-P_Y = np.array([math.comb(n, k) * p**k * (1-p)**(n-k) for k in y])
+y = np.arange(0, n + 1)
+P_Y = binom.pmf(y, n, p)
 
-plt.bar(y, P_Y, color='skyblue')
+plt.bar(y, P_Y, color='skyblue', width=0.8)
 plt.xlabel('Anzahl der Gewinnlose ($Y$)')
 plt.ylabel('Wahrscheinlichkeit')
-plt.title('Binomialverteilung (n = 10, p = 0.1)')
+plt.title(f'Binomialverteilung ($n = {n}$, $p = {p}$)')
 plt.xticks(y)
+plt.grid(axis='y', alpha=0.3)
 plt.show()
 ```
 
 #### Erwartungswert und Varianz der Binomialverteilung {#sec-binomial-expectation-variance}
 
-:::::: {.callout-important}
-Der __Erwartungswert__ $E(Y)$ der Binomialverteilung gibt die erwartete Anzahl der Erfolge in $n$ Versuchen an:  
+Der __Erwartungswert__ $E(Y)$ der Binomialverteilung ($Y \sim \text{Bin}(n, p)$) gibt die erwartete Anzahl der Erfolge in $n$ Versuchen an:  
 $$E(Y) = n \cdot p.$$  
-Die __Varianz__ $\text{Var}(Y)$ misst die Streuung der Erfolge:  
+Für $n = 10$ und $p = 0.1$ (Gewinnlose) ist $E(Y) = 10 \cdot 0.1 = 1$.
+
+Die __Varianz__ $\text{Var}(Y)$ misst die Streuung um diesen Erwartungswert:  
 $$\text{Var}(Y) = n \cdot p \cdot (1-p).$$  
-Beispiel: Bei $n = 10$, $p = 0.1$ (Gewinnlose) ist $E(Y) = 10 \cdot 0.1 = 1$ und $\text{Var}(Y) = 10 \cdot 0.1 \cdot 0.9 = 0.9$.
-::::::
+Im Beispiel ist $\text{Var}(Y) = 10 \cdot 0.1 \cdot 0.9 = 0.9$. Diese Werte helfen, die Verteilung zu charakterisieren, z. B. in Simulationen wie im [Tutorial](#sec-monte-carlo-simulation).
 
 ### Diskrete Gleichverteilung {#sec-discrete-uniform-distribution}
 
-Die diskrete Gleichverteilung (auch Uniformverteilung) beschreibt eine Zufallsvariable, bei der alle Werte gleiche Wahrscheinlichkeit haben, z. B. beim Würfelwurf. Für $n$ mögliche Werte ($x = 1, 2, \ldots, n$) ist die Wahrscheinlichkeitsfunktion:  
-$$P(X=x) = \frac{1}{n}.$$  
-Wir notieren $X \sim \text{DU}(n)$. Beim Würfelwurf ($n = 6$) ist $P(X=x) = \frac{1}{6}$. Die Verteilung zeigt @fig-sec-dataexploratory-distributions-discrete-uniform-distribution.
+Die __diskrete Gleichverteilung__ (auch Uniformverteilung) beschreibt eine Zufallsvariable, bei der alle möglichen Werte die gleiche Wahrscheinlichkeit haben – etwa beim Würfeln eines fairen Würfels. Für $n$ mögliche Werte ($x = 1, 2, \ldots, n$) ist die Wahrscheinlichkeitsfunktion:  
+$$P(X = x) = \frac{1}{n}.$$  
+Wir notieren $X \sim \text{DU}(n)$, wobei $[1, n]$ das Intervall der Werte ist.  
+
+@fig-sec-dataexploratory-distributions-discrete-uniform-distribution zeigt die Verteilung für einen Würfel ($n = 6$). Im [Tutorial zur Fahrzeugausfallzeit](#sec-monte-carlo-simulation) wird eine stetige Gleichverteilung für die Steuereinheit ($4000$ bis $8000$ Stunden) verwendet – die diskrete Variante ist hier eine einfache Entsprechung.
 
 ```{python}
 #| classes: styled-output
 #| label: fig-sec-dataexploratory-distributions-discrete-uniform-distribution
-#| fig-cap: Diskrete Gleichverteilung für einen Würfelwurf (n = 6).
+#| fig-cap: Wahrscheinlichkeitsverteilung der diskreten Gleichverteilung für einen Würfel (n = 6).
 import numpy as np
 import matplotlib.pyplot as plt
 
 n = 6
-x = np.arange(1, n+1)
-P_X = np.array([1/n for _ in x])
+x = np.arange(1, n + 1)
+P_X = np.full(n, 1/n)  # Array mit konstanter Wahrscheinlichkeit 1/n
 
-plt.bar(x, P_X, color='skyblue')
-plt.xlabel('Augenzahl ($X$)')
+plt.bar(x, P_X, color='skyblue', width=0.8)
+plt.xlabel('Würfelzahl ($X$)')
 plt.ylabel('Wahrscheinlichkeit')
-plt.title('Diskrete Gleichverteilung (n = 6)')
+plt.title(f'Diskrete Gleichverteilung ($n = {n}$)')
 plt.xticks(x)
+plt.grid(axis='y', alpha=0.3)
 plt.show()
 ```
 
-In @fig-sec-dataexploratory-distributions-discrete-uniform-distribution ist ersichtlich, dass jede Augenzahl die gleiche Wahrscheinlichkeit $\frac{1}{6}$ hat.
+In der Abbildung @fig:sec-dataexploratory-distributions-discrete-uniform-distribution wird die Wahrscheinlichkeitsverteilung der diskreten Gleichverteilung für das Würfeln eines Würfels dargestellt. Die Wahrscheinlichkeitsverteilung zeigt, dass alle möglichen Werte der Zufallsvariablen die gleiche Wahrscheinlichkeit haben.
 
-#### Erwartungswert und Varianz der diskreten Gleichverteilung {#sec-discrete-uniform-expectation-variance}
+#### Erwartungswert und Varianz der diskreten Gleichverteilung
 
-:::::: {.callout-important}
-Der __Erwartungswert__ $E(X)$ der diskreten Gleichverteilung ($X = 1, 2, \ldots, n$) ist der Mittelwert der Werte:  
-$$E(X) = \frac{n+1}{2}.$$  
-Die __Varianz__ $\text{Var}(X)$ misst die Streuung:  
-$$\text{Var}(X) = \frac{n^2-1}{12}.$$  
-Beispiel: Für einen Würfel ($n=6$) ist $E(X) = \frac{6+1}{2} = 3.5$ und $\text{Var}(X) = \frac{6^2-1}{12} = \frac{35}{12} \approx 2.9167$.
-::::::
+Erwartungswert und Varianz der diskreten Gleichverteilung {#sec-discrete-uniform-expectation-variance}
+Der Erwartungswert $E(X)$ liegt in der Mitte des Intervalls:
+
+$$
+E(X) = \frac{n+1}{2}.
+$$
+Für einen Würfel ($n = 6$) ist $E(X) = \frac{6 + 1}{2} = 3.5$.
+
+
+Die Varianz $\text{Var}(X)$ beschreibt die Streuung:
+$$
+\text{Var}(X) = \frac{n^2-1}{12}.
+$$
+
+Bei $n = 6$ ist $\text{Var}(X) = \frac{36 - 1}{12} = \frac{35}{12} \approx 2.9167$. 
 
 ## Stetige Verteilungen {#sec-continuous-distributions}
 
-Stetige Verteilungen modellieren Zufallsvariablen mit kontinuierlichen Werten. Wir untersuchen die Normal-, Exponential- und stetige Gleichverteilung.
+__Stetige Verteilungen__ modellieren Zufallsvariablen, die kontinuierliche Werte annehmen können, z. B. Zeit oder Länge. Im Gegensatz zu diskreten Verteilungen gibt es hier unendlich viele mögliche Werte innerhalb eines Intervalls. Wir betrachten die Normalverteilung, Exponentialverteilung und stetige Gleichverteilung, die in Simulationen wie im [Tutorial zur Fahrzeugausfallzeit](#sec-monte-carlo-simulation) eine Rolle spielen.
 
 ### Stetige Gleichverteilung {#sec-continuous-uniform-distribution}
 
-Die stetige Gleichverteilung beschreibt eine Zufallsvariable, bei der alle Werte im Intervall $[a, b]$ gleich wahrscheinlich sind. Ihre Wahrscheinlichkeitsdichtefunktion lautet:  
+Die __stetige Gleichverteilung__ beschreibt eine Zufallsvariable, bei der alle Werte in einem Intervall $[a, b]$ gleich wahrscheinlich sind. Die Wahrscheinlichkeitsdichtefunktion (Dichte) lautet:  
 $$f(x) = \begin{cases} 
-\frac{1}{b-a} & \text{für } a \leq x \leq b, \\ 
+\frac{1}{b - a} & \text{für } a \leq x \leq b, \\ 
 0 & \text{sonst}. 
 \end{cases}$$  
-Wir notieren $X \sim \text{U}(a, b)$. Bei stetigen Verteilungen gibt die Fläche unter der Dichtefunktion die Wahrscheinlichkeit an und ist stets 1. Für $a = 0$, $b = 1$ zeigt @fig-sec-dataexploratory-distributions-continuous-uniform-distribution die Dichtefunktion.
+Wir schreiben $X \sim \text{U}(a, b)$. Bei stetigen Verteilungen wird die Wahrscheinlichkeit als Fläche unter der Dichte berechnet, wobei die Gesamtfläche stets 1 beträgt.  
+
+@fig-sec-dataexploratory-distributions-continuous-uniform-distribution zeigt die Dichte für $a = 0$ und $b = 1$. Im [Tutorial](#sec-monte-carlo-simulation) wird die stetige Gleichverteilung für die Steuereinheit ($X \sim \text{U}(4000, 8000)$) verwendet, um Ausfallzeiten zu modellieren.
 
 ```{python}
 #| classes: styled-output
 #| label: fig-sec-dataexploratory-distributions-continuous-uniform-distribution
-#| fig-cap: Stetige Gleichverteilung auf dem Intervall [0, 1].
+#| fig-cap: Wahrscheinlichkeitsdichte der stetigen Gleichverteilung auf dem Intervall [0, 1].
 import numpy as np
 import matplotlib.pyplot as plt
 
 a = 0
 b = 1
-x = np.linspace(a-0.5, b+0.5, 1000)
-f_X = np.array([1/(b-a) if a <= x_i <= b else 0 for x_i in x])
+x = np.linspace(a - 0.5, b + 0.5, 1000)
+f_X = np.where((x >= a) & (x <= b), 1 / (b - a), 0)
 
-plt.plot(x, f_X, color='skyblue')
-plt.xlabel('Werte von $X$')
+plt.plot(x, f_X, color='skyblue', linewidth=2)
+plt.fill_between(x, f_X, alpha=0.2, color='skyblue')  # Fläche einfärben
+plt.xlabel('Werte der Zufallsvariablen ($X$)')
 plt.ylabel('Wahrscheinlichkeitsdichte')
-plt.title('Stetige Gleichverteilung [0, 1]')
+plt.title(f'Stetige Gleichverteilung ($a = {a}$, $b = {b}$)')
+plt.grid(alpha=0.3)
 plt.show()
 ```
+Bei stetigen Verteilungen ist die Wahrscheinlichkeit eines exakten Wertes 0, da es unendlich viele mögliche Werte gibt. Stattdessen berechnen wir die Wahrscheinlichkeit für einen Wertebereich als Fläche unter der Dichtefunktion:  
+$$P(a \leq X \leq b) = \int_{a}^{b} f(x) \, dx.$$
 
-Bei stetigen Verteilungen ist die Wahrscheinlichkeit eines einzelnen Wertes 0, da es unendlich viele mögliche Werte gibt. Stattdessen berechnen wir die Wahrscheinlichkeit für Intervalle:  
-$$P(a \leq X \leq b) = \int_{a}^{b} f(x) \, dx,$$  
-wobei $f(x)$ die Dichtefunktion ist. Dies entspricht der Fläche unter der Kurve, wie in @fig-sec-dataexploratory-distributions-continuous-uniform-distribution für $[0, 1]$ gezeigt.
+#### Beispiel: Ausfallwahrscheinlichkeit eines Bauteils {#sec-uniform-example}
 
-#### Beispiel: Ausfallwahrscheinlichkeit eines Bauteils {#sec-uniform-example-component-failure}
+Der Ausfall eines elektronischen Bauteils folgt einer stetigen Gleichverteilung auf $[0, 3650]$ Tagen ($X \sim \text{U}(0, 3650)$). Wie hoch ist die Wahrscheinlichkeit, dass es innerhalb der ersten 1000 Tage ausfällt?  
 
-Der Ausfallzeitpunkt eines elektronischen Bauteils folgt einer stetigen Gleichverteilung auf $[0, 3650]$ Tagen ($X \sim \text{U}(0, 3650)$). Wie hoch ist die Wahrscheinlichkeit, dass es innerhalb der ersten 1000 Tage ausfällt?
-
-:::::: {.callout-tip collapse=true}
 Die Dichtefunktion ist:  
 $$f(x) = \begin{cases} 
-\frac{1}{3650} & \text{für } 0 \leq x \leq 3650, \\ 
+\frac{1}{3650 - 0} = \frac{1}{3650} & \text{für } 0 \leq x \leq 3650, \\ 
 0 & \text{sonst}. 
 \end{cases}$$  
-Die Wahrscheinlichkeit für einen Ausfall in $[0, 1000]$ beträgt:  
-$$P(0 \leq X \leq 1000) = \int_{0}^{1000} \frac{1}{3650} \, dx = \left[ \frac{x}{3650} \right]_{0}^{1000} = \frac{1000}{3650} = \frac{100}{365} \approx 0.274.$$  
-Das Bauteil hat eine Chance von ca. 27,4 %, innerhalb von 1000 Tagen auszusetzen.
+Die Wahrscheinlichkeit ergibt sich durch Integration:  
+$$P(0 \leq X \leq 1000) = \int_{0}^{1000} \frac{1}{3650} \, dx = \frac{1000}{3650} \approx 0.274.$$  
+Das Bauteil hat also eine 27,4 % Chance, innerhalb von 1000 Tagen auszusetzen. Dieses Prinzip wird im [Tutorial](#sec-monte-carlo-simulation) bei der Steuereinheit ($X \sim \text{U}(4000, 8000)$) angewendet.
+
+:::::: {.callout-tip collapse=true title="Lösungsschritte"}
+1. Dichte: $f(x) = \frac{1}{3650}$ für $0 \leq x \leq 3650$.  
+2. Integral: $P(0 \leq X \leq 1000) = \int_{0}^{1000} \frac{1}{3650} \, dx$.  
+3. Ergebnis: $\frac{1000}{3650} = 0.274$.
 ::::::
-
-
 
 ### Normalverteilung {#sec-normal-distribution}
 
-Die Normalverteilung ist eine stetige Wahrscheinlichkeitsverteilung, die in Statistik und Naturwissenschaften weit verbreitet ist – etwa für Körpergrößen oder Messfehler. Sie wird durch ihre symmetrische Glockenkurve charakterisiert, bei der die Werte um den Erwartungswert $\mu$ verteilt sind. Ihre Wahrscheinlichkeitsdichtefunktion lautet:  
-$$f(x) = \frac{1}{\sqrt{2\pi} \sigma} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right),$$  
-für $-\infty < x < \infty$. Die Zufallsvariable $X$ folgt $X \sim \mathcal{N}(\mu, \sigma^2)$, wobei $\mu$ der Erwartungswert und $\sigma^2$ die Varianz ist.
+Die __Normalverteilung__ ist eine stetige Verteilung, die in Statistik und Naturwissenschaften weit verbreitet ist. Ihre Glockenform zeigt eine symmetrische Verteilung der Werte um den Erwartungswert. Die Dichtefunktion lautet:  
+$$f(x) = \frac{1}{\sqrt{2\pi} \sigma} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right),$$  
+für $-\infty < x < \infty$. Wir schreiben $X \sim \mathcal{N}(\mu, \sigma^2)$, wobei $\mu$ der Erwartungswert und $\sigma^2$ die Varianz ist.  
 
-Falls $\mu = 0$ und $\sigma = 1$, spricht man von der __Standardnormalverteilung__: $X \sim \mathcal{N}(0, 1)$. Sie ist eine spezielle Form mit Erwartungswert 0 und Varianz 1, die oft als Referenz dient. Ihre Dichtefunktion zeigt @fig-sec-dataexploratory-distributions-normal-distribution.
+Falls $\mu = 0$ und $\sigma = 1$, spricht man von der __Standardnormalverteilung__ ($X \sim \mathcal{N}(0, 1)$), eine spezielle Form mit Erwartungswert 0 und Varianz 1. @fig-sec-dataexploratory-distributions-normal-distribution zeigt diese Verteilung. Im [Tutorial](#sec-monte-carlo-simulation) wird die Normalverteilung für den Sensor ($X \sim \mathcal{N}(6000, 100^2)$) genutzt, um Ausfallzeiten zu modellieren.
 
 ```{python}
 #| classes: styled-output
 #| label: fig-sec-dataexploratory-distributions-normal-distribution
-#| fig-cap: Standardnormalverteilung mit $\mu = 0$ und $\sigma = 1$.
+#| fig-cap: Wahrscheinlichkeitsdichte der Standardnormalverteilung ($\mu = 0$, $\sigma = 1$).
 import numpy as np
 import matplotlib.pyplot as plt
 
 mu = 0
 sigma = 1
 x = np.linspace(-5, 5, 1000)
-f_X = 1/(np.sqrt(2*np.pi)*sigma) * np.exp(-(x-mu)**2/(2*sigma**2))
+f_X = 1 / (np.sqrt(2 * np.pi) * sigma) * np.exp(-((x - mu) ** 2) / (2 * sigma ** 2))
 
-plt.plot(x, f_X, color='skyblue')
-plt.xlabel('Werte von $X$')
+plt.plot(x, f_X, color='skyblue', linewidth=2)
+plt.fill_between(x, f_X, alpha=0.2, color='skyblue')  # Fläche einfärben
+plt.xlabel('Werte der Zufallsvariablen ($X$)')
 plt.ylabel('Wahrscheinlichkeitsdichte')
-plt.title('Standardnormalverteilung ($\mu = 0$, $\sigma = 1$)')
+plt.title(f'Standardnormalverteilung ($\mu = {mu}$, $\sigma = {sigma}$)')
+plt.grid(alpha=0.3)
 plt.show()
 ```
 
-Früher war die Berechnung der Fläche unter der Normalverteilungskurve ($P(X \leq x)$) ohne Computer schwierig. Dafür nutzte man [Z-Tabellen](https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle), die die Wahrscheinlichkeit $P(Z \leq z)$ für eine Standardnormalverteilte Zufallsvariable $Z \sim \mathcal{N}(0, 1)$ angeben. Beispiele:  
-- $P(Z \leq 0) = 0.5$ (50 %),  
-- $P(Z \leq 1) = 0.8413$ (84,13 %),  
+Früher, ohne Computer, war die Berechnung der Fläche unter der Normalverteilungskurve ($P(X \leq x)$) schwierig. Man nutzte [$Z$-Wert-Tabellen](https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle), um die Wahrscheinlichkeit für eine standardnormalverteilte Zufallsvariable $Z \sim \mathcal{N}(0, 1)$ nachzuschlagen. Beispiele:  
+
+- $P(Z \leq 0) = 0.5$ (50 %).  
+- $P(Z \leq 1) = 0.8413$ (84,13 %).  
 - $P(Z \leq -1) = 1 - P(Z \leq 1) = 0.1587$ (15,87 %).  
-Umgekehrt: $P(Z \leq 1.645) = 0.95$ (95 %). Heute ersetzen Computerprogramme diese Tabellen.
+Umgekehrt: $P(Z \leq 1.645) = 0.95$ (95 %). Heute ersetzen Computerprogramme solche Tabellen, wie im Folgenden gezeigt.
 
 #### Erwartungswert und Varianz der Normalverteilung {#sec-normal-expectation-variance}
 
-:::::: {.callout-important}
-Der __Erwartungswert__ einer stetigen Zufallsvariable $X$ ist:  
-$$E(X) = \mu = \int_{-\infty}^{\infty} x \cdot f(x) \, dx.$$  
-Die __Varianz__ ist:  
-$$\text{Var}(X) = \sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 \cdot f(x) \, dx.$$  
-Für $X \sim \mathcal{N}(\mu, \sigma^2)$ sind $E(X) = \mu$ und $\text{Var}(X) = \sigma^2$ direkt gegeben.
-::::::
+Der __Erwartungswert__ $E(X)$ einer normalverteilten Zufallsvariable $X \sim \mathcal{N}(\mu, \sigma^2)$ ist:  
+$$E(X) = \mu.$$  
+Die __Varianz__ $\text{Var}(X)$ beträgt:  
+$$\text{Var}(X) = \sigma^2.$$  
+Für die Standardnormalverteilung ($X \sim \mathcal{N}(0, 1)$) gilt $E(X) = 0$ und $\text{Var}(X) = 1$. Im [Tutorial](#sec-monte-carlo-simulation) wird dies für den Sensor ($X \sim \mathcal{N}(6000, 100^2)$) genutzt.
 
-#### Standardisierung der Normalverteilung {#sec-normal-standardization}
+##### Standardisierung der Normalverteilung {#sec-normal-standardization}
 
-Viele Zufallsvariablen folgen einer Normalverteilung mit $\mu \neq 0$ und $\sigma \neq 1$. Um diese auf die Standardnormalverteilung $Z \sim \mathcal{N}(0, 1)$ abzubilden, wird standardisiert:  
-$$Z = \frac{X - \mu}{\sigma},$$  
-wobei $Z$ dann Erwartungswert 0 und Varianz 1 hat. Die $Z$-Werte können in Tabellen nachgeschlagen oder heute per Software berechnet werden.
+Viele Zufallsvariablen folgen keiner Standardnormalverteilung, sondern haben andere Werte für $\mu$ und $\sigma$. Um diese auf $Z \sim \mathcal{N}(0, 1)$ zu überführen, wird standardisiert:  
+$$Z = \frac{X - \mu}{\sigma}.$$  
+$Z$ hat dann $E(Z) = 0$ und $\text{Var}(Z) = 1$, sodass $Z$-Tabellen oder Software genutzt werden können.
 
-#### Beispiel: Intelligenzquotient (IQ) {#sec-normal-iq-example}
+#### Beispiel: Intelligenz-Quotient (IQ) {#sec-normal-iq-example}
 
-Der IQ ist normalverteilt mit $\mu = 100$ und $\sigma = 15$: $X \sim \mathcal{N}(100, 15^2)$. Wie wahrscheinlich ist ein IQ $\geq 130$?
+Der IQ ist normalverteilt mit $X \sim \mathcal{N}(100, 15^2)$ ($\mu = 100$, $\sigma = 15$). Wie wahrscheinlich ist ein IQ von 130 oder mehr ($P(X \geq 130)$)?
 
 ##### Analytische Berechnung
-
-Die Dichtefunktion lautet:  
-$$f(x) = \frac{1}{\sqrt{2\pi} \cdot 15} \exp\left(-\frac{(x-100)^2}{2 \cdot 15^2}\right).$$  
-Gesucht ist:  
+Die Dichtefunktion ist:  
+$$f(x) = \frac{1}{\sqrt{2\pi} \cdot 15} \exp\left(-\frac{(x - 100)^2}{2 \cdot 15^2}\right).$$  
+Die Wahrscheinlichkeit $P(X \geq 130)$ ergibt sich als:  
 $$P(X \geq 130) = 1 - P(X \leq 130) = 1 - \int_{-\infty}^{130} f(x) \, dx.$$  
-Standardisierung: $Z = \frac{130 - 100}{15} = 2$. Für $Z \sim \mathcal{N}(0, 1)$ ist $P(Z \leq 2) \approx 0.97725$ (aus Tabellen oder Software), also:  
-$$P(X \geq 130) = 1 - P(Z \leq 2) = 1 - 0.97725 = 0.02275.$$  
-Die Wahrscheinlichkeit beträgt ca. 2,275 %.
+Mit Standardisierung:  
+$$Z = \frac{130 - 100}{15} = 2, \quad P(X \leq 130) = P(Z \leq 2).$$  
+Aus Tabellen oder Software: $P(Z \leq 2) \approx 0.9772$, also:  
+$$P(X \geq 130) = 1 - 0.9772 = 0.0228 \text{ (2,28 %)}.$$
 
 ##### Berechnung mit Python
-
-Mit `scipy.stats.norm` berechnen wir die kumulative Verteilungsfunktion $P(X \leq x)$:  
+Mit `scipy.stats.norm` können wir die kumulative Verteilungsfunktion (`cdf`) direkt berechnen:
 
 ```{python}
 #| classes: styled-output
 #| label: fig-sec-dataexploratory-distributions-normal-distribution-iq-130
-#| fig-cap: Wahrscheinlichkeit eines IQ $\geq 130$ bei $\mu = 100$, $\sigma = 15$.
+#| fig-cap: Wahrscheinlichkeit, dass eine Person einen IQ von 130 oder mehr hat.
 import numpy as np
 from scipy.stats import norm
 
@@ -303,22 +315,23 @@ mu = 100
 sigma = 15
 P_X_geq_130 = 1 - norm.cdf(130, loc=mu, scale=sigma)
 
-print(f'P(X >= 130) = {P_X_geq_130:.5f}')
+print(f'P(X >= 130) = {P_X_geq_130:.4f}')  # Ausgabe: 0.0228
 ```
 
 #### Visualisierung der Wahrscheinlichkeiten {#sec-normal-probability-visualization}
 
-Häufig fragt man, welcher Anteil einer Population innerhalb von ein oder zwei Standardabweichungen vom Mittelwert liegt. Für $X \sim \mathcal{N}(\mu, \sigma^2)$ berechnen wir:  
-$$P(\mu - \sigma \leq X \leq \mu + \sigma) = P(X \leq \mu + \sigma) - P(X \leq \mu - \sigma) = \text{cdf}(\mu + \sigma) - \text{cdf}(\mu - \sigma).$$  
-Für die Standardnormalverteilung ($Z \sim \mathcal{N}(0, 1)$) ist bekannt:  
-- $P(-1 \leq Z \leq 1) \approx 0.6826$ (ca. 68 %),  
-- $P(-2 \leq Z \leq 2) \approx 0.9545$ (ca. 95 %).  
-Dies überträgt sich auf jede Normalverteilung via Standardisierung. @fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma zeigt dies für den IQ ($X \sim \mathcal{N}(100, 15^2)$).
+Oft interessiert der Anteil einer Population innerhalb von ein oder zwei Standardabweichungen vom Mittelwert. Für eine normalverteilte Zufallsvariable $X \sim \mathcal{N}(\mu, \sigma^2)$ berechnen wir:  
+$$P(\mu - \sigma \leq X \leq \mu + \sigma) = P(X \leq \mu + \sigma) - P(X \leq \mu - \sigma),$$  
+wobei $P(X \leq x)$ die kumulative Verteilungsfunktion (CDF) ist. Für die Standardnormalverteilung gilt:  
+- $P(\mu - \sigma \leq X \leq \mu + \sigma) \approx 0.6826$ (ca. 68 %),  
+- $P(\mu - 2\sigma \leq X \leq \mu + 2\sigma) \approx 0.9544$ (ca. 95 %).  
+
+Im IQ-Beispiel ($X \sim \mathcal{N}(100, 15^2)$) prüfen wir den Bereich von zwei Standardabweichungen ($\mu - 2\sigma = 70$, $\mu + 2\sigma = 130$). @fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma zeigt diese Wahrscheinlichkeit. Solche Berechnungen sind im [Tutorial](#sec-monte-carlo-simulation) nützlich, z. B. um Sensor-Ausfallzeiten zu analysieren.
 
 ```{python}
 #| classes: styled-output
 #| label: fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma
-#| fig-cap: Wahrscheinlichkeit eines IQ innerhalb von 2 Standardabweichungen ($\mu = 100$, $\sigma = 15$).
+#| fig-cap: Wahrscheinlichkeit, dass ein IQ-Wert innerhalb von zwei Standardabweichungen liegt.
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
@@ -326,172 +339,176 @@ from scipy.stats import norm
 mu = 100
 sigma = 15
 x = np.linspace(mu - 4*sigma, mu + 4*sigma, 1000)
-f_X = 1/(np.sqrt(2*np.pi)*sigma) * np.exp(-(x-mu)**2/(2*sigma**2))
+f_X = norm.pdf(x, loc=mu, scale=sigma)
 
+# Wahrscheinlichkeit für μ ± 2σ
 P_X_2_sigma = norm.cdf(mu + 2*sigma, loc=mu, scale=sigma) - norm.cdf(mu - 2*sigma, loc=mu, scale=sigma)
-print(f'P({mu - 2*sigma} <= X <= {mu + 2*sigma}) = {P_X_2_sigma:.4f}')
+print(f'P({mu - 2*sigma} <= X <= {mu + 2*sigma}) = {P_X_2_sigma:.4f}')  # Ausgabe: 0.9545
 
-plt.plot(x, f_X, color='skyblue')
-plt.fill_between(x, f_X, where=(x >= mu - 2*sigma) & (x <= mu + 2*sigma), color='lightblue', alpha=0.5)
-plt.xlabel('IQ-Werte ($X$)')
+# Plot
+plt.plot(x, f_X, color='skyblue', linewidth=2)
+plt.fill_between(x, f_X, where=(x >= mu - 2*sigma) & (x <= mu + 2*sigma), color='lightblue', alpha=0.3, label=f'P = {P_X_2_sigma:.4f}')
+plt.axvline(mu - 2*sigma, color='red', linestyle='--', label=f'{mu - 2*sigma}')
+plt.axvline(mu + 2*sigma, color='red', linestyle='--', label=f'{mu + 2*sigma}')
+plt.xlabel('IQ-Wert ($X$)')
 plt.ylabel('Wahrscheinlichkeitsdichte')
-plt.title('Normalverteilung: IQ ($\mu = 100$, $\sigma = 15$)')
-plt.text(mu, 0.015, f'P({mu - 2*sigma} <= X <= {mu + 2*sigma}) = {P_X_2_sigma:.4f}', ha='center')
+plt.title(f'IQ-Verteilung ($\mu = {mu}$, $\sigma = {sigma}$)')
+plt.legend()
+plt.grid(alpha=0.3)
 plt.show()
 ```
 
-Hier ist der überarbeitete Abschnitt mit didaktischer Überprüfung, Anpassungen für Klarheit und Quarto-kompatiblen Referenzen:
-
-markdown
-
-Einklappen
-
-Zeilenumbruch
-
-Kopieren
-### Normalverteilung (Fortsetzung) {#sec-normal-distribution-cont}
-
 :::::: {.callout-tip}
-Der [IQ](https://de.wikipedia.org/wiki/Intelligenzquotient) ist so skaliert, dass $\mu = 100$ und $\sigma = 15$. Die Wahrscheinlichkeit für einen IQ $\geq 130$ beträgt ca. 2,28 % (siehe vorheriges Beispiel). Innerhalb von 2 Standardabweichungen (70 bis 130) liegen 95,45 % der Bevölkerung, wie in @fig-sec-dataexploratory-distributions-normal-distribution-iq-2-sigma gezeigt.
+Der [IQ](https://de.wikipedia.org/wiki/Intelligenzquotient) ist so skaliert, dass $\mu = 100$ und $\sigma = 15$. Die Wahrscheinlichkeit für einen IQ $\geq 130$ beträgt etwa 2,28 %, während 95,45 % der Bevölkerung einen IQ zwischen 70 und 130 haben (innerhalb von $\pm 2\sigma$). Dies zeigt die praktische Relevanz der Normalverteilung.
 ::::::
 
 ## Weitere Verteilungen {#sec-other-distributions}
 
-Neben der Normalverteilung gibt es weitere wichtige Verteilungen in Statistik und Naturwissenschaften, z. B. für Zuverlässigkeitsanalysen oder Zufallsprozesse:  
-- __Exponentialverteilung__: Stetig, beschreibt die Zeit zwischen unabhängigen Ereignissen (z. B. Ausfallzeiten in der Zuverlässigkeitsanalyse).  
-- __Poisson-Verteilung__: Diskret, modelliert die Anzahl von Ereignissen in einem festen Intervall (z. B. Anrufe pro Stunde in der Warteschlangentheorie).  
+Neben der Normalverteilung spielen weitere stetige und diskrete Verteilungen eine Rolle in Statistik und Simulationen, wie im [Tutorial](#sec-monte-carlo-simulation) zur Fahrzeugausfallzeit genutzt:  
 
-Das Python-Modul [`scipy.stats`](https://docs.scipy.org/doc/scipy/reference/stats.html) bietet Funktionen zur Berechnung und Simulation solcher Verteilungen.
+- Die __Exponentialverteilung__ modelliert die Zeit zwischen unabhängigen Ereignissen, z. B. in der Zuverlässigkeitsanalyse oder Warteschlangentheorie.  
+- Die __Poissonverteilung__ (diskret) beschreibt die Anzahl von Ereignissen in einem festen Zeitintervall, etwa in Zufallsprozessen.  
 
-## Fitting von Verteilungen {#sec-distribution-fitting}
+Diese Verteilungen sind im Python-Modul [`scipy.stats`](https://docs.scipy.org/doc/scipy/reference/stats.html) verfügbar, das Funktionen für Wahrscheinlichkeiten und Zufallszahlen bietet. Im Tutorial wird z. B. die Poissonverteilung für den Motor ($X \sim \text{Poisson}(5000)$) eingesetzt.
 
-In der Praxis müssen Verteilungen oft an Daten angepasst werden – dies nennt sich __Fitting__. Ziel ist, die Verteilung zu finden, die die Daten am besten beschreibt. Gängige Methoden sind:  
-- Methode der kleinsten Quadrate,  
-- Maximum-Likelihood-Schätzung,  
-- Methode der Momente.  
+### Exponentialverteilung {#sec-exponential-distribution}
 
-### Beispiel: Lotterie-Daten
+Die Dichtefunktion der Exponentialverteilung ist:  
+$$f(x) = \lambda e^{-\lambda x}, \quad x \geq 0,$$  
+wobei $\lambda$ die Rate ist. Wir schreiben $X \sim \text{Exp}(\lambda)$, mit $E(X) = \frac{1}{\lambda}$ und $\text{Var}(X) = \frac{1}{\lambda^2}$. Sie ist im Tutorial für Ausfallzeiten relevant, wenn Ereignisse exponentiell verteilt wären.
 
-Nehmen wir simulierte Lotterie-Daten: Die Anzahl der Gewinnlose folgt $X \sim \text{Bin}(10, 0.1)$. Wir passen verschiedene Verteilungen an und vergleichen sie in @fig-sec-dataexploratory-distributions-binomial-fitting.
+## Fitting von Verteilungen {#sec-fitting-distributions}
+
+In der Praxis müssen wir oft die Verteilung von Daten bestimmen – ein Prozess namens __Fitting__. Ziel ist es, die Verteilung zu finden, die die Daten am besten beschreibt. Methoden wie Maximum-Likelihood-Schätzung oder die Methode der Momente werden dafür genutzt.  
+
+Als Beispiel simulieren wir Lotterie-Daten mit $X \sim \text{Bin}(10, 0.1)$ und passen verschiedene Verteilungen an, um zu vergleichen, welche die Daten am besten modelliert.
 
 ```{python}
 #| classes: styled-output
-#| label: fig-sec-dataexploratory-distributions-binomial-fitting
-#| fig-cap: Fitting von Verteilungen an simulierte Lotterie-Daten (n = 10, p = 0.1).
+#| label: fig-sec-dataexploratory-distributions-binomial-fit
+#| fig-cap: Fitting verschiedener Verteilungen an simulierte Binomialdaten (n = 10, p = 0.1).
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import binom, norm, uniform
 
 np.random.seed(42)
-data = np.random.binomial(n=10, p=0.1, size=1000)
+data = np.random.binomial(n=10, p=0.1, size=1000)  # 1000 Ziehungen
 
+# Binomialverteilung schätzen
 n_est = 10  # Bekannt aus Simulation
 p_est = np.mean(data) / n_est
 binom_x = np.arange(0, n_est + 1)
 binom_y = binom.pmf(binom_x, n=n_est, p=p_est)
 
+# Normalverteilung schätzen
 mu, sigma = norm.fit(data)
 norm_x = np.linspace(0, 10, 1000)
 norm_y = norm.pdf(norm_x, mu, sigma)
 
+# Gleichverteilung schätzen
 a, b = uniform.fit(data)
 uniform_x = np.linspace(0, 10, 1000)
-uniform_y = uniform.pdf(uniform_x, a, b-a)
+uniform_y = uniform.pdf(uniform_x, a, b - a)
 
-plt.hist(data, bins=11, density=True, color='skyblue', alpha=0.7, label='Daten')
-plt.plot(binom_x, binom_y, 'ro--', label='Binomialverteilung')
-plt.plot(norm_x, norm_y, 'g-', label='Normalverteilung')
-plt.plot(uniform_x, uniform_y, 'p-', label='Gleichverteilung')
-plt.xlabel('Anzahl der Gewinnlose')
+# Plot
+plt.hist(data, bins=range(11), density=True, color='skyblue', alpha=0.7, label='Daten')
+plt.plot(binom_x, binom_y, 'ro--', label=f'Binomial ($n={n_est}$, $p={p_est:.2f}$)')
+plt.plot(norm_x, norm_y, 'g-', label=f'Normal ($\mu={mu:.2f}$, $\sigma={sigma:.2f}$)')
+plt.plot(uniform_x, uniform_y, 'p-', label=f'Gleichverteilung ($a={a:.2f}$, $b={b:.2f}$)')
+plt.xlabel('Anzahl der Gewinnlose ($X$)')
 plt.ylabel('Dichte')
-plt.title('Fitting von Verteilungen an Lotterie-Daten')
+plt.title('Fitting von Verteilungen an Binomialdaten')
 plt.legend()
+plt.grid(alpha=0.3)
 plt.show()
 ```
 
+## Rechnen mit Verteilungen, Zufallsvariablen und Erwartungswert {#sec-computing-distributions}
 
-## Rechnen mit Verteilungen und Zufallsvariablen {#sec-computing-distributions}
-
-Der __zentrale Grenzwertsatz__ besagt, dass die Summe einer großen Anzahl unabhängiger, identisch verteilter (i.i.d.) Zufallsvariablen annähernd einer Normalverteilung folgt – unabhängig von deren ursprünglicher Verteilung. Dies ist eine Grundlage vieler statistischer Methoden, da es die Analyse von Summen erleichtert.
+Der __zentrale Grenzwertsatz__ besagt, dass die Summe einer großen Anzahl von __unabhängigen__ und __identisch verteilten__ (i.i.d.) Zufallsvariablen einer Normalverteilung folgt – unabhängig von ihrer ursprünglichen Verteilung. Dies ist ein Grundpfeiler der Statistik und erklärt, warum Normalverteilungen in Simulationen wie im [Tutorial](#sec-monte-carlo-simulation) oft auftreten.
 
 ### Rechenregeln für Erwartungswert und Varianz {#sec-expectation-variance-rules}
 
-:::::: {.callout-important}
-Für Zufallsvariablen $X_1, X_2, \ldots, X_n$ gelten:  
-- __Erwartungswert der Summe__: Immer, auch bei Abhängigkeit:  
+Für unabhängige Zufallsvariablen $X_1, X_2, \ldots, X_n$ gelten folgende Regeln:  
+
+- __Erwartungswert__: Die Summe der Erwartungswerte gilt immer, auch ohne Unabhängigkeit:  
 $$E(X_1 + X_2 + \cdots + X_n) = E(X_1) + E(X_2) + \cdots + E(X_n).$$  
-- __Varianz der Summe__: Bei Unabhängigkeit (Kovarianz = 0):  
-$$\text{Var}(X_1 + X_2) = \text{Var}(X_1) + \text{Var}(X_2).$$  
-Allgemein:  
-$$\text{Var}(X_1 + X_2) = \text{Var}(X_1) + \text{Var}(X_2) + 2 \text{Cov}(X_1, X_2).$$  
-- __Linearkombinationen__ $aX + bY$:  
+
+- __Varianz__: Bei Unabhängigkeit (Kovarianz = 0) ist die Varianz die Summe der Varianzen:  
+$$\text{Var}(X_1 + X_2 + \cdots + X_n) = \text{Var}(X_1) + \text{Var}(X_2) + \cdots + \text{Var}(X_n).$$  
+Andernfalls: $\text{Var}(X_1 + X_2) = \text{Var}(X_1) + \text{Var}(X_2) + 2 \text{Cov}(X_1, X_2)$.  
+
+- __Linearkombinationen__: Für $aX + bY$:  
 $$E(aX + bY) = aE(X) + bE(Y),$$  
 $$\text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \text{Cov}(X, Y),$$  
-wobei $\text{Cov}(X, Y) = 0$, wenn $X$ und $Y$ unabhängig sind.
+wobei $\text{Cov}(X, Y) = 0$ bei Unabhängigkeit.
+
+:::::: {.callout-important}
+Die Kovarianz $\text{Cov}(X, Y)$ misst den linearen Zusammenhang zwischen $X$ und $Y$. Bei Unabhängigkeit ist sie 0, was die Varianzberechnung vereinfacht.
 ::::::
 
-### Beispiel: Summen aus verschiedenen Verteilungen {#sec-sum-different-distributions}
+### Beispiel: Summe von Zufallsvariablen aus verschiedenen Verteilungen {#sec-sum-example}
 
-Der zentrale Grenzwertsatz gilt auch, wenn die Zufallsvariablen nicht identisch verteilt sind, solange ihre Anzahl groß ist und sie unabhängig sind. @fig-sec-dataexploratory-distributions-sum-random-variables zeigt, wie die Summe unterschiedlicher Verteilungen normal wird.
+Der zentrale Grenzwertsatz gilt auch, wenn die Zufallsvariablen nicht identisch verteilt sind, solange sie unabhängig sind und die Anzahl groß ist. @fig-sec-dataexploratory-distributions-sum-random-variables zeigt, wie die Summe von Uniform-, Exponential- und Binomialverteilungen einer Normalverteilung ähnelt – ein Prinzip, das in Monte-Carlo-Simulationen wie im Tutorial genutzt wird.
 
 ```{python}
 #| classes: styled-output
 #| label: fig-sec-dataexploratory-distributions-sum-random-variables
-#| fig-cap: Summe von Zufallsvariablen aus verschiedenen Verteilungen.
+#| fig-cap: Summe von Zufallsvariablen aus verschiedenen Verteilungen (N = 10.000).
 import numpy as np
 import matplotlib.pyplot as plt
 
 np.random.seed(42)
 N = 10000
 
-# Uniformverteilungen
-X_uni_1 = np.random.uniform(0, 10, N)
-X_uni_2 = np.random.uniform(2, 8, N)
-
-# Exponentialverteilungen
-X_exp_1 = np.random.exponential(2, N)
-X_exp_2 = np.random.exponential(3, N)
-
-# Binomialverteilungen
-X_bin_1 = np.random.binomial(20, 0.3, N)
-X_bin_2 = np.random.binomial(30, 0.2, N)
+# Zufallsvariablen definieren
+X_uni_1 = np.random.uniform(0, 10, N)      # Uniform [0, 10]
+X_uni_2 = np.random.uniform(2, 8, N)       # Uniform [2, 8]
+X_exp_1 = np.random.exponential(2, N)      # Exponential, Scale = 2
+X_exp_2 = np.random.exponential(3, N)      # Exponential, Scale = 3
+X_bin_1 = np.random.binomial(20, 0.3, N)   # Binomial (n=20, p=0.3)
+X_bin_2 = np.random.binomial(15, 0.4, N)   # Binomial (n=15, p=0.4)
 
 X_sum = X_uni_1 + X_uni_2 + X_exp_1 + X_exp_2 + X_bin_1 + X_bin_2
 
+# Plot
 plt.figure(figsize=(12, 6))
-plt.hist(X_uni_1, bins=50, alpha=0.5, label='Uniform [0, 10]', density=True)
-plt.hist(X_uni_2, bins=50, alpha=0.5, label='Uniform [2, 8]', density=True)
-plt.hist(X_exp_1, bins=50, alpha=0.5, label='Exponential (λ=0.5)', density=True)
-plt.hist(X_exp_2, bins=50, alpha=0.5, label='Exponential (λ=0.33)', density=True)
-plt.hist(X_bin_1, bins=50, alpha=0.5, label='Binomial (n=20, p=0.3)', density=True)
-plt.hist(X_bin_2, bins=50, alpha=0.5, label='Binomial (n=30, p=0.2)', density=True)
-plt.hist(X_sum, bins=50, alpha=0.7, label='Summe', density=True, color='black')
-plt.legend()
+plt.hist(X_sum, bins=50, density=True, color='skyblue', alpha=0.7, label='Summe')
+plt.hist(X_uni_1, bins=50, density=True, alpha=0.3, label='Uniform 1')
+plt.hist(X_uni_2, bins=50, density=True, alpha=0.3, label='Uniform 2')
+plt.hist(X_exp_1, bins=50, density=True, alpha=0.3, label='Exponential 1')
+plt.hist(X_exp_2, bins=50, density=True, alpha=0.3, label='Exponential 2')
+plt.hist(X_bin_1, bins=50, density=True, alpha=0.3, label='Binomial 1')
+plt.hist(X_bin_2, bins=50, density=True, alpha=0.3, label='Binomial 2')
 plt.xlabel('Wert')
 plt.ylabel('Dichte')
-plt.title('Zentraler Grenzwertsatz: Summe verschiedener Verteilungen')
+plt.title('Summe von Zufallsvariablen aus verschiedenen Verteilungen')
+plt.legend()
+plt.grid(alpha=0.3)
 plt.show()
 ```
-Um den zentralen Grenzwertsatz zu verdeutlichen, passen wir eine Normalverteilung an die Summe der Zufallsvariablen aus @fig-sec-dataexploratory-distributions-sum-random-variables an. @fig-sec-dataexploratory-distributions-sum-random-variables-fit zeigt, wie gut die Summe durch eine Normalverteilung beschrieben wird.
+
+#### Normalverteilungs-Fit der Summe
+Um den zentralen Grenzwertsatz zu veranschaulichen, passen wir eine Normalverteilung an die Summe an. @fig-sec-dataexploratory-distributions-sum-random-variables-fit zeigt, wie gut die Summe einer Normalverteilung entspricht.
 
 ```{python}
 #| classes: styled-output
 #| label: fig-sec-dataexploratory-distributions-sum-random-variables-fit
-#| fig-cap: Fit einer Normalverteilung an die Summe verschiedener Verteilungen.
+#| fig-cap: Fit der Summe von Zufallsvariablen mit einer Normalverteilung (N = 10.000).
 from scipy.stats import norm
-import numpy as np
-import matplotlib.pyplot as plt
 
-# Annahme: X_sum aus vorherigem Code verfügbar
+# Normalverteilung an Summe anpassen
 X_sum_mu, X_sum_sigma = norm.fit(X_sum)
 
-plt.hist(X_sum, bins=50, alpha=0.7, label='Summe', density=True, color='skyblue')
+# Plot
+plt.hist(X_sum, bins=50, density=True, color='skyblue', alpha=0.7, label='Summe')
 x = np.linspace(min(X_sum), max(X_sum), 1000)
 y = norm.pdf(x, X_sum_mu, X_sum_sigma)
-plt.plot(x, y, 'r-', label='Normalverteilung')
-plt.legend()
+plt.plot(x, y, 'r-', label=f'Normal ($\mu={X_sum_mu:.1f}$, $\sigma={X_sum_sigma:.1f}$)')
 plt.xlabel('Wert')
 plt.ylabel('Dichte')
 plt.title('Fit der Summe mit einer Normalverteilung')
+plt.legend()
+plt.grid(alpha=0.3)
 plt.show()
 ```

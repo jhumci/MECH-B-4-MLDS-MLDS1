@@ -26,15 +26,15 @@ Die Studierenden simulieren das Ausfallverhalten eines Fahrzeugs mit drei Kompon
 1. Simuliere Ausfallzeiten für jede Komponente des Fahrzeugs.
 2. Bestimme die Zeit bis zum Ausfall des Fahrzeugs.
 3. Wiederhole dies für 10.000 Durchläufe.
-4. Stelle die Ausfallzeiten in einem Histogramm dar (@fig-monte-carlo-failure-histogram).
+4. Stelle die Zeit bis zum Ausfall in einem Histogramm dar (@fig-monte-carlo-failure-histogram).
 
 ##### Analyse
 
-Für die weitere Anaylse nehmen wir an, dass wir den Zufallsprozess der Ausfälle nicht kennen. Wir können jedoch die Ausfallereignisse aufzeichnen und analysieren. Wir interessieren uns nur für Ausfälle, die zu einem Stopp des Fahrzeugs vor 5000 Stunden führen.
+Für die weitere Anaylse nehmen wir an, dass wir den Zufallsprozess der Ausfälle nicht kennen. Wir können jedoch die Ausfallereignisse aufzeichnen und analysieren. Wir interessieren uns nur für Ausfälle, die zu einem Stopp des Fahrzeugs vor 5000 Betriebs-Stunden führen.
 
-5. Berechne für jede Komponente die Wahrscheinlichkeit, dass sie ausgefallen ist, gegen das Fahrzeug fällt vor 5000 Stunden aus. 
-6. Gibt es eine Korrelation zwischen allen Ausfallzeiten aller Komponenten und des Fahrzeugs? Berechne die Korrelationskoeffizienten und visualisiere es in einer Scatterplot-Matrix.
-7. Wie hoch ist die Wahrscheinlichkeit, dass die Steuereinheit den ausgefallen ist, wenn das Fahrzeug vor 5000 Stunden ausgefallen ist.
+5. Berechne für jede Komponente die Wahrscheinlichkeit, dass sie ausgefallen ist, gegeben das Fahrzeug fällt vor 5000 Stunden aus. 
+6. Gibt es eine Korrelation zwischen allen Zeiten bis zum Ausfall  aller Komponenten und des Fahrzeugs? Berechne die Korrelationskoeffizienten und visualisiere die Korrelation in einer Scatterplot-Matrix.
+7. Wie hoch ist die Bedingte Wahrscheinlichkeit, dass die Steuereinheit den ausgefallen ist, wenn das Fahrzeug vor 4000 Stunden ausgefallen ist.
 8. Wähle eine Verteilung für die Ausfallzeit des Fahrzeugs fitte diese. Vergleiche die Verteilung mit dem Histogramm.
 
 ## Simulation {#sec-monte-carlo-simulation}

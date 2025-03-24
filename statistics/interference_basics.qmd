@@ -3,6 +3,9 @@
 Bei der Frage der Interferenz geht es darum, was wir mit ausreichender Sicherheit über eine Population aussagen können, wenn wir nur eine Stichprobe haben. Ein Beispiel hierfür könnte sein, ob ein Parameter einer Verteilung signifikant von einem bestimmten Wert abweicht oder ob sich die Mittelwerte zweier Verteilungen signifikant unterscheiden.
 
 
+![pi_hacking](https://preview.redd.it/jeez-who-wouldve-thought-v0-1thgdzhamgqe1.png?auto=webp&s=4074fabff97809d08a5962596243175df232f7e3)
+
+
 ## Punktschätzer und Konfidenzintervalle {#sec-statistics-pointestimates}
 
 Ein __Punktschätzer__ ist eine __Schätz-Funktion__, die eine Schätzung für einen Parameter (z.B. Mittelwert oder Varianz) einer Verteilung liefert. Da wir die wahre Verteilung der Grundgesamtheit nie direkt beobachten können, müssen wir Rückschlüsse daraus aus unserer Stichprobe ziehen. Dabei hilft uns wieder der Zentrale Grenzwertsatz.
