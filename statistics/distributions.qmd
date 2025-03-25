@@ -276,9 +276,9 @@ Umgekehrt: $P(Z \leq 1.645) = 0.95$ (95 %). Heute ersetzen Computerprogramme sol
 #### Erwartungswert und Varianz der Normalverteilung {#sec-normal-expectation-variance}
 
 Der __Erwartungswert__ $E(X)$ einer normalverteilten Zufallsvariable $X \sim \mathcal{N}(\mu, \sigma^2)$ ist:  
-$$E(X) = \mu.$$  
+$$E(X) = \mu = \int\limits_{ - \infty }^\infty {x \cdot f\left( x \right)} \,\,dx.$$  
 Die __Varianz__ $\text{Var}(X)$ beträgt:  
-$$\text{Var}(X) = \sigma^2.$$  
+$${\sigma _x}^2 = Var\left( X \right) = E{\left( {X - {\mu _x}} \right)^2} = \int\limits_{ - \infty }^\infty {{{\left( {x - {\mu _x}} \right)}^2}} \cdot f\left( x \right)\,\,dx.$$  
 Für die Standardnormalverteilung ($X \sim \mathcal{N}(0, 1)$) gilt $E(X) = 0$ und $\text{Var}(X) = 1$. Im [Tutorial](#sec-monte-carlo-simulation) wird dies für den Sensor ($X \sim \mathcal{N}(6000, 100^2)$) genutzt.
 
 ##### Standardisierung der Normalverteilung {#sec-normal-standardization}
