@@ -218,6 +218,14 @@ plt.show()
 Bei stetigen Verteilungen ist die Wahrscheinlichkeit eines exakten Wertes 0, da es unendlich viele mögliche Werte gibt. Stattdessen berechnen wir die Wahrscheinlichkeit für einen Wertebereich als Fläche unter der Dichtefunktion:  
 $$P(a \leq X \leq b) = \int_{a}^{b} f(x) \, dx.$$
 
+
+Der __Erwartungswert__ $E(X)$ einer gleichverteilten Zufallsvariable $X \sim \text{U}(a, b)$ ist:  
+$$E(X) = \frac{a + b}{2}=\int\limits_{ - \infty }^\infty {x \cdot f\left( x \right)} \,\,dx.$$  
+
+Die __Varianz__ $\text{Var}(X)$ beträgt:  
+$$\text{Var}(X) = \frac{(b - a)^2}{12} = \int\limits_{ - \infty }^\infty {{{\left( {x - {\mu _x}} \right)}^2}} \cdot f\left( x \right)\,\,dx.$$  
+
+
 #### Beispiel: Ausfallwahrscheinlichkeit eines Bauteils {#sec-uniform-example}
 
 Der Ausfall eines elektronischen Bauteils folgt einer stetigen Gleichverteilung auf $[0, 3650]$ Tagen ($X \sim \text{U}(0, 3650)$). Wie hoch ist die Wahrscheinlichkeit, dass es innerhalb der ersten 1000 Tage ausfällt?  
