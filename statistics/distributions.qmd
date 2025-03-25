@@ -134,11 +134,12 @@ Im Beispiel ist $\text{Var}(Y) = 10 \cdot 0.1 \cdot 0.9 = 0.9$. Diese Werte helf
 
 ### Diskrete Gleichverteilung {#sec-discrete-uniform-distribution}
 
-Die __diskrete Gleichverteilung__ (auch Uniformverteilung) beschreibt eine Zufallsvariable, bei der alle möglichen Werte die gleiche Wahrscheinlichkeit haben – etwa beim Würfeln eines fairen Würfels. Für $n$ mögliche Werte ($x = 1, 2, \ldots, n$) ist die Wahrscheinlichkeitsfunktion:  
-$$P(X = x) = \frac{1}{n}.$$  
-Wir notieren $X \sim \text{DU}(n)$, wobei $[1, n]$ das Intervall der Werte ist.  
+Die __diskrete Gleichverteilung__ (auch Uniformverteilung) beschreibt eine Zufallsvariable, bei der alle möglichen Werte innerhalb eines Intervalls die gleiche Wahrscheinlichkeit haben. Im Gegensatz zum Würfelbeispiel, wo die Werte bei 1 beginnen, kann das Intervall beliebig gewählt werden, z. B. $x = a, a+1, \ldots, b$, wobei $a$ und $b$ ganze Zahlen sind und $a \leq b$. Die Anzahl der Werte ist $n = b - a + 1$, und die Wahrscheinlichkeitsfunktion lautet:  
+$$P(X = x) = \frac{1}{b - a + 1}, \quad \text{für } x = a, a+1, \ldots, b.$$  
+Wir notieren $X \sim \text{DU}(a, b)$ für die diskrete Gleichverteilung auf $[a, b]$.  
 
-@fig-sec-dataexploratory-distributions-discrete-uniform-distribution zeigt die Verteilung für einen Würfel ($n = 6$). Im [Tutorial zur Fahrzeugausfallzeit](#sec-monte-carlo-simulation) wird eine stetige Gleichverteilung für die Steuereinheit ($4000$ bis $8000$ Stunden) verwendet – die diskrete Variante ist hier eine einfache Entsprechung.
+@fig-sec-dataexploratory-distributions-discrete-uniform-distribution zeigt die Verteilung für $a = 3$ und $b = 8$ (z. B. ein modifizierter Würfel). Dieses flexible Intervall ist nützlich, um spezifische Szenarien zu modellieren, z. B. in Simulationen mit nicht standardisierten Bereichen.
+
 
 ```{python}
 #| classes: styled-output
@@ -162,23 +163,18 @@ plt.show()
 
 In der Abbildung @fig:sec-dataexploratory-distributions-discrete-uniform-distribution wird die Wahrscheinlichkeitsverteilung der diskreten Gleichverteilung für das Würfeln eines Würfels dargestellt. Die Wahrscheinlichkeitsverteilung zeigt, dass alle möglichen Werte der Zufallsvariablen die gleiche Wahrscheinlichkeit haben.
 
-#### Erwartungswert und Varianz der diskreten Gleichverteilung
+#### Erwartungswert und Varianz der diskreten Gleichverteilung {#sec-discrete-uniform-expectation-variance}
 
-Erwartungswert und Varianz der diskreten Gleichverteilung {#sec-discrete-uniform-expectation-variance}
-Der Erwartungswert $E(X)$ liegt in der Mitte des Intervalls:
+Der __Erwartungswert__ $E(X)$ einer diskreten Gleichverteilung auf dem Intervall $[a, b]$ liegt in der Mitte des Intervalls:  
+$$E(X) = \frac{a + b}{2} = \sum_{x} x \cdot P(X = x).$.$$  
+Für $a = 3$ und $b = 8$ ergibt sich:  
+$$E(X) = \frac{3 + 8}{2} = 5.5.$$
 
-$$
-E(X) = \frac{n+1}{2}.
-$$
-Für einen Würfel ($n = 6$) ist $E(X) = \frac{6 + 1}{2} = 3.5$.
-
-
-Die Varianz $\text{Var}(X)$ beschreibt die Streuung:
-$$
-\text{Var}(X) = \frac{n^2-1}{12}.
-$$
-
-Bei $n = 6$ ist $\text{Var}(X) = \frac{36 - 1}{12} = \frac{35}{12} \approx 2.9167$. 
+Die __Varianz__ $\text{Var}(X)$ beschreibt die Streuung der Verteilung:  
+$$\text{Var}(X) = \frac{(b - a + 1)^2 - 1}{12} = \sum_{x} (x - E(X))^2 \cdot P(X = x)..$$  
+Bei $a = 3$ und $b = 8$ ist $n = b - a + 1 = 6$, also:  
+$$\text{Var}(X) = \frac{6^2 - 1}{12} = \frac{36 - 1}{12} = \frac{35}{12} \approx 2.9167.$$  
+Diese Formeln gelten für jedes Intervall $[a, b]$, wobei $a$ und $b$ ganze Zahlen sind und $a \leq b$.
 
 ## Stetige Verteilungen {#sec-continuous-distributions}
 
