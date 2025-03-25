@@ -448,7 +448,7 @@ SE_{\hat{p}}=\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}.
 </div>
 </div>
 <p>Um dies zu illustrieren, schauen wir uns die Grundgesamtheit und eine Stichprobe an. Wir ziehen <span class="math inline">\(N=1000\)</span> Zufallszahlen aus einer Bernoulli-Verteilung mit <span class="math inline">\(p=0.3\)</span> und wählen eine Stichprobe der Größe <span class="math inline">\(n=100\)</span>. Diesen Vorgang wiederholen wir <span class="math inline">\(m=100\)</span> mal. Den Anteil der Einsen in der Stichprobe speichern wir als Stichprobenhäufigkeit <span class="math inline">\(\hat{p}\)</span>.</p>
-<div id="49964532" class="cell styled-output" data-execution_count="1">
+<div id="240f9605" class="cell styled-output" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -492,7 +492,7 @@ SE_{\hat{p}}=\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}.
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="interference_basics_files/figure-html/cell-2-output-1.png" width="585" height="431" class="figure-img"></p>
+<p><img src="interference_basics_files/figure-html/cell-2-output-1.png" width="597" height="431" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -549,7 +549,7 @@ Erklärung
 \left(\hat{p} - z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\right).
 \]</span></p>
 <p>Aus der Tabelle der Standardnormalverteilung können wir den Wert für <span class="math inline">\(z_{\alpha/2}\)</span> ablesen. Für ein Konfidenzniveau von 95% ist <span class="math inline">\(\alpha = 0.05\)</span> und damit <span class="math inline">\(z_{\alpha/2} = 1.96\)</span>. Alternativ können wir dieses auch mit der Funktion <code>norm.ppf</code> berechnen.</p>
-<div id="a6cafe69" class="cell styled-output" data-execution_count="2">
+<div id="f19ed4b3" class="cell styled-output" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Konfidenzintervall</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> norm.ppf(<span class="dv">1</span><span class="op">-</span>alpha<span class="op">/</span><span class="dv">2</span>)</span>
@@ -596,7 +596,7 @@ Lösung
 \]</span></p>
 <section id="darstellung-des-konfidenzintervalls-eines-normalverteilten-parameters" class="level3" data-number="5.1.2">
 <h3 data-number="5.1.2" class="anchored" data-anchor-id="darstellung-des-konfidenzintervalls-eines-normalverteilten-parameters"><span class="header-section-number">5.1.2</span> Darstellung des Konfidenzintervalls eines normalverteilten Parameters</h3>
-<div id="004fb559" class="cell styled-output" data-execution_count="3">
+<div id="5509b665" class="cell styled-output" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Konfidenzniveau</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -639,7 +639,7 @@ Lösung
 Konfidenzintervall für alpha=0.01: (0.18, 0.42)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3190/598074221.py:35: UserWarning:
+<pre><code>/tmp/ipykernel_3247/598074221.py:35: UserWarning:
 
 No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </code></pre>
@@ -779,7 +779,7 @@ Important
 X \sim \mathcal{N}(110, 15).
 \]</span></p>
 <p>Wir haben eine Stichprobe von 100 Studierenden und wollen wissen, ob der Mittelwert signifikant von 100 abweicht.</p>
-<div id="aabb1d65" class="cell styled-output" data-execution_count="4">
+<div id="fe047857" class="cell styled-output" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesentest</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
@@ -815,7 +815,7 @@ X \sim \mathcal{N}(110, 15).
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="interference_basics_files/figure-html/cell-5-output-1.png" width="587" height="431" class="figure-img"></p>
+<p><img src="interference_basics_files/figure-html/cell-5-output-1.png" width="596" height="431" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -830,7 +830,7 @@ X \sim \mathcal{N}(110, 15).
 SE(\hat{\mu})=\sigma_{\hat{\mu}} = \frac{\sigma}{\sqrt{n}}.
 \]</span></p>
 <p>Dies können wir nun anhand der Stichprobe berechnen und visualisieren.</p>
-<div id="68ab6798" class="cell styled-output" data-execution_count="5">
+<div id="0a1fa771" class="cell styled-output" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Schätzer für den Mittelwert und Standardabweichung</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>X_hat <span class="op">=</span> np.mean(X)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>mu_hat <span class="op">=</span> np.std(X)<span class="op">/</span>np.sqrt(n)</span>
@@ -865,8 +865,8 @@ SE(\hat{\mu})=\sigma_{\hat{\mu}} = \frac{\sigma}{\sqrt{n}}.
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Mittelwert der Stichprobe: 110.60
-Standardabweichung der Stichprobe: 1.31</code></pre>
+<pre><code>Mittelwert der Stichprobe: 108.26
+Standardabweichung der Stichprobe: 1.46</code></pre>
 </div>
 </div>
 <p>An Fig. können wir erkennen, dass die Wahrscheinlichkeit, dass der Mittelwert der Stichprobe von 100 abweicht, sehr hoch ist. Der grüner Bereich, der das Signifikanzniveau darstellt, liegt weit rechts von der Nullhypothese.</p>
