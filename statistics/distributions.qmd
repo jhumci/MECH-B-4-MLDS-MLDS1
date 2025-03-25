@@ -368,7 +368,7 @@ Der [IQ](https://de.wikipedia.org/wiki/Intelligenzquotient) ist so skaliert, das
 
 ## Weitere Verteilungen {#sec-other-distributions}
 
-Neben der Normalverteilung spielen weitere stetige und diskrete Verteilungen eine Rolle in Statistik und Simulationen, wie im [Tutorial](#sec-monte-carlo-simulation) zur Fahrzeugausfallzeit genutzt:  
+Neben der Normalverteilung spielen [weitere stetige und diskrete Verteilungen](https://de.wikipedia.org/wiki/Liste_univariater_Wahrscheinlichkeitsverteilungen) eine Rolle in Statistik und Simulationen, wie im [Tutorial](#sec-monte-carlo-simulation) zur Fahrzeugausfallzeit genutzt:  
 
 - Die __Exponentialverteilung__ modelliert die Zeit zwischen unabhängigen Ereignissen, z. B. in der Zuverlässigkeitsanalyse oder Warteschlangentheorie.  
 - Die __Poissonverteilung__ (diskret) beschreibt die Anzahl von Ereignissen in einem festen Zeitintervall, etwa in Zufallsprozessen.  

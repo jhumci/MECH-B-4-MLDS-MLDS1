@@ -36,6 +36,7 @@ Für die weitere Anaylse nehmen wir an, dass wir den Zufallsprozess der Ausfäll
 6. Gibt es eine Korrelation zwischen allen Zeiten bis zum Ausfall  aller Komponenten und des Fahrzeugs? Berechne die Korrelationskoeffizienten und visualisiere die Korrelation in einer Scatterplot-Matrix.
 7. Wie hoch ist die Bedingte Wahrscheinlichkeit, dass die Steuereinheit den ausgefallen ist, wenn das Fahrzeug vor 4000 Stunden ausgefallen ist.
 8. Wähle eine Verteilung für die Ausfallzeit des Fahrzeugs fitte diese. Vergleiche die Verteilung mit dem Histogramm und gibt die Parameter der Verteilung an.
+9. Nutze die gefittete Verteilung, um die Wahrscheinlichkeit zu berechnen, dass das Fahrzeug vor 3000 Stunden ausfällt.
 
 ## Simulation {#sec-monte-carlo-simulation}
 
@@ -72,6 +73,9 @@ for trial in range(n_trials):
     # Bedingung: Sensor-Ausfall verkürzt Motorzeit
     if sensor_time < motor_time:
         motor_time -= 1000
+        if motor_time < sensor_time:
+            motor_time = sensor_time
+
 
     # Ausfallzeit des Fahrzeugs (Motor oder Steuereinheit)
     vehicle_failure = min(motor_time, control_time)
