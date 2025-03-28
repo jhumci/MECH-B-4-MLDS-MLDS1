@@ -1,320 +1,284 @@
 # Interferenz {#sec-statistics-interference}
 
-Bei der Frage der Interferenz geht es darum, was wir mit ausreichender Sicherheit über eine Population aussagen können, wenn wir nur eine Stichprobe haben. Ein Beispiel hierfür könnte sein, ob ein Parameter einer Verteilung signifikant von einem bestimmten Wert abweicht oder ob sich die Mittelwerte zweier Verteilungen signifikant unterscheiden.
+__Inferenz__ (statistische Schlussfolgerung) befasst sich damit, was wir mit ausreichender Sicherheit über eine Population aussagen können, wenn nur eine Stichprobe vorliegt. Beispiele sind: Weicht ein Parameter (z. B. Mittelwert) signifikant von einem Wert ab? Unterscheiden sich die Mittelwerte zweier Verteilungen signifikant? Der zentrale Grenzwertsatz ist hier ein Schlüsselwerkzeug.
 
-
-![pi_hacking](https://preview.redd.it/jeez-who-wouldve-thought-v0-1thgdzhamgqe1.png?auto=webp&s=4074fabff97809d08a5962596243175df232f7e3)
-
+![P-Hacking](https://preview.redd.it/jeez-who-wouldve-thought-v0-1thgdzhamgqe1.png?auto=webp&s=4074fabff97809d08a5962596243175df232f7e3)  
+*Vorsicht vor P-Hacking: Daten so lange manipulieren, bis ein „signifikantes“ Ergebnis herauskommt, ist keine Inferenz, sondern Fehlinterpretation!*
 
 ## Punktschätzer und Konfidenzintervalle {#sec-statistics-pointestimates}
 
-Ein __Punktschätzer__ ist eine __Schätz-Funktion__, die eine Schätzung für einen Parameter (z.B. Mittelwert oder Varianz) einer Verteilung liefert. Da wir die wahre Verteilung der Grundgesamtheit nie direkt beobachten können, müssen wir Rückschlüsse daraus aus unserer Stichprobe ziehen. Dabei hilft uns wieder der Zentrale Grenzwertsatz.
+Ein __Punktschätzer__ ist eine Funktion, die einen Parameter einer Verteilung (z. B. Mittelwert, Varianz) aus einer Stichprobe schätzt. Da die wahre Verteilung der Population unbekannt ist, ziehen wir Rückschlüsse aus den Daten. Der zentrale Grenzwertsatz hilft, die Verteilung dieser Schätzer zu verstehen.
 
-Wir beginnen mit einem Beispiel einer Zufallsvariable $X \sim \text{Bernoulli}(p)$, wobei uns der Parameter $p$ unbekannt ist. Diesen Parameter wollen wir nun anhand unserer Stichprobe schätzen. Eine Schätzung für $p$ ist der Anteil der Einsen in der Stichprobe $\hat{p}$. Diesen Schätzer können wir berechnen als
+### Beispiel: Bernoulli-Verteilung
+Betrachten wir eine Zufallsvariable $X \sim \text{Bernoulli}(p)$ mit unbekanntem Parameter $p$. Ein naheliegender Schätzer für $p$ ist der Anteil der Einsen in einer Stichprobe, $\hat{p}$, berechnet als:  
+$$\hat{p} = \frac{1}{n} \sum_{i=1}^n X_i,$$  
+wobei $n$ die Stichprobengröße ist und $X_i$ die Beobachtungen (0 oder 1). Dies ist zudem der Mittelwert der Stichprobe, wenn wir Erfolge als 1 und Misserfolge als 0 kodieren.
 
-$$
-\hat{p} = \frac{1}{n} \sum_{i=1}^n X_i,
-$$
-
-::: {.callout-tip collapse="true"}
-#### Bestimmung von Punktschätzern mittels Maximum-Likelihood-Schätzung
-Um den Maximum-Likelihood-Schätzer (MLE) für den Parameter $p$ einer Bernoulli-Verteilung zu finden, geht man wie folgt vor. 
-Man stellt die Likelihood-Funktion der Beobachteten Werte in der Stichprobe auf und sucht dann nach dem Wert von $p$, bei dem dieses Auftreten am wahrscheinlichsten ist. 
-
-##### 1. Likelihood-Funktion aufstellen:
-
-Angenommen, du hast $n$ unabhängige und identisch verteilte Bernoulli-Zufallsvariablen $X_1, X_2, \ldots, X_n$. Jede dieser Variablen $X_i$ hat eine Bernoulli-Verteilung mit Parameter $p$, was bedeutet, dass die Wahrscheinlichkeit, dass $X_i = 1$ ist, gleich $p$ ist und die Wahrscheinlichkeit, dass $X_i = 0$ ist, gleich $1-p$ ist.
-
-Die Likelihood-Funktion ist das Produkt der Wahrscheinlichkeiten aller beobachteten Werte. Falls wir $k$ Einsen und $n-k$ Nullen in unserer Stichprobe haben, ist die Likelihood-Funktion gegeben durch:
-
-$$
-L(p) = \prod_{i=1}^{n} p^{x_i} (1-p)^{1-x_i} = P(X_1=x_1) \cdot P(X_2=x_2) \cdot \ldots \cdot P(X_n=x_n)
-$$
-
-Das vereinfacht sich zu:
-
-$$
-L(p) = p^k (1-p)^{n-k}
-$$
-
-wobei $k = \sum_{i=1}^{n} x_i$ die Anzahl der Einsen in der Stichprobe ist.
-
-##### 2. Log-Likelihood-Funktion aufstellen:
-
-Um die Berechnungen zu vereinfachen, nimmt man den natürlichen Logarithmus der Likelihood-Funktion, da nun die Produkte zu Summen werden und dies die Ableitungen vereinfacht:
-
-$$
-\log L(p) = k \log p + (n-k) \log (1-p)
-$$
-
-##### 3. Log-Likelihood maximieren:
-
-Um die Log-Likelihood-Funktion zu maximieren, leiten wir sie nach $p$ ab und setzen diese Ableitung gleich null:
-
-$$
-\frac{d}{dp} \log L(p) = \frac{k}{p} - \frac{n-k}{1-p} = 0
-$$
-
-##### 4. Gleichung nach $p$ auflösen:
-
-Um diese Gleichung nach $p$ aufzulösen, bringen wir sie auf einen gemeinsamen Nenner:
-
-$$
-\frac{k(1-p) - (n-k)p}{p(1-p)} = 0
-$$
-
-Der Zähler muss null sein, damit der Bruch null wird und wir die Nullstellen finden:
-
-$$
-k - kp - np + kp = k - np = 0
-$$
-
-Das ergibt:
-
-$$
-k = np
-$$
-
-Daraus folgt, dass der MLE für $p$:
-
-$$
-\hat{p} = \frac{k}{n} = \frac{1}{n} \sum_{i=1}^{n} x_i.
-$$
-
-##### Fazit:
-
-Der Maximum-Likelihood-Schätzer $\hat{p}$ für den Parameter $p$ einer Bernoulli-Verteilung ist also gleich dem Stichprobenmittelwert $frac{k}{n}$, was intuitiv der Anteil der beobachteten Einsen in der Stichprobe ist.
-Der Maximum-Likelihood-Schätzer ergibt sich, aus dem Gedanken, dass der Parameter $p$ der Wert ist, bei dem die beobachteten Werte in der Stichprobe am wahrscheinlichsten sind.
+::: {.callout-tip collapse="true" title="Maximum-Likelihood-Schätzung (MLE)"}
+Um $\hat{p}$ systematisch zu bestimmen, nutzen wir die Maximum-Likelihood-Schätzung:  
+1. **Likelihood-Funktion**: Für $n$ unabhängige Bernoulli-Variablen $X_1, \ldots, X_n$ mit $k = \sum_{i=1}^n X_i$ Einsen lautet die Likelihood:  
+$$L(p) = p^k (1-p)^{n-k}.$$  
+2. **Log-Likelihood**: Der Logarithmus vereinfacht die Maximierung:  
+$$\log L(p) = k \log p + (n - k) \log (1 - p).$$  
+3. **Maximierung**: Ableitung nach $p$ und Nullsetzen:  
+$$\frac{d}{dp} \log L(p) = \frac{k}{p} - \frac{n - k}{1 - p} = 0.$$  
+Lösung: $k(1 - p) = p(n - k)$, also $\hat{p} = \frac{k}{n}$.  
+**Fazit**: Der MLE-Schätzer $\hat{p}$ ist der Stichprobenanteil, da er die beobachteten Daten am wahrscheinlichsten macht.
 :::
 
+::: {.callout-important title="Zentraler Grenzwertsatz für Schätzer"}
+Bei großer Stichprobengröße $n$ und unabhängigen, identisch verteilten (i.i.d.) Ziehungen ist $\hat{p}$ annähernd normalverteilt:  
+$$\hat{p} \sim \mathcal{N}\left(p, \frac{p(1-p)}{n}\right),$$  
+wobei:  
+- $\mu_{\hat{p}} = p$ (erwartungstreu, d. h., im Mittel korrekt), ergibt sich aus der Maximum-Likelihood-Schätzung,  
+- $\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}$ (Standardfehler, SE).
 
-::: {.callout-important}
-### Anwendund des Zentralen Grenzwertsatzes für Schätzer
-
-Wenn eine Stichprobe groß genug ist und die Ziehungen unabhängig und identisch Verteilt sind, dann ist $\hat{p}$ normalverteilt mit
-
-$$
-\mu_{\hat{p}} = p,
-$$
-
-was bedeutet, dass wird bei unendlich vielen Wiederholungen im Mittel den wahren Wert von $p$ schätzen. Einen Schätzer mit dieser Eigenschaft nennen wir __erwartungstreu__.
-
-Die Standardabweichung, welche wir bei einem Schätzer als Standardfehler bezeichnen, gegeben durch 
-$$
-SE_{\hat{p}}=\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}.
-$$
-
-Damit dies gilt muss $np \geq 10$ und $n(1-p) \geq 10$ sein.
+Voraussetzung: $np \geq 10$ und $n(1-p) \geq 10$, damit die Normalapproximation gilt.
 :::
 
-Um dies zu illustrieren, schauen wir uns die Grundgesamtheit und eine Stichprobe an. Wir ziehen $N=1000$ Zufallszahlen aus einer Bernoulli-Verteilung mit $p=0.3$ und wählen eine Stichprobe der Größe $n=100$. Diesen Vorgang wiederholen wir $m=100$ mal. Den Anteil der Einsen in der Stichprobe speichern wir als Stichprobenhäufigkeit $\hat{p}$.
+::: {.callout-tip collapse=true title="Herleitung der Varianz"}
+Die **Varianz** einer Zufallsvariablen $X$ ist definiert als:
+
+$$ \text{Var}(X) = \mathbb{E}[(X - \mathbb{E}[X])^2] $$
+
+Dies beschreibt, wie weit die Werte der Zufallsvariablen $X$ im Durchschnitt von ihrem Erwartungswert $\mathbb{E}[X]$ abweichen.
+
+__Rechenregeln für die Varianz__
+
+- **Varianz einer konstanten Zahl:**  
+  Für eine Konstante $c$ gilt:  
+  $$ \text{Var}(c) = 0 $$
+
+- **Varianz einer linearen Kombination von Zufallsvariablen:**  
+  Wenn $X$ und $Y$ zwei Zufallsvariablen sind und $a, b$ Konstanten, dann gilt:
+  $$ \text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \, \text{Cov}(X, Y) $$
+
+  Wenn $X$ und $Y$ **unabhängig** sind, fällt der Kovarianzterm weg, sodass:
+  $$ \text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) $$
+
+__Herleitung der Varianz für den Fall von $\hat{p}$__
+
+Sei $X_1, X_2, \dots, X_n$ eine Stichprobe von **unabhängigen** Zufallsvariablen, wobei jede $X_i$ der **Bernoulli-Verteilung** mit Erfolgswahrscheinlichkeit $p$ folgt. Der Mittelwert der Stichprobe $\hat{p}$ ist:
+
+$$ \hat{p} = \frac{1}{n} \sum_{i=1}^{n} X_i $$
+
+Da die $X_i$ unabhängig sind, gilt für die Varianz von $\hat{p}$ die Rechenregel für die Varianz der Summe unabhängiger Zufallsvariablen:
+
+$$ \text{Var}(\hat{p}) = \text{Var}\left( \frac{1}{n} \sum_{i=1}^{n} X_i \right) $$
+
+Da die $X_i$ identisch verteilt sind, haben sie die gleiche Varianz $\text{Var}(X_i) = p(1 - p)$. Es folgt:
+
+$$ \text{Var}(\hat{p}) = \frac{1}{n^2} \sum_{i=1}^{n} \text{Var}(X_i) = \frac{1}{n^2} \cdot n \cdot p(1 - p) = \frac{p(1 - p)}{n} $$
+
+Damit haben wir die Formel für die Varianz von $\hat{p}$:
+
+$$ \text{Var}(\hat{p}) = \frac{p(1 - p)}{n} $$
+
+Diese Varianz beschreibt, wie stark der geschätzte Anteil $\hat{p}$ von der tatsächlichen Erfolgswahrscheinlichkeit $p$ abweichen kann.
+:::
+
+### Simulation: Schätzer-Verteilung
+Wir illustrieren dies mit einer Grundgesamtheit $X \sim \text{Bernoulli}(0.3)$, ziehen $N = 1000$ Werte, nehmen Stichproben der Größe $n = 100$ und wiederholen dies $m = 100$ Mal. Der Schätzer $\hat{p}$ wird als Anteil der Einsen berechnet. @fig-sec-statistics-bernoulli-estimator zeigt die Verteilung von $\hat{p}$.
 
 ```{python}
 #| classes: styled-output
+#| label: fig-sec-statistics-bernoulli-estimator
+#| fig-cap: Verteilung des Schätzers $\hat{p}$ für eine Bernoulli-Verteilung (p = 0.3, n = 100, m = 100).
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 from scipy.stats import norm
 
-# Definiere Anzahl der Versuche 
-m = 100
+np.random.seed(42)
+p = 0.3  # Wahrer Parameter
+N = 1000  # Grundgesamtheit
+n = 100   # Stichprobengröße
+m = 100   # Anzahl der Wiederholungen
 
 results = np.zeros(m)
-
-# Grundgesamtheit ist Bernoulli verteilt
-p = 0.3
-N = 1000
+population = np.random.binomial(1, p, N)  # Grundgesamtheit einmal ziehen
 
 for i in range(m):
-    # Grundgesamtheit
-    X = np.random.binomial(1, p, N)
+    sample = np.random.choice(population, n, replace=False)  # Stichprobe ohne Zurücklegen
+    results[i] = np.mean(sample)  # Schätzer \hat{p}
 
-    # Stichprobe mit n=100
-    n = 100
-    X_sample = np.random.choice(X, n)
-
-    # Speichere das Anzahl der Einsen
-    results[i] = np.sum(X_sample)/n
-
-# Wie verteilt sich die Anzahl der Einsen in der Stichprobe
-sns.histplot(results)
-
-# Wie gut passt eine Normalverteilung
-mu, std = norm.fit(results)
-xmin, xmax = plt.xlim()
-x = np.linspace(xmin, xmax, 100)
-p = norm.pdf(x, mu, std)
-plt.plot(x, p, 'k', linewidth=2)
-
-plt.title('Verteilung der Anzahl der Einsen in der Stichprobe')
+# Plot
+plt.hist(results, bins=15, density=True, color='skyblue', alpha=0.7, label='$\hat{p}$')
+mu, sigma = norm.fit(results)
+x = np.linspace(min(results), max(results), 100)
+y = norm.pdf(x, mu, sigma)
+plt.plot(x, y, 'r-', label=f'Normal ($\mu={mu:.3f}$, $\sigma={sigma:.3f}$)')
+plt.xlabel('Schätzer $\hat{p}$')
+plt.ylabel('Dichte')
+plt.title(f'Verteilung von $\hat{{p}}$ (p = {p}, n = {n})')
+plt.legend()
+plt.grid(alpha=0.3)
 plt.show()
 
-print(f'Mittelwert von p_hat: {np.mean(results)/n:.2f}')
-print(f'Standardabweichung von p_hat: {np.std(results)/n:.2f}')
+print(f'Mittelwert von $\hat{{p}}$: {np.mean(results):.3f}')
+print(f'Standardfehler von $\hat{{p}}$: {np.std(results):.3f}')
+print(f'Theoretischer SE: {np.sqrt(p * (1 - p) / n):.3f}')
 ```
-
-Verglichen mit den theoretischen Werten übergibt dies eine hohe Übereinstimmung.
-
-$$
-\mu_{\hat{p}} = p = 0.3,
-$$
-
-$$
-SE_{\hat{p}}=\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} = 0.046.
-$$
+Die simulierten Werte für $\hat{p}$ stimmen gut mit den theoretischen Erwartungen überein:  
+- $\mu_{\hat{p}} = p = 0.3$,  
+- $\text{SE}_{\hat{p}} = \sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{0.3 \cdot 0.7}{100}} \approx 0.046.$  
+Dies bestätigt die Normalapproximation durch den zentralen Grenzwertsatz.
 
 ### Konfidenzintervalle {#sec-statistics-confidenceintervals}
 
-Ein Konfidenzintervall ist ein Intervall, das den wahren Wert eines Parameters mit einer bestimmten Wahrscheinlichkeit enthält. Bei einer Normalverteilung haben wir schon beobachtet, dass ca. 95% der Werte innerhalb von zwei Standardabweichungen liegen. Wir können dieses Wissen nutzen, um ein Konfidenzintervall zu berechnen.
+Ein __Konfidenzintervall__ (KI) gibt ein Intervall an, das den wahren Wert eines Parameters mit einer bestimmten Wahrscheinlichkeit (dem Konfidenzniveau $1-\alpha$) enthält. Bei einer Normalverteilung liegen etwa 95 % der Werte innerhalb von zwei Standardabweichungen. Dies haben wir z.B. bei der Betrachung von IQ-Werten gesehen, dort liegen 95 % der Werte innerhalb von zwei Standardabweichungen ($2 \sigma = 2 \cdot 15$) um den Mittelwert ($\mu = 100$).
 
-::: {.callout-important}
-Ein Konfidenzintervall $\text{CI}_{1-\alpha}$ gibt für einen Schätzer $\hat{\theta}$ eines Parameters $\theta$ einen Intervall an, in dem der wahre Wert von $\theta$ mit einer bestimmten Wahrscheinlichkeit ($1-\alpha$) liegt.
-Das Konfidenzintervall für den Mittelwert $\mu$ einer Normalverteilung mit bekannter Varianz $\sigma^2$ ist gegeben durch 
-
-$$
-\left(\bar{\theta} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}}, \bar{\theta} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}}\right),
-$$
-
-wobei $z_{\alpha/2}$ das $\alpha/2$-[Quantil der Standardnormalverteilung](https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle) ist und wir dieses durch die Multiplikation mit der Standardabweichung $\sigma$ und Division durch die Wurzel der Stichprobengröße $n$ auf unsere Ursprungsverteilung skalieren.
-
-Für den Fall, dass die Varianz unbekannt ist, können wir die Stichprobenvarianz $S^2$ verwenden und erhalten
+::: {.callout-important title="Definition eines Konfidenzintervalls"}
+Für einen Schätzer $\hat{\theta}$ eines Parameters $\theta$ ist das Konfidenzintervall $\text{CI}_{1-\alpha}$:  
+$$\left(\hat{\theta} - z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}, \hat{\theta} + z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}\right),$$  
+wobei:  
+- $\hat{\theta}$ der Punktschätzer (z. B. Stichprobenmittelwert),  
+- $\sigma$ die Standardabweichung der Grundgesamtheit,  
+- $n$ die Stichprobengröße,  
+- $z_{\alpha/2}$ das $\alpha/2$-[Quantil der Standardnormalverteilung](https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle).  
+Falls $\sigma$ unbekannt ist, wird die Stichprobenstandardabweichung $s$ verwendet:  
+$$\text{SE} = \frac{s}{\sqrt{n}}.$$  
 :::
 
-
-::: {.callout-note}
-#### Erklärung
-
-Zunächst überführen wir die Normalverteilung von $\theta$ in eine Standardnormalverteilung. Dazu subtrahieren wir den Erwartungswert $\mu$ und teilen durch die Standardabweichung $\sigma$. Damit erhalten wir eine Standardnormalverteilung mit Erwartungswert 0 und Varianz 1.
-
-Nun können wir die Wahrscheinlichkeit berechnen, dass der Wert innerhalb eines Intervalls liegt. Für ein Konfidenzniveau von 95% ist $\alpha = 0.05$. Das bedeutet, dass wird an beiden Seiten der Verteilung $\alpha/2 = 0.025$ abtrennen.
-
-In der Tabelle $\Phi(z)$ der Standardnormalverteilung suchen wir nun den Wert, ab dem 97.5% der Werte unterhalb liegen. Dieser Wert ist $z_{\alpha/2} = 1.96$. Aus der Symmetrie der Normalverteilung folgt, dass der Wert für $-z_{\alpha/2}$ ebenfalls 1.96 ist.
+::: {.callout-note title="Herleitung des Intervalls"}
+1. **Standardisierung**: Für eine normalverteilte Zufallsvariable $\hat{\theta} \sim \mathcal{N}(\theta, \sigma^2/n)$ wird $\frac{\hat{\theta} - \theta}{\sigma/\sqrt{n}} \sim \mathcal{N}(0, 1)$.  
+2. **Konfidenzniveau**: Für $1-\alpha = 0.95$ liegt 95 % der Fläche zwischen $-z_{\alpha/2}$ und $z_{\alpha/2}$. Bei $\alpha = 0.05$ ist $z_{\alpha/2} = 1.96$ (da $P(Z \leq 1.96) \approx 0.975$).  
+3. **Intervall**: Umstellen ergibt: $P\left(\hat{\theta} - z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}} \leq \theta \leq \hat{\theta} + z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}\right) = 1-\alpha$.
 :::
 
-
-In unserem Beispiel ist die Stichprobenhäufigkeit $\hat{p}$ normalverteilt mit $\mu_{\hat{p}} = p$ und $\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}$. Wir können also ein Konfidenzintervall für $p$ berechnen.
-
-$$
-\left(\hat{p} - z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\right).
-$$
-
-Aus der Tabelle der Standardnormalverteilung können wir den Wert für $z_{\alpha/2}$ ablesen. Für ein Konfidenzniveau von 95% ist $\alpha = 0.05$ und damit $z_{\alpha/2} = 1.96$. Alternativ können wir dieses auch mit der Funktion `norm.ppf` berechnen.
+### Beispiel: Konfidenzintervall für $p$
+Für unsere Bernoulli-Verteilung ist $\hat{p}$ normalverteilt mit $\mu_{\hat{p}} = p$ und Standardfehler $\text{SE}_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}.$ Da $p$ unbekannt ist, nutzen wir $\hat{p}$ zur Schätzung:  
+$$\text{CI}_{0.95} = \left(\hat{p} - z_{\alpha/2} \cdot \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \cdot \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\right).$$  
+Für ein 95 %-Konfidenzniveau ($\alpha = 0.05$) ist $z_{\alpha/2} = 1.96$, was wir aus Tabellen oder mit `norm.ppf` berechnen können.
 
 ```{python}
 #| classes: styled-output
-# Konfidenzintervall
-alpha = 0.05
-z = norm.ppf(1-alpha/2)
-print(f'z_alpha/2: {z:.2f}')
-```
-
-Damit ergibt sich für unser Beispiel ein Konfidenzintervall von
-
-$$
-\left(0.3 - 1.96 \sqrt{\frac{0.3(1-0.3)}{100}}, 0.3 + 1.96 \sqrt{\frac{0.3(1-0.3)}{100}}\right) = (0.21, 0.39).
-$$
-
-Wir sind uns also zu 95% sicher, dass der wahre Wert von $p$ in diesem Intervall liegt.
-
-::: {.callout-caution}
-Welchen Faktor können wir anpassen, wenn wir den Konfidenzintervall verkleineren wollen?
-
-Welcher Konfidenzintervall würde sich für ein Konfidenzniveau von 99% ergeben?
-:::
-
-
-::: {.callout-caution collapse="true"}
-#### Lösung
-
-Der Faktor, den wir anpassen können, die größe der Stichprobe $n$, da diese im Nennern steht.
-
-Für ein Konfidenzniveau von 99% ist $\alpha = 0.01$ und damit $z_{\alpha/2} = 2.58$. Damit ergibt sich für unser Beispiel ein Konfidenzintervall von
-
-$$
-\left(0.3 - 2.58 \sqrt{\frac{0.3(1-0.3)}{100}}, 0.3 + 2.58 \sqrt{\frac{0.3(1-0.3)}{100}}\right) = (0.18, 0.42).
-$$
-
-
-### Darstellung des Konfidenzintervalls eines normalverteilten Parameters
-
-```{python}
-#| classes: styled-output
-# Konfidenzniveau
-import seaborn as sns
+#| label: fig-sec-statistics-bernoulli-ci
+#| fig-cap: 95%-Konfidenzintervall für $\hat{p}$ aus einer Stichprobe (p = 0.3, n = 100).
+import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
-# Konfidenzniveaus
-alphas = [0.05, 0.01]
-
-cmap = plt.get_cmap('tab10')
-colors = cmap(np.linspace(0, 1, len(alphas)))
-
-# Normalverteilung
-mu = 0.3
-sigma = np.sqrt(0.3*(1-0.3)/100)
+np.random.seed(42)
+p = 0.3
+n = 70
+sample = np.random.binomial(1, p, n)  # Eine Stichprobe
+p_hat = np.mean(sample)  # Schätzer
 
 # Konfidenzintervall
-x = np.linspace(0.1, 0.5, 100)
-y = norm.pdf(x, mu, sigma)
-plt.plot(x, y)
+alpha = 0.05
+z = norm.ppf(1 - alpha/2)  # z-Wert für 95%
+se = np.sqrt(p_hat * (1 - p_hat) / n)  # Standardfehler mit \hat{p}
+ci_lower = p_hat - z * se
+ci_upper = p_hat + z * se
 
-for alpha in alphas:
-    z = norm.ppf(1-alpha/2)
-    lower = mu - z*sigma
-    upper = mu + z*sigma
+print(f'z_{{alpha/2}}: {z:.2f}')
+print(f'\hat{{p}}: {p_hat:.3f}')
+print(f'95%-Konfidenzintervall: [{ci_lower:.3f}, {ci_upper:.3f}]')
 
-    print(f'Konfidenzintervall für alpha={alpha}: ({lower:.2f}, {upper:.2f})')
-
-    # Darstellung
-    plt.fill_between(x, y, where=(x >= lower) & (x <= upper), alpha=0.1, color=colors[alphas.index(alpha)])
-    # Text
-    plt.text(mu+0.1, norm.pdf(mu, mu, sigma) * (0.2+ 0.1 * alphas.index(alpha)), f'CI {1-alpha} %', color=colors[alphas.index(alpha)])
-    
-
-
+# Visualisierung
+x = np.linspace(0, 0.6, 1000)
+y = norm.pdf(x, p_hat, se)
+plt.plot(x, y, 'r-', label=f'Normal ($\mu={p_hat:.3f}$, SE={se:.3f})')
+plt.axvline(p_hat, color='blue', linestyle='-', label='$\hat{p}$')
+plt.axvline(ci_lower, color='green', linestyle='--', label='Untere Grenze')
+plt.axvline(ci_upper, color='green', linestyle='--', label='Obere Grenze')
+plt.fill_between(x, y, where=(x >= ci_lower) & (x <= ci_upper), color='skyblue', alpha=0.3, label='95%-KI')
+plt.xlabel('Wert von $p$')
+plt.ylabel('Dichte')
+plt.title('Konfidenzintervall für $\hat{p}$')
 plt.legend()
-plt.title('Konfidenzintervall für p')
+plt.grid(alpha=0.3)
 plt.show()
 ```
 
+Für unser Beispiel mit $\hat{p} = 0.3$, $n = 70$ und einem 95 %-Konfidenzniveau ($\alpha = 0.05$, $z_{\alpha/2} = 1.96$) ergibt sich das Konfidenzintervall:  
+$$\left(0.271 - 1.96 \cdot \sqrt{\frac{0.271 \cdot 0.729}{70}}, 0.271 + 1.96 \cdot \sqrt{\frac{0.271 \cdot 0.729}{70}}\right) \approx (0.167, 0.376).$$  
+Das bedeutet, wir sind zu 95 % sicher, dass der wahre Wert von $p$ zwischen 0.167 und 0.376 liegt.
+
+::: {.callout-caution title="Fragen zur Anpassung"}
+1. Welchen Faktor können wir ändern, um das Konfidenzintervall zu verkleinern?  
+2. Wie sieht das Konfidenzintervall für ein 99 %-Niveau aus?
 :::
 
-### Punktschätzer und Konfidenzintervall für andere Fälle
+::: {.callout-caution collapse="true" title="Lösung"}
+1. **Verkleinerung des Intervalls**: Die Breite des Konfidenzintervalls hängt von $\frac{\sigma}{\sqrt{n}}$ ab. Eine größere Stichprobengröße $n$ reduziert den Standardfehler $\sqrt{\frac{p(1-p)}{n}}$, wodurch das Intervall schmaler wird.  
+2. **99 %-Konfidenzniveau**: Bei $\alpha = 0.01$ ist $z_{\alpha/2} = 2.58$ (da $P(Z \leq 2.58) \approx 0.995$). Das Intervall wird:  
+$$\left(0.271 - 2.58 \cdot \sqrt{\frac{0.271 \cdot 0.729}{70}}, 0.271 + 2.58 \cdot \sqrt{\frac{0.271 \cdot 0.729}{70}}\right) \approx (0.134, 0.408).$$  
+Ein höheres Konfidenzniveau verbreitert das Intervall, da mehr Sicherheit gefordert wird.
+:::
 
-Für andere Verteilungen und Schätzer können wir die gleichen Prinzipien anwenden. Wir können die Schätzer und Konfidenzintervalle für den Mittelwert, die Varianz oder andere Parameter berechnen. Dabei müssen wir nur die Verteilung des Schätzers kennen und die entsprechenden Formeln anwenden.
+### Darstellung des Konfidenzintervalls {#sec-confidenceintervals-visualization}
+
+@fig-sec-statistics-bernoulli-ci-multi zeigt die Konfidenzintervalle für $p$ bei 95 % und 99 % Konfidenzniveau, basierend auf $\hat{p} = 0.3$ und $n = 100$. Dies verdeutlicht, wie sich das Intervall mit dem Konfidenzniveau ändert – ein nützliches Konzept, um Unsicherheiten in Simulationen wie im [Tutorial](#sec-monte-carlo-simulation) zu quantifizieren.
+
+```{python}
+#| classes: styled-output
+#| label: fig-sec-statistics-bernoulli-ci-multi
+#| fig-cap: Konfidenzintervalle für $\hat{p}$ bei 95% und 99% (p = 0.3, n = 100).
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+# Parameter
+mu = 0.3  # \hat{p}
+sigma = np.sqrt(mu * (1 - mu) / 100)  # SE
+alphas = [0.05, 0.01]  # 95% und 99% Konfidenzniveau
+colors = ['skyblue', 'lightgreen']
+
+# Normalverteilung
+x = np.linspace(0.1, 0.5, 1000)
+y = norm.pdf(x, mu, sigma)
+plt.plot(x, y, 'r-', label=f'Normal ($\mu={mu}$, SE={sigma:.3f})')
+
+# Konfidenzintervalle
+for i, alpha in enumerate(alphas):
+    z = norm.ppf(1 - alpha/2)
+    lower = mu - z * sigma
+    upper = mu + z * sigma
+    print(f'Konfidenzintervall für {int((1-alpha)*100)}%: ({lower:.2f}, {upper:.2f})')
+    plt.fill_between(x, y, where=(x >= lower) & (x <= upper), color=colors[i], alpha=0.3, label=f'{int((1-alpha)*100)}%-KI')
+    plt.axvline(lower, color=colors[i], linestyle='--', alpha=0.5)
+    plt.axvline(upper, color=colors[i], linestyle='--', alpha=0.5)
+
+plt.axvline(mu, color='blue', linestyle='-', label='$\hat{p}$')
+plt.xlabel('Wert von $p$')
+plt.ylabel('Dichte')
+plt.title('Konfidenzintervalle für $\hat{p}$')
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+```
 
 
+
+### Punktschätzer und Konfidenzintervalle für andere Fälle {#sec-pointestimates-other}
+
+Die Prinzipien für Schätzer und Konfidenzintervalle lassen sich auf andere Verteilungen und Parameter (z. B. Mittelwert, Varianz) übertragen. Entscheidend ist, die Verteilung des Schätzers zu kennen und entsprechende Formeln anzuwenden. 
 
 ## Hypothesentests {#sec-statistics-hypothesistests}
 
-Ein Hypothesentest ist ein statistisches Verfahren, um zu entscheiden, ob eine Hypothese über eine Population auf Basis einer Stichprobe abgelehnt oder beibehalten wird. Dabei wird eine Nullhypothese $H_0$ aufgestellt, die wir widerlegen wollen. Die Nullhypothese ist meist eine Aussage über den Wert eines Parameters, z.B. dass der Mittelwert einer Verteilung gleich einem bestimmten Wert ist. Die Alternative Hypothese $H_1$ ist die Aussage, die wir beweisen wollen.
+Ein __Hypothesentest__ ist ein Verfahren, um auf Basis einer Stichprobe zu entscheiden, ob eine Hypothese über eine Population verworfen wird. Wir stellen eine __Nullhypothese__ $H_0$ auf (z. B. „ein Parameter hat einen bestimmten Wert“), die wir widerlegen wollen, und eine __Alternativhypothese__ $H_1$, die wir unterstützen möchten.
 
-
-::: {.callout-note}
-### [Dialektik](https://de.wikipedia.org/wiki/Dialektik) und [Falsifikationismus](https://de.wikipedia.org/wiki/Falsifikationismus)
-
-Zunächst wirkt es ungewohnt, dass wir etwas aufstellen, nur um es zu widerlegen. Dieser Ansatz ist jedoch ein zentraler Bestandteil der wissenschaftlichen Methode und fußt tief in der westlichen Philosophie.
-
-Die _Dialektik_ ist eine Methode, um Wahrheit zu finden, indem eine __These__ aufgestellt wird und diese durch eine __Antithese__ widerlegt wird. Die __Synthese__ ist dann der nächste Schritt in Richtung Wahrheit. Dieser Prozess wird so lange wiederholt, bis die Wahrheit gefunden ist.
-
-Der Philisoph [Karl Popper](https://de.wikipedia.org/wiki/Karl_Popper) hat diesen Ansatz weiterentwickelt und den _Falsifikationismus_ geprägt, um den wissenschaftlichen Erkennungsprozess zu beschreiben. Laut Popper lässt sich eine These nie beweisen, sondern nur widerlegen. Wenn eine These widerlegt wird, muss sie verworfen werden. Wenn sie widersteht, ist sie nicht bewiesen, sondern nur nicht widerlegt.
+::: {.callout-note title="Dialektik und Falsifikationismus"}
+Dieser Ansatz mag ungewohnt erscheinen: Warum etwas aufstellen, um es zu widerlegen? Er wurzelt in der wissenschaftlichen Methode:  
+- **Dialektik**: Eine These wird durch eine Antithese geprüft, die Synthese führt näher zur Wahrheit ([Wikipedia: Dialektik](https://de.wikipedia.org/wiki/Dialektik)).  
+- **Falsifikationismus**: Karl Popper betonte, dass Thesen nicht beweisbar, sondern nur widerlegbar sind. Eine nicht widerlegte Hypothese bleibt vorläufig gültig, ist aber nicht endgültig bewiesen ([Wikipedia: Falsifikationismus](https://de.wikipedia.org/wiki/Falsifikationismus)).  
+In der Statistik nutzen wir diesen Ansatz, um Hypothesen systematisch zu prüfen.
 :::
 
-Ensprechend gehen wir in der Statistik wie folgt vor:
+### Ablauf eines Hypothesentests
+1. **Hypothesen formulieren**: $H_0$ (zu widerlegen) und $H_1$ (zu unterstützen).  
+2. **Signifikanzniveau wählen**: $\alpha$ ist die Wahrscheinlichkeit, $H_0$ fälschlicherweise abzulehnen (z. B. 0.05).  
+3. **Teststatistik berechnen**: Bestimme $t$ und dessen Verteilung unter $H_0$.  
+4. **Entscheidung treffen**: Vergleiche $t$ mit einem kritischen Wert oder berechne einen p-Wert.
 
-1. Wir formulieren die Nullhypothese $H_0$ und die Alternativhypothese $H_1$. Die Nullhypothese ist die Aussage, die wir widerlegen wollen. Die Alternativhypothese ist die Aussage, die wir beweisen wollen.
-2. Wir wählen ein Signifikanzniveau $\alpha$, das die Wahrscheinlichkeit angibt, mit der wir die Nullhypothese ablehnen.
-3. Wir berechnen den Teststatistik $t$ und bestimmen die Verteilung der Teststatistik unter der Nullhypothese.
+### Entscheidungsfehler {#sec-hypothesistests-errors}
 
-### Entscheidungsfehler
-
-Um uns das Problem noch einmal zu vergegenwärtigen, betrachten wir nochmal das Beispiel eines medizinischen Tests. Wir haben eine Person, die entweder Krebs hat oder nicht. Der Test kann entweder positiv oder negativ sein.
-
+Betrachten wir ein Beispiel: Ein medizinischer Test soll Krebs erkennen. Die Realität (Krebs oder kein Krebs) und das Testergebnis (positiv oder negativ) können abweichen. Das Diagramm zeigt die Wahrscheinlichkeiten:
 
 ```{mermaid}
 graph LR
-    U[Person] -->|0.001| A[Krebs] 
+    U[Person] -->|0.001| A[Krebs]
     U[Person] -->|0.999| D[Kein Krebs]
     A[Krebs] -->|0.99| B[Positiv]
     A[Krebs] -->|0.01| C[Negativ]
@@ -322,179 +286,122 @@ graph LR
     D[Kein Krebs] -->|0.95| F[Negativ]
 ```
 
-Nun vergegenwärtigen wir noch einmal unser _Business Understanding_: Wir wollen die Person mit Krebs identifizieren. Der Worst-Case ist, dass wir die Person mit Krebs nicht erkennen. Wir wollen also die Wahrscheinlichkeit, dass wir die Person mit Krebs erkennen maximieren.
+**Ziel**: Personen mit Krebs identifizieren. Der schlimmste Fall wäre, Krebs zu übersehen. Wir möchten daher die Wahrscheinlichkeit maximieren, Krebs korrekt zu erkennen.  
 
-Das bedeutet, dass wir die Nullhypothese $H_0$ formulieren, dass die Person keinen Krebs hat. Die Alternativhypothese $H_1$ ist, dass die Person Krebs hat.
-Bei einem Hypothesentest können wir zwei Arten von Fehlern machen:
+Daraus folgt:  
+- __Nullhypothese__ $H_0$: „Die Person hat keinen Krebs“ (zu widerlegen),  
+- __Alternativhypothese__ $H_1$: „Die Person hat Krebs“ (zu unterstützen).  
 
-- __Typ I Fehler__ ($\alpha$): Wir lehnen die Nullhypothese ab, obwohl sie wahr ist.
-- __Typ II Fehler__ ($\beta$): Wir akzeptieren die Nullhypothese, obwohl sie falsch ist.
-
-oder als Tabelle
+Bei einem Hypothesentest können zwei Fehler auftreten:  
+- __Typ-I-Fehler__ ($\alpha$): $H_0$ wird abgelehnt, obwohl sie wahr ist (falsch positiv, z. B. „Krebs“ trotz „kein Krebs“).  
+- __Typ-II-Fehler__ ($\beta$): $H_0$ wird beibehalten, obwohl sie falsch ist (falsch negativ, z. B. „kein Krebs“ trotz „Krebs“).
 
 
 ```{=html}
 <table border="1">
-  <caption>Table of error types</caption>
+  <caption>Tabelle der Fehlertypen</caption>
   <tr>
-    <th rowspan="2" colspan="2">Table of error types</th>
-    <th colspan="2">Null hypothesis (<b>H<sub>0</sub></b>) is</th>
+    <th rowspan="2" colspan="2">Entscheidung über die Nullhypothese</th>
+    <th colspan="2">Nullhypothese (<b>H<sub>0</sub></b>) ist</th>
   </tr>
   <tr>
-    <th>True</th>
-    <th>False</th>
+    <th>Wahr</th>
+    <th>Falsch</th>
   </tr>
   <tr>
-    <th rowspan="2">Decision<br>about null<br>hypothesis (<b>H<sub>0</sub></b>)</th>
-    <th>Not reject</th>
-    <td style="text-align:center;">Correct inference<br>(true negative)<br>(probability = <b>1-α</b>)</td>
-    <td style="text-align:center;">Type II error<br>(false negative)<br>(probability = <b>β</b>)</td>
+    <th rowspan="2">Entscheidung über die<br>Nullhypothese (<b>H<sub>0</sub></b>)</th>
+    <th>Nicht verwerfen</th>
+    <td style="text-align:center;">Korrekte Entscheidung<br>(wahr negativ, wirklich gesund)<br>(Wahrscheinlichkeit = <b>1-α</b>)</td>
+    <td style="text-align:center;">Typ-II-Fehler<br>(falsch negativ, hat eigentlich Krebs)<br>(Wahrscheinlichkeit = <b>β</b>)</td>
   </tr>
   <tr>
-    <th>Reject</th>
-    <td style="text-align:center;">Type I error<br>(false positive)<br>(probability = <b>α</b>)</td>
-    <td style="text-align:center;">Correct inference<br>(true positive)<br>(probability = <b>1-β</b>)</td>
+    <th>Verwerfen</th>
+    <td style="text-align:center;">Typ-I-Fehler<br>(falsch positiv, ist eigentlich gesund)<br>(Wahrscheinlichkeit = <b>α</b>)</td>
+    <td style="text-align:center;">Korrekte Entscheidung<br>(wahr positiv, hat wirklich Krebs)<br>(Wahrscheinlichkeit = <b>1-β</b>)</td>
   </tr>
 </table>
-
 ```
-
-::: {.callout-important}
-Der kritischere Fehler ist der Typ I Fehler, da wir die Nullhypothese ablehnen, obwohl sie wahr ist. Das Signifikanzniveau $\alpha$ gibt die Wahrscheinlichkeit an, mit der wir die Nullhypothese fälschlicherweise ablehnen. Das Signifikanzniveau wird vor dem Test festgelegt und sollte möglichst klein sein.
-
-Üblicherweise wird ein Signifikanzniveau von 5% oder 1% gewählt. Das bedeutet, dass wir die Nullhypothese nur ablehnen, wenn die Wahrscheinlichkeit, dass die Nullhypothese wahr ist, kleiner als 5% oder 1% ist.
-
-Im Beispiel würde dies bedeuten, dass wir eine Person als gesund einstufen, obwohl sie Krebs hat. Dies kann fatale Folgen haben, wenn die Person nicht rechtzeitig behandelt wird.
+::: {.callout-important title="Signifikanzniveau und Fehlerprioritäten"}
+Im Beispiel ist der __Typ-II-Fehler__ ($\beta$) besonders kritisch, da Krebs übersehen schwerwiegender ist als eine falsche Diagnose. Dennoch steuern wir die Ablehnung von $H_0$ mit dem __Signifikanzniveau__ $\alpha$, der Wahrscheinlichkeit eines Typ-I-Fehlers (falsch positiv). $\alpha$ wird vorab festgelegt, typischerweise 5 % (0.05) oder 1 % (0.01). Ein kleineres $\alpha$ reduziert das Risiko, $H_0$ fälschlich zu verwerfen (z. B. unnötige Behandlungen), erhöht aber die Chance eines Typ-II-Fehlers.
 :::
 
+### Beispiel: Hypothesentest für den Mittelwert einer Normalverteilung {#sec-hypothesistests-example}
 
-### Am Beispiel eines Punktschätzer für den Mittelwert einer Normalverteilung
+Wir prüfen, ob Mechatronik-Studierende intelligenter sind als der Bevölkerungsdurchschnitt (IQ = 100). Angenommen, ihr IQ ist normalverteilt mit $\mu = 110$ und $\sigma = 15$, also $X \sim \mathcal{N}(110, 15^2)$. Mit einer Stichprobe von $n = 100$ Studierenden testen wir, ob ihr Mittelwert signifikant von 100 abweicht – ein Ansatz, der im [Tutorial](#sec-monte-carlo-simulation) z. B. für Komponenten-Lebensdauern nützlich ist.
 
-Angenommen wir wollen untersuchen, ob Studierende der Mechatronik im Schnitt intelligenter sind als der Durchschnitt. Wie haben bereits etabliert, dass die durchschnittliche Intelligenz in der Bevölkerung bei einem IQ von 100 liegt.
-Nehmen wir nun wohlwollend an, dass der IQ der Mechatronikstudierenden normalverteilt ist mit einem Mittelwert von 110 und einer Standardabweichung von 15:
+#### Hypothesen und Teststatistik
+- $H_0$: $\mu = 100$ (kein Unterschied zum Durchschnitt),  
+- $H_1$: $\mu \neq 100$ (zweiseitiger Test, da „abweicht“ keine Richtung vorgibt).  
+Der Schätzer ist $\hat{\mu} = \bar{X}$, und unter $H_0$ gilt:  
+$$\bar{X} \sim \mathcal{N}\left(100, \frac{\sigma^2}{n}\right) = \mathcal{N}\left(100, \frac{15^2}{100}\right).$$  
+Die Teststatistik lautet:  
+$$z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}},$$  
+mit $\mu_0 = 100$, $\sigma = 15$, $n = 100$. Bei $\alpha = 0.05$ ist der kritische Wert $z_{\alpha/2} = 1.96$.
 
-$$
-X \sim \mathcal{N}(110, 15).
-$$
-
-Wir haben eine Stichprobe von 100 Studierenden und wollen wissen, ob der Mittelwert signifikant von 100 abweicht.
-    
-
+#### Simulation und Visualisierung
+@fig-sec-statistics-hypothesistests zeigt die Stichprobenverteilung und die Nullhypothese.
 
 ```{python}
 #| classes: styled-output
-#| #| #| fig-cap: Hypothesentest für den Mittelwert einer Normalverteilung
-#| #| label: fig:sec-statistics-hypothesistests
-#| 
-# Hypothesentest
+#| label: fig-sec-statistics-hypothesistests
+#| fig-cap: Hypothesentest für den Mittelwert von Mechatronik-Studierenden (n = 100).
 import numpy as np
-from scipy.stats import norm
 import matplotlib.pyplot as plt
-import seaborn as sns
+from scipy.stats import norm
 
-# Stichprobe der Mechatronikstudierenden
-mu = 110
-sigma = 15
-
-# Nullhypothese
-mu_0 = 100
+np.random.seed(42)
+mu_true = 110  # Wahrer Mittelwert (Simulation)
+sigma = 15     # Bekannte Standardabweichung
+n = 100        # Stichprobengröße
+mu_0 = 100     # Nullhypothese
 
 # Stichprobe
-n = 100
-X = np.random.normal(mu, sigma, n)
+X = np.random.normal(mu_true, sigma, n)
+X_bar = np.mean(X)  # Schätzer für Mittelwert
 
-# Schätzer für den Mittelwert und Standardabweichung
-X_hat = np.mean(X)
-mu_hat = np.std(X)
+# Teststatistik
+se = sigma / np.sqrt(n)  # Standardfehler
+z_stat = (X_bar - mu_0) / se
+p_value = 2 * (1 - norm.cdf(abs(z_stat)))  # Zweiseitiger p-Wert
 
-# Normale Verteilung aus der Schätzung
-x = np.linspace(90, 130, 100)
-y = norm.pdf(x, X_hat, mu_hat)
-
-# Plot der geschätzten Verteilung und Nullhypothese
-
-plt.plot(x, y, label='Verteilung der Stichprobe')
-plt.axvline(mu_0, color='r', linestyle='--', label='Nullhypothese')
+# Plot
+x = np.linspace(90, 130, 1000)
+y_null = norm.pdf(x, mu_0, se)  # Verteilung unter H_0
+y_sample = norm.pdf(x, X_bar, se)  # Verteilung der Stichprobe
+plt.plot(x, y_null, 'r--', label=f'$H_0$ ($\mu={mu_0}$)')
+plt.plot(x, y_sample, 'b-', label=f'Stichprobe ($\hat{{\mu}}={X_bar:.1f}$)')
+plt.axvline(mu_0, color='red', linestyle='--')
+plt.axvline(X_bar, color='blue', linestyle='-')
+plt.fill_between(x, y_null, where=(x <= mu_0 - 1.96*se) | (x >= mu_0 + 1.96*se), color='red', alpha=0.2, label=r'Ablehnungsbereich ($\alpha=0.05$)')
+plt.xlabel('Mittelwert (IQ)')
+plt.ylabel('Dichte')
+plt.title('Hypothesentest: IQ von Mechatronik-Studierenden')
 plt.legend()
-plt.title('Verteilung der Stichprobe und Nullhypothese')
-plt.show()
-```
-
-Wir können nun sehen, dass die Stichprobe der Mechatronikstudierenden eine höhere Intelligenz aufweist als der Durchschnitt von 100. 
-Wahrscheinlich werden wir auch einige Mechatronikstudierende finden, die weniger intelligent sind als der Durchschnitt.
-
-Was wir nun aber testen wollen, ist ob der Mittelwert der Stichprobe signifikant von 100 abweicht.
-Dazu brauchen wir jetzt einen Schätzer des Mittelwertes und der Standardabweichung der Stichprobe. 
-Die Ziehungen sind unabängig und identisch verteilt, daher können wir den zentralen Grenzwertsatz anwenden.
-Dieser besagt, dass der Schätzer für den Mittelwert gegeben ist durch
-
-$$
-\hat{\mu}=\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i,
-$$
-
-
-dessen Standardfehler ist gegeben durch
-
-$$
-SE(\hat{\mu})=\sigma_{\hat{\mu}} = \frac{\sigma}{\sqrt{n}}.
-$$
-
-
-Dies können wir nun anhand der Stichprobe berechnen und visualisieren.
-
-```{python}
-#| classes: styled-output
-#| #| fig-cap: Hypothesentest für den Mittelwert einer Normalverteilung
-#| #| label: fig:sec-statistics-hypothesistests_2
-
-# Schätzer für den Mittelwert und Standardabweichung
-X_hat = np.mean(X)
-mu_hat = np.std(X)/np.sqrt(n)
-
-# Normale Verteilung aus der Schätzung
-x = np.linspace(90, 130, 100)
-y = norm.pdf(x, X_hat, mu_hat)
-
-# mit zweiseitigem Signifikanzniveau von 5%
-alpha = 0.05
-z = norm.ppf(1-alpha/2)
-
-# Plot der geschätzten Verteilung und Nullhypothese
-
-plt.plot(x, y, label='Verteilung der Stichprobe')
-plt.axvline(mu_0, color='r', linestyle='--', label='Nullhypothese')
-plt.axvline(X_hat + z*mu_hat, color='g', linestyle='--', label='Signifikanzniveau')
-plt.axvline(X_hat - z*mu_hat, color='g', linestyle='--')
-plt.fill_between(x, y, where=(x >= X_hat - z*mu_hat) & (x <= X_hat + z*mu_hat), alpha=0.1, color='g')
-
-plt.legend()
-plt.title('Verteilung von Mittelwert-Schätzer und Nullhypothese')
+plt.grid(alpha=0.3)
 plt.show()
 
-print(f'Mittelwert der Stichprobe: {X_hat:.2f}')
-print(f'Standardabweichung der Stichprobe: {mu_hat:.2f}')
+print(f'Stichprobenmittelwert: {X_bar:.2f}')
+print(f'Teststatistik z: {z_stat:.2f}')
+print(f'p-Wert: {p_value:.4f}')
 ```
 
-An Fig. können wir erkennen, dass die Wahrscheinlichkeit, dass der Mittelwert der Stichprobe von 100 abweicht, sehr hoch ist.
-Der grüner Bereich, der das Signifikanzniveau darstellt, liegt weit rechts von der Nullhypothese.
+#### Interpretation
+An @fig-sec-statistics-hypothesistests-2 sehen wir, dass der Stichprobenmittelwert $\hat{\mu}$ deutlich über $\mu_0 = 100$ liegt. Der grüne Bereich (95 %-Konfidenzintervall) schließt 100 nicht ein, und der p-Wert ist < 0.05. Das deutet darauf hin, dass die Wahrscheinlichkeit für $\mu = 100$ sehr gering ist. Wir lehnen $H_0$ ab und schließen, dass der Mittelwert der Mechatronik-Studierenden signifikant von 100 abweicht.
 
+### $t$-Verteilung {#sec-t-distribution}
 
+Bei großen Stichproben ($n \geq 30$) approximiert der zentrale Grenzwertsatz den Stichprobenmittelwert $\bar{X}$ durch eine Normalverteilung, besonders wenn $\sigma$ bekannt ist. Für kleine Stichproben ($n < 30$) oder unbekannte Varianz ist die __$t$-Verteilung__ ([Wikipedia: Studentsche t-Verteilung](https://de.wikipedia.org/wiki/Studentsche_t-Verteilung)) besser geeignet, da sie die Unsicherheit der geschätzten Standardabweichung einbezieht.
 
+Die Teststatistik der $t$-Verteilung ist:  
+$$t = \frac{\bar{X} - \mu_0}{\frac{S}{\sqrt{n}}},$$  
+wobei:  
+- $\bar{X}$: Stichprobenmittelwert,  
+- $\mu_0$: Wert unter $H_0$,  
+- $S$: Stichprobenstandardabweichung ($S = \sqrt{\frac{1}{n-1} \sum (X_i - \bar{X})^2}$),  
+- $n$: Stichprobengröße.  
 
-### T-Verteilung
+Die Form der $t$-Verteilung hängt von den __Freiheitsgraden__ $df = n - 1$ ab: Bei kleinem $n$ ist sie breiter (mehr Streuung), bei großem $n$ nähert sie sich der Normalverteilung. Im [Tutorial](#sec-monte-carlo-simulation) könnte die $t$-Verteilung bei kleinen Stichproben von Ausfallzeiten hilfreich sein, wenn $\sigma$ unbekannt ist.
 
-Für endlich große Stichproben-Umfänge funktionert unsere Annäherung des Strichprobenmittelwerts durch eine Normalverteilung. Für kleine Stichproben-Umfänge ist die [T-Verteilung](https://de.wikipedia.org/wiki/Studentsche_t-Verteilung) besser geeignet.
-
-
-Die T-Verteilung ist gegeben durch
-
-$$
-t = \frac{\bar{X} - \mu_0}{\frac{S}{\sqrt{n}}},
-$$
-
-und hängt vorallem vom Stichprobenumfang $n$ ab. Je kleiner der Stichprobenumfang, desto breiter ist die T-Verteilung. Für große Stichprobenumfänge konvergiert die T-Verteilung gegen die Normalverteilung. $S$ ist die Stichprobenstandardabweichung. Man bezeichnet $df = n-1$ als die Freiheitsgrade der T-Verteilung.
-
-::: {.callout-note}
-Die T-Verteilung wurde von [William Sealy Gosset](https://de.wikipedia.org/wiki/William_Sealy_Gosset) entwickelt. Er arbeitete für die [Guinness-Brauerei](https://de.wikipedia.org/wiki/Guinness_Brewery) und entwickelte die T-Verteilung, um die Qualität des Bieres zu verbessern. Um die Geheimhaltung der Brauerei zu wahren, [veröffentlichte](https://www.dcscience.net/Student-t-1908.pdf) er seine Ergebnisse unter dem Pseudonym Student. Dies führte zur Bezeichnung der T-Verteilung als Student's T-Verteilung.
+::: {.callout-note title="Herkunft der $t$-Verteilung"}
+Die $t$-Verteilung stammt von [William Sealy Gosset](https://de.wikipedia.org/wiki/William_Sealy_Gosset), einem Statistiker bei der [Guinness-Brauerei](https://de.wikipedia.org/wiki/Guinness_Brewery). Er entwickelte sie, um die Bierqualität mit kleinen Stichproben zu prüfen, und veröffentlichte 1908 unter dem Pseudonym „Student“ ([Original: Student’s t](https://www.dcscience.net/Student-t-1908.pdf)). Daher heißt sie „Student’s $t$-Verteilung“.
 :::
-

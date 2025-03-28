@@ -34,6 +34,7 @@ book:
         - statistics/interference_basics.qmd
         - statistics/interference_advanced.qmd
         - statistics/tutorial_2.qmd
+        - statistics/tasks.qmd
     - part: regression/index.qmd
       chapters:        
         - regression/index.qmd
