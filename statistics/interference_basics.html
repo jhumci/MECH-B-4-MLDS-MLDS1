@@ -269,6 +269,12 @@ window.Quarto = {
  <span class="menu-text">Tutorial 2: Understanding Patterns in Grid Loads</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tasks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Übungsaufgaben: Wahrscheinlichkeitsrechnung</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -312,14 +318,19 @@ window.Quarto = {
   <ul>
   <li><a href="#sec-statistics-pointestimates" id="toc-sec-statistics-pointestimates" class="nav-link active" data-scroll-target="#sec-statistics-pointestimates"><span class="header-section-number">5.1</span> Punktschätzer und Konfidenzintervalle</a>
   <ul class="collapse">
-  <li><a href="#sec-statistics-confidenceintervals" id="toc-sec-statistics-confidenceintervals" class="nav-link" data-scroll-target="#sec-statistics-confidenceintervals"><span class="header-section-number">5.1.1</span> Konfidenzintervalle</a></li>
-  <li><a href="#punktschätzer-und-konfidenzintervall-für-andere-fälle" id="toc-punktschätzer-und-konfidenzintervall-für-andere-fälle" class="nav-link" data-scroll-target="#punktschätzer-und-konfidenzintervall-für-andere-fälle"><span class="header-section-number">5.1.3</span> Punktschätzer und Konfidenzintervall für andere Fälle</a></li>
+  <li><a href="#beispiel-bernoulli-verteilung" id="toc-beispiel-bernoulli-verteilung" class="nav-link" data-scroll-target="#beispiel-bernoulli-verteilung"><span class="header-section-number">5.1.1</span> Beispiel: Bernoulli-Verteilung</a></li>
+  <li><a href="#simulation-schätzer-verteilung" id="toc-simulation-schätzer-verteilung" class="nav-link" data-scroll-target="#simulation-schätzer-verteilung"><span class="header-section-number">5.1.2</span> Simulation: Schätzer-Verteilung</a></li>
+  <li><a href="#sec-statistics-confidenceintervals" id="toc-sec-statistics-confidenceintervals" class="nav-link" data-scroll-target="#sec-statistics-confidenceintervals"><span class="header-section-number">5.1.3</span> Konfidenzintervalle</a></li>
+  <li><a href="#beispiel-konfidenzintervall-für-p" id="toc-beispiel-konfidenzintervall-für-p" class="nav-link" data-scroll-target="#beispiel-konfidenzintervall-für-p"><span class="header-section-number">5.1.4</span> Beispiel: Konfidenzintervall für <span class="math inline">\(p\)</span></a></li>
+  <li><a href="#sec-confidenceintervals-visualization" id="toc-sec-confidenceintervals-visualization" class="nav-link" data-scroll-target="#sec-confidenceintervals-visualization"><span class="header-section-number">5.1.5</span> Darstellung des Konfidenzintervalls</a></li>
+  <li><a href="#sec-pointestimates-other" id="toc-sec-pointestimates-other" class="nav-link" data-scroll-target="#sec-pointestimates-other"><span class="header-section-number">5.1.6</span> Punktschätzer und Konfidenzintervalle für andere Fälle</a></li>
   </ul></li>
   <li><a href="#sec-statistics-hypothesistests" id="toc-sec-statistics-hypothesistests" class="nav-link" data-scroll-target="#sec-statistics-hypothesistests"><span class="header-section-number">5.2</span> Hypothesentests</a>
   <ul class="collapse">
-  <li><a href="#entscheidungsfehler" id="toc-entscheidungsfehler" class="nav-link" data-scroll-target="#entscheidungsfehler"><span class="header-section-number">5.2.1</span> Entscheidungsfehler</a></li>
-  <li><a href="#am-beispiel-eines-punktschätzer-für-den-mittelwert-einer-normalverteilung" id="toc-am-beispiel-eines-punktschätzer-für-den-mittelwert-einer-normalverteilung" class="nav-link" data-scroll-target="#am-beispiel-eines-punktschätzer-für-den-mittelwert-einer-normalverteilung"><span class="header-section-number">5.2.2</span> Am Beispiel eines Punktschätzer für den Mittelwert einer Normalverteilung</a></li>
-  <li><a href="#t-verteilung" id="toc-t-verteilung" class="nav-link" data-scroll-target="#t-verteilung"><span class="header-section-number">5.2.3</span> T-Verteilung</a></li>
+  <li><a href="#ablauf-eines-hypothesentests" id="toc-ablauf-eines-hypothesentests" class="nav-link" data-scroll-target="#ablauf-eines-hypothesentests"><span class="header-section-number">5.2.1</span> Ablauf eines Hypothesentests</a></li>
+  <li><a href="#sec-hypothesistests-errors" id="toc-sec-hypothesistests-errors" class="nav-link" data-scroll-target="#sec-hypothesistests-errors"><span class="header-section-number">5.2.2</span> Entscheidungsfehler</a></li>
+  <li><a href="#sec-hypothesistests-example" id="toc-sec-hypothesistests-example" class="nav-link" data-scroll-target="#sec-hypothesistests-example"><span class="header-section-number">5.2.3</span> Beispiel: Hypothesentest für den Mittelwert einer Normalverteilung</a></li>
+  <li><a href="#sec-t-distribution" id="toc-sec-t-distribution" class="nav-link" data-scroll-target="#sec-t-distribution"><span class="header-section-number">5.2.4</span> <span class="math inline">\(t\)</span>-Verteilung</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/statistics/interference_basics.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -346,239 +357,418 @@ window.Quarto = {
 </header>
 
 
-<p>Bei der Frage der Interferenz geht es darum, was wir mit ausreichender Sicherheit über eine Population aussagen können, wenn wir nur eine Stichprobe haben. Ein Beispiel hierfür könnte sein, ob ein Parameter einer Verteilung signifikant von einem bestimmten Wert abweicht oder ob sich die Mittelwerte zweier Verteilungen signifikant unterscheiden.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://preview.redd.it/jeez-who-wouldve-thought-v0-1thgdzhamgqe1.png?auto=webp&amp;s=4074fabff97809d08a5962596243175df232f7e3" class="img-fluid figure-img"></p>
-<figcaption>pi_hacking</figcaption>
-</figure>
-</div>
+<p><strong>Inferenz</strong> (statistische Schlussfolgerung) befasst sich damit, was wir mit ausreichender Sicherheit über eine Population aussagen können, wenn nur eine Stichprobe vorliegt. Beispiele sind: Weicht ein Parameter (z. B. Mittelwert) signifikant von einem Wert ab? Unterscheiden sich die Mittelwerte zweier Verteilungen signifikant? Der zentrale Grenzwertsatz ist hier ein Schlüsselwerkzeug.</p>
+<p><img src="https://preview.redd.it/jeez-who-wouldve-thought-v0-1thgdzhamgqe1.png?auto=webp&amp;s=4074fabff97809d08a5962596243175df232f7e3" class="img-fluid" alt="P-Hacking"><br>
+<em>Vorsicht vor P-Hacking: Daten so lange manipulieren, bis ein „signifikantes“ Ergebnis herauskommt, ist keine Inferenz, sondern Fehlinterpretation!</em></p>
 <section id="sec-statistics-pointestimates" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="sec-statistics-pointestimates"><span class="header-section-number">5.1</span> Punktschätzer und Konfidenzintervalle</h2>
-<p>Ein <strong>Punktschätzer</strong> ist eine <strong>Schätz-Funktion</strong>, die eine Schätzung für einen Parameter (z.B. Mittelwert oder Varianz) einer Verteilung liefert. Da wir die wahre Verteilung der Grundgesamtheit nie direkt beobachten können, müssen wir Rückschlüsse daraus aus unserer Stichprobe ziehen. Dabei hilft uns wieder der Zentrale Grenzwertsatz.</p>
-<p>Wir beginnen mit einem Beispiel einer Zufallsvariable <span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span>, wobei uns der Parameter <span class="math inline">\(p\)</span> unbekannt ist. Diesen Parameter wollen wir nun anhand unserer Stichprobe schätzen. Eine Schätzung für <span class="math inline">\(p\)</span> ist der Anteil der Einsen in der Stichprobe <span class="math inline">\(\hat{p}\)</span>. Diesen Schätzer können wir berechnen als</p>
-<p><span class="math display">\[
-\hat{p} = \frac{1}{n} \sum_{i=1}^n X_i,
-\]</span></p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<p>Ein <strong>Punktschätzer</strong> ist eine Funktion, die einen Parameter einer Verteilung (z. B. Mittelwert, Varianz) aus einer Stichprobe schätzt. Da die wahre Verteilung der Population unbekannt ist, ziehen wir Rückschlüsse aus den Daten. Der zentrale Grenzwertsatz hilft, die Verteilung dieser Schätzer zu verstehen.</p>
+<section id="beispiel-bernoulli-verteilung" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="beispiel-bernoulli-verteilung"><span class="header-section-number">5.1.1</span> Beispiel: Bernoulli-Verteilung</h3>
+<p>Betrachten wir eine Zufallsvariable <span class="math inline">\(X \sim \text{Bernoulli}(p)\)</span> mit unbekanntem Parameter <span class="math inline">\(p\)</span>. Ein naheliegender Schätzer für <span class="math inline">\(p\)</span> ist der Anteil der Einsen in einer Stichprobe, <span class="math inline">\(\hat{p}\)</span>, berechnet als:<br>
+<span class="math display">\[\hat{p} = \frac{1}{n} \sum_{i=1}^n X_i,\]</span><br>
+wobei <span class="math inline">\(n\)</span> die Stichprobengröße ist und <span class="math inline">\(X_i\)</span> die Beobachtungen (0 oder 1). Dies ist zudem der Mittelwert der Stichprobe, wenn wir Erfolge als 1 und Misserfolge als 0 kodieren.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Maximum-Likelihood-Schätzung (MLE)">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Bestimmung von Punktschätzern mittels Maximum-Likelihood-Schätzung
+Maximum-Likelihood-Schätzung (MLE)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Um den Maximum-Likelihood-Schätzer (MLE) für den Parameter <span class="math inline">\(p\)</span> einer Bernoulli-Verteilung zu finden, geht man wie folgt vor. Man stellt die Likelihood-Funktion der Beobachteten Werte in der Stichprobe auf und sucht dann nach dem Wert von <span class="math inline">\(p\)</span>, bei dem dieses Auftreten am wahrscheinlichsten ist.</p>
-<section id="likelihood-funktion-aufstellen" class="level5" data-number="5.1.0.0.1">
-<h5 data-number="5.1.0.0.1" class="anchored" data-anchor-id="likelihood-funktion-aufstellen"><span class="header-section-number">5.1.0.0.1</span> 1. Likelihood-Funktion aufstellen:</h5>
-<p>Angenommen, du hast <span class="math inline">\(n\)</span> unabhängige und identisch verteilte Bernoulli-Zufallsvariablen <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span>. Jede dieser Variablen <span class="math inline">\(X_i\)</span> hat eine Bernoulli-Verteilung mit Parameter <span class="math inline">\(p\)</span>, was bedeutet, dass die Wahrscheinlichkeit, dass <span class="math inline">\(X_i = 1\)</span> ist, gleich <span class="math inline">\(p\)</span> ist und die Wahrscheinlichkeit, dass <span class="math inline">\(X_i = 0\)</span> ist, gleich <span class="math inline">\(1-p\)</span> ist.</p>
-<p>Die Likelihood-Funktion ist das Produkt der Wahrscheinlichkeiten aller beobachteten Werte. Falls wir <span class="math inline">\(k\)</span> Einsen und <span class="math inline">\(n-k\)</span> Nullen in unserer Stichprobe haben, ist die Likelihood-Funktion gegeben durch:</p>
-<p><span class="math display">\[
-L(p) = \prod_{i=1}^{n} p^{x_i} (1-p)^{1-x_i} = P(X_1=x_1) \cdot P(X_2=x_2) \cdot \ldots \cdot P(X_n=x_n)
-\]</span></p>
-<p>Das vereinfacht sich zu:</p>
-<p><span class="math display">\[
-L(p) = p^k (1-p)^{n-k}
-\]</span></p>
-<p>wobei <span class="math inline">\(k = \sum_{i=1}^{n} x_i\)</span> die Anzahl der Einsen in der Stichprobe ist.</p>
-</section>
-<section id="log-likelihood-funktion-aufstellen" class="level5" data-number="5.1.0.0.2">
-<h5 data-number="5.1.0.0.2" class="anchored" data-anchor-id="log-likelihood-funktion-aufstellen"><span class="header-section-number">5.1.0.0.2</span> 2. Log-Likelihood-Funktion aufstellen:</h5>
-<p>Um die Berechnungen zu vereinfachen, nimmt man den natürlichen Logarithmus der Likelihood-Funktion, da nun die Produkte zu Summen werden und dies die Ableitungen vereinfacht:</p>
-<p><span class="math display">\[
-\log L(p) = k \log p + (n-k) \log (1-p)
-\]</span></p>
-</section>
-<section id="log-likelihood-maximieren" class="level5" data-number="5.1.0.0.3">
-<h5 data-number="5.1.0.0.3" class="anchored" data-anchor-id="log-likelihood-maximieren"><span class="header-section-number">5.1.0.0.3</span> 3. Log-Likelihood maximieren:</h5>
-<p>Um die Log-Likelihood-Funktion zu maximieren, leiten wir sie nach <span class="math inline">\(p\)</span> ab und setzen diese Ableitung gleich null:</p>
-<p><span class="math display">\[
-\frac{d}{dp} \log L(p) = \frac{k}{p} - \frac{n-k}{1-p} = 0
-\]</span></p>
-</section>
-<section id="gleichung-nach-p-auflösen" class="level5" data-number="5.1.0.0.4">
-<h5 data-number="5.1.0.0.4" class="anchored" data-anchor-id="gleichung-nach-p-auflösen"><span class="header-section-number">5.1.0.0.4</span> 4. Gleichung nach <span class="math inline">\(p\)</span> auflösen:</h5>
-<p>Um diese Gleichung nach <span class="math inline">\(p\)</span> aufzulösen, bringen wir sie auf einen gemeinsamen Nenner:</p>
-<p><span class="math display">\[
-\frac{k(1-p) - (n-k)p}{p(1-p)} = 0
-\]</span></p>
-<p>Der Zähler muss null sein, damit der Bruch null wird und wir die Nullstellen finden:</p>
-<p><span class="math display">\[
-k - kp - np + kp = k - np = 0
-\]</span></p>
-<p>Das ergibt:</p>
-<p><span class="math display">\[
-k = np
-\]</span></p>
-<p>Daraus folgt, dass der MLE für <span class="math inline">\(p\)</span>:</p>
-<p><span class="math display">\[
-\hat{p} = \frac{k}{n} = \frac{1}{n} \sum_{i=1}^{n} x_i.
-\]</span></p>
-</section>
-<section id="fazit" class="level5" data-number="5.1.0.0.5">
-<h5 data-number="5.1.0.0.5" class="anchored" data-anchor-id="fazit"><span class="header-section-number">5.1.0.0.5</span> Fazit:</h5>
-<p>Der Maximum-Likelihood-Schätzer <span class="math inline">\(\hat{p}\)</span> für den Parameter <span class="math inline">\(p\)</span> einer Bernoulli-Verteilung ist also gleich dem Stichprobenmittelwert <span class="math inline">\(frac{k}{n}\)</span>, was intuitiv der Anteil der beobachteten Einsen in der Stichprobe ist. Der Maximum-Likelihood-Schätzer ergibt sich, aus dem Gedanken, dass der Parameter <span class="math inline">\(p\)</span> der Wert ist, bei dem die beobachteten Werte in der Stichprobe am wahrscheinlichsten sind.</p>
-</section>
+<p>Um <span class="math inline">\(\hat{p}\)</span> systematisch zu bestimmen, nutzen wir die Maximum-Likelihood-Schätzung:<br>
+1. <strong>Likelihood-Funktion</strong>: Für <span class="math inline">\(n\)</span> unabhängige Bernoulli-Variablen <span class="math inline">\(X_1, \ldots, X_n\)</span> mit <span class="math inline">\(k = \sum_{i=1}^n X_i\)</span> Einsen lautet die Likelihood:<br>
+<span class="math display">\[L(p) = p^k (1-p)^{n-k}.\]</span><br>
+2. <strong>Log-Likelihood</strong>: Der Logarithmus vereinfacht die Maximierung:<br>
+<span class="math display">\[\log L(p) = k \log p + (n - k) \log (1 - p).\]</span><br>
+3. <strong>Maximierung</strong>: Ableitung nach <span class="math inline">\(p\)</span> und Nullsetzen:<br>
+<span class="math display">\[\frac{d}{dp} \log L(p) = \frac{k}{p} - \frac{n - k}{1 - p} = 0.\]</span><br>
+Lösung: <span class="math inline">\(k(1 - p) = p(n - k)\)</span>, also <span class="math inline">\(\hat{p} = \frac{k}{n}\)</span>.<br>
+<strong>Fazit</strong>: Der MLE-Schätzer <span class="math inline">\(\hat{p}\)</span> ist der Stichprobenanteil, da er die beobachteten Daten am wahrscheinlichsten macht.</p>
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-important callout-titled" title="Zentraler Grenzwertsatz für Schätzer">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Anwendund des Zentralen Grenzwertsatzes für Schätzer
+Zentraler Grenzwertsatz für Schätzer
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Wenn eine Stichprobe groß genug ist und die Ziehungen unabhängig und identisch Verteilt sind, dann ist <span class="math inline">\(\hat{p}\)</span> normalverteilt mit</p>
-<p><span class="math display">\[
-\mu_{\hat{p}} = p,
-\]</span></p>
-<p>was bedeutet, dass wird bei unendlich vielen Wiederholungen im Mittel den wahren Wert von <span class="math inline">\(p\)</span> schätzen. Einen Schätzer mit dieser Eigenschaft nennen wir <strong>erwartungstreu</strong>.</p>
-<p>Die Standardabweichung, welche wir bei einem Schätzer als Standardfehler bezeichnen, gegeben durch <span class="math display">\[
-SE_{\hat{p}}=\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}.
-\]</span></p>
-<p>Damit dies gilt muss <span class="math inline">\(np \geq 10\)</span> und <span class="math inline">\(n(1-p) \geq 10\)</span> sein.</p>
+<p>Bei großer Stichprobengröße <span class="math inline">\(n\)</span> und unabhängigen, identisch verteilten (i.i.d.) Ziehungen ist <span class="math inline">\(\hat{p}\)</span> annähernd normalverteilt:<br>
+<span class="math display">\[\hat{p} \sim \mathcal{N}\left(p, \frac{p(1-p)}{n}\right),\]</span><br>
+wobei:<br>
+- <span class="math inline">\(\mu_{\hat{p}} = p\)</span> (erwartungstreu, d.&nbsp;h., im Mittel korrekt), ergibt sich aus der Maximum-Likelihood-Schätzung,<br>
+- <span class="math inline">\(\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}\)</span> (Standardfehler, SE).</p>
+<p>Voraussetzung: <span class="math inline">\(np \geq 10\)</span> und <span class="math inline">\(n(1-p) \geq 10\)</span>, damit die Normalapproximation gilt.</p>
 </div>
 </div>
-<p>Um dies zu illustrieren, schauen wir uns die Grundgesamtheit und eine Stichprobe an. Wir ziehen <span class="math inline">\(N=1000\)</span> Zufallszahlen aus einer Bernoulli-Verteilung mit <span class="math inline">\(p=0.3\)</span> und wählen eine Stichprobe der Größe <span class="math inline">\(n=100\)</span>. Diesen Vorgang wiederholen wir <span class="math inline">\(m=100\)</span> mal. Den Anteil der Einsen in der Stichprobe speichern wir als Stichprobenhäufigkeit <span class="math inline">\(\hat{p}\)</span>.</p>
-<div id="240f9605" class="cell styled-output" data-execution_count="1">
+<div class="callout callout-style-default callout-tip callout-titled" title="Herleitung der Varianz">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Herleitung der Varianz
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Die <strong>Varianz</strong> einer Zufallsvariablen <span class="math inline">\(X\)</span> ist definiert als:</p>
+<p><span class="math display">\[ \text{Var}(X) = \mathbb{E}[(X - \mathbb{E}[X])^2] \]</span></p>
+<p>Dies beschreibt, wie weit die Werte der Zufallsvariablen <span class="math inline">\(X\)</span> im Durchschnitt von ihrem Erwartungswert <span class="math inline">\(\mathbb{E}[X]\)</span> abweichen.</p>
+<p><strong>Rechenregeln für die Varianz</strong></p>
+<ul>
+<li><p><strong>Varianz einer konstanten Zahl:</strong><br>
+Für eine Konstante <span class="math inline">\(c\)</span> gilt:<br>
+<span class="math display">\[ \text{Var}(c) = 0 \]</span></p></li>
+<li><p><strong>Varianz einer linearen Kombination von Zufallsvariablen:</strong><br>
+Wenn <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span> zwei Zufallsvariablen sind und <span class="math inline">\(a, b\)</span> Konstanten, dann gilt: <span class="math display">\[ \text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \, \text{Cov}(X, Y) \]</span></p>
+<p>Wenn <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span> <strong>unabhängig</strong> sind, fällt der Kovarianzterm weg, sodass: <span class="math display">\[ \text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) \]</span></p></li>
+</ul>
+<p><strong>Herleitung der Varianz für den Fall von <span class="math inline">\(\hat{p}\)</span></strong></p>
+<p>Sei <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> eine Stichprobe von <strong>unabhängigen</strong> Zufallsvariablen, wobei jede <span class="math inline">\(X_i\)</span> der <strong>Bernoulli-Verteilung</strong> mit Erfolgswahrscheinlichkeit <span class="math inline">\(p\)</span> folgt. Der Mittelwert der Stichprobe <span class="math inline">\(\hat{p}\)</span> ist:</p>
+<p><span class="math display">\[ \hat{p} = \frac{1}{n} \sum_{i=1}^{n} X_i \]</span></p>
+<p>Da die <span class="math inline">\(X_i\)</span> unabhängig sind, gilt für die Varianz von <span class="math inline">\(\hat{p}\)</span> die Rechenregel für die Varianz der Summe unabhängiger Zufallsvariablen:</p>
+<p><span class="math display">\[ \text{Var}(\hat{p}) = \text{Var}\left( \frac{1}{n} \sum_{i=1}^{n} X_i \right) \]</span></p>
+<p>Da die <span class="math inline">\(X_i\)</span> identisch verteilt sind, haben sie die gleiche Varianz <span class="math inline">\(\text{Var}(X_i) = p(1 - p)\)</span>. Es folgt:</p>
+<p><span class="math display">\[ \text{Var}(\hat{p}) = \frac{1}{n^2} \sum_{i=1}^{n} \text{Var}(X_i) = \frac{1}{n^2} \cdot n \cdot p(1 - p) = \frac{p(1 - p)}{n} \]</span></p>
+<p>Damit haben wir die Formel für die Varianz von <span class="math inline">\(\hat{p}\)</span>:</p>
+<p><span class="math display">\[ \text{Var}(\hat{p}) = \frac{p(1 - p)}{n} \]</span></p>
+<p>Diese Varianz beschreibt, wie stark der geschätzte Anteil <span class="math inline">\(\hat{p}\)</span> von der tatsächlichen Erfolgswahrscheinlichkeit <span class="math inline">\(p\)</span> abweichen kann.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="simulation-schätzer-verteilung" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="simulation-schätzer-verteilung"><span class="header-section-number">5.1.2</span> Simulation: Schätzer-Verteilung</h3>
+<p>Wir illustrieren dies mit einer Grundgesamtheit <span class="math inline">\(X \sim \text{Bernoulli}(0.3)\)</span>, ziehen <span class="math inline">\(N = 1000\)</span> Werte, nehmen Stichproben der Größe <span class="math inline">\(n = 100\)</span> und wiederholen dies <span class="math inline">\(m = 100\)</span> Mal. Der Schätzer <span class="math inline">\(\hat{p}\)</span> wird als Anteil der Einsen berechnet. <a href="#fig-sec-statistics-bernoulli-estimator" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> zeigt die Verteilung von <span class="math inline">\(\hat{p}\)</span>.</p>
+<div id="cell-fig-sec-statistics-bernoulli-estimator" class="cell styled-output" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Definiere Anzahl der Versuche </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> np.zeros(m)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.3</span>  <span class="co"># Wahrer Parameter</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">1000</span>  <span class="co"># Grundgesamtheit</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span>   <span class="co"># Stichprobengröße</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="dv">100</span>   <span class="co"># Anzahl der Wiederholungen</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Grundgesamtheit ist Bernoulli verteilt</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.3</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">1000</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(m):</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Grundgesamtheit</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, p, N)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stichprobe mit n=100</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    X_sample <span class="op">=</span> np.random.choice(X, n)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Speichere das Anzahl der Einsen</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    results[i] <span class="op">=</span> np.<span class="bu">sum</span>(X_sample)<span class="op">/</span>n</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Wie verteilt sich die Anzahl der Einsen in der Stichprobe</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>sns.histplot(results)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Wie gut passt eine Normalverteilung</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>mu, std <span class="op">=</span> norm.fit(results)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>xmin, xmax <span class="op">=</span> plt.xlim()</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(xmin, xmax, <span class="dv">100</span>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> norm.pdf(x, mu, std)</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>plt.plot(x, p, <span class="st">'k'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Verteilung der Anzahl der Einsen in der Stichprobe'</span>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Mittelwert von p_hat: </span><span class="sc">{</span>np<span class="sc">.</span>mean(results)<span class="op">/</span>n<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Standardabweichung von p_hat: </span><span class="sc">{</span>np<span class="sc">.</span>std(results)<span class="op">/</span>n<span class="sc">:.2f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> np.zeros(m)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>population <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, p, N)  <span class="co"># Grundgesamtheit einmal ziehen</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(m):</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    sample <span class="op">=</span> np.random.choice(population, n, replace<span class="op">=</span><span class="va">False</span>)  <span class="co"># Stichprobe ohne Zurücklegen</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    results[i] <span class="op">=</span> np.mean(sample)  <span class="co"># Schätzer \hat{p}</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.hist(results, bins<span class="op">=</span><span class="dv">15</span>, density<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'skyblue'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="st">'$\hat</span><span class="sc">{p}</span><span class="st">$'</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>mu, sigma <span class="op">=</span> norm.fit(results)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="bu">min</span>(results), <span class="bu">max</span>(results), <span class="dv">100</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, mu, sigma)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, <span class="st">'r-'</span>, label<span class="op">=</span><span class="ss">f'Normal ($\mu=</span><span class="sc">{</span>mu<span class="sc">:.3f}</span><span class="ss">$, $\sigma=</span><span class="sc">{</span>sigma<span class="sc">:.3f}</span><span class="ss">$)'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Schätzer $\hat</span><span class="sc">{p}</span><span class="st">$'</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Verteilung von $\hat</span><span class="ch">{{</span><span class="ss">p</span><span class="ch">}}</span><span class="ss">$ (p = </span><span class="sc">{</span>p<span class="sc">}</span><span class="ss">, n = </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Mittelwert von $\hat</span><span class="ch">{{</span><span class="ss">p</span><span class="ch">}}</span><span class="ss">$: </span><span class="sc">{</span>np<span class="sc">.</span>mean(results)<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Standardfehler von $\hat</span><span class="ch">{{</span><span class="ss">p</span><span class="ch">}}</span><span class="ss">$: </span><span class="sc">{</span>np<span class="sc">.</span>std(results)<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Theoretischer SE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(p <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p) <span class="op">/</span> n)<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:19: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:23: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:23: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+&lt;&gt;:24: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:26: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:31: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:32: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:19: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:23: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:23: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+&lt;&gt;:24: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:26: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:31: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:32: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/4128398071.py:19: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/4128398071.py:23: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+/tmp/ipykernel_3158/4128398071.py:23: SyntaxWarning:
+
+invalid escape sequence '\s'
+
+/tmp/ipykernel_3158/4128398071.py:24: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/4128398071.py:26: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/4128398071.py:31: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/4128398071.py:32: SyntaxWarning:
+
+invalid escape sequence '\h'
+</code></pre>
+</div>
 <div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="interference_basics_files/figure-html/cell-2-output-1.png" width="597" height="431" class="figure-img"></p>
+<div id="fig-sec-statistics-bernoulli-estimator" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sec-statistics-bernoulli-estimator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="interference_basics_files/figure-html/fig-sec-statistics-bernoulli-estimator-output-2.png" width="597" height="458" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-statistics-bernoulli-estimator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Verteilung des Schätzers <span class="math inline">\(\hat{p}\)</span> für eine Bernoulli-Verteilung (p = 0.3, n = 100, m = 100).
+</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Mittelwert von p_hat: 0.00
-Standardabweichung von p_hat: 0.00</code></pre>
+<pre><code>Mittelwert von $\hat{p}$: 0.285
+Standardfehler von $\hat{p}$: 0.040
+Theoretischer SE: 0.046</code></pre>
 </div>
 </div>
-<p>Verglichen mit den theoretischen Werten übergibt dies eine hohe Übereinstimmung.</p>
-<p><span class="math display">\[
-\mu_{\hat{p}} = p = 0.3,
-\]</span></p>
-<p><span class="math display">\[
-SE_{\hat{p}}=\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} = 0.046.
-\]</span></p>
-<section id="sec-statistics-confidenceintervals" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="sec-statistics-confidenceintervals"><span class="header-section-number">5.1.1</span> Konfidenzintervalle</h3>
-<p>Ein Konfidenzintervall ist ein Intervall, das den wahren Wert eines Parameters mit einer bestimmten Wahrscheinlichkeit enthält. Bei einer Normalverteilung haben wir schon beobachtet, dass ca. 95% der Werte innerhalb von zwei Standardabweichungen liegen. Wir können dieses Wissen nutzen, um ein Konfidenzintervall zu berechnen.</p>
-<div class="callout callout-style-default callout-important callout-titled">
+<p>Die simulierten Werte für <span class="math inline">\(\hat{p}\)</span> stimmen gut mit den theoretischen Erwartungen überein:<br>
+- <span class="math inline">\(\mu_{\hat{p}} = p = 0.3\)</span>,<br>
+- <span class="math inline">\(\text{SE}_{\hat{p}} = \sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{0.3 \cdot 0.7}{100}} \approx 0.046.\)</span><br>
+Dies bestätigt die Normalapproximation durch den zentralen Grenzwertsatz.</p>
+</section>
+<section id="sec-statistics-confidenceintervals" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="sec-statistics-confidenceintervals"><span class="header-section-number">5.1.3</span> Konfidenzintervalle</h3>
+<p>Ein <strong>Konfidenzintervall</strong> (KI) gibt ein Intervall an, das den wahren Wert eines Parameters mit einer bestimmten Wahrscheinlichkeit (dem Konfidenzniveau <span class="math inline">\(1-\alpha\)</span>) enthält. Bei einer Normalverteilung liegen etwa 95 % der Werte innerhalb von zwei Standardabweichungen. Dies haben wir z.B. bei der Betrachung von IQ-Werten gesehen, dort liegen 95 % der Werte innerhalb von zwei Standardabweichungen (<span class="math inline">\(2 \sigma = 2 \cdot 15\)</span>) um den Mittelwert (<span class="math inline">\(\mu = 100\)</span>).</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definition eines Konfidenzintervalls">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Definition eines Konfidenzintervalls
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ein Konfidenzintervall <span class="math inline">\(\text{CI}_{1-\alpha}\)</span> gibt für einen Schätzer <span class="math inline">\(\hat{\theta}\)</span> eines Parameters <span class="math inline">\(\theta\)</span> einen Intervall an, in dem der wahre Wert von <span class="math inline">\(\theta\)</span> mit einer bestimmten Wahrscheinlichkeit (<span class="math inline">\(1-\alpha\)</span>) liegt. Das Konfidenzintervall für den Mittelwert <span class="math inline">\(\mu\)</span> einer Normalverteilung mit bekannter Varianz <span class="math inline">\(\sigma^2\)</span> ist gegeben durch</p>
-<p><span class="math display">\[
-\left(\bar{\theta} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}}, \bar{\theta} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}}\right),
-\]</span></p>
-<p>wobei <span class="math inline">\(z_{\alpha/2}\)</span> das <span class="math inline">\(\alpha/2\)</span>-<a href="https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle">Quantil der Standardnormalverteilung</a> ist und wir dieses durch die Multiplikation mit der Standardabweichung <span class="math inline">\(\sigma\)</span> und Division durch die Wurzel der Stichprobengröße <span class="math inline">\(n\)</span> auf unsere Ursprungsverteilung skalieren.</p>
-<p>Für den Fall, dass die Varianz unbekannt ist, können wir die Stichprobenvarianz <span class="math inline">\(S^2\)</span> verwenden und erhalten</p>
+<p>Für einen Schätzer <span class="math inline">\(\hat{\theta}\)</span> eines Parameters <span class="math inline">\(\theta\)</span> ist das Konfidenzintervall <span class="math inline">\(\text{CI}_{1-\alpha}\)</span>:<br>
+<span class="math display">\[\left(\hat{\theta} - z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}, \hat{\theta} + z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}\right),\]</span><br>
+wobei:<br>
+- <span class="math inline">\(\hat{\theta}\)</span> der Punktschätzer (z. B. Stichprobenmittelwert),<br>
+- <span class="math inline">\(\sigma\)</span> die Standardabweichung der Grundgesamtheit,<br>
+- <span class="math inline">\(n\)</span> die Stichprobengröße,<br>
+- <span class="math inline">\(z_{\alpha/2}\)</span> das <span class="math inline">\(\alpha/2\)</span>-<a href="https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle">Quantil der Standardnormalverteilung</a>.<br>
+Falls <span class="math inline">\(\sigma\)</span> unbekannt ist, wird die Stichprobenstandardabweichung <span class="math inline">\(s\)</span> verwendet:<br>
+<span class="math display">\[\text{SE} = \frac{s}{\sqrt{n}}.\]</span></p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="Herleitung des Intervalls">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Erklärung
+Herleitung des Intervalls
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Zunächst überführen wir die Normalverteilung von <span class="math inline">\(\theta\)</span> in eine Standardnormalverteilung. Dazu subtrahieren wir den Erwartungswert <span class="math inline">\(\mu\)</span> und teilen durch die Standardabweichung <span class="math inline">\(\sigma\)</span>. Damit erhalten wir eine Standardnormalverteilung mit Erwartungswert 0 und Varianz 1.</p>
-<p>Nun können wir die Wahrscheinlichkeit berechnen, dass der Wert innerhalb eines Intervalls liegt. Für ein Konfidenzniveau von 95% ist <span class="math inline">\(\alpha = 0.05\)</span>. Das bedeutet, dass wird an beiden Seiten der Verteilung <span class="math inline">\(\alpha/2 = 0.025\)</span> abtrennen.</p>
-<p>In der Tabelle <span class="math inline">\(\Phi(z)\)</span> der Standardnormalverteilung suchen wir nun den Wert, ab dem 97.5% der Werte unterhalb liegen. Dieser Wert ist <span class="math inline">\(z_{\alpha/2} = 1.96\)</span>. Aus der Symmetrie der Normalverteilung folgt, dass der Wert für <span class="math inline">\(-z_{\alpha/2}\)</span> ebenfalls 1.96 ist.</p>
+<ol type="1">
+<li><strong>Standardisierung</strong>: Für eine normalverteilte Zufallsvariable <span class="math inline">\(\hat{\theta} \sim \mathcal{N}(\theta, \sigma^2/n)\)</span> wird <span class="math inline">\(\frac{\hat{\theta} - \theta}{\sigma/\sqrt{n}} \sim \mathcal{N}(0, 1)\)</span>.<br>
+</li>
+<li><strong>Konfidenzniveau</strong>: Für <span class="math inline">\(1-\alpha = 0.95\)</span> liegt 95 % der Fläche zwischen <span class="math inline">\(-z_{\alpha/2}\)</span> und <span class="math inline">\(z_{\alpha/2}\)</span>. Bei <span class="math inline">\(\alpha = 0.05\)</span> ist <span class="math inline">\(z_{\alpha/2} = 1.96\)</span> (da <span class="math inline">\(P(Z \leq 1.96) \approx 0.975\)</span>).<br>
+</li>
+<li><strong>Intervall</strong>: Umstellen ergibt: <span class="math inline">\(P\left(\hat{\theta} - z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}} \leq \theta \leq \hat{\theta} + z_{\alpha/2} \cdot \frac{\sigma}{\sqrt{n}}\right) = 1-\alpha\)</span>.</li>
+</ol>
 </div>
 </div>
-<p>In unserem Beispiel ist die Stichprobenhäufigkeit <span class="math inline">\(\hat{p}\)</span> normalverteilt mit <span class="math inline">\(\mu_{\hat{p}} = p\)</span> und <span class="math inline">\(\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}\)</span>. Wir können also ein Konfidenzintervall für <span class="math inline">\(p\)</span> berechnen.</p>
-<p><span class="math display">\[
-\left(\hat{p} - z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\right).
-\]</span></p>
-<p>Aus der Tabelle der Standardnormalverteilung können wir den Wert für <span class="math inline">\(z_{\alpha/2}\)</span> ablesen. Für ein Konfidenzniveau von 95% ist <span class="math inline">\(\alpha = 0.05\)</span> und damit <span class="math inline">\(z_{\alpha/2} = 1.96\)</span>. Alternativ können wir dieses auch mit der Funktion <code>norm.ppf</code> berechnen.</p>
-<div id="f19ed4b3" class="cell styled-output" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Konfidenzintervall</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> norm.ppf(<span class="dv">1</span><span class="op">-</span>alpha<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'z_alpha/2: </span><span class="sc">{</span>z<span class="sc">:.2f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="beispiel-konfidenzintervall-für-p" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="beispiel-konfidenzintervall-für-p"><span class="header-section-number">5.1.4</span> Beispiel: Konfidenzintervall für <span class="math inline">\(p\)</span></h3>
+<p>Für unsere Bernoulli-Verteilung ist <span class="math inline">\(\hat{p}\)</span> normalverteilt mit <span class="math inline">\(\mu_{\hat{p}} = p\)</span> und Standardfehler <span class="math inline">\(\text{SE}_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}.\)</span> Da <span class="math inline">\(p\)</span> unbekannt ist, nutzen wir <span class="math inline">\(\hat{p}\)</span> zur Schätzung:<br>
+<span class="math display">\[\text{CI}_{0.95} = \left(\hat{p} - z_{\alpha/2} \cdot \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \cdot \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\right).\]</span><br>
+Für ein 95 %-Konfidenzniveau (<span class="math inline">\(\alpha = 0.05\)</span>) ist <span class="math inline">\(z_{\alpha/2} = 1.96\)</span>, was wir aus Tabellen oder mit <code>norm.ppf</code> berechnen können.</p>
+<div id="cell-fig-sec-statistics-bernoulli-ci" class="cell styled-output" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">70</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, p, n)  <span class="co"># Eine Stichprobe</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>p_hat <span class="op">=</span> np.mean(sample)  <span class="co"># Schätzer</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Konfidenzintervall</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> norm.ppf(<span class="dv">1</span> <span class="op">-</span> alpha<span class="op">/</span><span class="dv">2</span>)  <span class="co"># z-Wert für 95%</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>se <span class="op">=</span> np.sqrt(p_hat <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p_hat) <span class="op">/</span> n)  <span class="co"># Standardfehler mit \hat{p}</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>ci_lower <span class="op">=</span> p_hat <span class="op">-</span> z <span class="op">*</span> se</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>ci_upper <span class="op">=</span> p_hat <span class="op">+</span> z <span class="op">*</span> se</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'z_</span><span class="ch">{{</span><span class="ss">alpha/2</span><span class="ch">}}</span><span class="ss">: </span><span class="sc">{</span>z<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'\hat</span><span class="ch">{{</span><span class="ss">p</span><span class="ch">}}</span><span class="ss">: </span><span class="sc">{</span>p_hat<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'95%-Konfidenzintervall: [</span><span class="sc">{</span>ci_lower<span class="sc">:.3f}</span><span class="ss">, </span><span class="sc">{</span>ci_upper<span class="sc">:.3f}</span><span class="ss">]'</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualisierung</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="fl">0.6</span>, <span class="dv">1000</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, p_hat, se)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, <span class="st">'r-'</span>, label<span class="op">=</span><span class="ss">f'Normal ($\mu=</span><span class="sc">{</span>p_hat<span class="sc">:.3f}</span><span class="ss">$, SE=</span><span class="sc">{</span>se<span class="sc">:.3f}</span><span class="ss">)'</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>plt.axvline(p_hat, color<span class="op">=</span><span class="st">'blue'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, label<span class="op">=</span><span class="st">'$\hat</span><span class="sc">{p}</span><span class="st">$'</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>plt.axvline(ci_lower, color<span class="op">=</span><span class="st">'green'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Untere Grenze'</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>plt.axvline(ci_upper, color<span class="op">=</span><span class="st">'green'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Obere Grenze'</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, y, where<span class="op">=</span>(x <span class="op">&gt;=</span> ci_lower) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> ci_upper), color<span class="op">=</span><span class="st">'skyblue'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="st">'95%-KI'</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wert von $p$'</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Konfidenzintervall für $\hat</span><span class="sc">{p}</span><span class="st">$'</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>z_alpha/2: 1.96</code></pre>
+<pre><code>z_{alpha/2}: 1.96
+\hat{p}: 0.271
+95%-Konfidenzintervall: [0.167, 0.376]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:19: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:25: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:26: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:32: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:19: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:25: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:26: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:32: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/1564904913.py:19: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/1564904913.py:25: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+/tmp/ipykernel_3158/1564904913.py:26: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/1564904913.py:32: SyntaxWarning:
+
+invalid escape sequence '\h'
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-sec-statistics-bernoulli-ci" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sec-statistics-bernoulli-ci-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="interference_basics_files/figure-html/fig-sec-statistics-bernoulli-ci-output-3.png" width="576" height="455" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-statistics-bernoulli-ci-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: 95%-Konfidenzintervall für <span class="math inline">\(\hat{p}\)</span> aus einer Stichprobe (p = 0.3, n = 100).
+</figcaption>
+</figure>
 </div>
 </div>
-<p>Damit ergibt sich für unser Beispiel ein Konfidenzintervall von</p>
-<p><span class="math display">\[
-\left(0.3 - 1.96 \sqrt{\frac{0.3(1-0.3)}{100}}, 0.3 + 1.96 \sqrt{\frac{0.3(1-0.3)}{100}}\right) = (0.21, 0.39).
-\]</span></p>
-<p>Wir sind uns also zu 95% sicher, dass der wahre Wert von <span class="math inline">\(p\)</span> in diesem Intervall liegt.</p>
-<div class="callout callout-style-default callout-caution callout-titled">
+</div>
+<p>Für unser Beispiel mit <span class="math inline">\(\hat{p} = 0.3\)</span>, <span class="math inline">\(n = 70\)</span> und einem 95 %-Konfidenzniveau (<span class="math inline">\(\alpha = 0.05\)</span>, <span class="math inline">\(z_{\alpha/2} = 1.96\)</span>) ergibt sich das Konfidenzintervall:<br>
+<span class="math display">\[\left(0.271 - 1.96 \cdot \sqrt{\frac{0.271 \cdot 0.729}{70}}, 0.271 + 1.96 \cdot \sqrt{\frac{0.271 \cdot 0.729}{70}}\right) \approx (0.167, 0.376).\]</span><br>
+Das bedeutet, wir sind zu 95 % sicher, dass der wahre Wert von <span class="math inline">\(p\)</span> zwischen 0.167 und 0.376 liegt.</p>
+<div class="callout callout-style-default callout-caution callout-titled" title="Fragen zur Anpassung">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Caution
+Fragen zur Anpassung
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Welchen Faktor können wir anpassen, wenn wir den Konfidenzintervall verkleineren wollen?</p>
-<p>Welcher Konfidenzintervall würde sich für ein Konfidenzniveau von 99% ergeben?</p>
+<ol type="1">
+<li>Welchen Faktor können wir ändern, um das Konfidenzintervall zu verkleinern?<br>
+</li>
+<li>Wie sieht das Konfidenzintervall für ein 99 %-Niveau aus?</li>
+</ol>
 </div>
 </div>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-caution callout-titled" title="Lösung">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -587,115 +777,157 @@ Lösung
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Der Faktor, den wir anpassen können, die größe der Stichprobe <span class="math inline">\(n\)</span>, da diese im Nennern steht.</p>
-<p>Für ein Konfidenzniveau von 99% ist <span class="math inline">\(\alpha = 0.01\)</span> und damit <span class="math inline">\(z_{\alpha/2} = 2.58\)</span>. Damit ergibt sich für unser Beispiel ein Konfidenzintervall von</p>
-<p><span class="math display">\[
-\left(0.3 - 2.58 \sqrt{\frac{0.3(1-0.3)}{100}}, 0.3 + 2.58 \sqrt{\frac{0.3(1-0.3)}{100}}\right) = (0.18, 0.42).
-\]</span></p>
-<section id="darstellung-des-konfidenzintervalls-eines-normalverteilten-parameters" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="darstellung-des-konfidenzintervalls-eines-normalverteilten-parameters"><span class="header-section-number">5.1.2</span> Darstellung des Konfidenzintervalls eines normalverteilten Parameters</h3>
-<div id="5509b665" class="cell styled-output" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Konfidenzniveau</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Konfidenzniveaus</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>alphas <span class="op">=</span> [<span class="fl">0.05</span>, <span class="fl">0.01</span>]</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> plt.get_cmap(<span class="st">'tab10'</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> cmap(np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="bu">len</span>(alphas)))</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalverteilung</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="fl">0.3</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> np.sqrt(<span class="fl">0.3</span><span class="op">*</span>(<span class="dv">1</span><span class="op">-</span><span class="fl">0.3</span>)<span class="op">/</span><span class="dv">100</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Konfidenzintervall</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">100</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, mu, sigma)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> alpha <span class="kw">in</span> alphas:</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> norm.ppf(<span class="dv">1</span><span class="op">-</span>alpha<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    lower <span class="op">=</span> mu <span class="op">-</span> z<span class="op">*</span>sigma</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    upper <span class="op">=</span> mu <span class="op">+</span> z<span class="op">*</span>sigma</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Konfidenzintervall für alpha=</span><span class="sc">{</span>alpha<span class="sc">}</span><span class="ss">: (</span><span class="sc">{</span>lower<span class="sc">:.2f}</span><span class="ss">, </span><span class="sc">{</span>upper<span class="sc">:.2f}</span><span class="ss">)'</span>)</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Darstellung</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    plt.fill_between(x, y, where<span class="op">=</span>(x <span class="op">&gt;=</span> lower) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> upper), alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span>colors[alphas.index(alpha)])</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Text</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    plt.text(mu<span class="op">+</span><span class="fl">0.1</span>, norm.pdf(mu, mu, sigma) <span class="op">*</span> (<span class="fl">0.2</span><span class="op">+</span> <span class="fl">0.1</span> <span class="op">*</span> alphas.index(alpha)), <span class="ss">f'CI </span><span class="sc">{</span><span class="dv">1</span><span class="op">-</span>alpha<span class="sc">}</span><span class="ss"> %'</span>, color<span class="op">=</span>colors[alphas.index(alpha)])</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Konfidenzintervall für p'</span>)</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li><strong>Verkleinerung des Intervalls</strong>: Die Breite des Konfidenzintervalls hängt von <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span> ab. Eine größere Stichprobengröße <span class="math inline">\(n\)</span> reduziert den Standardfehler <span class="math inline">\(\sqrt{\frac{p(1-p)}{n}}\)</span>, wodurch das Intervall schmaler wird.<br>
+</li>
+<li><strong>99 %-Konfidenzniveau</strong>: Bei <span class="math inline">\(\alpha = 0.01\)</span> ist <span class="math inline">\(z_{\alpha/2} = 2.58\)</span> (da <span class="math inline">\(P(Z \leq 2.58) \approx 0.995\)</span>). Das Intervall wird:<br>
+<span class="math display">\[\left(0.271 - 2.58 \cdot \sqrt{\frac{0.271 \cdot 0.729}{70}}, 0.271 + 2.58 \cdot \sqrt{\frac{0.271 \cdot 0.729}{70}}\right) \approx (0.134, 0.408).\]</span><br>
+Ein höheres Konfidenzniveau verbreitert das Intervall, da mehr Sicherheit gefordert wird.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-confidenceintervals-visualization" class="level3" data-number="5.1.5">
+<h3 data-number="5.1.5" class="anchored" data-anchor-id="sec-confidenceintervals-visualization"><span class="header-section-number">5.1.5</span> Darstellung des Konfidenzintervalls</h3>
+<p><a href="#fig-sec-statistics-bernoulli-ci-multi" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> zeigt die Konfidenzintervalle für <span class="math inline">\(p\)</span> bei 95 % und 99 % Konfidenzniveau, basierend auf <span class="math inline">\(\hat{p} = 0.3\)</span> und <span class="math inline">\(n = 100\)</span>. Dies verdeutlicht, wie sich das Intervall mit dem Konfidenzniveau ändert – ein nützliches Konzept, um Unsicherheiten in Simulationen wie im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a> zu quantifizieren.</p>
+<div id="cell-fig-sec-statistics-bernoulli-ci-multi" class="cell styled-output" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameter</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="fl">0.3</span>  <span class="co"># \hat{p}</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> np.sqrt(mu <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> mu) <span class="op">/</span> <span class="dv">100</span>)  <span class="co"># SE</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>alphas <span class="op">=</span> [<span class="fl">0.05</span>, <span class="fl">0.01</span>]  <span class="co"># 95% und 99% Konfidenzniveau</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'skyblue'</span>, <span class="st">'lightgreen'</span>]</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalverteilung</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">1000</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, mu, sigma)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, <span class="st">'r-'</span>, label<span class="op">=</span><span class="ss">f'Normal ($\mu=</span><span class="sc">{</span>mu<span class="sc">}</span><span class="ss">$, SE=</span><span class="sc">{</span>sigma<span class="sc">:.3f}</span><span class="ss">)'</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Konfidenzintervalle</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, alpha <span class="kw">in</span> <span class="bu">enumerate</span>(alphas):</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> norm.ppf(<span class="dv">1</span> <span class="op">-</span> alpha<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    lower <span class="op">=</span> mu <span class="op">-</span> z <span class="op">*</span> sigma</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    upper <span class="op">=</span> mu <span class="op">+</span> z <span class="op">*</span> sigma</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Konfidenzintervall für </span><span class="sc">{</span><span class="bu">int</span>((<span class="dv">1</span><span class="op">-</span>alpha)<span class="op">*</span><span class="dv">100</span>)<span class="sc">}</span><span class="ss">%: (</span><span class="sc">{</span>lower<span class="sc">:.2f}</span><span class="ss">, </span><span class="sc">{</span>upper<span class="sc">:.2f}</span><span class="ss">)'</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    plt.fill_between(x, y, where<span class="op">=</span>(x <span class="op">&gt;=</span> lower) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> upper), color<span class="op">=</span>colors[i], alpha<span class="op">=</span><span class="fl">0.3</span>, label<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span><span class="bu">int</span>((<span class="dv">1</span><span class="op">-</span>alpha)<span class="op">*</span><span class="dv">100</span>)<span class="sc">}</span><span class="ss">%-KI'</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    plt.axvline(lower, color<span class="op">=</span>colors[i], linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    plt.axvline(upper, color<span class="op">=</span>colors[i], linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.axvline(mu, color<span class="op">=</span><span class="st">'blue'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, label<span class="op">=</span><span class="st">'$\hat</span><span class="sc">{p}</span><span class="st">$'</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Wert von $p$'</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Konfidenzintervalle für $\hat</span><span class="sc">{p}</span><span class="st">$'</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Konfidenzintervall für alpha=0.05: (0.21, 0.39)
-Konfidenzintervall für alpha=0.01: (0.18, 0.42)</code></pre>
+<pre><code>Konfidenzintervall für 95%: (0.21, 0.39)
+Konfidenzintervall für 99%: (0.18, 0.42)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3247/598074221.py:35: UserWarning:
+<pre><code>&lt;&gt;:14: SyntaxWarning:
 
-No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+invalid escape sequence '\m'
+
+&lt;&gt;:26: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:29: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:14: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:26: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:29: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/1622860018.py:14: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+/tmp/ipykernel_3158/1622860018.py:26: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/1622860018.py:29: SyntaxWarning:
+
+invalid escape sequence '\h'
 </code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="interference_basics_files/figure-html/cell-4-output-3.png" width="558" height="431" class="figure-img"></p>
+<div id="fig-sec-statistics-bernoulli-ci-multi" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sec-statistics-bernoulli-ci-multi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="interference_basics_files/figure-html/fig-sec-statistics-bernoulli-ci-multi-output-3.png" width="576" height="455" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-statistics-bernoulli-ci-multi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Konfidenzintervalle für <span class="math inline">\(\hat{p}\)</span> bei 95% und 99% (p = 0.3, n = 100).
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-</div>
-</div>
-</div>
-</section>
-<section id="punktschätzer-und-konfidenzintervall-für-andere-fälle" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="punktschätzer-und-konfidenzintervall-für-andere-fälle"><span class="header-section-number">5.1.3</span> Punktschätzer und Konfidenzintervall für andere Fälle</h3>
-<p>Für andere Verteilungen und Schätzer können wir die gleichen Prinzipien anwenden. Wir können die Schätzer und Konfidenzintervalle für den Mittelwert, die Varianz oder andere Parameter berechnen. Dabei müssen wir nur die Verteilung des Schätzers kennen und die entsprechenden Formeln anwenden.</p>
+<section id="sec-pointestimates-other" class="level3" data-number="5.1.6">
+<h3 data-number="5.1.6" class="anchored" data-anchor-id="sec-pointestimates-other"><span class="header-section-number">5.1.6</span> Punktschätzer und Konfidenzintervalle für andere Fälle</h3>
+<p>Die Prinzipien für Schätzer und Konfidenzintervalle lassen sich auf andere Verteilungen und Parameter (z. B. Mittelwert, Varianz) übertragen. Entscheidend ist, die Verteilung des Schätzers zu kennen und entsprechende Formeln anzuwenden.</p>
 </section>
 </section>
 <section id="sec-statistics-hypothesistests" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="sec-statistics-hypothesistests"><span class="header-section-number">5.2</span> Hypothesentests</h2>
-<p>Ein Hypothesentest ist ein statistisches Verfahren, um zu entscheiden, ob eine Hypothese über eine Population auf Basis einer Stichprobe abgelehnt oder beibehalten wird. Dabei wird eine Nullhypothese <span class="math inline">\(H_0\)</span> aufgestellt, die wir widerlegen wollen. Die Nullhypothese ist meist eine Aussage über den Wert eines Parameters, z.B. dass der Mittelwert einer Verteilung gleich einem bestimmten Wert ist. Die Alternative Hypothese <span class="math inline">\(H_1\)</span> ist die Aussage, die wir beweisen wollen.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<p>Ein <strong>Hypothesentest</strong> ist ein Verfahren, um auf Basis einer Stichprobe zu entscheiden, ob eine Hypothese über eine Population verworfen wird. Wir stellen eine <strong>Nullhypothese</strong> <span class="math inline">\(H_0\)</span> auf (z. B. „ein Parameter hat einen bestimmten Wert“), die wir widerlegen wollen, und eine <strong>Alternativhypothese</strong> <span class="math inline">\(H_1\)</span>, die wir unterstützen möchten.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Dialektik und Falsifikationismus">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<a href="https://de.wikipedia.org/wiki/Dialektik">Dialektik</a> und <a href="https://de.wikipedia.org/wiki/Falsifikationismus">Falsifikationismus</a>
+Dialektik und Falsifikationismus
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Zunächst wirkt es ungewohnt, dass wir etwas aufstellen, nur um es zu widerlegen. Dieser Ansatz ist jedoch ein zentraler Bestandteil der wissenschaftlichen Methode und fußt tief in der westlichen Philosophie.</p>
-<p>Die <em>Dialektik</em> ist eine Methode, um Wahrheit zu finden, indem eine <strong>These</strong> aufgestellt wird und diese durch eine <strong>Antithese</strong> widerlegt wird. Die <strong>Synthese</strong> ist dann der nächste Schritt in Richtung Wahrheit. Dieser Prozess wird so lange wiederholt, bis die Wahrheit gefunden ist.</p>
-<p>Der Philisoph <a href="https://de.wikipedia.org/wiki/Karl_Popper">Karl Popper</a> hat diesen Ansatz weiterentwickelt und den <em>Falsifikationismus</em> geprägt, um den wissenschaftlichen Erkennungsprozess zu beschreiben. Laut Popper lässt sich eine These nie beweisen, sondern nur widerlegen. Wenn eine These widerlegt wird, muss sie verworfen werden. Wenn sie widersteht, ist sie nicht bewiesen, sondern nur nicht widerlegt.</p>
+<p>Dieser Ansatz mag ungewohnt erscheinen: Warum etwas aufstellen, um es zu widerlegen? Er wurzelt in der wissenschaftlichen Methode:<br>
+- <strong>Dialektik</strong>: Eine These wird durch eine Antithese geprüft, die Synthese führt näher zur Wahrheit (<a href="https://de.wikipedia.org/wiki/Dialektik">Wikipedia: Dialektik</a>).<br>
+- <strong>Falsifikationismus</strong>: Karl Popper betonte, dass Thesen nicht beweisbar, sondern nur widerlegbar sind. Eine nicht widerlegte Hypothese bleibt vorläufig gültig, ist aber nicht endgültig bewiesen (<a href="https://de.wikipedia.org/wiki/Falsifikationismus">Wikipedia: Falsifikationismus</a>).<br>
+In der Statistik nutzen wir diesen Ansatz, um Hypothesen systematisch zu prüfen.</p>
 </div>
 </div>
-<p>Ensprechend gehen wir in der Statistik wie folgt vor:</p>
+<section id="ablauf-eines-hypothesentests" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="ablauf-eines-hypothesentests"><span class="header-section-number">5.2.1</span> Ablauf eines Hypothesentests</h3>
 <ol type="1">
-<li>Wir formulieren die Nullhypothese <span class="math inline">\(H_0\)</span> und die Alternativhypothese <span class="math inline">\(H_1\)</span>. Die Nullhypothese ist die Aussage, die wir widerlegen wollen. Die Alternativhypothese ist die Aussage, die wir beweisen wollen.</li>
-<li>Wir wählen ein Signifikanzniveau <span class="math inline">\(\alpha\)</span>, das die Wahrscheinlichkeit angibt, mit der wir die Nullhypothese ablehnen.</li>
-<li>Wir berechnen den Teststatistik <span class="math inline">\(t\)</span> und bestimmen die Verteilung der Teststatistik unter der Nullhypothese.</li>
+<li><strong>Hypothesen formulieren</strong>: <span class="math inline">\(H_0\)</span> (zu widerlegen) und <span class="math inline">\(H_1\)</span> (zu unterstützen).<br>
+</li>
+<li><strong>Signifikanzniveau wählen</strong>: <span class="math inline">\(\alpha\)</span> ist die Wahrscheinlichkeit, <span class="math inline">\(H_0\)</span> fälschlicherweise abzulehnen (z. B. 0.05).<br>
+</li>
+<li><strong>Teststatistik berechnen</strong>: Bestimme <span class="math inline">\(t\)</span> und dessen Verteilung unter <span class="math inline">\(H_0\)</span>.<br>
+</li>
+<li><strong>Entscheidung treffen</strong>: Vergleiche <span class="math inline">\(t\)</span> mit einem kritischen Wert oder berechne einen p-Wert.</li>
 </ol>
-<section id="entscheidungsfehler" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="entscheidungsfehler"><span class="header-section-number">5.2.1</span> Entscheidungsfehler</h3>
-<p>Um uns das Problem noch einmal zu vergegenwärtigen, betrachten wir nochmal das Beispiel eines medizinischen Tests. Wir haben eine Person, die entweder Krebs hat oder nicht. Der Test kann entweder positiv oder negativ sein.</p>
+</section>
+<section id="sec-hypothesistests-errors" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="sec-hypothesistests-errors"><span class="header-section-number">5.2.2</span> Entscheidungsfehler</h3>
+<p>Betrachten wir ein Beispiel: Ein medizinischer Test soll Krebs erkennen. Die Realität (Krebs oder kein Krebs) und das Testergebnis (positiv oder negativ) können abweichen. Das Diagramm zeigt die Wahrscheinlichkeiten:</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">graph LR
-    U[Person] --&gt;|0.001| A[Krebs] 
+    U[Person] --&gt;|0.001| A[Krebs]
     U[Person] --&gt;|0.999| D[Kein Krebs]
     A[Krebs] --&gt;|0.99| B[Positiv]
     A[Krebs] --&gt;|0.01| C[Negativ]
@@ -707,15 +939,15 @@ No artists with labels found to put in legend.  Note that artists whose label st
 </div>
 </div>
 </div>
-<p>Nun vergegenwärtigen wir noch einmal unser <em>Business Understanding</em>: Wir wollen die Person mit Krebs identifizieren. Der Worst-Case ist, dass wir die Person mit Krebs nicht erkennen. Wir wollen also die Wahrscheinlichkeit, dass wir die Person mit Krebs erkennen maximieren.</p>
-<p>Das bedeutet, dass wir die Nullhypothese <span class="math inline">\(H_0\)</span> formulieren, dass die Person keinen Krebs hat. Die Alternativhypothese <span class="math inline">\(H_1\)</span> ist, dass die Person Krebs hat. Bei einem Hypothesentest können wir zwei Arten von Fehlern machen:</p>
-<ul>
-<li><strong>Typ I Fehler</strong> (<span class="math inline">\(\alpha\)</span>): Wir lehnen die Nullhypothese ab, obwohl sie wahr ist.</li>
-<li><strong>Typ II Fehler</strong> (<span class="math inline">\(\beta\)</span>): Wir akzeptieren die Nullhypothese, obwohl sie falsch ist.</li>
-</ul>
-<p>oder als Tabelle</p>
+<p><strong>Ziel</strong>: Personen mit Krebs identifizieren. Der schlimmste Fall wäre, Krebs zu übersehen. Wir möchten daher die Wahrscheinlichkeit maximieren, Krebs korrekt zu erkennen.</p>
+<p>Daraus folgt:<br>
+- <strong>Nullhypothese</strong> <span class="math inline">\(H_0\)</span>: „Die Person hat keinen Krebs“ (zu widerlegen),<br>
+- <strong>Alternativhypothese</strong> <span class="math inline">\(H_1\)</span>: „Die Person hat Krebs“ (zu unterstützen).</p>
+<p>Bei einem Hypothesentest können zwei Fehler auftreten:<br>
+- <strong>Typ-I-Fehler</strong> (<span class="math inline">\(\alpha\)</span>): <span class="math inline">\(H_0\)</span> wird abgelehnt, obwohl sie wahr ist (falsch positiv, z. B. „Krebs“ trotz „kein Krebs“).<br>
+- <strong>Typ-II-Fehler</strong> (<span class="math inline">\(\beta\)</span>): <span class="math inline">\(H_0\)</span> wird beibehalten, obwohl sie falsch ist (falsch negativ, z. B. „kein Krebs“ trotz „Krebs“).</p>
 <table class="caption-top table" data-quarto-postprocess="true" data-border="1">
-<caption>Table of error types</caption>
+<caption>Tabelle der Fehlertypen</caption>
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -724,172 +956,191 @@ No artists with labels found to put in legend.  Note that artists whose label st
 </colgroup>
 <tbody>
 <tr class="odd">
-<td colspan="2" rowspan="2" data-quarto-table-cell-role="th">Table of error types</td>
-<td colspan="2" data-quarto-table-cell-role="th">Null hypothesis (<strong>H<sub>0</sub></strong>) is</td>
+<td colspan="2" rowspan="2" data-quarto-table-cell-role="th">Entscheidung über die Nullhypothese</td>
+<td colspan="2" data-quarto-table-cell-role="th">Nullhypothese (<strong>H<sub>0</sub></strong>) ist</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">True</td>
-<td data-quarto-table-cell-role="th">False</td>
+<td data-quarto-table-cell-role="th">Wahr</td>
+<td data-quarto-table-cell-role="th">Falsch</td>
 </tr>
 <tr class="odd">
-<td rowspan="2" data-quarto-table-cell-role="th">Decision<br>
-about null<br>
-hypothesis (<strong>H<sub>0</sub></strong>)</td>
-<td data-quarto-table-cell-role="th">Not reject</td>
-<td style="text-align: center;">Correct inference<br>
-(true negative)<br>
-(probability = <strong>1-α</strong>)</td>
-<td style="text-align: center;">Type II error<br>
-(false negative)<br>
-(probability = <strong>β</strong>)</td>
+<td rowspan="2" data-quarto-table-cell-role="th">Entscheidung über die<br>
+Nullhypothese (<strong>H<sub>0</sub></strong>)</td>
+<td data-quarto-table-cell-role="th">Nicht verwerfen</td>
+<td style="text-align: center;">Korrekte Entscheidung<br>
+(wahr negativ, wirklich gesund)<br>
+(Wahrscheinlichkeit = <strong>1-α</strong>)</td>
+<td style="text-align: center;">Typ-II-Fehler<br>
+(falsch negativ, hat eigentlich Krebs)<br>
+(Wahrscheinlichkeit = <strong>β</strong>)</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">Reject</td>
-<td style="text-align: center;">Type I error<br>
-(false positive)<br>
-(probability = <strong>α</strong>)</td>
-<td style="text-align: center;">Correct inference<br>
-(true positive)<br>
-(probability = <strong>1-β</strong>)</td>
+<td data-quarto-table-cell-role="th">Verwerfen</td>
+<td style="text-align: center;">Typ-I-Fehler<br>
+(falsch positiv, ist eigentlich gesund)<br>
+(Wahrscheinlichkeit = <strong>α</strong>)</td>
+<td style="text-align: center;">Korrekte Entscheidung<br>
+(wahr positiv, hat wirklich Krebs)<br>
+(Wahrscheinlichkeit = <strong>1-β</strong>)</td>
 </tr>
 </tbody>
 </table>
-
-
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-important callout-titled" title="Signifikanzniveau und Fehlerprioritäten">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Signifikanzniveau und Fehlerprioritäten
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Der kritischere Fehler ist der Typ I Fehler, da wir die Nullhypothese ablehnen, obwohl sie wahr ist. Das Signifikanzniveau <span class="math inline">\(\alpha\)</span> gibt die Wahrscheinlichkeit an, mit der wir die Nullhypothese fälschlicherweise ablehnen. Das Signifikanzniveau wird vor dem Test festgelegt und sollte möglichst klein sein.</p>
-<p>Üblicherweise wird ein Signifikanzniveau von 5% oder 1% gewählt. Das bedeutet, dass wir die Nullhypothese nur ablehnen, wenn die Wahrscheinlichkeit, dass die Nullhypothese wahr ist, kleiner als 5% oder 1% ist.</p>
-<p>Im Beispiel würde dies bedeuten, dass wir eine Person als gesund einstufen, obwohl sie Krebs hat. Dies kann fatale Folgen haben, wenn die Person nicht rechtzeitig behandelt wird.</p>
+<p>Im Beispiel ist der <strong>Typ-II-Fehler</strong> (<span class="math inline">\(\beta\)</span>) besonders kritisch, da Krebs übersehen schwerwiegender ist als eine falsche Diagnose. Dennoch steuern wir die Ablehnung von <span class="math inline">\(H_0\)</span> mit dem <strong>Signifikanzniveau</strong> <span class="math inline">\(\alpha\)</span>, der Wahrscheinlichkeit eines Typ-I-Fehlers (falsch positiv). <span class="math inline">\(\alpha\)</span> wird vorab festgelegt, typischerweise 5 % (0.05) oder 1 % (0.01). Ein kleineres <span class="math inline">\(\alpha\)</span> reduziert das Risiko, <span class="math inline">\(H_0\)</span> fälschlich zu verwerfen (z. B. unnötige Behandlungen), erhöht aber die Chance eines Typ-II-Fehlers.</p>
 </div>
 </div>
 </section>
-<section id="am-beispiel-eines-punktschätzer-für-den-mittelwert-einer-normalverteilung" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="am-beispiel-eines-punktschätzer-für-den-mittelwert-einer-normalverteilung"><span class="header-section-number">5.2.2</span> Am Beispiel eines Punktschätzer für den Mittelwert einer Normalverteilung</h3>
-<p>Angenommen wir wollen untersuchen, ob Studierende der Mechatronik im Schnitt intelligenter sind als der Durchschnitt. Wie haben bereits etabliert, dass die durchschnittliche Intelligenz in der Bevölkerung bei einem IQ von 100 liegt. Nehmen wir nun wohlwollend an, dass der IQ der Mechatronikstudierenden normalverteilt ist mit einem Mittelwert von 110 und einer Standardabweichung von 15:</p>
-<p><span class="math display">\[
-X \sim \mathcal{N}(110, 15).
-\]</span></p>
-<p>Wir haben eine Stichprobe von 100 Studierenden und wollen wissen, ob der Mittelwert signifikant von 100 abweicht.</p>
-<div id="fe047857" class="cell styled-output" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesentest</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Stichprobe der Mechatronikstudierenden</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="dv">110</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">15</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Nullhypothese</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>mu_0 <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Stichprobe</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.random.normal(mu, sigma, n)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Schätzer für den Mittelwert und Standardabweichung</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>X_hat <span class="op">=</span> np.mean(X)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>mu_hat <span class="op">=</span> np.std(X)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Normale Verteilung aus der Schätzung</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">90</span>, <span class="dv">130</span>, <span class="dv">100</span>)</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, X_hat, mu_hat)</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot der geschätzten Verteilung und Nullhypothese</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, label<span class="op">=</span><span class="st">'Verteilung der Stichprobe'</span>)</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>plt.axvline(mu_0, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Nullhypothese'</span>)</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Verteilung der Stichprobe und Nullhypothese'</span>)</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="sec-hypothesistests-example" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="sec-hypothesistests-example"><span class="header-section-number">5.2.3</span> Beispiel: Hypothesentest für den Mittelwert einer Normalverteilung</h3>
+<p>Wir prüfen, ob Mechatronik-Studierende intelligenter sind als der Bevölkerungsdurchschnitt (IQ = 100). Angenommen, ihr IQ ist normalverteilt mit <span class="math inline">\(\mu = 110\)</span> und <span class="math inline">\(\sigma = 15\)</span>, also <span class="math inline">\(X \sim \mathcal{N}(110, 15^2)\)</span>. Mit einer Stichprobe von <span class="math inline">\(n = 100\)</span> Studierenden testen wir, ob ihr Mittelwert signifikant von 100 abweicht – ein Ansatz, der im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a> z. B. für Komponenten-Lebensdauern nützlich ist.</p>
+<section id="hypothesen-und-teststatistik" class="level4" data-number="5.2.3.1">
+<h4 data-number="5.2.3.1" class="anchored" data-anchor-id="hypothesen-und-teststatistik"><span class="header-section-number">5.2.3.1</span> Hypothesen und Teststatistik</h4>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu = 100\)</span> (kein Unterschied zum Durchschnitt),<br>
+</li>
+<li><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu \neq 100\)</span> (zweiseitiger Test, da „abweicht“ keine Richtung vorgibt).<br>
+Der Schätzer ist <span class="math inline">\(\hat{\mu} = \bar{X}\)</span>, und unter <span class="math inline">\(H_0\)</span> gilt:<br>
+<span class="math display">\[\bar{X} \sim \mathcal{N}\left(100, \frac{\sigma^2}{n}\right) = \mathcal{N}\left(100, \frac{15^2}{100}\right).\]</span><br>
+Die Teststatistik lautet:<br>
+<span class="math display">\[z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}},\]</span><br>
+mit <span class="math inline">\(\mu_0 = 100\)</span>, <span class="math inline">\(\sigma = 15\)</span>, <span class="math inline">\(n = 100\)</span>. Bei <span class="math inline">\(\alpha = 0.05\)</span> ist der kritische Wert <span class="math inline">\(z_{\alpha/2} = 1.96\)</span>.</li>
+</ul>
+</section>
+<section id="simulation-und-visualisierung" class="level4" data-number="5.2.3.2">
+<h4 data-number="5.2.3.2" class="anchored" data-anchor-id="simulation-und-visualisierung"><span class="header-section-number">5.2.3.2</span> Simulation und Visualisierung</h4>
+<p><a href="#fig-sec-statistics-hypothesistests" class="quarto-xref">Figure&nbsp;<span>5.4</span></a> zeigt die Stichprobenverteilung und die Nullhypothese.</p>
+<div id="cell-fig-sec-statistics-hypothesistests" class="cell styled-output" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>mu_true <span class="op">=</span> <span class="dv">110</span>  <span class="co"># Wahrer Mittelwert (Simulation)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">15</span>     <span class="co"># Bekannte Standardabweichung</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span>        <span class="co"># Stichprobengröße</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>mu_0 <span class="op">=</span> <span class="dv">100</span>     <span class="co"># Nullhypothese</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Stichprobe</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.random.normal(mu_true, sigma, n)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>X_bar <span class="op">=</span> np.mean(X)  <span class="co"># Schätzer für Mittelwert</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Teststatistik</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>se <span class="op">=</span> sigma <span class="op">/</span> np.sqrt(n)  <span class="co"># Standardfehler</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>z_stat <span class="op">=</span> (X_bar <span class="op">-</span> mu_0) <span class="op">/</span> se</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> norm.cdf(<span class="bu">abs</span>(z_stat)))  <span class="co"># Zweiseitiger p-Wert</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">90</span>, <span class="dv">130</span>, <span class="dv">1000</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>y_null <span class="op">=</span> norm.pdf(x, mu_0, se)  <span class="co"># Verteilung unter H_0</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>y_sample <span class="op">=</span> norm.pdf(x, X_bar, se)  <span class="co"># Verteilung der Stichprobe</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y_null, <span class="st">'r--'</span>, label<span class="op">=</span><span class="ss">f'$H_0$ ($\mu=</span><span class="sc">{</span>mu_0<span class="sc">}</span><span class="ss">$)'</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y_sample, <span class="st">'b-'</span>, label<span class="op">=</span><span class="ss">f'Stichprobe ($\hat</span><span class="ch">{{</span><span class="ss">\mu</span><span class="ch">}}</span><span class="ss">=</span><span class="sc">{</span>X_bar<span class="sc">:.1f}</span><span class="ss">$)'</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>plt.axvline(mu_0, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>plt.axvline(X_bar, color<span class="op">=</span><span class="st">'blue'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, y_null, where<span class="op">=</span>(x <span class="op">&lt;=</span> mu_0 <span class="op">-</span> <span class="fl">1.96</span><span class="op">*</span>se) <span class="op">|</span> (x <span class="op">&gt;=</span> mu_0 <span class="op">+</span> <span class="fl">1.96</span><span class="op">*</span>se), color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, label<span class="op">=</span><span class="vs">r'Ablehnungsbereich ($\alpha=0.05$)'</span>)</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Mittelwert (IQ)'</span>)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Dichte'</span>)</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Hypothesentest: IQ von Mechatronik-Studierenden'</span>)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Stichprobenmittelwert: </span><span class="sc">{</span>X_bar<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Teststatistik z: </span><span class="sc">{</span>z_stat<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'p-Wert: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:24: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:25: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:25: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:24: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+&lt;&gt;:25: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+&lt;&gt;:25: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+/tmp/ipykernel_3158/1135806841.py:24: SyntaxWarning:
+
+invalid escape sequence '\m'
+
+/tmp/ipykernel_3158/1135806841.py:25: SyntaxWarning:
+
+invalid escape sequence '\h'
+
+/tmp/ipykernel_3158/1135806841.py:25: SyntaxWarning:
+
+invalid escape sequence '\m'
+</code></pre>
+</div>
 <div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="interference_basics_files/figure-html/cell-5-output-1.png" width="596" height="431" class="figure-img"></p>
-</figure>
+<div id="fig-sec-statistics-hypothesistests" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sec-statistics-hypothesistests-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="interference_basics_files/figure-html/fig-sec-statistics-hypothesistests-output-2.png" width="597" height="449" class="figure-img">
 </div>
-</div>
-</div>
-<p>Wir können nun sehen, dass die Stichprobe der Mechatronikstudierenden eine höhere Intelligenz aufweist als der Durchschnitt von 100. Wahrscheinlich werden wir auch einige Mechatronikstudierende finden, die weniger intelligent sind als der Durchschnitt.</p>
-<p>Was wir nun aber testen wollen, ist ob der Mittelwert der Stichprobe signifikant von 100 abweicht. Dazu brauchen wir jetzt einen Schätzer des Mittelwertes und der Standardabweichung der Stichprobe. Die Ziehungen sind unabängig und identisch verteilt, daher können wir den zentralen Grenzwertsatz anwenden. Dieser besagt, dass der Schätzer für den Mittelwert gegeben ist durch</p>
-<p><span class="math display">\[
-\hat{\mu}=\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i,
-\]</span></p>
-<p>dessen Standardfehler ist gegeben durch</p>
-<p><span class="math display">\[
-SE(\hat{\mu})=\sigma_{\hat{\mu}} = \frac{\sigma}{\sqrt{n}}.
-\]</span></p>
-<p>Dies können wir nun anhand der Stichprobe berechnen und visualisieren.</p>
-<div id="0a1fa771" class="cell styled-output" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Schätzer für den Mittelwert und Standardabweichung</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>X_hat <span class="op">=</span> np.mean(X)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>mu_hat <span class="op">=</span> np.std(X)<span class="op">/</span>np.sqrt(n)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Normale Verteilung aus der Schätzung</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">90</span>, <span class="dv">130</span>, <span class="dv">100</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.pdf(x, X_hat, mu_hat)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># mit zweiseitigem Signifikanzniveau von 5%</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> norm.ppf(<span class="dv">1</span><span class="op">-</span>alpha<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot der geschätzten Verteilung und Nullhypothese</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, label<span class="op">=</span><span class="st">'Verteilung der Stichprobe'</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>plt.axvline(mu_0, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Nullhypothese'</span>)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>plt.axvline(X_hat <span class="op">+</span> z<span class="op">*</span>mu_hat, color<span class="op">=</span><span class="st">'g'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'Signifikanzniveau'</span>)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.axvline(X_hat <span class="op">-</span> z<span class="op">*</span>mu_hat, color<span class="op">=</span><span class="st">'g'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.fill_between(x, y, where<span class="op">=</span>(x <span class="op">&gt;=</span> X_hat <span class="op">-</span> z<span class="op">*</span>mu_hat) <span class="op">&amp;</span> (x <span class="op">&lt;=</span> X_hat <span class="op">+</span> z<span class="op">*</span>mu_hat), alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">'g'</span>)</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Verteilung von Mittelwert-Schätzer und Nullhypothese'</span>)</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Mittelwert der Stichprobe: </span><span class="sc">{</span>X_hat<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Standardabweichung der Stichprobe: </span><span class="sc">{</span>mu_hat<span class="sc">:.2f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="interference_basics_files/figure-html/cell-6-output-1.png" width="579" height="431" class="figure-img"></p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sec-statistics-hypothesistests-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Hypothesentest für den Mittelwert von Mechatronik-Studierenden (n = 100).
+</figcaption>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Mittelwert der Stichprobe: 108.26
-Standardabweichung der Stichprobe: 1.46</code></pre>
+<pre><code>Stichprobenmittelwert: 108.44
+Teststatistik z: 5.63
+p-Wert: 0.0000</code></pre>
 </div>
 </div>
-<p>An Fig. können wir erkennen, dass die Wahrscheinlichkeit, dass der Mittelwert der Stichprobe von 100 abweicht, sehr hoch ist. Der grüner Bereich, der das Signifikanzniveau darstellt, liegt weit rechts von der Nullhypothese.</p>
 </section>
-<section id="t-verteilung" class="level3" data-number="5.2.3">
-<h3 data-number="5.2.3" class="anchored" data-anchor-id="t-verteilung"><span class="header-section-number">5.2.3</span> T-Verteilung</h3>
-<p>Für endlich große Stichproben-Umfänge funktionert unsere Annäherung des Strichprobenmittelwerts durch eine Normalverteilung. Für kleine Stichproben-Umfänge ist die <a href="https://de.wikipedia.org/wiki/Studentsche_t-Verteilung">T-Verteilung</a> besser geeignet.</p>
-<p>Die T-Verteilung ist gegeben durch</p>
-<p><span class="math display">\[
-t = \frac{\bar{X} - \mu_0}{\frac{S}{\sqrt{n}}},
-\]</span></p>
-<p>und hängt vorallem vom Stichprobenumfang <span class="math inline">\(n\)</span> ab. Je kleiner der Stichprobenumfang, desto breiter ist die T-Verteilung. Für große Stichprobenumfänge konvergiert die T-Verteilung gegen die Normalverteilung. <span class="math inline">\(S\)</span> ist die Stichprobenstandardabweichung. Man bezeichnet <span class="math inline">\(df = n-1\)</span> als die Freiheitsgrade der T-Verteilung.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="interpretation" class="level4" data-number="5.2.3.3">
+<h4 data-number="5.2.3.3" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">5.2.3.3</span> Interpretation</h4>
+<p>An <span class="quarto-unresolved-ref">?fig-sec-statistics-hypothesistests-2</span> sehen wir, dass der Stichprobenmittelwert <span class="math inline">\(\hat{\mu}\)</span> deutlich über <span class="math inline">\(\mu_0 = 100\)</span> liegt. Der grüne Bereich (95 %-Konfidenzintervall) schließt 100 nicht ein, und der p-Wert ist &lt; 0.05. Das deutet darauf hin, dass die Wahrscheinlichkeit für <span class="math inline">\(\mu = 100\)</span> sehr gering ist. Wir lehnen <span class="math inline">\(H_0\)</span> ab und schließen, dass der Mittelwert der Mechatronik-Studierenden signifikant von 100 abweicht.</p>
+</section>
+</section>
+<section id="sec-t-distribution" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="sec-t-distribution"><span class="header-section-number">5.2.4</span> <span class="math inline">\(t\)</span>-Verteilung</h3>
+<p>Bei großen Stichproben (<span class="math inline">\(n \geq 30\)</span>) approximiert der zentrale Grenzwertsatz den Stichprobenmittelwert <span class="math inline">\(\bar{X}\)</span> durch eine Normalverteilung, besonders wenn <span class="math inline">\(\sigma\)</span> bekannt ist. Für kleine Stichproben (<span class="math inline">\(n &lt; 30\)</span>) oder unbekannte Varianz ist die <strong><span class="math inline">\(t\)</span>-Verteilung</strong> (<a href="https://de.wikipedia.org/wiki/Studentsche_t-Verteilung">Wikipedia: Studentsche t-Verteilung</a>) besser geeignet, da sie die Unsicherheit der geschätzten Standardabweichung einbezieht.</p>
+<p>Die Teststatistik der <span class="math inline">\(t\)</span>-Verteilung ist:<br>
+<span class="math display">\[t = \frac{\bar{X} - \mu_0}{\frac{S}{\sqrt{n}}},\]</span><br>
+wobei:<br>
+- <span class="math inline">\(\bar{X}\)</span>: Stichprobenmittelwert,<br>
+- <span class="math inline">\(\mu_0\)</span>: Wert unter <span class="math inline">\(H_0\)</span>,<br>
+- <span class="math inline">\(S\)</span>: Stichprobenstandardabweichung (<span class="math inline">\(S = \sqrt{\frac{1}{n-1} \sum (X_i - \bar{X})^2}\)</span>),<br>
+- <span class="math inline">\(n\)</span>: Stichprobengröße.</p>
+<p>Die Form der <span class="math inline">\(t\)</span>-Verteilung hängt von den <strong>Freiheitsgraden</strong> <span class="math inline">\(df = n - 1\)</span> ab: Bei kleinem <span class="math inline">\(n\)</span> ist sie breiter (mehr Streuung), bei großem <span class="math inline">\(n\)</span> nähert sie sich der Normalverteilung. Im <a href="tutorial.html#sec-monte-carlo-simulation">Tutorial</a> könnte die <span class="math inline">\(t\)</span>-Verteilung bei kleinen Stichproben von Ausfallzeiten hilfreich sein, wenn <span class="math inline">\(\sigma\)</span> unbekannt ist.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Herkunft der $t$-Verteilung">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+Herkunft der <span class="math inline">\(t\)</span>-Verteilung
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Die T-Verteilung wurde von <a href="https://de.wikipedia.org/wiki/William_Sealy_Gosset">William Sealy Gosset</a> entwickelt. Er arbeitete für die <a href="https://de.wikipedia.org/wiki/Guinness_Brewery">Guinness-Brauerei</a> und entwickelte die T-Verteilung, um die Qualität des Bieres zu verbessern. Um die Geheimhaltung der Brauerei zu wahren, <a href="https://www.dcscience.net/Student-t-1908.pdf">veröffentlichte</a> er seine Ergebnisse unter dem Pseudonym Student. Dies führte zur Bezeichnung der T-Verteilung als Student’s T-Verteilung.</p>
+<p>Die <span class="math inline">\(t\)</span>-Verteilung stammt von <a href="https://de.wikipedia.org/wiki/William_Sealy_Gosset">William Sealy Gosset</a>, einem Statistiker bei der <a href="https://de.wikipedia.org/wiki/Guinness_Brewery">Guinness-Brauerei</a>. Er entwickelte sie, um die Bierqualität mit kleinen Stichproben zu prüfen, und veröffentlichte 1908 unter dem Pseudonym „Student“ (<a href="https://www.dcscience.net/Student-t-1908.pdf">Original: Student’s t</a>). Daher heißt sie „Student’s <span class="math inline">\(t\)</span>-Verteilung“.</p>
 </div>
 </div>
 

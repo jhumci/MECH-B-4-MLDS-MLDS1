@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Einleitung – Machine Learning and Data Science 1</title>
+<title>Übungsaufgaben: Wahrscheinlichkeitsrechnung – Machine Learning and Data Science 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,49 +20,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./dataexploratory/index.html" rel="next">
-<link href="./index.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2bcf7be291d79734ada0dea710dd8908.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6bb28caf545b74723fac9b4cde4209ed.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../regression/index.html" rel="next">
+<link href="../statistics/tutorial_2.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2bcf7be291d79734ada0dea710dd8908.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-6bb28caf545b74723fac9b4cde4209ed.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -91,6 +105,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -103,7 +146,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">Einleitung</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/tasks.html">Übungsaufgaben: Wahrscheinlichkeitsrechnung</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -118,7 +161,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Machine Learning and Data Science 1</a> 
+      <a href="../">Machine Learning and Data Science 1</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
@@ -139,19 +182,19 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Einleitung</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./dataexploratory/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../dataexploratory/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Umgang mit Daten und Explorative Analyse</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -160,19 +203,19 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dataexploratory/data_science.html" class="sidebar-item-text sidebar-link">
+  <a href="../dataexploratory/data_science.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science, Statisik, und Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dataexploratory/data_sets.html" class="sidebar-item-text sidebar-link">
+  <a href="../dataexploratory/data_sets.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Sets</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dataexploratory/tutorial.html" class="sidebar-item-text sidebar-link">
+  <a href="../dataexploratory/tutorial.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tutorial: Getting Data Tidy and finding Correlation</span></a>
   </div>
 </li>
@@ -180,7 +223,7 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./statistics/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../statistics/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Statistik</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -189,43 +232,43 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./statistics/sampling.html" class="sidebar-item-text sidebar-link">
+  <a href="../statistics/sampling.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stichproben und Zufallsvariablen</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./statistics/distributions.html" class="sidebar-item-text sidebar-link">
+  <a href="../statistics/distributions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Verteilungen</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./statistics/tutorial.html" class="sidebar-item-text sidebar-link">
+  <a href="../statistics/tutorial.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tutorial: Monte Carlo Simulation of Vehicle Component Failure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./statistics/interference_basics.html" class="sidebar-item-text sidebar-link">
+  <a href="../statistics/interference_basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interferenz</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./statistics/interference_advanced.html" class="sidebar-item-text sidebar-link">
+  <a href="../statistics/interference_advanced.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tests</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./statistics/tutorial_2.html" class="sidebar-item-text sidebar-link">
+  <a href="../statistics/tutorial_2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Tutorial 2: Understanding Patterns in Grid Loads</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./statistics/tasks.html" class="sidebar-item-text sidebar-link">
+  <a href="../statistics/tasks.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Übungsaufgaben: Wahrscheinlichkeitsrechnung</span></a>
   </div>
 </li>
@@ -233,7 +276,7 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./regression/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regressions-Analyse</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -242,7 +285,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./regression/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Regressions-Analyse</span></a>
   </div>
 </li>
@@ -250,13 +293,13 @@ div.csl-indent {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Summary</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -270,16 +313,21 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#leistungsüberprüfung" id="toc-leistungsüberprüfung" class="nav-link active" data-scroll-target="#leistungsüberprüfung">Leistungsüberprüfung</a></li>
+  <li><a href="#berechnung-von-mittelwert-varianz-und-kovarianz" id="toc-berechnung-von-mittelwert-varianz-und-kovarianz" class="nav-link active" data-scroll-target="#berechnung-von-mittelwert-varianz-und-kovarianz">1. Berechnung von Mittelwert, Varianz und Kovarianz</a></li>
+  <li><a href="#beschreibung-von-skalenniveaus-von-variablen" id="toc-beschreibung-von-skalenniveaus-von-variablen" class="nav-link" data-scroll-target="#beschreibung-von-skalenniveaus-von-variablen">2. Beschreibung von Skalenniveaus von Variablen</a></li>
+  <li><a href="#berechnung-von-wahrscheinlichkeiten-mit-additions--und-multiplikationsregeln" id="toc-berechnung-von-wahrscheinlichkeiten-mit-additions--und-multiplikationsregeln" class="nav-link" data-scroll-target="#berechnung-von-wahrscheinlichkeiten-mit-additions--und-multiplikationsregeln">3. Berechnung von Wahrscheinlichkeiten mit Additions- und Multiplikationsregeln</a></li>
+  <li><a href="#berechnung-von-bedingten-wahrscheinlichkeiten" id="toc-berechnung-von-bedingten-wahrscheinlichkeiten" class="nav-link" data-scroll-target="#berechnung-von-bedingten-wahrscheinlichkeiten">4. Berechnung von bedingten Wahrscheinlichkeiten</a></li>
+  <li><a href="#umrechnen-von-werten-einer-normalverteilung-zur-standardnormalverteilung" id="toc-umrechnen-von-werten-einer-normalverteilung-zur-standardnormalverteilung" class="nav-link" data-scroll-target="#umrechnen-von-werten-einer-normalverteilung-zur-standardnormalverteilung">5. Umrechnen von Werten einer Normalverteilung zur Standardnormalverteilung</a></li>
+  <li><a href="#ablesen-von-quantilen-aus-einem-boxplot" id="toc-ablesen-von-quantilen-aus-einem-boxplot" class="nav-link" data-scroll-target="#ablesen-von-quantilen-aus-einem-boxplot">6. Ablesen von Quantilen aus einem Boxplot</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/statistics/tasks.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/tasks.html">Übungsaufgaben: Wahrscheinlichkeitsrechnung</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Einleitung</h1>
+<h1 class="title">Übungsaufgaben: Wahrscheinlichkeitsrechnung</h1>
 </div>
 
 
@@ -296,22 +344,302 @@ div.csl-indent {
 </header>
 
 
-<p>In dieser Lehrveranstaltung werden wir uns mit den grundlegenden Konzepten moderner Data-Science-Techniken befassen und eine solide Basis in Statistik und maschinellem Lernen legen. Wir behandeln alle essenziellen Grundlagen, die notwendig sind, um sich in diesem Bereich sicher zu bewegen. Dabei beschränken wir uns nicht nur auf die theoretischen Aspekte, sondern nutzen auch Python, um die Inhalte programmatisch zu veranschaulichen.</p>
-<p>Die verwendeten Referenzen wurden nach Qualität, freier Verfügbarkeit und der Nutzung von Python ausgewählt. Für die statistischen Grundlagen greifen wir auf Beispiele aus <span class="citation" data-cites="Diez2019-ll">Diez, Barr, and Cetinkaya-Rundel (<a href="references.html#ref-Diez2019-ll" role="doc-biblioref">2019</a>)</span> zurück, während für die Einführung in das statistische Lernen <span class="citation" data-cites="james2013introduction">James et al. (<a href="references.html#ref-james2013introduction" role="doc-biblioref">2013</a>)</span> herangezogen wird.</p>
-<p>Dieses Skriptum richtet sich an Studierende der Ingenieurwissenschaften, weshalb mathematische Konzepte nur selten mit strengen Beweisen versehen sind.</p>
-<section id="leistungsüberprüfung" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="leistungsüberprüfung">Leistungsüberprüfung</h2>
-<p>Die Vorlesungsteil der Lehrveranstaltung wird mit einer <strong>Klausur</strong> bewertet.</p>
+<section id="berechnung-von-mittelwert-varianz-und-kovarianz" class="level3">
+<h3 class="anchored" data-anchor-id="berechnung-von-mittelwert-varianz-und-kovarianz">1. Berechnung von Mittelwert, Varianz und Kovarianz</h3>
+<p><strong>Aufgabe:</strong><br>
+Gegeben ist folgende Tabelle mit Werten für zwei Variablen <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(X\)</span></th>
+<th><span class="math inline">\(Y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p>Berechne den Mittelwert von <span class="math inline">\(X\)</span>, den Mittelwert von <span class="math inline">\(Y\)</span>, die Varianz von <span class="math inline">\(X\)</span>, die Varianz von <span class="math inline">\(Y\)</span> und die Kovarianz zwischen <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span>. Interpretiere anschließend die Kovarianz hinsichtlich der Beziehung zwischen <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Musterlösung">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Musterlösung
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<section id="musterlösung" class="level4 callout-body-container callout-body">
+<h4 class="anchored" data-anchor-id="musterlösung">Musterlösung</h4>
+<ol type="1">
+<li><p><strong>Mittelwert von <span class="math inline">\(X\)</span></strong>:<br>
+<span class="math display">\[
+\bar{X} = \frac{2 + 4 + 6 + 8 + 10}{5} = \frac{30}{5} = 6
+\]</span></p></li>
+<li><p><strong>Mittelwert von <span class="math inline">\(Y\)</span></strong>:<br>
+<span class="math display">\[
+\bar{Y} = \frac{3 + 7 + 5 + 9 + 11}{5} = \frac{35}{5} = 7
+\]</span></p></li>
+<li><p><strong>Varianz von <span class="math inline">\(X\)</span></strong>:<br>
+Abweichungen von <span class="math inline">\(\bar{X}\)</span>:<br>
+<span class="math display">\[
+(2-6)^2 = 16, \quad (4-6)^2 = 4, \quad (6-6)^2 = 0, \quad (8-6)^2 = 4, \quad (10-6)^2 = 16
+\]</span><br>
+Dann:<br>
+<span class="math display">\[
+\text{Var}(X) = \frac{16 + 4 + 0 + 4 + 16}{5} = \frac{40}{5} = 8
+\]</span></p></li>
+<li><p><strong>Varianz von <span class="math inline">\(Y\)</span></strong>:<br>
+Abweichungen von <span class="math inline">\(\bar{Y}\)</span>:<br>
+<span class="math display">\[
+(3-7)^2 = 16, \quad (7-7)^2 = 0, \quad (5-7)^2 = 4, \quad (9-7)^2 = 4, \quad (11-7)^2 = 16
+\]</span><br>
+Dann:<br>
+<span class="math display">\[
+\text{Var}(Y) = \frac{16 + 0 + 4 + 4 + 16}{5} = \frac{40}{5} = 8
+\]</span></p></li>
+<li><p><strong>Kovarianz zwischen <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span></strong>:<br>
+Produkte der Abweichungen:<br>
+<span class="math display">\[
+(2-6)(3-7) = (-4)(-4) = 16, \quad (4-6)(7-7) = (-2)(0) = 0, \quad (6-6)(5-7) = (0)(-2) = 0, \quad (8-6)(9-7) = (2)(2) = 4, \quad (10-6)(11-7) = (4)(4) = 16
+\]</span><br>
+Dann:<br>
+<span class="math display">\[
+\text{Cov}(X, Y) = \frac{16 + 0 + 0 + 4 + 16}{5} = \frac{36}{5} = 7.2
+\]</span></p></li>
+<li><p><strong>Interpretation der Kovarianz</strong>:<br>
+Die Kovarianz ((X, Y) = 7.2) ist positiv. Das bedeutet, dass <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span> positiv korreliert sind. Wenn die Werte von <span class="math inline">\(X\)</span> steigen, tendieren auch die Werte von <span class="math inline">\(Y\)</span> dazu, zu steigen, und umgekehrt. Eine positive Kovarianz zeigt somit eine gemeinsame Bewegungsrichtung der beiden Variablen an.</p></li>
+</ol>
+</section>
+</div>
+</div>
+<hr>
+</section>
+<section id="beschreibung-von-skalenniveaus-von-variablen" class="level3">
+<h3 class="anchored" data-anchor-id="beschreibung-von-skalenniveaus-von-variablen">2. Beschreibung von Skalenniveaus von Variablen</h3>
+<p><strong>Aufgabe:</strong><br>
+Bestimme das Skalenniveau (nominal, ordinal, metrisch) der folgenden Variablen:<br>
+a) Geschlecht (männlich, weiblich, divers)<br>
+b) Schulnoten (1, 2, 3, 4, 5, 6)<br>
+c) Temperatur in Celsius<br>
+d) Lieblingsfarbe (rot, blau, grün, etc.)<br>
+e) Körpergröße in cm</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Musterlösung">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Musterlösung
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<section id="musterlösung-1" class="level4 callout-body-container callout-body">
+<h4 class="anchored" data-anchor-id="musterlösung-1">Musterlösung</h4>
+<ol type="a">
+<li><strong>Geschlecht</strong>: Nominal (Kategorien ohne Reihenfolge)<br>
+</li>
+<li><strong>Schulnoten</strong>: Ordinal (Kategorien mit Reihenfolge, aber ungleiche Abstände)<br>
+</li>
+<li><strong>Temperatur in Celsius</strong>: Metrisch (kontinuierliche Werte mit gleichen Abständen, aber kein absoluter Nullpunkt)<br>
+</li>
+<li><strong>Lieblingsfarbe</strong>: Nominal (Kategorien ohne Reihenfolge)<br>
+</li>
+<li><strong>Körpergröße in cm</strong>: Metrisch (kontinuierliche Werte mit wahrem Nullpunkt)</li>
+</ol>
+</section>
+</div>
+</div>
+<hr>
+</section>
+<section id="berechnung-von-wahrscheinlichkeiten-mit-additions--und-multiplikationsregeln" class="level3">
+<h3 class="anchored" data-anchor-id="berechnung-von-wahrscheinlichkeiten-mit-additions--und-multiplikationsregeln">3. Berechnung von Wahrscheinlichkeiten mit Additions- und Multiplikationsregeln</h3>
+<p><strong>Aufgabe:</strong><br>
+In einem Kartenspiel mit 52 Karten (4 Farben, 13 Werte) ziehst du zwei Karten nacheinander ohne Zurücklegen. Berechne:<br>
+a) Die Wahrscheinlichkeit, dass die erste Karte ein Ass ist.<br>
+b) Die Wahrscheinlichkeit, dass die zweite Karte ein Ass ist, wenn die erste Karte ein Ass war.<br>
+c) Die Wahrscheinlichkeit, dass beide Karten Asse sind.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Musterlösung">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Musterlösung
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<section id="musterlösung-2" class="level4 callout-body-container callout-body">
+<h4 class="anchored" data-anchor-id="musterlösung-2">Musterlösung</h4>
+<ol type="a">
+<li><p><strong>Erste Karte ein Ass</strong>:<br>
+<span class="math display">\[
+P(\text{Ass}_1) = \frac{4}{52} = \frac{1}{13} \approx 0.0769
+\]</span></p></li>
+<li><p><strong>Zweite Karte ein Ass, wenn erste Karte ein Ass war</strong>:<br>
+Nach dem Ziehen eines Asses bleiben 3 Asse und 51 Karten:<br>
+<span class="math display">\[
+P(\text{Ass}_2 \mid \text{Ass}_1) = \frac{3}{51} = \frac{1}{17} \approx 0.0588
+\]</span></p></li>
+<li><p><strong>Beide Karten sind Asse</strong>:<br>
+<span class="math display">\[
+P(\text{Ass}_1 \cap \text{Ass}_2) = P(\text{Ass}_1) \cdot P(\text{Ass}_2 \mid \text{Ass}_1) = \frac{1}{13} \cdot \frac{1}{17} = \frac{1}{221} \approx 0.0045
+\]</span></p></li>
+</ol>
+</section>
+</div>
+</div>
+<hr>
+</section>
+<section id="berechnung-von-bedingten-wahrscheinlichkeiten" class="level3">
+<h3 class="anchored" data-anchor-id="berechnung-von-bedingten-wahrscheinlichkeiten">4. Berechnung von bedingten Wahrscheinlichkeiten</h3>
+<p><strong>Aufgabe:</strong><br>
+In einer Firma sind 60 % der Angestellten männlich. 30 % der männlichen Angestellten und 40 % der weiblichen Angestellten haben einen Hochschulabschluss. Berechne die Wahrscheinlichkeit, dass ein zufällig ausgewählter Angestellter mit Hochschulabschluss männlich ist.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Musterlösung">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Musterlösung
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<section id="musterlösung-3" class="level4 callout-body-container callout-body">
+<h4 class="anchored" data-anchor-id="musterlösung-3">Musterlösung</h4>
+<p>Sei <span class="math inline">\(M\)</span>: männlich, <span class="math inline">\(W\)</span>: weiblich, <span class="math inline">\(H\)</span>: Hochschulabschluss.<br>
+Gegeben:<br>
+- <span class="math inline">\(P(M) = 0.6\)</span>, <span class="math inline">\(P(W) = 0.4\)</span><br>
+- <span class="math inline">\(P(H \mid M) = 0.3\)</span>, <span class="math inline">\(P(H \mid W) = 0.4\)</span></p>
+<p>Gesucht: <span class="math inline">\(P(M \mid H)\)</span>. Nach dem Satz von Bayes:<br>
+<span class="math display">\[
+P(M \mid H) = \frac{P(H \mid M) \cdot P(M)}{P(H)}
+\]</span> Zuerst <span class="math inline">\(P(H)\)</span>:<br>
+<span class="math display">\[
+P(H) = P(H \mid M) \cdot P(M) + P(H \mid W) \cdot P(W) = 0.3 \cdot 0.6 + 0.4 \cdot 0.4 = 0.18 + 0.16 = 0.34
+\]</span> Dann:<br>
+<span class="math display">\[
+P(M \mid H) = \frac{0.3 \cdot 0.6}{0.34} = \frac{0.18}{0.34} \approx 0.5294
+\]</span> Also etwa 52.94 %.</p>
+</section>
+</div>
+</div>
+<hr>
+</section>
+<section id="umrechnen-von-werten-einer-normalverteilung-zur-standardnormalverteilung" class="level3">
+<h3 class="anchored" data-anchor-id="umrechnen-von-werten-einer-normalverteilung-zur-standardnormalverteilung">5. Umrechnen von Werten einer Normalverteilung zur Standardnormalverteilung</h3>
+<p><strong>Aufgabe:</strong><br>
+Eine Zufallsvariable <span class="math inline">\(X\)</span> ist normalverteilt mit <span class="math inline">\(\mu = 50\)</span> und <span class="math inline">\(\sigma = 10\)</span>. Berechne die Wahrscheinlichkeit, dass <span class="math inline">\(X &lt; 60\)</span>, indem du den Wert in die Standardnormalverteilung umrechnest und aus einer <a href="https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle">Standardnormalverteilungstabelle</a> abliest.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Musterlösung">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Musterlösung
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<section id="musterlösung-4" class="level4 callout-body-container callout-body">
+<h4 class="anchored" data-anchor-id="musterlösung-4">Musterlösung</h4>
+<p>Standardisiere <span class="math inline">\(X = 60\)</span>:<br>
+<span class="math display">\[
+Z = \frac{X - \mu}{\sigma} = \frac{60 - 50}{10} = 1
+\]</span> In der Tabelle für <span class="math inline">\(Z = 1.00\)</span> findest du <span class="math inline">\(\Phi(1.00) = 0.8413\)</span>.<br>
+Also:<br>
+<span class="math display">\[
+P(X &lt; 60) = P(Z &lt; 1) = 0.8413
+\]</span></p>
+</section>
+</div>
+</div>
+<hr>
+</section>
+<section id="ablesen-von-quantilen-aus-einem-boxplot" class="level3">
+<h3 class="anchored" data-anchor-id="ablesen-von-quantilen-aus-einem-boxplot">6. Ablesen von Quantilen aus einem Boxplot</h3>
+<p><strong>Aufgabe:</strong><br>
+Erstelle mit Python einen Boxplot für eine Verteilung mit folgenden Eigenschaften: Die Box erstreckt sich von 20 bis 60, der Median liegt bei 40, und die Whisker reichen von 10 bis 70. Sieh dir den Boxplot in <a href="#fig-boxplot" class="quarto-xref">Figure&nbsp;<span>1</span></a> an und bestimme das 25 %-Quantil, das 50 %-Quantil (Median) und das 75 %-Quantil.</p>
+<div id="cell-fig-boxplot" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Daten generieren, die den Anforderungen entsprechen</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.concatenate([</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    np.random.uniform(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">25</span>),  <span class="co"># Unterer Whisker bis Q1</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    np.random.uniform(<span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">25</span>),  <span class="co"># Q1 bis Median</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    np.random.uniform(<span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">25</span>),  <span class="co"># Median bis Q3</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    np.random.uniform(<span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">25</span>)   <span class="co"># Q3 bis oberer Whisker</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.boxplot(data, vert<span class="op">=</span><span class="va">True</span>, patch_artist<span class="op">=</span><span class="va">True</span>, showmeans<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Boxplot der Verteilung'</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Werte'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="tasks_files/figure-html/fig-boxplot-output-1.png" width="585" height="431" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Boxplot zur Verteilung mit spezifizierten Quantilen.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Musterlösung">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Musterlösung
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<section id="musterlösung-5" class="level4 callout-body-container callout-body">
+<h4 class="anchored" data-anchor-id="musterlösung-5">Musterlösung</h4>
+<ul>
+<li><strong>25 %-Quantil (untere Quartil)</strong>: Beginn der Box bei 20<br>
+</li>
+<li><strong>50 %-Quantil (Median)</strong>: Linie in der Box bei 40<br>
+</li>
+<li><strong>75 %-Quantil (obere Quartil)</strong>: Ende der Box bei 60</li>
+</ul>
+</section>
+</div>
+</div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-Diez2019-ll" class="csl-entry" role="listitem">
-Diez, David M., Christopher D. Barr, and Mine Cetinkaya-Rundel. 2019. <em>OpenIntro Statistics</em>. 4th ed. Boston, MA: OpenIntro. <a href="\url{https://www.openintro.org/stat/textbook.php?stat_book=os}">\url{https://www.openintro.org/stat/textbook.php?stat_book=os}</a>.
-</div>
-<div id="ref-james2013introduction" class="csl-entry" role="listitem">
-James, Gareth, Daniela Witten, Trevor Hastie, Robert Tibshirani, et al. 2013. <em>An Introduction to Statistical Learning</em>. Vol. 112. Springer.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -878,13 +1206,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="../statistics/tutorial_2.html" class="pagination-link" aria-label="Tutorial 2: Understanding Patterns in Grid Loads">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Tutorial 2: Understanding Patterns in Grid Loads</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./dataexploratory/index.html" class="pagination-link" aria-label="Umgang mit Daten und Explorative Analyse">
-        <span class="nav-page-text">Umgang mit Daten und Explorative Analyse</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../regression/index.html" class="pagination-link" aria-label="Regressions-Analyse">
+        <span class="nav-page-text">Regressions-Analyse</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -896,7 +1224,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
 <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> Julian Huber</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/statistics/tasks.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
