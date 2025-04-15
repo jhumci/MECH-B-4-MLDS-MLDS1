@@ -41,7 +41,7 @@ book:
         - regression/basic_linear_regression.qmd
         - regression/advanced_linear_regression.qmd  
         - regression/tutorial.qmd
-        - logistic_regression.qmd
+        - regression/logistic_regression.qmd
 #        - regression/expansions_linear_regression.qmd 
 #        - regression/statistical_learning.qmd 
 #        - regression/tutorial2.qmd
