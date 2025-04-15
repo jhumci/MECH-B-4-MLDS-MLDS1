@@ -2,70 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/index.html</loc>
-    <lastmod>2025-04-15T15:32:39.995Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.358Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/intro.html</loc>
-    <lastmod>2025-04-15T15:32:39.995Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.358Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/dataexploratory/index.html</loc>
-    <lastmod>2025-04-15T15:32:39.995Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.358Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/dataexploratory/data_science.html</loc>
-    <lastmod>2025-04-15T15:32:39.995Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.358Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/dataexploratory/data_sets.html</loc>
-    <lastmod>2025-04-15T15:32:39.995Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.358Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/dataexploratory/tutorial.html</loc>
-    <lastmod>2025-04-15T15:32:39.995Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.358Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/statistics/index.html</loc>
-    <lastmod>2025-04-15T15:32:39.999Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.362Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/statistics/sampling.html</loc>
-    <lastmod>2025-04-15T15:32:39.999Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.362Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/statistics/distributions.html</loc>
-    <lastmod>2025-04-15T15:32:39.999Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.362Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/statistics/tutorial.html</loc>
-    <lastmod>2025-04-15T15:32:40.000Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.363Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/statistics/interference_basics.html</loc>
-    <lastmod>2025-04-15T15:32:39.999Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.362Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/statistics/interference_advanced.html</loc>
-    <lastmod>2025-04-15T15:32:39.999Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.362Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/statistics/tutorial_2.html</loc>
-    <lastmod>2025-04-15T15:32:40.000Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.363Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/statistics/tasks.html</loc>
-    <lastmod>2025-04-15T15:32:39.999Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.363Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/regression/index.html</loc>
-    <lastmod>2025-04-15T15:32:39.997Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.360Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/regression/basic_linear_regression.html</loc>
+    <lastmod>2025-04-15T15:40:26.360Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/regression/advanced_linear_regression.html</loc>
+    <lastmod>2025-04-15T15:40:26.360Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/regression/tutorial.html</loc>
+    <lastmod>2025-04-15T15:40:26.361Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/regression/logistic_regression.html</loc>
+    <lastmod>2025-04-15T15:40:26.361Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/summary.html</loc>
-    <lastmod>2025-04-15T15:32:40.000Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.363Z</lastmod>
   </url>
   <url>
     <loc>https://jhumci.github.io/MECH-B-4-MLDS-MLDS1/references.html</loc>
-    <lastmod>2025-04-15T15:32:39.996Z</lastmod>
+    <lastmod>2025-04-15T15:40:26.359Z</lastmod>
   </url>
 </urlset>

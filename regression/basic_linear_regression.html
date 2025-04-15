@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Lineare Regression – Machine Learning and Data Science 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../regression/advanced_linear_regression.html" rel="next">
+<link href="../regression/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2bcf7be291d79734ada0dea710dd8908.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-6bb28caf545b74723fac9b4cde4209ed.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/basic_linear_regression.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Machine Learning and Data Science 1</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Einleitung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../dataexploratory/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Umgang mit Daten und Explorative Analyse</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/data_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science, Statisik, und Machine Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/data_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Sets</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial: Getting Data Tidy and finding Correlation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistik</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stichproben und Zufallsvariablen</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Verteilungen</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial: Monte Carlo Simulation of Vehicle Component Failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/interference_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interferenz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/interference_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tutorial_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 2: Understanding Patterns in Grid Loads</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tasks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Übungsaufgaben: Wahrscheinlichkeitsrechnung</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressions-Analyse</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressions-Analyse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/basic_linear_regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/advanced_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/logistic_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#linare-regression-mit-einer-variablen" id="toc-linare-regression-mit-einer-variablen" class="nav-link active" data-scroll-target="#linare-regression-mit-einer-variablen"><span class="header-section-number">7.1</span> Linare Regression mit einer Variablen</a></li>
+  <li><a href="#beispiel-vorhersage-von-zeitungenverkäufen" id="toc-beispiel-vorhersage-von-zeitungenverkäufen" class="nav-link" data-scroll-target="#beispiel-vorhersage-von-zeitungenverkäufen"><span class="header-section-number">7.2</span> Beispiel: Vorhersage von Zeitungenverkäufen</a></li>
+  <li><a href="#methode-der-kleinsten-quadrate-ols" id="toc-methode-der-kleinsten-quadrate-ols" class="nav-link" data-scroll-target="#methode-der-kleinsten-quadrate-ols"><span class="header-section-number">7.3</span> Methode der kleinsten Quadrate (OLS)</a></li>
+  <li><a href="#schätzung-der-parameter-mittels-odinary-least-squares-ols" id="toc-schätzung-der-parameter-mittels-odinary-least-squares-ols" class="nav-link" data-scroll-target="#schätzung-der-parameter-mittels-odinary-least-squares-ols"><span class="header-section-number">7.4</span> Schätzung der Parameter mittels Odinary Least Squares (OLS)</a>
+  <ul class="collapse">
+  <li><a href="#berechnung-der-mittelwerte" id="toc-berechnung-der-mittelwerte" class="nav-link" data-scroll-target="#berechnung-der-mittelwerte"><span class="header-section-number">7.4.1</span> 1. Berechnung der Mittelwerte</a></li>
+  <li><a href="#minimierung-der-kostenfunktion-nach-beta_1" id="toc-minimierung-der-kostenfunktion-nach-beta_1" class="nav-link" data-scroll-target="#minimierung-der-kostenfunktion-nach-beta_1"><span class="header-section-number">7.4.2</span> 2. Minimierung der Kostenfunktion nach <span class="math inline">\(\beta_1\)</span></a></li>
+  <li><a href="#minimierung-der-kostenfunktion-nach-beta_0" id="toc-minimierung-der-kostenfunktion-nach-beta_0" class="nav-link" data-scroll-target="#minimierung-der-kostenfunktion-nach-beta_0"><span class="header-section-number">7.4.3</span> 3. Minimierung der Kostenfunktion nach <span class="math inline">\(\beta_0\)</span></a></li>
+  <li><a href="#einsetzen-von-beta_1-in-die-gleichung-für-beta_0" id="toc-einsetzen-von-beta_1-in-die-gleichung-für-beta_0" class="nav-link" data-scroll-target="#einsetzen-von-beta_1-in-die-gleichung-für-beta_0"><span class="header-section-number">7.4.4</span> 4. Einsetzen von <span class="math inline">\(\beta_1\)</span> in die Gleichung für <span class="math inline">\(\beta_0\)</span></a></li>
+  <li><a href="#ergebnis" id="toc-ergebnis" class="nav-link" data-scroll-target="#ergebnis"><span class="header-section-number">7.4.5</span> 5. Ergebnis</a></li>
+  </ul></li>
+  <li><a href="#beispiel-lineare-regression-mit-einer-variablen" id="toc-beispiel-lineare-regression-mit-einer-variablen" class="nav-link" data-scroll-target="#beispiel-lineare-regression-mit-einer-variablen"><span class="header-section-number">7.5</span> Beispiel: Lineare Regression mit einer Variablen</a>
+  <ul class="collapse">
+  <li><a href="#scikit-learn" id="toc-scikit-learn" class="nav-link" data-scroll-target="#scikit-learn"><span class="header-section-number">7.5.1</span> <code>scikit-learn</code></a></li>
+  <li><a href="#statsmodels" id="toc-statsmodels" class="nav-link" data-scroll-target="#statsmodels"><span class="header-section-number">7.5.2</span> <code>statsmodels</code></a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/regression/basic_linear_regression.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/basic_linear_regression.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-regression-linear" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Die lineare Regression ist ein statistisches Verfahren, das dazu verwendet wird, die Beziehung zwischen einer abhängigen Variable <span class="math inline">\(Y\)</span> und einer oder mehreren unabhängigen Variablen <span class="math inline">\(X\)</span> zu modellieren. Das Modell der linearen Regression kann als eine lineare Beziehung zwischen <span class="math inline">\(Y\)</span> und <span class="math inline">\(X\)</span> interpretiert werden, die durch die Gleichung</p>
+<p><span class="math display">\[
+Y = f(X, \theta) + \epsilon,
+\]</span></p>
+<section id="linare-regression-mit-einer-variablen" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="linare-regression-mit-einer-variablen"><span class="header-section-number">7.1</span> Linare Regression mit einer Variablen</h2>
+<p>Für den Fall, dass wird nur eine Variable <span class="math inline">\(X\)</span> betrachten, wird die lineare Regression durch die Gleichung: <span class="math display">\[
+Y = \beta_0 + \beta_1 X + \epsilon
+\]</span></p>
+<p>beschrieben wird. Hierbei sind <span class="math inline">\(\beta_0\)</span> und <span class="math inline">\(\beta_1\)</span> die Parameter <span class="math inline">\(\theta\)</span> des Modells, die die Steigung und den Achsenabschnitt der Regressionsgeraden bestimmen, und <span class="math inline">\(\epsilon\)</span> ist der Fehlerterm, der die Abweichung der beobachteten Werte von den vorhergesagten Werten beschreibt.</p>
+<p>In diesem Fall haben wir einen einfachen Zusammenhang zwischen nur zwei Variablen <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span>. In der Praxis kann die lineare Regression jedoch auch auf mehrere unabhängige Variablen erweitert werden, um komplexere Beziehungen zu modellieren.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Überwachtes Lernen
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die lineare Regression ist ein Beispiel für ein überwachtes Lernverfahren, bei dem wir ein Modell auf Basis von gelabelten Trainingsdaten erstellen. Das bedeutet, dass wir sowohl die unabhängigen Variablen <span class="math inline">\(X\)</span> als auch die abhängige Variable <span class="math inline">\(Y\)</span> kennen und das Modell so anpassen, dass es die Beziehung zwischen <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span> möglichst gut abbildet. Wir können dabei <em>überwachen</em> wie gut sich das Modell mit verschiedenen Parametern an die Daten anpasst und das Modell so optimieren, dass es die besten Vorhersagen liefert.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Parametrische Modelle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Bei der linearen Regression handelt es sich um ein parametrisches Modell, bei dem wir eine bestimmte Form der Beziehung zwischen <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span> annehmen und die Parameter <span class="math inline">\(\theta\)</span> des Modells so anpassen, dass es die Daten möglichst gut abbildet. Im Gegensatz dazu gibt es auch nicht-parametrische Modelle, bei denen keine spezifische Form der Beziehung angenommen wird und das Modell flexibler ist, aber auch mehr Daten benötigt, um zuverlässige Vorhersagen zu treffen (z.B. Neuronale Netze).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpreation und Prognose
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Es gibt grundlegend zwei Zielstellungen, die mit der linearen Regression, und auch vielen anderen Modellen, verfolgt werden können:</p>
+<ul>
+<li><strong>Interpretation</strong>: Die Interpretation der Beziehung zwischen den Variablen <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span> steht im Vordergrund. Hierbei geht es darum, die Auswirkung der unabhängigen Variablen auf die abhängige Variable zu verstehen und zu erklären und ggf. Hypothesen zu testen.</li>
+<li><strong>Prognose</strong>: Die Vorhersage von Werten der abhängigen Variablen <span class="math inline">\(Y\)</span> auf Basis der unabhängigen Variablen <span class="math inline">\(X\)</span> steht im Vordergrund. Hierbei geht es darum, die Genauigkeit der Vorhersagen zu maximieren und die Modellgüte zu optimieren.</li>
+</ul>
+<p>Wichtig ist es, sich vor der Anwendung eines Modells klar zu machen, welches Ziel verfolgt wird.</p>
+</div>
+</div>
+</section>
+<section id="beispiel-vorhersage-von-zeitungenverkäufen" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="beispiel-vorhersage-von-zeitungenverkäufen"><span class="header-section-number">7.2</span> Beispiel: Vorhersage von Zeitungenverkäufen</h2>
+<p><a href="images/tv.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/tv.png" class="img-fluid"></a></p>
+<p>::: {.callout-note} {.collapsed = “true”} ### Wenn wir diese Grafik stellen, welche Fragen können wir uns stellen? Fallen diese Fragen in die Kategorie der Interpretation oder der Prognose?</p>
+<ul>
+<li>Interpretation:
+<ul>
+<li>Gibt es einen Zusammenhang zwischen den Werbeausgaben und den Verkäufen?</li>
+<li>Wie stark ist der Zusammenhang?</li>
+<li>Welche Ausgaben haben den größten Einfluss auf die Verkäufe?</li>
+<li>Ist die Beziehung linear oder nicht-linear?</li>
+<li>Gibt es Synergieeffekte zwischen den verschiedenen Werbekanälen?</li>
+</ul></li>
+<li>Prognose:
+<ul>
+<li>Wie gut können wir die Verkäufe vorhersagen, wenn wir die Werbeausgaben kennen?</li>
+<li>Wie genau sind unsere Vorhersagen? :::</li>
+</ul></li>
+</ul>
+<p>Wenn wir das lineare Modell aufstellen könnte, wir das folgendermaßen aussehen:</p>
+<p><span class="math display">\[
+Y ≈ β_0 + β_1 \cdot X_1,
+\]</span></p>
+<p>bzw. in unserem Beispiel:</p>
+<p><span class="math display">\[
+\text{sales} ≈ β_0 + β_1 \cdot \text{TV}
+\]</span></p>
+<p>Die Parameter <span class="math inline">\(β_0\)</span> und <span class="math inline">\(β_1\)</span> haben dabei bestimmt Bedeutungen:</p>
+<ul>
+<li><span class="math inline">\(β_0\)</span> … intercept oder y-Achsenabschnitt</li>
+<li><span class="math inline">\(β_1\)</span> … slope oder Steigung</li>
+</ul>
+<p>Als nächstes müssen wir einen Weg finden die Parameter <span class="math inline">\(β_0\)</span> und <span class="math inline">\(β_1\)</span> zu schätzen. Dafür gibt es verschiedene Methoden. Die Klassische Methode ist die Methode der kleinsten Quadrate (OLS). Diese Methode minimiert die Summe der quadrierten Abweichungen zwischen den beobachteten Werten und den vorhergesagten Werten.</p>
+<p><span class="math display">\[Y ≈ \hat{β}_0 + \hat{β}_1 \cdot X_1\]</span></p>
+</section>
+<section id="methode-der-kleinsten-quadrate-ols" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="methode-der-kleinsten-quadrate-ols"><span class="header-section-number">7.3</span> Methode der kleinsten Quadrate (OLS)</h2>
+<p>Die Methode der kleinsten Quadrate (OLS) ist ein Verfahren zur Schätzung der Parameter eines linearen Regressionsmodells, das die Summe der quadrierten Abweichungen zwischen den beobachteten Werten und den vorhergesagten Werten minimiert.</p>
+<p>Als erstes definieren wir den Fehler <span class="math inline">\(\epsilon_i\)</span> für jeden Datenpunkt <span class="math inline">\(i\)</span> als die Differenz zwischen dem beobachteten Wert <span class="math inline">\(y_i\)</span> und dem vorhergesagten Wert <span class="math inline">\(\hat{y}_i\)</span>:</p>
+<p><span class="math display">\[
+\epsilon_i = y_i - \hat{y}_i.
+\]</span></p>
+<p>Die Methode der kleinsten Quadrate zielt darauf ab, die Summe der quadrierten Fehler zu minimieren, d.h. die Summe der quadrierten Abweichungen zwischen den beobachteten Werten und den vorhergesagten Werten:</p>
+<p><span class="math display">\[
+\text{RSS} = \sum_{i=1}^{n} \epsilon_i^2 = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2.
+\]</span></p>
+<p>Auf Englisch wird die Summe als <em>Residual Sum of Squares</em> (RSS) bezeichnet. Die Methode der kleinsten Quadrate sucht nun die Parameter <span class="math inline">\(\hat{\beta}_0\)</span> und <span class="math inline">\(\hat{\beta}_1\)</span>, die die Summe der quadrierten Fehler minimieren:</p>
+<p><span class="math display">\[
+\hat{\beta}_0, \hat{\beta}_1 = \text{argmin}_{\beta_0, \beta_1} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2.
+\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Kostenfunktion <span class="math inline">\(J\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die Methode der kleinsten Quadrate kann auch als Optimierungsproblem formuliert werden, bei dem wir eine <strong>Kostenfunktion</strong> (Cost Function) minimieren, die die Summe der quadrierten Fehler zwischen den beobachteten und den vorhergesagten Werten beschreibt. Die Kostenfunktion ist in diesem Fall die Residual Sum of Squares (RSS), die wir minimieren, um die besten Parameter für das Modell zu finden. Kostenfunktionen hängen in der Regel von Modell, den Daten und den Parametern ab und dienen dazu, die Güte des Modells zu bewerten und zu optimieren. Da wir meist ein festes Modell und Daten haben und nur die Parameter anpassen, können wir die Kostenfunktion als Funktion der Parameter betrachten, die wir minimieren wollen. Ein eng verwandtes Konzept ist die Verlustfunktion (Loss Function) oder Accuracy Measures, die in der Regel den Fehler zwischen den beobachteten und den vorhergesagten Werten beschreiben Die Kostenfunktion ist in der Regel eine Summe der Verlustfunktionen über alle Datenpunkte.</p>
+</div>
+</div>
+</section>
+<section id="schätzung-der-parameter-mittels-odinary-least-squares-ols" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="schätzung-der-parameter-mittels-odinary-least-squares-ols"><span class="header-section-number">7.4</span> Schätzung der Parameter mittels Odinary Least Squares (OLS)</h2>
+<p>Die Methode der kleinsten Quadrate (Ordinary Least Squares, OLS) wird verwendet, um die Parameter einer linearen Regression zu schätzen. Ziel ist es, die Gerade</p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
+\]</span></p>
+<p>so zu bestimmen, dass die Summe der quadrierten Fehler (Residual Sum of Squares, RSS) minimiert wird:</p>
+<p><span class="math display">\[
+RSS = \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right)^2.
+\]</span></p>
+<section id="berechnung-der-mittelwerte" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="berechnung-der-mittelwerte"><span class="header-section-number">7.4.1</span> 1. Berechnung der Mittelwerte</h3>
+<p>Für spätere Berechnungen ist es nützlich, die Mittelwerte der Variablen <span class="math inline">\(x\)</span> und <span class="math inline">\(y\)</span> zu bestimmen:</p>
+<p><span class="math display">\[
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad \bar{y} = \frac{1}{n} \sum_{i=1}^{n} y_i.
+\]</span></p>
+</section>
+<section id="minimierung-der-kostenfunktion-nach-beta_1" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="minimierung-der-kostenfunktion-nach-beta_1"><span class="header-section-number">7.4.2</span> 2. Minimierung der Kostenfunktion nach <span class="math inline">\(\beta_1\)</span></h3>
+<p>Um <span class="math inline">\(\beta_1\)</span> zu bestimmen, setzen wir die erste Ableitung der Kostenfunktion <span class="math inline">\(J = RSS\)</span> gleich null:</p>
+<p><span class="math display">\[
+\frac{\partial RSS}{\partial \beta_1} = 0.
+\]</span></p>
+<p>Die Ableitung der Kostenfunktion lautet:</p>
+<p><span class="math display">\[
+\frac{\partial RSS}{\partial \beta_1} = \frac{\partial}{\partial \beta_1} \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right)^2.
+\]</span></p>
+<p>::: {.callout-tip} {.collapsed = “true”} #### Anwendung der Kettenregel<br>
+Die Kettenregel besagt:</p>
+<p><span class="math display">\[
+[f(g(x))]' = f'(g(x)) \cdot g'(x),
+\]</span></p>
+<p>wobei hier <span class="math inline">\(f(x) = x^2\)</span> und <span class="math inline">\(g(x) = y_i - \beta_0 - \beta_1 x_i\)</span>. :::</p>
+<p>Angewendet ergibt dies:</p>
+<p><span class="math display">\[
+\frac{\partial RSS}{\partial \beta_1} = -2 \sum_{i=1}^{n} x_i \left(y_i - \beta_0 - \beta_1 x_i\right).
+\]</span></p>
+<p>Setzen wir die Ableitung gleich null:</p>
+<p><span class="math display">\[
+-2 \sum_{i=1}^{n} x_i \left(y_i - \beta_0 - \beta_1 x_i\right) = 0.
+\]</span></p>
+<p>Vereinfachen der Gleichung:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} x_i y_i - \beta_0 \sum_{i=1}^{n} x_i - \beta_1 \sum_{i=1}^{n} x_i^2 = 0.
+\]</span></p>
+<p>Setzen wir die Mittelwerte ein:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} x_i y_i - \beta_0 n \bar{x} - \beta_1 \sum_{i=1}^{n} x_i^2 = 0.
+\]</span></p>
+</section>
+<section id="minimierung-der-kostenfunktion-nach-beta_0" class="level3" data-number="7.4.3">
+<h3 data-number="7.4.3" class="anchored" data-anchor-id="minimierung-der-kostenfunktion-nach-beta_0"><span class="header-section-number">7.4.3</span> 3. Minimierung der Kostenfunktion nach <span class="math inline">\(\beta_0\)</span></h3>
+<p>Analog leiten wir <span class="math inline">\(J\)</span> nach <span class="math inline">\(\beta_0\)</span> ab:</p>
+<p><span class="math display">\[
+\frac{\partial RSS}{\partial \beta_0} = 0.
+\]</span></p>
+<p><span class="math display">\[
+\frac{\partial RSS}{\partial \beta_0} = -2 \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right).
+\]</span></p>
+<p>Setzen wir die Ableitung gleich null:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} y_i - \beta_0 \sum_{i=1}^{n} 1 - \beta_1 \sum_{i=1}^{n} x_i = 0.
+\]</span></p>
+<p>Da <span class="math inline">\(\sum_{i=1}^{n} 1 = n\)</span>, folgt:</p>
+<p><span class="math display">\[
+n \beta_0 + \beta_1 \sum_{i=1}^{n} x_i = \sum_{i=1}^{n} y_i.
+\]</span></p>
+<p>Umformen ergibt:</p>
+<p><span class="math display">\[
+\beta_0 = \frac{1}{n} \sum_{i=1}^{n} y_i - \beta_1 \frac{1}{n} \sum_{i=1}^{n} x_i.
+\]</span></p>
+</section>
+<section id="einsetzen-von-beta_1-in-die-gleichung-für-beta_0" class="level3" data-number="7.4.4">
+<h3 data-number="7.4.4" class="anchored" data-anchor-id="einsetzen-von-beta_1-in-die-gleichung-für-beta_0"><span class="header-section-number">7.4.4</span> 4. Einsetzen von <span class="math inline">\(\beta_1\)</span> in die Gleichung für <span class="math inline">\(\beta_0\)</span></h3>
+<p>Die optimale Steigung <span class="math inline">\(\hat{\beta_1}\)</span> erhält man durch:</p>
+<p><span class="math display">\[
+\hat{\beta_1} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2}.
+\]</span></p>
+<p>Dies ist die Kovarianz zwischen <span class="math inline">\(x\)</span> und <span class="math inline">\(y\)</span> geteilt durch die Varianz von <span class="math inline">\(x\)</span> (vgl. Kapitel ) Für den Achsenabschnitt <span class="math inline">\(\hat{\beta_0}\)</span> setzen wir <span class="math inline">\(\hat{\beta_1}\)</span> ein:</p>
+<p><span class="math display">\[
+\hat{\beta_0} = \bar{y} - \hat{\beta_1} \bar{x}.
+\]</span></p>
+</section>
+<section id="ergebnis" class="level3" data-number="7.4.5">
+<h3 data-number="7.4.5" class="anchored" data-anchor-id="ergebnis"><span class="header-section-number">7.4.5</span> 5. Ergebnis</h3>
+<p>Die geschätzte Regressionsgerade lautet:</p>
+<p><span class="math display">\[
+\hat{y} = \hat{\beta_0} + \hat{\beta_1} x.
+\]</span></p>
+<p>Hiermit haben wir die OLS-Schätzung der Parameter <span class="math inline">\(\beta_0\)</span> und <span class="math inline">\(\beta_1\)</span> abgeschlossen.</p>
+</section>
+</section>
+<section id="beispiel-lineare-regression-mit-einer-variablen" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="beispiel-lineare-regression-mit-einer-variablen"><span class="header-section-number">7.5</span> Beispiel: Lineare Regression mit einer Variablen</h2>
+<p>Wir simulieren einen Datensatz mit einer linearen Beziehung zwischen <span class="math inline">\(X\)</span> (€ ausgegeben für TV-Werbung) und <span class="math inline">\(Y\)</span> (Verkäufe von Zeitungen). In diesem Fall kennen wir den Zufalls-Prozess, der die Daten generiert hat, und können daher die wahren Parameter des Modells bestimmen. Die Variable <span class="math inline">\(X\)</span> ist gleichmäßig zwischen 0 und 300 verteilt, und <span class="math inline">\(Y\)</span> wird durch die Gleichung <span class="math display">\[
+Y = 7 + 0.05 \cdot X + \epsilon
+\]</span></p>
+<p>generiert, wobei <span class="math inline">\(\epsilon\)</span> ein normalverteilter Fehler mit einer Standardabweichung von <span class="math inline">\(5\)</span> ist.</p>
+<div id="331198c6" class="cell styled-output" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate population data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="dv">300</span> <span class="op">*</span> np.random.rand(<span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> <span class="dv">7</span> <span class="op">+</span> <span class="fl">0.05</span> <span class="op">*</span> X <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> np.random.randn(<span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate sample data</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>idx <span class="op">=</span> np.random.choice(<span class="dv">100</span>, sample_size, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>X_sample <span class="op">=</span> X[idx]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Y_sample <span class="op">=</span> Y[idx]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Store data in a tidy dataframe</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({<span class="st">"X (TV advertising spending (€))"</span>: X_sample.flatten(), <span class="st">"Y (Sales)"</span>: Y_sample.flatten()})</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   X (TV advertising spending (€))  Y (Sales)
+0                       246.297969  14.750787
+1                       140.595360  22.596482
+2                        62.663027   6.953921
+3                       172.783949  21.579346
+4                        19.244249  12.709316</code></pre>
+</div>
+</div>
+<div id="f2e6fd94" class="cell styled-output" data-fig-label="fig-tv-advertising" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(X, Y)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"TV advertising spending (€)"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Sales"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"TV advertising vs. sales"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="basic_linear_regression_files/figure-html/cell-3-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Scatter plot of TV advertising vs.&nbsp;sales"><img src="basic_linear_regression_files/figure-html/cell-3-output-1.png" width="585" height="449" alt="Scatter plot of TV advertising vs.&nbsp;sales" class="figure-img"></a></p>
+<figcaption>Scatter plot of TV advertising vs.&nbsp;sales</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Nun können wir unsere Formel für die OLS-Schätzung der Parameter <span class="math inline">\(\beta_0\)</span> und <span class="math inline">\(\beta_1\)</span> anwenden:</p>
+<div id="d52a4de1" class="cell styled-output" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate means</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>X_mean <span class="op">=</span> np.mean(X_sample)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Y_mean <span class="op">=</span> np.mean(Y_sample)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate slope</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>numerator <span class="op">=</span> np.<span class="bu">sum</span>((X_sample <span class="op">-</span> X_mean) <span class="op">*</span> (Y_sample <span class="op">-</span> Y_mean))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>denominator <span class="op">=</span> np.<span class="bu">sum</span>((X_sample <span class="op">-</span> X_mean) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="op">=</span> numerator <span class="op">/</span> denominator</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate intercept</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>beta_0 <span class="op">=</span> Y_mean <span class="op">-</span> beta_1 <span class="op">*</span> X_mean</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Slope (beta_1): </span><span class="sc">{</span>beta_1<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intercept (beta_0): </span><span class="sc">{</span>beta_0<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Slope (beta_1): 0.04894891702336733
+Intercept (beta_0): 8.110755387236143</code></pre>
+</div>
+</div>
+<p>In der Zukunft werden wir stattdessen eines von zwei Paketen verwenden, die die OLS-Schätzung automatisch durchführen: <code>statsmodels</code> oder <code>scikit-learn</code>.</p>
+<section id="scikit-learn" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="scikit-learn"><span class="header-section-number">7.5.1</span> <code>scikit-learn</code></h3>
+<p><a href="https://scikit-learn.org/stable/"><code>scikit-learn</code></a> ist eine der bekanntesten Bibliotheken für maschinelles Lernen in Python. Sie bietet eine Vielzahl von Algorithmen und Werkzeugen für die Modellierung und Analyse von Daten. Wir werden es später und im kommenden Semester noch ausführlich verwenden.</p>
+<div id="b0e13e46" class="cell styled-output" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Defines what kind of model we want to use</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fits the model to the data</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>model.fit(X_sample, Y_sample)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Get slope and intercept from the models coefficients</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>beta_1_sklearn <span class="op">=</span> model.coef_[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>beta_0_sklearn <span class="op">=</span> model.intercept_[<span class="dv">0</span>]</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Slope (beta_1): </span><span class="sc">{</span>beta_1_sklearn<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intercept (beta_0): </span><span class="sc">{</span>beta_0_sklearn<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Slope (beta_1): 0.04894891702336733
+Intercept (beta_0): 8.110755387236143</code></pre>
+</div>
+</div>
+</section>
+<section id="statsmodels" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="statsmodels"><span class="header-section-number">7.5.2</span> <code>statsmodels</code></h3>
+<p><a href="https://www.statsmodels.org/stable/index.html"><code>statsmodels</code></a> ist eine Bibliothek für statistische Modellierung in Python. Sie bietet eine Vielzahl von statistischen Modellen und Tests, darunter auch die lineare Regression. Die Ausgabe von <code>statsmodels</code> ist oft detaillierter und enthält mehr statistische Informationen als die von <code>scikit-learn</code>.</p>
+<div id="42a35508" class="cell styled-output" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regression model</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>X_sm <span class="op">=</span> sm.add_constant(X_sample)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>model_sm <span class="op">=</span> sm.OLS(Y_sample, X_sm).fit()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get slope and intercept</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model_sm.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.419
+Model:                            OLS   Adj. R-squared:                  0.413
+Method:                 Least Squares   F-statistic:                     70.80
+Date:                Tue, 15 Apr 2025   Prob (F-statistic):           3.29e-13
+Time:                        15:42:55   Log-Likelihood:                -302.46
+No. Observations:                 100   AIC:                             608.9
+Df Residuals:                      98   BIC:                             614.1
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          8.1108      0.966      8.392      0.000       6.193      10.029
+x1             0.0489      0.006      8.414      0.000       0.037       0.060
+==============================================================================
+Omnibus:                       11.746   Durbin-Watson:                   2.121
+Prob(Omnibus):                  0.003   Jarque-Bera (JB):                4.097
+Skew:                           0.138   Prob(JB):                        0.129
+Kurtosis:                       2.047   Cond. No.                         319.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Arbeit mit DataFrames und Formula-Strings
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Anstelle die Daten in einem Numpy-Array zu speichern, können wir auch ein Pandas DataFrame verwenden. Dies hat den Vorteil, dass wir die Spalten mit ihren Namen ansprechen können und so den Code besser lesbar machen. Zudem läss sich die lineare Regression auch mit Hilfe von Formel-Strings durchführen, die die Beziehung zwischen den Variablen angeben.</p>
+<div id="788dc597" class="cell styled-output" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DataFrame</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({<span class="st">"TV"</span>: X_sample.flatten(), <span class="st">"Sales"</span>: Y_sample.flatten()})</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regression model using formula string</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>model_smf <span class="op">=</span> smf.ols(<span class="st">"Sales ~ TV"</span>, data<span class="op">=</span>data).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>Wenn wir die Ergebnisse der OLS-Schätzung betrachten, sehen wir einige Zusatzinformationen, die uns helfen, die Güte des Modells zu bewerten</p>
+<section id="koeffizienten-und-deren-konfidenzintervalle" class="level4" data-number="7.5.2.1">
+<h4 data-number="7.5.2.1" class="anchored" data-anchor-id="koeffizienten-und-deren-konfidenzintervalle"><span class="header-section-number">7.5.2.1</span> Koeffizienten und deren Konfidenzintervalle</h4>
+<p>Wir können die geschätzen Koeffizienten <span class="math inline">\(\hat{\beta}_0\)</span> und <span class="math inline">\(\hat{\beta}_1\)</span> sowie deren Konfidenzintervalle ablesen. Die Konfidenzintervalle geben an. Es wird davon ausgegangen, dass die Schätzer der Koeffizienten normalverteilt sind. Entsprechend sind die Konfidenzintervalle symmetrisch um den Schätzer und 95% der Werte liegen innerhalb von zwei Standardabweichung des Schätzers z.B:</p>
+<p><span class="math display">\[
+[CI_{0.025}^{\beta_0}, CI^{\beta_0}_{0.975}] = [8.1108 - 2 0.966 , 8.1108 + 2 0.966] = [6.193, 10.029]
+\]</span></p>
+</section>
+<section id="teststatistiken-t-und-p-werte" class="level4" data-number="7.5.2.2">
+<h4 data-number="7.5.2.2" class="anchored" data-anchor-id="teststatistiken-t-und-p-werte"><span class="header-section-number">7.5.2.2</span> Teststatistiken <span class="math inline">\(t\)</span> und <span class="math inline">\(p\)</span>-Werte</h4>
+<p>Eine weitere wichtige Frage ist, ob ein Koeffizient (Parameter) tatsächlich siginifikant von <span class="math inline">\(0\)</span> verschiedenen ist. Im unserem konkreten Beispiel stellt sich die Fragen: Verändert sich der Umsatz, wenn wir mehr Geld in TV-Werbung investieren? Dies kann mit einem T-Test überprüft werden.</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\beta_1 = 0\)</span> (kein Effekt)</li>
+<li><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\beta_1 \neq 0\)</span> (Effekt)</li>
+</ul>
+<p>Die Teststatistik <span class="math inline">\(t\)</span> gibt an, wie viele Standardabweichungen der Schätzer <span class="math inline">\(\hat{\beta}_1\)</span> vom Wert <span class="math inline">\(0\)</span> entfernt ist. Ein hoher <span class="math inline">\(t\)</span>-Wert deutet darauf hin, dass der Schätzer signifikant von <span class="math inline">\(0\)</span> verschieden ist. Der <span class="math inline">\(p\)</span>-Wert gibt die Wahrscheinlichkeit an, dass der beobachtete Effekt auftritt, wenn die Nullhypothese wahr ist. Ein <span class="math inline">\(p\)</span>-Wert kleiner als <span class="math inline">\(0.05\)</span> wird oft als Hinweis darauf interpretiert, dass der Effekt signifikant ist.</p>
+<p>Im Vorliegenden Fall können wir also die Nullhypothese, dass der Umsatz unabhängig von den Werbeausgaben ist mit hoher Konfidenz ablehnen.</p>
+</section>
+<section id="koeffizient-der-determination-r2" class="level4" data-number="7.5.2.3">
+<h4 data-number="7.5.2.3" class="anchored" data-anchor-id="koeffizient-der-determination-r2"><span class="header-section-number">7.5.2.3</span> Koeffizient der Determination <span class="math inline">\(R^2\)</span></h4>
+<p>Der Koeffizient der Determination <span class="math inline">\(R^2\)</span> gibt an, wie gut das Modell die beobachteten Daten erklärt. Er liegt zwischen <span class="math inline">\(0\)</span> und <span class="math inline">\(1\)</span> und gibt den Anteil der Varianz der abhängigen Variable <span class="math inline">\(Y\)</span> an, der durch das Modell erklärt wird. Ein <span class="math inline">\(R^2\)</span> von <span class="math inline">\(1\)</span> bedeutet, dass das Modell alle Variationen in <span class="math inline">\(Y\)</span> erklärt, während ein <span class="math inline">\(R^2\)</span> von <span class="math inline">\(0\)</span> bedeutet, dass das Modell keine Variationen erklärt. In unserem Fall beträgt <span class="math inline">\(R^2 = 0.41\)</span>, was darauf hindeutet, dass das Modell etwa <span class="math inline">\(41\%\)</span> der Variationen in den Verkäufen erklärt.</p>
+<p>Das Bestimmtheitsmaß <span class="math inline">\(R^2\)</span> ist definiert als: <span class="math display">\[
+R^2 = \frac{TSS-RSS}{TSS} = 1- \frac{RSS}{TSS},
+\]</span></p>
+<p>wobei <span class="math inline">\(RSS\)</span> die Residual Sum of Squares und <span class="math inline">\(TSS\)</span> die Total Sum of Squares ist. <span class="math inline">\(TSS\)</span> ist die Summe der quadrierten Abweichungen der abhängigen Variable <span class="math inline">\(Y\)</span> von ihrem Mittelwert <span class="math inline">\(\bar{y}\)</span>.</p>
+<p>Die Varianz und TSS hängen eng miteinander zusammen:</p>
+<p><span class="math display">\[
+TSS = \sum_{i=1}^{n} (y_i - \bar{y})^2 = n \text{Var}(Y).
+\]</span></p>
+<p>Intuitiv kann man sagen, R² gibt an, wie viel Prozent der Varianz der abhängigen Variable durch die unabhängigen Variablen erklärt wird, bzw. genauer. Wie veringern sich die Fehler, wenn man ein naives Mittel-Wert-Modells (<span class="math inline">\(f(x)=\bar(y)\)</span>) durch das lineare Modell ersetzt.</p>
+<div id="b7f59bde" class="cell styled-output" data-fig-label="fig-tv-advertising" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot data</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(X, Y)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot(X, beta_0 <span class="op">+</span> beta_1 <span class="op">*</span> X, color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="st">"OLS regression"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.plot(X, np.mean(Y) <span class="op">*</span> np.ones_like(X), color<span class="op">=</span><span class="st">"green"</span>, label<span class="op">=</span><span class="st">"Mean of Y"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"TV advertising spending (€)"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Sales"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"TV advertising vs. sales"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="basic_linear_regression_files/figure-html/cell-8-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Scatter plot of TV advertising vs.&nbsp;sales"><img src="basic_linear_regression_files/figure-html/cell-8-output-1.png" width="585" height="449" alt="Scatter plot of TV advertising vs.&nbsp;sales" class="figure-img"></a></p>
+<figcaption>Scatter plot of TV advertising vs.&nbsp;sales</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Stolpersteine beim Interpretieren von <span class="math inline">\(R^2\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Ein hoher <span class="math inline">\(R^2\)</span> bedeutet nicht unbedingt, dass das Modell gut ist. Ein Modell mit einem hohen <span class="math inline">\(R^2\)</span> kann immer noch schlechte Vorhersagen machen, wenn es nicht gut generalisiert.</li>
+<li>Ein niedriger <span class="math inline">\(R^2\)</span> bedeutet nicht unbedingt, dass das Modell schlecht ist. Ein Modell mit einem niedrigen <span class="math inline">\(R^2\)</span> kann immer noch nützlich sein, wenn es die Beziehung zwischen den Variablen gut erklärt.</li>
+<li><span class="math inline">\(R^2\)</span> hängt von der Anzahl der Variablen im Modell ab. Ein Modell mit mehr Variablen wird tendenziell ein höheres <span class="math inline">\(R^2\)</span> haben, auch wenn es nicht besser ist.</li>
+</ul>
+<p>Die Folgede Abbildung zeigt zudem verschiende Zusammenhänge und den <span class="math inline">\(R^2\)</span> Wert für die jeweiligen Modelle.</p>
+</div>
+</div>
+<p><a href="https://www.datasciencecentral.com/wp-content/uploads/2021/10/2742052271.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="https://www.datasciencecentral.com/wp-content/uploads/2021/10/2742052271.jpg" class="img-fluid"></a></p>
+<p><a href="https://www.enmanreg.org/wp-content/uploads/2016/05/r2_vs_CVRMSE.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="https://www.enmanreg.org/wp-content/uploads/2016/05/r2_vs_CVRMSE.png" class="img-fluid"></a></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Annahmen für die lineare Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Damit eine Lineare Regression sinnvoll ist und die Schätzung der Parameter gut funktioniert müssen einige Annahmen erfüllt sein:</p>
+<ul>
+<li>Lineare Beziehung: Die Beziehung zwischen den unabhängigen und abhängigen Variablen ist linear.</li>
+<li>Unabhängigkeit: Die Beobachtungen sind unabhängig voneinander.</li>
+<li>Homoskedastizität: Die Varianz der Fehler ist konstant.</li>
+<li>Normalverteilung: Die Fehler sind normalverteilt.</li>
+<li>Keine Multikollinearität: Die unabhängigen Variablen sind nicht stark miteinander korreliert.</li>
+</ul>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/jhumci\.github\.io\/MECH-B-4-MLDS-MLDS1");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../regression/index.html" class="pagination-link" aria-label="Regressions-Analyse">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Regressions-Analyse</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../regression/advanced_linear_regression.html" class="pagination-link" aria-label="Lineare Regression">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Machine Learning and Data Science 1 SoSe 2025 (MECH-B-4-MLDS-MLDS1)</p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> Julian Huber</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/regression/basic_linear_regression.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>
