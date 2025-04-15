@@ -329,20 +329,20 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="objective">Objective</h2>
 <p>Again, we work witht the <strong>Global Energy Forecasting Competition</strong> <span class="citation" data-cites="HONG2014357">Hong, Pinson, and Fan (<a href="../references.html#ref-HONG2014357" role="doc-biblioref">2014</a>)</span> data, you have cleaned before. This time, we want to make a deeper analysis of the data and try to find patterns in the data. In particular, we want to find out about the following characteristics of the data:</p>
 <ul>
-<li><strong>Weekday Effects</strong>: Grid load varies by day of the wee, as this changes the behavior of private households and industries. You want to find out, whether there is a difference in the load between weekdays and weekends. This is important, for later forecasting steps, as you might want to include this information in your model or use different models for weekdays and weekends.
+<li><strong>Weekday Effects</strong>: Grid load varies by day of the week, as this changes the behavior of private households and industries. You want to find out, whether there is a difference in the load between weekdays and weekends. This is important, for later forecasting steps, as you might want to include this information in your model or use different models for weekdays and weekends.
 <ul>
 <li>Visualize the load of each Weekday in a Boxplot, Violin-Plot or a Histogram and color the weekends differently.</li>
 <li>Add holidays to the plot and see, if there is a difference in the load on holidays.</li>
-<li>Make a statistical test to see, if the load is different between weekdays and weekends. You can use either a <em>t-test</em> to compare the means or the <em>Kolmogorov-Smirnov (KS) Test</em> to compare the distributions.</li>
+<li>Make a statistical test to see, if the load is different between (all) weekdays pooled togehter and weekends with holidays. You can use either a <em>t-test</em> to compare the means or the <em>Kolmogorov-Smirnov (KS) Test</em> to compare the distributions.</li>
 <li>Is there a significant difference (<span class="math inline">\(\alpha&gt;0.05\)</span>) in the load on weekends?</li>
 </ul></li>
-<li><strong>Extreme Values</strong>: Extreme values are values that are far away from the mean of the data. In electricity grids, peak loads, which are the maximum load in a certain time period, are important to know, as they determine the capacity of the grid. If the peak load get to high, this might lead to equipment failure and blackouts. You want to find out, if there are extreme values in the data and how they are distributed.
-<ul>
-<li>Identify the peak loads for each day in the data and visualize them in a histogram.</li>
-<li>Fit a <em>Generalized Extreme Value Distribution</em> to the extreme values and compare it to a fitted normal distribution in a plot. Use (<code>from scipy.stats import genextreme</code>)</li>
-<li>How would You use this distribution to predict the probability peak loads higher, than a certain threshold?</li>
-</ul></li>
 </ul>
+<!--
+- __Extreme Values__: Extreme values are values that are far away from the mean of the data. In electricity grids, peak loads, which are the maximum load in a certain time period, are important to know, as they determine the capacity of the grid. If the peak load get to high, this might lead to equipment failure and blackouts. You want to find out, if there are extreme values in the data and how they are distributed.
+    - Identify the peak loads for each day in the data and visualize them in a histogram.
+    - Fit a _Generalized Extreme Value Distribution_ to the extreme values and compare it to a fitted normal distribution in a plot. Use (`from scipy.stats import genextreme`)
+    - How would You use this distribution to predict the probability peak loads higher, than a certain threshold?
+-->
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
