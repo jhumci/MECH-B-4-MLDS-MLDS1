@@ -32,7 +32,7 @@ Die Entscheidung über die Ablehnung der Nullhypothese hängt von der Alternativ
 
 Der kritische Wert $t_{\text{krit}}$ (z.B. $t_{1-\alpha, n-1}$ oder $t_{1-\alpha/2, n-1}$) wird aus der [Tabelle der t-Verteilung](https://de.wikipedia.org/wiki/Studentsche_t-Verteilung) oder mittels Software bestimmt.
 
-### Beispiel: Eiweißgehalt von Braugerste {#sec-statistics-t-test-barley}
+#### Beispiel - Einseitig: Eiweißgehalt von Braugerste {#sec-statistics-t-test-barley}
 
 Eine Brauerei bezieht eine neue Charge Gerste. Für den Brauprozess ist es wichtig, dass der mittlere Eiweißgehalt der Gerste einen bestimmten Grenzwert nicht überschreitet, da ein zu hoher Eiweißgehalt zu unerwünscht starkem Schäumen des Bieres führen kann. Der maximal akzeptable mittlere Eiweißgehalt liegt laut Spezifikation bei $\mu_0 = 11.5\%$.
 
@@ -157,17 +157,17 @@ plt.show()
     * **Interpretation:** Das Ergebnis ist statistisch signifikant auf dem 5%-Niveau. Es gibt ausreichende Evidenz aus der Stichprobe, um zu schlussfolgern, dass der mittlere Eiweißgehalt dieser Gerstencharge signifikant über dem Grenzwert von 11.5% liegt. Die Brauerei sollte diese Charge möglicherweise nicht verwenden oder entsprechend behandeln, um Probleme mit dem Schaum zu vermeiden.
 
     * **p-Wert:** Berechnung der Wahrscheinlichkeit, unter $H_0$ eine Teststatistik zu beobachten, die mindestens so extrem ist wie $t \approx 4.011$.
-  ```{python}
-  #| echo: true
-  p_value_barley = 1 - t_dist.cdf(t_statistic_barley, df_barley)
-  print(f'p-Wert: {p_value_barley:.3e}') # Formatierung in wissenschaftlicher Notation
-  # Vergleich mit alpha
-  if p_value_barley < alpha_barley:
-      print(f"Da p-Wert ({p_value_barley:.3e}) < α ({alpha_barley}), wird H₀ abgelehnt.")
-  else:
-      print(f"Da p-Wert ({p_value_barley:.3e}) >= α ({alpha_barley}), wird H₀ nicht abgelehnt.")
-  ```
-    * Der p-Wert ist sehr klein ($p \approx 9.98 \times 10^{-5}$). Das bedeutet, es ist extrem unwahrscheinlich, einen Stichprobenmittelwert wie den beobachteten (oder einen noch höheren) zu erhalten, wenn der wahre mittlere Eiweißgehalt der Charge tatsächlich nur 11.5% (oder weniger) wäre. Da $p < \alpha$, wird $H_0$ abgelehnt.
+```{python}
+#| echo: true
+p_value_barley = 1 - t_dist.cdf(t_statistic_barley, df_barley)
+print(f'p-Wert: {p_value_barley:.3e}') # Formatierung in wissenschaftlicher Notation
+# Vergleich mit alpha
+if p_value_barley < alpha_barley:
+    print(f"Da p-Wert ({p_value_barley:.3e}) < α ({alpha_barley}), wird H₀ abgelehnt.")
+else:
+    print(f"Da p-Wert ({p_value_barley:.3e}) >= α ({alpha_barley}), wird H₀ nicht abgelehnt.")
+```
+* Der p-Wert ist sehr klein ($p \approx 9.98 \times 10^{-5}$). Das bedeutet, es ist extrem unwahrscheinlich, einen Stichprobenmittelwert wie den beobachteten (oder einen noch höheren) zu erhalten, wenn der wahre mittlere Eiweißgehalt der Charge tatsächlich nur 11.5% (oder weniger) wäre. Da $p < \alpha$, wird $H_0$ abgelehnt.
 
 ::: {.callout-important}
 **Konsequenz der Testentscheidung**
@@ -187,7 +187,8 @@ Der **p-Wert** ist die Wahrscheinlichkeit, unter Annahme der Gültigkeit der Nul
 Der p-Wert ist **nicht** die Wahrscheinlichkeit, dass $H_0$ wahr ist.
 :::
 
-### Aufgabe: Eiweißgehalt von Braugerste {#sec-statistics-t-test-barley-Two}
+
+#### Aufgabe - Zweiseitig: Eiweißgehalt von Braugerste {#sec-statistics-t-test-barley-Two}
 
 Eine Brauerei prüft, ob der Eiweißgehalt einer neuen Gerstencharge im optimalen Bereich von 10.5% liegt. Ein zu hoher oder zu niedriger Eiweißgehalt kann die Bierqualität beeinträchtigen. Führen Sie einen **zweiseitigen t-Test** durch, um zu testen, ob der mittlere Eiweißgehalt der Charge signifikant von 10.5% abweicht. Verwenden Sie eine Stichprobe von $n=50$ Körnern mit den folgenden Daten:
 
@@ -208,9 +209,10 @@ Eine Brauerei prüft, ob der Eiweißgehalt einer neuen Gerstencharge im optimale
 Berechnen Sie die Teststatistik $t$, den kritischen Wert $t_{\text{krit}}$ und den p-Wert. Entscheiden Sie, ob $H_0$ abgelehnt wird, und interpretieren Sie das Ergebnis.
 
 ::: {.callout-caution collapse="true" title="Musterlösung"}
-## Musterlösung
+##### Musterlösung
 
 **Schritt 1: Gegebene Werte**
+
 - $\bar{x} = 10.47\%$, $s = 0.49\%$, $n = 50$, $\mu_0 = 10.5\%$, $\alpha = 0.05$.
 
 **Schritt 2: Teststatistik berechnen**
@@ -271,13 +273,71 @@ Ergebnis: $p \approx 0.667$.
 - Vergleich: $|t| \approx 0.433 < 2.010 \approx t_{\text{krit}}$, daher wird $H_0$ nicht abgelehnt.
 - Alternativ: $p \approx 0.667 > 0.05$, bestätigt die Nicht-Ablehnung.
 
+
+```{python}
+#| classes: styled-output
+#| fig-cap: "t-Verteilung mit 49 Freiheitsgraden und Ablehnungsbereich für den zweiseitigen Gerstentest (α=0.05)."
+#| label: fig-sec-statistics-hypothesistests-t-distribution-barley-two-sided
+#| echo: true
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import t as t_dist
+
+# Gegebene Werte
+x_bar = 10.47
+s = 0.49
+n = 50
+mu_0 = 10.5
+alpha = 0.05
+
+# Berechnung der Teststatistik
+standard_error = s / np.sqrt(n)
+t_statistic = (x_bar - mu_0) / standard_error
+df = n - 1  # Freiheitsgrade
+
+# Kritischer Wert für zweiseitigen Test
+t_critical = t_dist.ppf(1 - alpha/2, df)
+
+# Daten für die t-Verteilung
+x = np.linspace(-4, 4, 1000)
+y = t_dist.pdf(x, df)
+
+# Plot der t-Verteilung
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, label=f't-Verteilung (df={df})', color='blue')
+
+# Schattierte Ablehnungsbereiche
+plt.fill_between(x, y, where=(x <= -t_critical), color='red', alpha=0.3, label='Ablehnungsbereich')
+plt.fill_between(x, y, where=(x >= t_critical), color='red', alpha=0.3)
+
+# Teststatistik markieren
+plt.axvline(t_statistic, color='green', linestyle='--', label=f'Teststatistik t = {t_statistic:.3f}')
+plt.axvline(-t_critical, color='black', linestyle=':', label=f'Kritischer Wert ±{t_critical:.3f}')
+plt.axvline(t_critical, color='black', linestyle=':')
+
+# Beschriftungen
+plt.title('t-Test: Teststatistik und Ablehnungsbereich')
+plt.xlabel('t-Wert')
+plt.ylabel('Dichte')
+plt.legend()
+plt.grid(True, alpha=0.3)
+
+# Plot anzeigen
+plt.show()
+
+# Ausgabe der berechneten Werte
+print(f"Standardfehler: {standard_error:.4f}")
+print(f"Teststatistik t: {t_statistic:.3f}")
+print(f"Kritischer Wert t_krit: ±{t_critical:.3f}")
+```
+
 **Interpretation**
 
 Es gibt keinen statistischen Hinweis, dass der Eiweißgehalt der Gerstencharge signifikant von 10.5% abweicht. Die Charge liegt im optimalen Bereich, und die Brauerei kann sie verwenden, ohne Anpassungen vornehmen zu müssen.
 :::
 
 
-## Zwei-Stichproben-t-Test (Independent Samples t-Test)
+### Zwei-Stichproben-t-Test (Independent Samples t-Test)
 
 Häufig ist man daran interessiert, ob sich die Mittelwerte zweier **unabhängiger** Stichproben signifikant voneinander unterscheiden. Zum Beispiel könnten wir vergleichen, ob sich die mittlere Zugfestigkeit von Stählen zweier verschiedener Lieferanten unterscheidet. Auch hierfür kann ein t-Test eingesetzt werden (vgl. Abb. @fig-sec-statistics-hypothesistests-two-sample-t-test).
 
@@ -301,6 +361,54 @@ Häufig ist man daran interessiert, ob sich die Mittelwerte zweier **unabhängig
     s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}
     $$
     wobei $n_1, n_2$ die Stichprobengrößen und $s_1^2, s_2^2$ die (korrigierten) Stichprobenvarianzen sind. $s_p = \sqrt{s_p^2}$ ist die gepoolte Standardabweichung.
+
+::: {.callout-note collapse="true" title="Herleitung der Formel für die gepoolte Varianz"}
+
+Die gepoolte Varianz ist eine gewichtete Mittelung der beiden Stichprobenvarianzen, wobei die Gewichte den Freiheitsgraden der Stichproben entsprechen.
+
+**Schritt 1: Definition der Stichprobenvarianz**
+
+Für Stichprobe 1:
+
+$$
+s_1^2 = \frac{1}{n_1 - 1} \sum_{i=1}^{n_1} (x_{1i} - \bar{x}_1)^2
+$$
+
+Für Stichprobe 2:
+
+$$
+s_2^2 = \frac{1}{n_2 - 1} \sum_{i=1}^{n_2} (x_{2i} - \bar{x}_2)^2
+$$
+
+**Schritt 2: Umstellen**
+
+Multiplizieren mit den Freiheitsgraden:
+
+$$
+(n_1 - 1) s_1^2 = \sum_{i=1}^{n_1} (x_{1i} - \bar{x}_1)^2
+$$
+
+$$
+(n_2 - 1) s_2^2 = \sum_{i=1}^{n_2} (x_{2i} - \bar{x}_2)^2
+$$
+
+**Schritt 3: Gesamtstreuung kombinieren**
+
+Die Gesamtquadratsumme (Summe der quadrierten Abweichungen innerhalb beider Gruppen):
+
+$$
+SS_{\text{total}} = \sum_{i=1}^{n_1} (x_{1i} - \bar{x}_1)^2 + \sum_{i=1}^{n_2} (x_{2i} - \bar{x}_2)^2 = (n_1 - 1) s_1^2 + (n_2 - 1) s_2^2
+$$
+
+**Schritt 4: Pooled Variance als Mittelwert**
+
+Die gepoolte Varianz ist diese Gesamtstreuung, geteilt durch die Gesamtanzahl der Freiheitsgrade:
+
+$$
+s_p^2 = \frac{SS_{\text{total}}}{n_1 + n_2 - 2} = \frac{(n_1 - 1) s_1^2 + (n_2 - 1) s_2^2}{n_1 + n_2 - 2}
+$$
+
+:::
 
 2.  Berechne die **Teststatistik $t$**:
     $$
@@ -328,8 +436,7 @@ $$
 Die Freiheitsgrade der t-Verteilung bleiben $n_1 + n_2 - 2$ (bei Varianzgleichheit).
 :::
 
-::: {.callout-note}
-**Test bei gepaarten Stichproben (Paired Samples t-Test)**
+### Zwei-Stichproben-t-Test (Paired Samples t-Test)
 
 In manchen Fällen sind die beiden Stichproben **nicht unabhängig**, sondern **gepaart**. Das klassische Beispiel ist eine Messung *vor* und *nach* einer Behandlung an denselben Untersuchungseinheiten (z.B. Patienten, Bauteilen). Hier interessiert uns nicht der Unterschied der Mittelwerte unabhängiger Gruppen, sondern der mittlere Unterschied *innerhalb* der Paare.
 
@@ -418,7 +525,7 @@ else:
 ```
 
     Der p-Wert ist extrem klein ($p \approx 1.35 \times 10^{-6}$), was die Ablehnung von $H_0$ bestätigt.
-:::
+
 
 
 ## Chi-Quadrat-Test
@@ -433,7 +540,7 @@ $$
 
 Unter der Nullhypothese ($H_0$) folgt die Statistik einer Chi-Quadrat-Verteilung mit $k-1$ Freiheitsgraden ($k$ = Anzahl Kategorien). Ein großer $\chi^2$-Wert spricht gegen $H_0$.
 
-## Beispiel: Qualität eines Lieferanten
+### Beispiel: Qualität eines Lieferanten
 
 Ein neuer Lieferant (A) liefert Bauteile, die in vier Kategorien eingeteilt werden: „OK“, „Fehler 1“, „Fehler 2“, „Fehler 3“. Wir prüfen, ob die Qualitätsverteilung von Lieferant A mit der bisherigen Verteilung (erwartete Anteile: OK: 81%, Fehler 1: 8%, Fehler 2: 6%, Fehler 3: 5%) übereinstimmt. Stichprobe: $n=120$ Teile.
 
@@ -497,8 +604,8 @@ print(f"p-Wert: {p_value:.3f}")
 
 ## Übersicht über Statistische Tests
 
-Grundsätzlich setzen wir statischtische Tests ein, wenn wir eine Hypothese über eine Grundgesamtheit aufstellen und diese Hypothese auf Basis einer Stichprobe überprüfen wollen. Die Hypothese wird in eine Nullhypothese $H_0$ und eine Alternativhypothese $H_1$ aufgeteilt. Die Nullhypothese ist die Hypothese, die wir widerlegen wollen, während die Alternativhypothese die Hypothese ist, die wir annehmen, wenn die Nullhypothese widerlegt wird.
+Grundsätzlich setzen wir statistische Tests ein, wenn wir eine Hypothese über eine Grundgesamtheit aufstellen und diese Hypothese auf Basis einer Stichprobe überprüfen wollen. Die Hypothese wird in eine Nullhypothese $H_0$ und eine Alternativhypothese $H_1$ aufgeteilt. Die Nullhypothese ist die Hypothese, die wir widerlegen wollen, während die Alternativhypothese die Hypothese ist, die wir annehmen, wenn die Nullhypothese widerlegt wird.
 
-Test ermöglichen und zu unterschieden, ob die durch uns auf Grund der Stichprobe getroffene Aussage auf die Grundgesamtheit übertragbar oder möglicherweise nur Zufall sind.
+[Tests](https://statsandr.com/blog/files/overview-statistical-tests-statsandr.pdf) ermöglichen und zu unterschieden, ob die durch uns auf Grund der Stichprobe getroffene Aussage auf die Grundgesamtheit übertragbar oder möglicherweise nur Zufall sind.
 
 <!-- Hier Einen Link zu möglichen Fragestellungen und tests einführen -->
