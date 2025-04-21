@@ -527,85 +527,123 @@ else:
     Der p-Wert ist extrem klein ($p \approx 1.35 \times 10^{-6}$), was die Ablehnung von $H_0$ bestätigt.
 
 
+## Chi-Quadrat-Test: Ein nicht-parametrischer Test
 
-## Chi-Quadrat-Test
-
-Der Chi-Quadrat-Test prüft Hypothesen über kategoriale Daten, z. B. ob beobachtete Häufigkeiten mit erwarteten Häufigkeiten übereinstimmen. Ein häufiger Anwendungsfall ist der **Anpassungstest** (Goodness-of-Fit), der testet, ob eine Stichprobe einer bestimmten Verteilung entspricht.
+Der Chi-Quadrat-Test ist ein **nicht-parametrischer Test**, der Hypothesen über kategoriale Daten prüft, ohne Annahmen über die Verteilung der Grundgesamtheit zu machen. Er wird häufig als **Anpassungstest** (Goodness-of-Fit) verwendet, um zu testen, ob beobachtete Häufigkeiten in einer Stichprobe einer erwarteten Verteilung entsprechen.
 
 Die Teststatistik misst die Abweichung zwischen beobachteten ($O_i$) und erwarteten ($E_i$) Häufigkeiten:
 
-$$
+$$    
 \chi^2 = \sum \frac{(O_i - E_i)^2}{E_i}
 $$
 
-Unter der Nullhypothese ($H_0$) folgt die Statistik einer Chi-Quadrat-Verteilung mit $k-1$ Freiheitsgraden ($k$ = Anzahl Kategorien). Ein großer $\chi^2$-Wert spricht gegen $H_0$.
+Unter der Nullhypothese ($H_0$) folgt die Statistik einer Chi-Quadrat-Verteilung mit $k-1$ Freiheitsgraden ($k$ = Anzahl Kategorien). Ein hoher $\chi^2$-Wert spricht gegen $H_0$.
 
-### Beispiel: Qualität eines Lieferanten
+### Beispiel: Bierqualität in einer Brauerei
 
-Ein neuer Lieferant (A) liefert Bauteile, die in vier Kategorien eingeteilt werden: „OK“, „Fehler 1“, „Fehler 2“, „Fehler 3“. Wir prüfen, ob die Qualitätsverteilung von Lieferant A mit der bisherigen Verteilung (erwartete Anteile: OK: 81%, Fehler 1: 8%, Fehler 2: 6%, Fehler 3: 5%) übereinstimmt. Stichprobe: $n=120$ Teile.
+Eine Brauerei prüft, ob die Qualitätsbewertungen einer neuen Biercharge („Hervorragend“, „Gut“, „Mangelhaft“) der erwarteten Verteilung entsprechen, die auf langjährigen Produktionsdaten basiert (erwartete Anteile: Hervorragend: 60%, Gut: 30%, Mangelhaft: 10%). Stichprobe: $n=150$ Flaschen.
 
 **Beobachtete Häufigkeiten:**
 
-- OK: 100
-- Fehler 1: 10
-- Fehler 2: 5
-- Fehler 3: 5
+- Hervorragend: 95
+- Gut: 45
+- Mangelhaft: 10
 
 **Erwartete Häufigkeiten:**
 
-- OK: $120 \times 0.81 = 97.2$
-- Fehler 1: $120 \times 0.08 = 9.6$
-- Fehler 2: $120 \times 0.06 = 7.2$
-- Fehler 3: $120 \times 0.05 = 6.0$
+- Hervorragend: $150 \times 0.60 = 90$
+- Gut: $150 \times 0.30 = 45$
+- Mangelhaft: $150 \times 0.10 = 15$
 
 **Hypothesen:**
 
-- $H_0$: Lieferant A hat die gleiche Qualitätsverteilung wie bisherige Lieferanten.
-- $H_1$: Die Verteilung unterscheidet sich.
+- $H_0$: Die Qualitätsverteilung der neuen Biercharge entspricht der erwarteten Verteilung.
+- $H_1$: Die Qualitätsverteilung weicht von der erwarteten Verteilung ab.
 
 **Testdurchführung:**
 
-1. **Voraussetzungen:** Erwartete Häufigkeiten $E_i \geq 5$, Stichprobe zufällig.
-2. **Signifikanzniveau:** $\alpha = 0.05$.
-3. **Teststatistik:**
+1. **Voraussetzungen**: Erwartete Häufigkeiten $E_i \geq 5$, Stichprobe zufällig.
+2. **Signifikanzniveau**: $\alpha = 0.05$.
+3. **Teststatistik**:
 
-```{python}
+```python
 #| echo: true
 import numpy as np
 from scipy.stats import chi2
 
-O = np.array([100, 10, 5, 5])
-E = np.array([97.2, 9.6, 7.2, 6.0])
+O = np.array([95, 45, 10])
+E = np.array([90, 45, 15])
 chi2_statistic = np.sum((O - E)**2 / E)
 print(f"Chi-Quadrat Statistik: {chi2_statistic:.3f}")
 ```
 
-   Ergebnis: $\chi^2 \approx 0.936$.
+Ergebnis: $\chi^2 \approx 1.667$.
 
-4. **Kritischer Wert:** 
+4. **Kritischer Wert**:
 
-Für $df = 4-1 = 3$ und $\alpha = 0.05$ ist $\chi^2_{\text{krit}} \approx 7.815$.
+Für $df = 3-1 = 2$ und $\alpha = 0.05$ ist $\chi^2_{\text{krit}} \approx 5.991$.
 
-5. **Entscheidung:** 
-
-Da $\chi^2 \approx 0.936 < 7.815$, wird $H_0$ nicht abgelehnt.
-
-**Interpretation:** 
-
-Es gibt keinen Hinweis, dass sich die Qualität von Lieferant A signifikant von bisherigen Lieferanten unterscheidet.
-
-```{python}
+```python
 #| echo: true
-p_value = 1 - chi2.cdf(chi2_statistic, 3)
+df = len(O) - 1
+alpha = 0.05
+chi2_critical = chi2.ppf(1 - alpha, df)
+print(f"Kritischer Wert: {chi2_critical:.3f}")
+```
+
+5. **p-Wert**:
+
+```python
+#| echo: true
+p_value = 1 - chi2.cdf(chi2_statistic, df)
 print(f"p-Wert: {p_value:.3f}")
 ```
 
-**p-Wert:** $p \approx 0.817 > 0.05$, bestätigt die Nicht-Ablehnung von $H_0$.
+Ergebnis: $p \approx 0.435$.
+
+6. **Entscheidung**:
+
+Da $\chi^2 \approx 1.667 < 5.991$ und $p \approx 0.435 > 0.05$, wird $H_0$ nicht abgelehnt.
+
+**Interpretation**:
+
+Es gibt keinen statistischen Hinweis, dass die Qualitätsverteilung der neuen Biercharge signifikant von der erwarteten Verteilung abweicht. Die Brauerei kann die Charge als qualitativ gleichwertig betrachten.
+
+### Visualisierung der Teststatistik
+
+```python
+#| echo: true
+import matplotlib.pyplot as plt
+
+# Chi-Quadrat-Verteilung
+x = np.linspace(0, 10, 1000)
+y = chi2.pdf(x, df)
+
+# Plot
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, label=f'Chi-Quadrat-Verteilung (df={df})', color='blue')
+plt.fill_between(x, y, where=(x >= chi2_critical), color='red', alpha=0.3, label='Ablehnungsbereich')
+plt.axvline(chi2_statistic, color='green', linestyle='--', label=f'Teststatistik = {chi2_statistic:.3f}')
+plt.axvline(chi2_critical, color='black', linestyle=':', label=f'Kritischer Wert = {chi2_critical:.3f}')
+
+# Beschriftungen
+plt.title('Chi-Quadrat-Test: Teststatistik und Ablehnungsbereich')
+plt.xlabel('Chi-Quadrat-Wert')
+plt.ylabel('Dichte')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+
+### Warum ist der Chi-Quadrat-Test nicht-parametrisch?
+
+Der Chi-Quadrat-Test macht keine Annahmen über die Verteilung der zugrunde liegenden Daten (z. B. Normalverteilung), sondern arbeitet direkt mit Häufigkeiten. Dies macht ihn besonders geeignet für kategoriale Daten, bei denen parametrische Annahmen wie Normalität oder gleiche Varianzen nicht zutreffen.
 
 ## Übersicht über Statistische Tests
 
-Grundsätzlich setzen wir statistische Tests ein, wenn wir eine Hypothese über eine Grundgesamtheit aufstellen und diese Hypothese auf Basis einer Stichprobe überprüfen wollen. Die Hypothese wird in eine Nullhypothese $H_0$ und eine Alternativhypothese $H_1$ aufgeteilt. Die Nullhypothese ist die Hypothese, die wir widerlegen wollen, während die Alternativhypothese die Hypothese ist, die wir annehmen, wenn die Nullhypothese widerlegt wird.
+Statistische Tests werden verwendet, um Hypothesen über eine Grundgesamtheit anhand einer Stichprobe zu prüfen. Sie bestehen aus einer Nullhypothese ($H_0$), die den Status quo repräsentiert, und einer Alternativhypothese ($H_1$), die angenommen wird, wenn $H_0$ abgelehnt wird. Tests helfen, zu unterscheiden, ob die Ergebnisse einer Stichprobe auf die Grundgesamtheit übertragbar sind oder zufällig entstanden.
 
-[Tests](https://statsandr.com/blog/files/overview-statistical-tests-statsandr.pdf) ermöglichen und zu unterschieden, ob die durch uns auf Grund der Stichprobe getroffene Aussage auf die Grundgesamtheit übertragbar oder möglicherweise nur Zufall sind.
+- **Parametrische Tests** (z. B. t-Test) setzen spezifische Verteilungsannahmen voraus (z. B. Normalität).
+- **Nicht-parametrische Tests** (z. B. Chi-Quadrat-Test, Mann-Whitney-U-Test) sind flexibler und benötigen keine Verteilungsannahmen, eignen sich aber oft für ordinal oder kategoriale Daten.
 
-<!-- Hier Einen Link zu möglichen Fragestellungen und tests einführen -->
+Weitere Details zu Testarten findest du in dieser [Übersicht](https://statsandr.com/blog/files/overview-statistical-tests-statsandr.pdf).
