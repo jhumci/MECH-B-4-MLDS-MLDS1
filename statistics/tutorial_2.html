@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Tutorial 2: Understanding Patterns in Grid Loads – Machine Learning and Data Science 1</title>
+<title>Tutorial 2: Muster in Netzlasten verstehen – Machine Learning and Data Science 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -132,7 +166,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/tutorial_2.html">Tutorial 2: Understanding Patterns in Grid Loads</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/tutorial_2.html">Tutorial 2: Muster in Netzlasten verstehen</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -249,7 +283,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../statistics/tutorial_2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Tutorial 2: Understanding Patterns in Grid Loads</span></a>
+ <span class="menu-text">Tutorial 2: Muster in Netzlasten verstehen</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -323,16 +357,26 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective">Objective</a></li>
+  <li><a href="#ziel" id="toc-ziel" class="nav-link active" data-scroll-target="#ziel">Ziel</a>
+  <ul class="collapse">
+  <li><a href="#aufgaben" id="toc-aufgaben" class="nav-link" data-scroll-target="#aufgaben">Aufgaben</a></li>
+  </ul></li>
+  <li><a href="#analyse-mit-simulierten-daten" id="toc-analyse-mit-simulierten-daten" class="nav-link" data-scroll-target="#analyse-mit-simulierten-daten">Analyse mit simulierten Daten</a>
+  <ul class="collapse">
+  <li><a href="#schritt-1-visualisierung-der-wochentag-verteilungen" id="toc-schritt-1-visualisierung-der-wochentag-verteilungen" class="nav-link" data-scroll-target="#schritt-1-visualisierung-der-wochentag-verteilungen">Schritt 1: Visualisierung der Wochentag-Verteilungen</a></li>
+  <li><a href="#schritt-2-t-test-für-mittelwerte-wochentage-vs.-sonn-feiertage" id="toc-schritt-2-t-test-für-mittelwerte-wochentage-vs.-sonn-feiertage" class="nav-link" data-scroll-target="#schritt-2-t-test-für-mittelwerte-wochentage-vs.-sonn-feiertage">Schritt 2: t-Test für Mittelwerte (Wochentage vs.&nbsp;Sonn-/Feiertage)</a></li>
+  <li><a href="#schritt-3-optionaler-vergleich-der-verteilungen-mit-dem-ks-test" id="toc-schritt-3-optionaler-vergleich-der-verteilungen-mit-dem-ks-test" class="nav-link" data-scroll-target="#schritt-3-optionaler-vergleich-der-verteilungen-mit-dem-ks-test">Schritt 3: Optionaler Vergleich der Verteilungen mit dem KS-Test</a></li>
+  </ul></li>
+  <li><a href="#fazit" id="toc-fazit" class="nav-link" data-scroll-target="#fazit">Fazit</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/statistics/tutorial_2.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/tutorial_2.html">Tutorial 2: Understanding Patterns in Grid Loads</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../statistics/index.html">Statistik</a></li><li class="breadcrumb-item"><a href="../statistics/tutorial_2.html">Tutorial 2: Muster in Netzlasten verstehen</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Tutorial 2: Understanding Patterns in Grid Loads</h1>
+<h1 class="title">Tutorial 2: Muster in Netzlasten verstehen</h1>
 </div>
 
 
@@ -349,24 +393,216 @@ window.Quarto = {
 </header>
 
 
-<section id="objective" class="level2">
-<h2 class="anchored" data-anchor-id="objective">Objective</h2>
-<p>Again, we work witht the <strong>Global Energy Forecasting Competition</strong> <span class="citation" data-cites="HONG2014357">Hong, Pinson, and Fan (<a href="../references.html#ref-HONG2014357" role="doc-biblioref">2014</a>)</span> data, you have cleaned before. This time, we want to make a deeper analysis of the data and try to find patterns in the data. In particular, we want to find out about the following characteristics of the data:</p>
+<section id="ziel" class="level2">
+<h2 class="anchored" data-anchor-id="ziel">Ziel</h2>
+<p>Wir arbeiten mit den Daten der <strong>Global Energy Forecasting Competition</strong> <span class="citation" data-cites="HONG2014357">Hong, Pinson, and Fan (<a href="../references.html#ref-HONG2014357" role="doc-biblioref">2014</a>)</span>, die Sie zuvor bereinigt haben. Ziel ist es, Muster in den Netzlasten zu identifizieren, insbesondere in Bezug auf <strong>Wochentag-Effekte</strong>. Die Netzlast variiert je nach Wochentag, da sich das Verhalten von Haushalten und Industrien ändert. Wir wollen herausfinden, ob es Unterschiede in der Last zwischen Wochentagen und Wochenenden/Feiertagen gibt, was für spätere Prognosemodelle relevant ist.</p>
+<section id="aufgaben" class="level3">
+<h3 class="anchored" data-anchor-id="aufgaben">Aufgaben</h3>
+<ol type="1">
+<li><strong>Trennung der Wochentage</strong>: Visualisieren Sie die Verteilung der Netzlast für jeden Wochentag (Montag bis Sonntag und Feiertag) in einem Violin-Plot, um die Verteilungen optisch zu vergleichen. Markieren Sie Wochenenden (Samstag, Sonntag) anders.</li>
+<li><strong>Gruppierung</strong>: Teilen Sie die Daten in zwei Gruppen: Wochentage (Montag bis Freitag) und Sonn-/Feiertage (Samstag, Sonntag sowie Feiertage). Vergleichen Sie die Mittelwerte der Netzlasten dieser Gruppen mit einem t-Test.</li>
+<li><strong>Optionaler Teil</strong>: Vergleichen Sie die Verteilungen der beiden Gruppen mit dem Kolmogorov-Smirnov (KS)-Test und visualisieren Sie die kumulativen Verteilungsfunktionen (CDFs). Dieser Teil ist in einem aufklappbaren Callout beschrieben.</li>
+</ol>
+<p>Wir verwenden ein Signifikanzniveau von <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+</section>
+</section>
+<section id="analyse-mit-simulierten-daten" class="level2">
+<h2 class="anchored" data-anchor-id="analyse-mit-simulierten-daten">Analyse mit simulierten Daten</h2>
+<p>Da keine echten Daten vorliegen, generieren wir simulierte Netzlast-Daten für jeden Wochentag sowie Feiertage. Die Daten sind normalverteilt mit unterschiedlichen Mittelwerten und Standardabweichungen, um realistische Unterschiede widerzuspiegeln.</p>
+<section id="schritt-1-visualisierung-der-wochentag-verteilungen" class="level3">
+<h3 class="anchored" data-anchor-id="schritt-1-visualisierung-der-wochentag-verteilungen">Schritt 1: Visualisierung der Wochentag-Verteilungen</h3>
+<p>Wir generieren Netzlast-Daten für jeden Wochentag und visualisieren die Verteilungen in einem Violin-Plot, wobei Wochenenden anders gefärbt sind.</p>
+<div id="0ed971b5" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulierte Daten generieren</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>days <span class="op">=</span> [<span class="st">'Montag'</span>, <span class="st">'Dienstag'</span>, <span class="st">'Mittwoch'</span>, <span class="st">'Donnerstag'</span>, <span class="st">'Freitag'</span>, <span class="st">'Samstag'</span>, <span class="st">'Sonntag'</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">100</span>  <span class="co"># Pro Tag</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>loads <span class="op">=</span> []</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>day_labels <span class="op">=</span> []</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> day <span class="kw">in</span> days:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> day <span class="kw">in</span> [<span class="st">'Samstag'</span>, <span class="st">'Sonntag'</span>]:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Wochenenden: Niedrigere Last</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        load <span class="op">=</span> np.random.normal(<span class="dv">90</span>, <span class="dv">8</span>, n_samples)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Wochentage: Höhere Last</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        load <span class="op">=</span> np.random.normal(<span class="dv">100</span>, <span class="dv">10</span>, n_samples)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    loads.extend(load)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    day_labels.extend([day] <span class="op">*</span> n_samples)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Feiertage hinzufügen (ähnlich wie Wochenenden)</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>holiday_load <span class="op">=</span> np.random.normal(<span class="dv">88</span>, <span class="dv">9</span>, <span class="dv">50</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>loads.extend(holiday_load)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>day_labels.extend([<span class="st">'Feiertag'</span>] <span class="op">*</span> <span class="dv">50</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame erstellen</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({<span class="st">'Tag'</span>: day_labels, <span class="st">'Last'</span>: loads})</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Violin-Plot</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">'Tag'</span>, y<span class="op">=</span><span class="st">'Last'</span>, data<span class="op">=</span>data, palette<span class="op">=</span>{<span class="st">'Montag'</span>: <span class="st">'blue'</span>, <span class="st">'Dienstag'</span>: <span class="st">'blue'</span>, </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>                                                      <span class="st">'Mittwoch'</span>: <span class="st">'blue'</span>, <span class="st">'Donnerstag'</span>: <span class="st">'blue'</span>, </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>                                                      <span class="st">'Freitag'</span>: <span class="st">'blue'</span>, <span class="st">'Samstag'</span>: <span class="st">'orange'</span>, </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>                                                      <span class="st">'Sonntag'</span>: <span class="st">'orange'</span>, <span class="st">'Feiertag'</span>: <span class="st">'orange'</span>})</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Verteilung der Netzlast nach Wochentag und Feiertagen'</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Tag'</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Netzlast (MW)'</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_3277/3092400038.py:33: FutureWarning:
+
+
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tutorial_2_files/figure-html/cell-2-output-2.png" width="965" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretation</strong>: Der Violin-Plot zeigt, dass die Netzlast an Wochentagen (Montag bis Freitag) tendenziell höher ist als an Wochenenden (Samstag, Sonntag) und Feiertagen. Die Verteilungen an Wochenenden und Feiertagen sind ähnlich und weisen eine geringere Variabilität auf.</p>
+</section>
+<section id="schritt-2-t-test-für-mittelwerte-wochentage-vs.-sonn-feiertage" class="level3">
+<h3 class="anchored" data-anchor-id="schritt-2-t-test-für-mittelwerte-wochentage-vs.-sonn-feiertage">Schritt 2: t-Test für Mittelwerte (Wochentage vs.&nbsp;Sonn-/Feiertage)</h3>
+<p>Wir teilen die Daten in zwei Gruppen: - <strong>Wochentage</strong>: Montag bis Freitag. - <strong>Sonn-/Feiertage</strong>: Samstag, Sonntag und Feiertage.</p>
+<p>Dann führen wir einen <strong>zweiseitigen t-Test</strong> durch, um die Mittelwerte der Netzlasten zu vergleichen.</p>
+<div id="0ecb8b70" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Gruppen erstellen</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>weekday_load <span class="op">=</span> data[data[<span class="st">'Tag'</span>].isin([<span class="st">'Montag'</span>, <span class="st">'Dienstag'</span>, <span class="st">'Mittwoch'</span>, <span class="st">'Donnerstag'</span>, <span class="st">'Freitag'</span>])][<span class="st">'Last'</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>weekend_holiday_load <span class="op">=</span> data[data[<span class="st">'Tag'</span>].isin([<span class="st">'Samstag'</span>, <span class="st">'Sonntag'</span>, <span class="st">'Feiertag'</span>])][<span class="st">'Last'</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># t-Test</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>t_statistic, p_value <span class="op">=</span> ttest_ind(weekday_load, weekend_holiday_load, equal_var<span class="op">=</span><span class="va">False</span>)  <span class="co"># Welch's t-Test</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"t-Statistik: </span><span class="sc">{</span>t_statistic<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-Wert: </span><span class="sc">{</span>p_value<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Entscheidung</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&lt;</span> alpha:</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"H_0 wird abgelehnt: Die Mittelwerte der Netzlast unterscheiden sich signifikant."</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"H_0 wird nicht abgelehnt: Kein Hinweis auf unterschiedliche Mittelwerte."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>t-Statistik: 16.259
+p-Wert: 0.000
+H_0 wird abgelehnt: Die Mittelwerte der Netzlast unterscheiden sich signifikant.</code></pre>
+</div>
+</div>
+<p><strong>Ergebnis</strong>: Der p-Wert liegt typischerweise unter 0.05 (z. B. <span class="math display">\[   p \approx 0.000   \]</span>), was darauf hindeutet, dass die Mittelwerte der Netzlast an Wochentagen und Sonn-/Feiertagen signifikant unterschiedlich sind. Die Netzlast ist an Wochentagen höher.</p>
+</section>
+<section id="schritt-3-optionaler-vergleich-der-verteilungen-mit-dem-ks-test" class="level3">
+<h3 class="anchored" data-anchor-id="schritt-3-optionaler-vergleich-der-verteilungen-mit-dem-ks-test">Schritt 3: Optionaler Vergleich der Verteilungen mit dem KS-Test</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Kolmogorov-Smirnov (KS)-Test: Erklärung und Anwendung">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Kolmogorov-Smirnov (KS)-Test: Erklärung und Anwendung
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Der <strong>Kolmogorov-Smirnov (KS)-Test</strong> ist ein nicht-parametrischer Test, der prüft, ob zwei Stichproben aus derselben Verteilung stammen. Er vergleicht die empirischen kumulativen Verteilungsfunktionen (CDFs) der beiden Stichproben.</p>
+<section id="teststatistik" class="level4">
+<h4 class="anchored" data-anchor-id="teststatistik">Teststatistik</h4>
+<p>Die KS-Teststatistik <span class="math inline">\(D\)</span> misst den maximalen Abstand zwischen den CDFs <span class="math inline">\(F_1(x)\)</span> und <span class="math inline">\(F_2(x)\)</span>:</p>
+<p><span class="math display">\[    
+D = \sup_x |F_1(x) - F_2(x)|,
+\]</span></p>
+<p>wobei <span class="math inline">\(\sup\)</span> der Supremum (größte Abstand) ist.</p>
+</section>
+<section id="hypothesen" class="level4">
+<h4 class="anchored" data-anchor-id="hypothesen">Hypothesen</h4>
 <ul>
-<li><strong>Weekday Effects</strong>: Grid load varies by day of the week, as this changes the behavior of private households and industries. You want to find out, whether there is a difference in the load between weekdays and weekends. This is important, for later forecasting steps, as you might want to include this information in your model or use different models for weekdays and weekends.
-<ul>
-<li>Visualize the load of each Weekday in a Boxplot, Violin-Plot or a Histogram and color the weekends differently.</li>
-<li>Add holidays to the plot and see, if there is a difference in the load on holidays.</li>
-<li>Make a statistical test to see, if the load is different between (all) weekdays pooled togehter and weekends with holidays. You can use either a <em>t-test</em> to compare the means or the <em>Kolmogorov-Smirnov (KS) Test</em> to compare the distributions.</li>
-<li>Is there a significant difference (<span class="math inline">\(\alpha&gt;0.05\)</span>) in the load on weekends?</li>
-</ul></li>
+<li><span class="math inline">\(H_0\)</span>: Die Verteilungen der Netzlast an Wochentagen und Sonn-/Feiertagen sind gleich.</li>
+<li><span class="math inline">\(H_1\)</span>: Die Verteilungen unterscheiden sich.</li>
 </ul>
-<!--
-- __Extreme Values__: Extreme values are values that are far away from the mean of the data. In electricity grids, peak loads, which are the maximum load in a certain time period, are important to know, as they determine the capacity of the grid. If the peak load get to high, this might lead to equipment failure and blackouts. You want to find out, if there are extreme values in the data and how they are distributed.
-    - Identify the peak loads for each day in the data and visualize them in a histogram.
-    - Fit a _Generalized Extreme Value Distribution_ to the extreme values and compare it to a fitted normal distribution in a plot. Use (`from scipy.stats import genextreme`)
-    - How would You use this distribution to predict the probability peak loads higher, than a certain threshold?
--->
+</section>
+<section id="anwendung" class="level4">
+<h4 class="anchored" data-anchor-id="anwendung">Anwendung</h4>
+<p>Der KS-Test ist nützlich, wenn keine Normalitätsannahmen getroffen werden können. Hier vergleichen wir die Verteilung der Netzlast an Wochentagen mit der an Sonn-/Feiertagen.</p>
+</section>
+<section id="python-implementierung-und-visualisierung" class="level4">
+<h4 class="anchored" data-anchor-id="python-implementierung-und-visualisierung">Python-Implementierung und Visualisierung</h4>
+<p>Wir führen den KS-Test durch und visualisieren die CDFs der beiden Gruppen.</p>
+<div id="5f098aa8" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ks_2samp</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># KS-Test</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>statistic, p_value <span class="op">=</span> ks_2samp(weekday_load, weekend_holiday_load)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"KS-Statistik: </span><span class="sc">{</span>statistic<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-Wert: </span><span class="sc">{</span>p_value<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Entscheidung</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&lt;</span> alpha:</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"H_0 wird abgelehnt: Die Verteilungen unterscheiden sich signifikant."</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"H_0 wird nicht abgelehnt: Kein Hinweis auf unterschiedliche Verteilungen."</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Kumulativer Verteilungsplot (CDF)</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_cdf(data, label, color):</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    sorted_data <span class="op">=</span> np.sort(data)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="bu">len</span>(sorted_data) <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> <span class="bu">len</span>(sorted_data)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    plt.plot(sorted_data, y, label<span class="op">=</span>label, color<span class="op">=</span>color)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>plot_cdf(weekday_load, <span class="st">'Wochentage'</span>, <span class="st">'blue'</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>plot_cdf(weekend_holiday_load, <span class="st">'Sonn-/Feiertage'</span>, <span class="st">'orange'</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Kumulative Verteilungsfunktionen (CDF) der Netzlast'</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Netzlast (MW)'</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Kumulative Wahrscheinlichkeit'</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>KS-Statistik: 0.476
+p-Wert: 0.000
+H_0 wird abgelehnt: Die Verteilungen unterscheiden sich signifikant.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="tutorial_2_files/figure-html/cell-4-output-2.png" width="812" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="interpretation" class="level4">
+<h4 class="anchored" data-anchor-id="interpretation">Interpretation</h4>
+<p>Ein p-Wert <span class="math inline">\(&lt; \alpha = 0.05\)</span> zeigt, dass die Verteilungen der Netzlast an Wochentagen und Sonn-/Feiertagen unterschiedlich sind. Der CDF-Plot visualisiert diese Unterschiede: Die CDF für Wochentage liegt tendenziell rechts von der für Sonn-/Feiertage, was auf eine höhere Netzlast hinweist.</p>
+<p><strong>Ergebnis</strong>: Der p-Wert ist typischerweise klein (z. B. <span class="math inline">\(p \approx 0.000\)</span>), was auf signifikante Unterschiede in den Verteilungen hinweist. Der CDF-Plot bestätigt, dass die Netzlast an Wochentagen höher und anders verteilt ist als an Sonn-/Feiertagen.</p>
+</section>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="fazit" class="level2">
+<h2 class="anchored" data-anchor-id="fazit">Fazit</h2>
+<ul>
+<li><strong>Wochentag-Verteilungen</strong>: Der Violin-Plot zeigt, dass die Netzlast an Wochentagen höher ist als an Wochenenden und Feiertagen.</li>
+<li><strong>t-Test</strong>: Der Mittelwert der Netzlast ist an Wochentagen signifikant höher als an Sonn-/Feiertagen (<span class="math inline">\(p &lt; 0.05\)</span>).</li>
+<li><strong>KS-Test (optional)</strong>: Die Verteilungen der Netzlast unterscheiden sich signifikant zwischen Wochentagen und Sonn-/Feiertagen, wie der KS-Test und der CDF-Plot zeigen.</li>
+</ul>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
