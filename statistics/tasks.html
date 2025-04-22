@@ -519,20 +519,38 @@ Musterlösung
 <section id="musterlösung-2" class="level4 callout-body-container callout-body">
 <h4 class="anchored" data-anchor-id="musterlösung-2">Musterlösung</h4>
 <ol type="a">
-<li><p><strong>Erste Karte ein Ass</strong>:<br>
-<span class="math display">\[
-P(\text{Ass}_1) = \frac{4}{52} = \frac{1}{13} \approx 0.0769
-\]</span></p></li>
-<li><p><strong>Zweite Karte ein Ass, wenn erste Karte ein Ass war</strong>:<br>
-Nach dem Ziehen eines Asses bleiben 3 Asse und 51 Karten:<br>
-<span class="math display">\[
-P(\text{Ass}_2 \mid \text{Ass}_1) = \frac{3}{51} = \frac{1}{17} \approx 0.0588
-\]</span></p></li>
-<li><p><strong>Beide Karten sind Asse</strong>:<br>
-<span class="math display">\[
-P(\text{Ass}_1 \cap \text{Ass}_2) = P(\text{Ass}_1) \cdot P(\text{Ass}_2 \mid \text{Ass}_1) = \frac{1}{13} \cdot \frac{1}{17} = \frac{1}{221} \approx 0.0045
-\]</span></p></li>
+<li><strong>Erste Karte ein Ass</strong>:</li>
 </ol>
+<p>Es gibt 4 Asse in einem Deck mit 52 Karten. Das Ereignis <span class="math inline">\(A_1\)</span> (erste Karte ist ein Ass) hat die Wahrscheinlichkeit:<br>
+<span class="math display">\[
+P(A_1) = \frac{\text{Anzahl der Asse}}{\text{Gesamtanzahl der Karten}} = \frac{4}{52} = \frac{1}{13} \approx 0.0769
+\]</span></p>
+<ol start="2" type="a">
+<li><strong>Zweite Karte ein Ass, wenn erste Karte ein Ass war</strong>:<br>
+Nachdem die erste Karte ein Ass war, bleiben 3 Asse und 51 Karten im Deck. Das Ereignis <span class="math inline">\(A_2\)</span> (zweite Karte ist ein Ass) unter der Bedingung <span class="math inline">\(A_1\)</span> hat die bedingte Wahrscheinlichkeit:<br>
+<span class="math display">\[
+P(A_2 \mid A_1) = \frac{\text{Anzahl der verbleibenden Asse}}{\text{Anzahl der verbleibenden Karten}} = \frac{3}{51} = \frac{1}{17} \approx 0.0588
+\]</span></li>
+</ol>
+<p><strong>Formalisierung</strong>: Die bedingte Wahrscheinlichkeit ist definiert als:<br>
+<span class="math display">\[
+P(A_2 \mid A_1) = \frac{P(A_1 \cap A_2)}{P(A_1)}
+\]</span><br>
+Dabei ist <span class="math inline">\(P(A_1 \cap A_2)\)</span> die Wahrscheinlichkeit, dass beide Karten Asse sind (siehe c)), und <span class="math inline">\(P(A_1) = \frac{4}{52}\)</span>.</p>
+<ol start="3" type="a">
+<li><strong>Beide Karten sind Asse</strong>:<br>
+Das Ereignis, dass beide Karten Asse sind, ist die Schnittmenge <span class="math inline">\(A_1 \cap A_2\)</span>. Nach der Multiplikationsregel für abhängige Ereignisse:<br>
+<span class="math display">\[
+P(A_1 \cap A_2) = P(A_1) \cdot P(A_2 \mid A_1) = \frac{1}{13} \cdot \frac{1}{17} = \frac{1}{221} \approx 0.0045
+\]</span></li>
+</ol>
+<p><strong>Alternative Berechnung</strong>:<br>
+- Erste Karte ein Ass: <span class="math inline">\(\frac{4}{52}\)</span>.<br>
+- Zweite Karte ein Ass (nach Ziehen eines Asses): <span class="math inline">\(\frac{3}{51}\)</span>.<br>
+- Gesamtwahrscheinlichkeit:</p>
+<p><span class="math display">\[
+\frac{4}{52} \cdot \frac{3}{51} = \frac{12}{2652} = \frac{1}{221}
+\]</span></p>
 </section>
 </div>
 </div>
@@ -555,20 +573,116 @@ Musterlösung
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <section id="musterlösung-3" class="level4 callout-body-container callout-body">
 <h4 class="anchored" data-anchor-id="musterlösung-3">Musterlösung</h4>
-<p>Sei <span class="math inline">\(M\)</span>: männlich, <span class="math inline">\(W\)</span>: weiblich, <span class="math inline">\(H\)</span>: Hochschulabschluss.<br>
-Gegeben:<br>
-- <span class="math inline">\(P(M) = 0.6\)</span>, <span class="math inline">\(P(W) = 0.4\)</span><br>
-- <span class="math inline">\(P(H \mid M) = 0.3\)</span>, <span class="math inline">\(P(H \mid W) = 0.4\)</span></p>
-<p>Gesucht: <span class="math inline">\(P(M \mid H)\)</span>. Nach dem Satz von Bayes:<br>
+<p><strong>Gegeben</strong>:<br>
+- <span class="math inline">\(P(M) = 0.6\)</span>: 60 % der Angestellten sind männlich.<br>
+- <span class="math inline">\(P(W) = 0.4\)</span>: 40 % der Angestellten sind weiblich (da <span class="math inline">\(P(M) + P(W) = 1\)</span>).<br>
+- <span class="math inline">\(P(H \mid M) = 0.3\)</span>: 30 % der männlichen Angestellten haben einen Hochschulabschluss.<br>
+- <span class="math inline">\(P(H \mid W) = 0.4\)</span>: 40 % der weiblichen Angestellten haben einen Hochschulabschluss.<br>
+<strong>Gesucht</strong>:<br>
+- <span class="math inline">\(P(M \mid H)\)</span>: Wahrscheinlichkeit, dass ein Angestellter männlich ist, unter der Bedingung, dass er einen Hochschulabschluss hat.</p>
+<section id="schritt-für-schritt-berechnung" class="level5">
+<h5 class="anchored" data-anchor-id="schritt-für-schritt-berechnung">Schritt-für-Schritt-Berechnung</h5>
+</section>
+<section id="definition-der-ereignisse" class="level5">
+<h5 class="anchored" data-anchor-id="definition-der-ereignisse">1. Definition der Ereignisse</h5>
+<ul>
+<li><span class="math inline">\(M\)</span>: Der Angestellte ist männlich.<br>
+</li>
+<li><span class="math inline">\(W\)</span>: Der Angestellte ist weiblich.<br>
+</li>
+<li><span class="math inline">\(H\)</span>: Der Angestellte hat einen Hochschulabschluss.</li>
+</ul>
+</section>
+<section id="anwendung-des-satzes-von-bayes" class="level5">
+<h5 class="anchored" data-anchor-id="anwendung-des-satzes-von-bayes">2. Anwendung des Satzes von Bayes</h5>
+<p>Die gesuchte Wahrscheinlichkeit <span class="math inline">\(P(M \mid H)\)</span> wird mit dem Satz von Bayes berechnet:<br>
 <span class="math display">\[
 P(M \mid H) = \frac{P(H \mid M) \cdot P(M)}{P(H)}
-\]</span> Zuerst <span class="math inline">\(P(H)\)</span>:<br>
+\]</span><br>
+Hierbei ist <span class="math inline">\(P(H)\)</span> die Gesamtwahrscheinlichkeit, dass ein Angestellter einen Hochschulabschluss hat, unabhängig vom Geschlecht.</p>
+</section>
+<section id="berechnung-von-ph" class="level5">
+<h5 class="anchored" data-anchor-id="berechnung-von-ph">3. Berechnung von <span class="math inline">\(P(H)\)</span></h5>
+<p>Da ein Angestellter entweder männlich oder weiblich ist (disjunkte und vollständige Partition), verwenden wir die Formel der totalen Wahrscheinlichkeit:<br>
 <span class="math display">\[
-P(H) = P(H \mid M) \cdot P(M) + P(H \mid W) \cdot P(W) = 0.3 \cdot 0.6 + 0.4 \cdot 0.4 = 0.18 + 0.16 = 0.34
-\]</span> Dann:<br>
+P(H) = P(H \mid M) \cdot P(M) + P(H \mid W) \cdot P(W)
+\]</span><br>
+Einsetzen der gegebenen Werte:<br>
 <span class="math display">\[
-P(M \mid H) = \frac{0.3 \cdot 0.6}{0.34} = \frac{0.18}{0.34} \approx 0.5294
-\]</span> Also etwa 52.94 %.</p>
+P(H) = (0.3 \cdot 0.6) + (0.4 \cdot 0.4)
+\]</span><br>
+- Männlicher Beitrag: <span class="math inline">\(0.3 \cdot 0.6 = 0.18\)</span><br>
+- Weiblicher Beitrag: <span class="math inline">\(0.4 \cdot 0.4 = 0.16\)</span><br>
+- Summe:<br>
+<span class="math display">\[
+P(H) = 0.18 + 0.16 = 0.34
+\]</span><br>
+Also: 34 % aller Angestellten haben einen Hochschulabschluss.</p>
+</section>
+<section id="berechnung-von-pm-mid-h" class="level5">
+<h5 class="anchored" data-anchor-id="berechnung-von-pm-mid-h">4. Berechnung von <span class="math inline">\(P(M \mid H)\)</span></h5>
+<p>Nun setzen wir die Werte in die Bayes-Formel ein:<br>
+<span class="math display">\[
+P(M \mid H) = \frac{P(H \mid M) \cdot P(M)}{P(H)} = \frac{0.3 \cdot 0.6}{0.34} = \frac{0.18}{0.34}
+\]</span><br>
+Berechnung:<br>
+<span class="math display">\[
+\frac{0.18}{0.34} = \frac{18}{34} = \frac{9}{17} \approx 0.52941176
+\]</span><br>
+Gerundet:<br>
+<span class="math display">\[
+P(M \mid H) \approx 0.5294 \text{ oder } 52.94 \, \%
+\]</span></p>
+</section>
+<section id="alternative-sichtweise-intuitives-beispiel" class="level5">
+<h5 class="anchored" data-anchor-id="alternative-sichtweise-intuitives-beispiel">Alternative Sichtweise: Intuitives Beispiel</h5>
+<p>Um die Lösung zu veranschaulichen, nehmen wir an, die Firma hat 100 Angestellte:<br>
+- 60 Angestellte sind männlich (<span class="math inline">\(0.6 \cdot 100\)</span>).<br>
+- 40 Angestellte sind weiblich (<span class="math inline">\(0.4 \cdot 100\)</span>).<br>
+- Von den 60 männlichen Angestellten haben 30 % einen Hochschulabschluss:<br>
+<span class="math display">\[
+  0.3 \cdot 60 = 18 \text{ männliche Angestellte mit Hochschulabschluss}
+  \]</span><br>
+- Von den 40 weiblichen Angestellten haben 40 % einen Hochschulabschluss:<br>
+<span class="math display">\[
+  0.4 \cdot 40 = 16 \text{ weibliche Angestellte mit Hochschulabschluss}
+  \]</span><br>
+- Insgesamt haben <span class="math inline">\(18 + 16 = 34\)</span> Angestellte einen Hochschulabschluss.<br>
+- Die Wahrscheinlichkeit, dass ein Angestellter mit Hochschulabschluss männlich ist:<br>
+<span class="math display">\[
+  \frac{\text{Männliche Angestellte mit Hochschulabschluss}}{\text{Gesamtanzahl Angestellte mit Hochschulabschluss}} = \frac{18}{34} = \frac{9}{17} \approx 0.5294
+  \]</span><br>
+Dies bestätigt die formale Berechnung.</p>
+</section>
+<section id="baumdiagramm-zur-visualisierung" class="level5">
+<h5 class="anchored" data-anchor-id="baumdiagramm-zur-visualisierung">Baumdiagramm zur Visualisierung</h5>
+<p>Ein Baumdiagramm verdeutlicht die Wahrscheinlichkeiten:<br>
+1. <strong>Erster Ast</strong>: Geschlecht<br>
+- Männlich: <span class="math inline">\(P(M) = 0.6\)</span><br>
+- Weiblich: <span class="math inline">\(P(W) = 0.4\)</span><br>
+2. <strong>Zweiter Ast</strong>: Hochschulabschluss<br>
+- Für männlich:<br>
+- Hochschulabschluss: <span class="math inline">\(P(H \mid M) = 0.3\)</span><br>
+- Kein Hochschulabschluss: <span class="math inline">\(P(\neg H \mid M) = 0.7\)</span><br>
+- Für weiblich:<br>
+- Hochschulabschluss: <span class="math inline">\(P(H \mid W) = 0.4\)</span><br>
+- Kein Hochschulabschluss: <span class="math inline">\(P(\neg H \mid W) = 0.6\)</span><br>
+3. <strong>Pfadwahrscheinlichkeiten</strong>:<br>
+- Männlich und Hochschulabschluss: <span class="math inline">\(P(M \cap H) = 0.3 \cdot 0.6 = 0.18\)</span><br>
+- Weiblich und Hochschulabschluss: <span class="math inline">\(P(W \cap H) = 0.4 \cdot 0.4 = 0.16\)</span><br>
+4. <strong>Gesamtwahrscheinlichkeit für Hochschulabschluss</strong>:<br>
+<span class="math display">\[
+   P(H) = 0.18 + 0.16 = 0.34
+   \]</span><br>
+5. <strong>Bedingte Wahrscheinlichkeit</strong>:<br>
+<span class="math display">\[
+   P(M \mid H) = \frac{P(M \cap H)}{P(H)} = \frac{0.18}{0.34} \approx 0.5294
+   \]</span></p>
+</section>
+<section id="interpretation" class="level5">
+<h5 class="anchored" data-anchor-id="interpretation">Interpretation</h5>
+<p>Die Wahrscheinlichkeit, dass ein zufällig ausgewählter Angestellter mit Hochschulabschluss männlich ist, beträgt etwa 52.94 %. Obwohl 60 % der Angestellten männlich sind, ist der Anteil der männlichen Angestellten mit Hochschulabschluss (30 %) geringer als der der weiblichen (40 %), was die Wahrscheinlichkeit nahe an 50 % bringt.</p>
+</section>
 </section>
 </div>
 </div>
