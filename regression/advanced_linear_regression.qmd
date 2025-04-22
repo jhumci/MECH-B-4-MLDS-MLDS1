@@ -248,7 +248,7 @@ Die Transformation der unabhängigen Variablen wird auch als __Feature Engineeri
 :::
 
 
-## Umgang mit Categorical Variablen
+## Umgang mit Kategorischen Variablen
 
 Bisher haben wir nur numerische Variablen betrachtet. In der Praxis haben wir es aber oft mit kategorischen Variablen zu tun. Kategorische Variablen sind Variablen, die eine endliche Anzahl von Kategorien haben. Beispiele sind Geschlecht, Region oder Produkttyp. Beispielsweise wird im Car-Data-Set die Herkunft der Autos erfasst.
 

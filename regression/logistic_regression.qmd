@@ -3,3 +3,16 @@ lightbox: true
 ---
 
 # Logistic Regression {#sec-regression-logistic}
+
+
+Was sind Odds
+
+Beispiel Klassifikation
+
+Matrix
+
+TP / FP / TPR 
+
+F1 Score
+
+AUC, ROC
