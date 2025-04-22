@@ -111,9 +111,9 @@ P(A_2 \mid A_1) = \frac{\text{Anzahl der verbleibenden Asse}}{\text{Anzahl der v
 $$
 
 **Formalisierung**: Die bedingte Wahrscheinlichkeit ist definiert als:  
-\[
+$$
 P(A_2 \mid A_1) = \frac{P(A_1 \cap A_2)}{P(A_1)}
-\]  
+$$  
 Dabei ist $P(A_1 \cap A_2)$ die Wahrscheinlichkeit, dass beide Karten Asse sind (siehe c)), und $P(A_1) = \frac{4}{52}$.
 
 c) **Beide Karten sind Asse**:  
@@ -143,24 +143,105 @@ In einer Firma sind 60 % der Angestellten männlich. 30 % der männlichen Angest
 ::: {.callout-tip collapse="true" title="Musterlösung"}
 #### Musterlösung
 
-Sei $M$: männlich, $W$: weiblich, $H$: Hochschulabschluss.  
-Gegeben:  
-- $P(M) = 0.6$, $P(W) = 0.4$  
-- $P(H \mid M) = 0.3$, $P(H \mid W) = 0.4$  
+**Gegeben**:  
+- $P(M) = 0.6$: 60 % der Angestellten sind männlich.  
+- $P(W) = 0.4$: 40 % der Angestellten sind weiblich (da $P(M) + P(W) = 1$).  
+- $P(H \mid M) = 0.3$: 30 % der männlichen Angestellten haben einen Hochschulabschluss.  
+- $P(H \mid W) = 0.4$: 40 % der weiblichen Angestellten haben einen Hochschulabschluss.  
+**Gesucht**:  
+- $P(M \mid H)$: Wahrscheinlichkeit, dass ein Angestellter männlich ist, unter der Bedingung, dass er einen Hochschulabschluss hat.
 
-Gesucht: $P(M \mid H)$. Nach dem Satz von Bayes:  
+##### Schritt-für-Schritt-Berechnung
+
+##### 1. Definition der Ereignisse
+- $M$: Der Angestellte ist männlich.  
+- $W$: Der Angestellte ist weiblich.  
+- $H$: Der Angestellte hat einen Hochschulabschluss.
+
+##### 2. Anwendung des Satzes von Bayes
+Die gesuchte Wahrscheinlichkeit $P(M \mid H)$ wird mit dem Satz von Bayes berechnet:  
 $$
 P(M \mid H) = \frac{P(H \mid M) \cdot P(M)}{P(H)}
+$$  
+Hierbei ist $P(H)$ die Gesamtwahrscheinlichkeit, dass ein Angestellter einen Hochschulabschluss hat, unabhängig vom Geschlecht.
+
+##### 3. Berechnung von $P(H)$
+Da ein Angestellter entweder männlich oder weiblich ist (disjunkte und vollständige Partition), verwenden wir die Formel der totalen Wahrscheinlichkeit:  
 $$
-Zuerst $P(H)$:  
+P(H) = P(H \mid M) \cdot P(M) + P(H \mid W) \cdot P(W)
+$$  
+Einsetzen der gegebenen Werte:  
 $$
-P(H) = P(H \mid M) \cdot P(M) + P(H \mid W) \cdot P(W) = 0.3 \cdot 0.6 + 0.4 \cdot 0.4 = 0.18 + 0.16 = 0.34
+P(H) = (0.3 \cdot 0.6) + (0.4 \cdot 0.4)
+$$  
+- Männlicher Beitrag: $0.3 \cdot 0.6 = 0.18$  
+- Weiblicher Beitrag: $0.4 \cdot 0.4 = 0.16$  
+- Summe:  
 $$
-Dann:  
+P(H) = 0.18 + 0.16 = 0.34
+$$  
+Also: 34 % aller Angestellten haben einen Hochschulabschluss.
+
+##### 4. Berechnung von $P(M \mid H)$
+Nun setzen wir die Werte in die Bayes-Formel ein:  
 $$
-P(M \mid H) = \frac{0.3 \cdot 0.6}{0.34} = \frac{0.18}{0.34} \approx 0.5294
+P(M \mid H) = \frac{P(H \mid M) \cdot P(M)}{P(H)} = \frac{0.3 \cdot 0.6}{0.34} = \frac{0.18}{0.34}
+$$  
+Berechnung:  
 $$
-Also etwa 52.94 %.
+\frac{0.18}{0.34} = \frac{18}{34} = \frac{9}{17} \approx 0.52941176
+$$  
+Gerundet:  
+$$
+P(M \mid H) \approx 0.5294 \text{ oder } 52.94 \, \%
+$$
+
+##### Alternative Sichtweise: Intuitives Beispiel
+Um die Lösung zu veranschaulichen, nehmen wir an, die Firma hat 100 Angestellte:  
+- 60 Angestellte sind männlich ($0.6 \cdot 100$).  
+- 40 Angestellte sind weiblich ($0.4 \cdot 100$).  
+- Von den 60 männlichen Angestellten haben 30 % einen Hochschulabschluss:  
+  $$
+  0.3 \cdot 60 = 18 \text{ männliche Angestellte mit Hochschulabschluss}
+  $$  
+- Von den 40 weiblichen Angestellten haben 40 % einen Hochschulabschluss:  
+  $$
+  0.4 \cdot 40 = 16 \text{ weibliche Angestellte mit Hochschulabschluss}
+  $$  
+- Insgesamt haben $18 + 16 = 34$ Angestellte einen Hochschulabschluss.  
+- Die Wahrscheinlichkeit, dass ein Angestellter mit Hochschulabschluss männlich ist:  
+  $$
+  \frac{\text{Männliche Angestellte mit Hochschulabschluss}}{\text{Gesamtanzahl Angestellte mit Hochschulabschluss}} = \frac{18}{34} = \frac{9}{17} \approx 0.5294
+  $$  
+Dies bestätigt die formale Berechnung.
+
+##### Baumdiagramm zur Visualisierung
+Ein Baumdiagramm verdeutlicht die Wahrscheinlichkeiten:  
+1. **Erster Ast**: Geschlecht  
+   - Männlich: $P(M) = 0.6$  
+   - Weiblich: $P(W) = 0.4$  
+2. **Zweiter Ast**: Hochschulabschluss  
+   - Für männlich:  
+     - Hochschulabschluss: $P(H \mid M) = 0.3$  
+     - Kein Hochschulabschluss: $P(\neg H \mid M) = 0.7$  
+   - Für weiblich:  
+     - Hochschulabschluss: $P(H \mid W) = 0.4$  
+     - Kein Hochschulabschluss: $P(\neg H \mid W) = 0.6$  
+3. **Pfadwahrscheinlichkeiten**:  
+   - Männlich und Hochschulabschluss: $P(M \cap H) = 0.3 \cdot 0.6 = 0.18$  
+   - Weiblich und Hochschulabschluss: $P(W \cap H) = 0.4 \cdot 0.4 = 0.16$  
+4. **Gesamtwahrscheinlichkeit für Hochschulabschluss**:  
+   $$
+   P(H) = 0.18 + 0.16 = 0.34
+   $$  
+5. **Bedingte Wahrscheinlichkeit**:  
+   $$
+   P(M \mid H) = \frac{P(M \cap H)}{P(H)} = \frac{0.18}{0.34} \approx 0.5294
+   $$
+
+##### Interpretation
+Die Wahrscheinlichkeit, dass ein zufällig ausgewählter Angestellter mit Hochschulabschluss männlich ist, beträgt etwa 52.94 %. Obwohl 60 % der Angestellten männlich sind, ist der Anteil der männlichen Angestellten mit Hochschulabschluss (30 %) geringer als der der weiblichen (40 %), was die Wahrscheinlichkeit nahe an 50 % bringt.
+
 :::
 
 ---
