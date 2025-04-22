@@ -643,7 +643,7 @@ Der Chi-Quadrat-Test macht keine Annahmen über die Verteilung der zugrunde lieg
 
 Statistische Tests werden verwendet, um Hypothesen über eine Grundgesamtheit anhand einer Stichprobe zu prüfen. Sie bestehen aus einer Nullhypothese ($H_0$), die den Status quo repräsentiert, und einer Alternativhypothese ($H_1$), die angenommen wird, wenn $H_0$ abgelehnt wird. Tests helfen, zu unterscheiden, ob die Ergebnisse einer Stichprobe auf die Grundgesamtheit übertragbar sind oder zufällig entstanden.
 
-- **Parametrische Tests** (z. B. t-Test) setzen spezifische Verteilungsannahmen voraus (z. B. Normalität).
+- **Parametrische Tests** (z. B. t-Test) setzen spezifische Verteilungsannahmen voraus (z.B. Normalität).
 - **Nicht-parametrische Tests** (z. B. Chi-Quadrat-Test, Mann-Whitney-U-Test) sind flexibler und benötigen keine Verteilungsannahmen, eignen sich aber oft für ordinal oder kategoriale Daten.
 
 Weitere Details zu Testarten findest du in dieser [Übersicht](https://statsandr.com/blog/files/overview-statistical-tests-statsandr.pdf).

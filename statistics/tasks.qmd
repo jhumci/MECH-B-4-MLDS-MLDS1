@@ -97,21 +97,40 @@ c) Die Wahrscheinlichkeit, dass beide Karten Asse sind.
 ::: {.callout-tip collapse="true" title="Musterlösung"}
 #### Musterlösung
 
-a) **Erste Karte ein Ass**:  
+a) **Erste Karte ein Ass**: 
+
+Es gibt 4 Asse in einem Deck mit 52 Karten. Das Ereignis $A_1$ (erste Karte ist ein Ass) hat die Wahrscheinlichkeit:  
 $$
-   P(\text{Ass}_1) = \frac{4}{52} = \frac{1}{13} \approx 0.0769
+P(A_1) = \frac{\text{Anzahl der Asse}}{\text{Gesamtanzahl der Karten}} = \frac{4}{52} = \frac{1}{13} \approx 0.0769
 $$
 
 b) **Zweite Karte ein Ass, wenn erste Karte ein Ass war**:  
-   Nach dem Ziehen eines Asses bleiben 3 Asse und 51 Karten:  
+Nachdem die erste Karte ein Ass war, bleiben 3 Asse und 51 Karten im Deck. Das Ereignis $A_2$ (zweite Karte ist ein Ass) unter der Bedingung $A_1$ hat die bedingte Wahrscheinlichkeit:  
 $$
-   P(\text{Ass}_2 \mid \text{Ass}_1) = \frac{3}{51} = \frac{1}{17} \approx 0.0588
+P(A_2 \mid A_1) = \frac{\text{Anzahl der verbleibenden Asse}}{\text{Anzahl der verbleibenden Karten}} = \frac{3}{51} = \frac{1}{17} \approx 0.0588
 $$
 
+**Formalisierung**: Die bedingte Wahrscheinlichkeit ist definiert als:  
+\[
+P(A_2 \mid A_1) = \frac{P(A_1 \cap A_2)}{P(A_1)}
+\]  
+Dabei ist $P(A_1 \cap A_2)$ die Wahrscheinlichkeit, dass beide Karten Asse sind (siehe c)), und $P(A_1) = \frac{4}{52}$.
+
 c) **Beide Karten sind Asse**:  
+Das Ereignis, dass beide Karten Asse sind, ist die Schnittmenge $A_1 \cap A_2$. Nach der Multiplikationsregel für abhängige Ereignisse:  
 $$
-   P(\text{Ass}_1 \cap \text{Ass}_2) = P(\text{Ass}_1) \cdot P(\text{Ass}_2 \mid \text{Ass}_1) = \frac{1}{13} \cdot \frac{1}{17} = \frac{1}{221} \approx 0.0045
+P(A_1 \cap A_2) = P(A_1) \cdot P(A_2 \mid A_1) = \frac{1}{13} \cdot \frac{1}{17} = \frac{1}{221} \approx 0.0045
 $$
+
+**Alternative Berechnung**:  
+- Erste Karte ein Ass: $\frac{4}{52}$.  
+- Zweite Karte ein Ass (nach Ziehen eines Asses): $\frac{3}{51}$.  
+- Gesamtwahrscheinlichkeit:  
+
+$$
+\frac{4}{52} \cdot \frac{3}{51} = \frac{12}{2652} = \frac{1}{221}
+$$
+
 :::
 
 ---
