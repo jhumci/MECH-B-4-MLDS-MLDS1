@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Vorhersagen mittels Linearen Regression – Machine Learning and Data Science 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../regression/tutorial.html" rel="next">
+<link href="../regression/advanced_linear_regression.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-48139c6f82674e6584ecd5021c8b5c10.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-53336226cf64bb1cd90aa1b6f45a17db.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/predictions_linear_regression.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Vorhersagen mittels Linearen Regression</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Machine Learning and Data Science 1</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Einleitung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../dataexploratory/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Umgang mit Daten und Explorative Analyse</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/data_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Science, Statisik, und Machine Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/data_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Sets</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataexploratory/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial: Getting Data Tidy and finding Correlation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Statistik</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Stichproben und Zufallsvariablen</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Verteilungen</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial: Monte Carlo Simulation of Vehicle Component Failure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/interference_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Interferenz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/interference_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tutorial_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 2: Muster in Netzlasten verstehen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../statistics/tasks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Übungsaufgaben: Wahrscheinlichkeitsrechnung</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressions-Analyse</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/basic_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/advanced_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Erweiterungen der Linearen Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/predictions_linear_regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Vorhersagen mittels Linearen Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 1: Vorhersage von Netzlasten</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#anwendungsfall-vorhersage-des-verbrauchs-eines-einzelnen-autos" id="toc-anwendungsfall-vorhersage-des-verbrauchs-eines-einzelnen-autos" class="nav-link active" data-scroll-target="#anwendungsfall-vorhersage-des-verbrauchs-eines-einzelnen-autos"><span class="header-section-number">9.1</span> Anwendungsfall: Vorhersage des Verbrauchs eines einzelnen Autos</a>
+  <ul class="collapse">
+  <li><a href="#bezug-zu-schritten-des-crisp-dm" id="toc-bezug-zu-schritten-des-crisp-dm" class="nav-link" data-scroll-target="#bezug-zu-schritten-des-crisp-dm"><span class="header-section-number">9.1.1</span> Bezug zu Schritten des CRISP-DM</a></li>
+  <li><a href="#fehlermaße-von-rss-zu-mse" id="toc-fehlermaße-von-rss-zu-mse" class="nav-link" data-scroll-target="#fehlermaße-von-rss-zu-mse"><span class="header-section-number">9.1.2</span> Fehlermaße: Von RSS zu MSE</a></li>
+  <li><a href="#erklärung-bias-varianz-tradeoff-über-modellkomplexität" id="toc-erklärung-bias-varianz-tradeoff-über-modellkomplexität" class="nav-link" data-scroll-target="#erklärung-bias-varianz-tradeoff-über-modellkomplexität"><span class="header-section-number">9.1.3</span> Erklärung Bias-Varianz-Tradeoff über Modellkomplexität</a></li>
+  <li><a href="#aufteilung-in-training-validation-und-testset" id="toc-aufteilung-in-training-validation-und-testset" class="nav-link" data-scroll-target="#aufteilung-in-training-validation-und-testset"><span class="header-section-number">9.1.4</span> Aufteilung in Training, Validation und Testset</a></li>
+  <li><a href="#erklärung-bias-varianz-tradeoff-über-modellkomplexität-mit-tvt-split" id="toc-erklärung-bias-varianz-tradeoff-über-modellkomplexität-mit-tvt-split" class="nav-link" data-scroll-target="#erklärung-bias-varianz-tradeoff-über-modellkomplexität-mit-tvt-split"><span class="header-section-number">9.1.5</span> Erklärung Bias-Varianz-Tradeoff über Modellkomplexität (mit TVT-Split)</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/regression/predictions_linear_regression.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/predictions_linear_regression.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Vorhersagen mittels Linearen Regression</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-regression-linear-prediction" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Vorhersagen mittels Linearen Regression</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Lineare Regression ist eine leistungsfähige Methode, um Vorhersagen über eine abhängige Variable basierend auf einer oder mehreren unabhängigen Variablen zu treffen. In diesem Abschnitt zeigen wir, wie man den Kraftstoffverbrauch eines Autos vorhersagt, und erläutern wichtige Konzepte wie Fehlermaße, den Bias-Varianz-Tradeoff und die Aufteilung der Daten in Trainings-, Validierungs- und Testsets. Der Prozess wird im Kontext des CRISP-DM-Modells eingeordnet.</p>
+<section id="anwendungsfall-vorhersage-des-verbrauchs-eines-einzelnen-autos" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="anwendungsfall-vorhersage-des-verbrauchs-eines-einzelnen-autos"><span class="header-section-number">9.1</span> Anwendungsfall: Vorhersage des Verbrauchs eines einzelnen Autos</h2>
+<p><strong>Ziel</strong>: Wir möchten den Kraftstoffverbrauch (<code>mpg</code>, Meilen pro Gallone) eines einzelnen Autos basierend auf Prädiktoren wie Leistung (<code>horsepower</code>) und Herkunft (<code>origin</code>) vorhersagen. Dies ist ein typisches Problem des überwachten Lernens, bei dem wir ein Modell trainieren, um eine kontinuierliche abhängige Variable (<span class="math inline">\(Y\)</span>) aus unabhängigen Variablen (<span class="math inline">\(\vec{X}\)</span>) zu schätzen.</p>
+<p><strong>Beispiel</strong>: Gegeben ein Auto mit 120 PS und Herkunft „Japan“, wie hoch ist der zu erwartende Verbrauch? Wir verwenden den Auto-Datensatz, um ein lineares Regressionsmodell zu trainieren und Vorhersagen zu treffen.</p>
+<div id="96ef64cf" class="cell styled-output" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/regression/Auto_Data_Set_963_49.csv"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Erstelle Dummy-Variablen (USA als Referenzkategorie)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.get_dummies(df[<span class="st">"origin"</span>], prefix<span class="op">=</span><span class="st">"origin"</span>, drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>X[<span class="st">"horsepower"</span>] <span class="op">=</span> df[<span class="st">"horsepower"</span>]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.astype(<span class="bu">float</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitte das Modell</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(df[<span class="st">"mpg"</span>], X).fit()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Vorhersage für ein Auto mit 120 PS, Herkunft Japan</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>new_car <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"const"</span>: [<span class="dv">1</span>],</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"origin_Europe"</span>: [<span class="dv">0</span>],</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"origin_Japan"</span>: [<span class="dv">1</span>],</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"horsepower"</span>: [<span class="dv">120</span>]</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> model.predict(new_car)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Vorhergesagter Verbrauch: </span><span class="sc">{</span>prediction[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss"> mpg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Vorhergesagter Verbrauch: 19.91 mpg</code></pre>
+</div>
+</div>
+<p><strong>Ergebnis</strong>: Das Modell liefert eine Vorhersage für den Verbrauch.</p>
+<section id="bezug-zu-schritten-des-crisp-dm" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="bezug-zu-schritten-des-crisp-dm"><span class="header-section-number">9.1.1</span> Bezug zu Schritten des CRISP-DM</h3>
+<p>CRISP-DM (Cross Industry Standard Process for Data Mining) bietet einen strukturierten Rahmen für Datenanalyseprojekte. Die Vorhersage des Kraftstoffverbrauchs lässt sich wie folgt in CRISP-DM einordnen:</p>
+<ul>
+<li><strong>Business Understanding</strong>: Ziel ist es, den Verbrauch eines Autos zu prognostizieren, um z. B. Kaufentscheidungen zu unterstützen.</li>
+<li><strong>Data Understanding</strong>: Analyse des Auto-Datensatzes, z. B. durch Boxplots von <code>mpg</code> nach <code>origin</code> oder Scatterplots von <code>mpg</code> gegen <code>horsepower</code>.</li>
+<li><strong>Data Preparation</strong>: Bereinigung der Daten (z. B. Behandlung fehlender Werte) und Erstellung von Dummy-Variablen für <code>origin</code>.</li>
+<li><strong>Modeling</strong>: Entwicklung eines linearen Regressionsmodells mit Prädiktoren wie <code>horsepower</code> und <code>origin</code>.</li>
+<li><strong>Evaluation</strong>: Bewertung der Modellgenauigkeit anhand von <strong>Fehlermaßen</strong> wie MSE auf einem <strong>Testset</strong>.</li>
+<li><strong>Deployment</strong>: Anwendung des Modells, um Vorhersagen für neue Autos zu treffen, z. B. in einer Entscheidungsunterstützungssoftware.</li>
+</ul>
+<p><strong>Beispiel</strong>: Die Datenaufbereitung und Modellierungsschritte sind im obigen Code enthalten, während die Evaluation weiter unten durch Fehlermaße erfolgt.</p>
+</section>
+<section id="fehlermaße-von-rss-zu-mse" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="fehlermaße-von-rss-zu-mse"><span class="header-section-number">9.1.2</span> Fehlermaße: Von RSS zu MSE</h3>
+<p>Fehlermaße quantifizieren, wie gut ein Modell die Daten vorhersagt. Die Summe der quadrierten Residuen (Residual Sum of Squares, RSS) misst die Gesamtabweichung der vorhergesagten Werte <span class="math inline">\(\hat{y}_j\)</span> von den tatsächlichen Werten <span class="math inline">\(y_j\)</span>:</p>
+<p><span class="math display">\[RSS = \sum_{j=1}^n (y_j - \hat{y}_j)^2\]</span></p>
+<p>Der <span class="math display">\[RSS\]</span> ist nur schwer interpretierbar, da er von der Anzahl der Beobachtungen abhängt. Daher verwenden wir den Mean Squared Error (MSE), um den RSS zu normalisieren und die durchschnittliche Abweichung pro Beobachtung zu erhalten. Der Mean Squared Error (MSE) ist der durchschnittliche quadratische Fehler, der durch Division des RSS durch die Anzahl der Beobachtungen <span class="math inline">\(n\)</span> berechnet wird:</p>
+<p><span class="math display">\[MSE = \frac{1}{n} \sum_{j=1}^n (y_j - \hat{y}_j)^2\]</span></p>
+<p><strong>Beispiel</strong>: Wir berechnen den MSE für das obige Modell auf den Trainingsdaten.</p>
+<div id="7f1b2b68" class="cell styled-output" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/regression/Auto_Data_Set_963_49.csv"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Erstelle Dummy-Variablen</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.get_dummies(df[<span class="st">"origin"</span>], prefix<span class="op">=</span><span class="st">"origin"</span>, drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>X[<span class="st">"horsepower"</span>] <span class="op">=</span> df[<span class="st">"horsepower"</span>]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.astype(<span class="bu">float</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitte das Modell</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(df[<span class="st">"mpg"</span>], X).fit()</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Berechne Vorhersagen</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Berechne MSE</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> np.mean((df[<span class="st">"mpg"</span>] <span class="op">-</span> y_pred) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Trainings-MSE: </span><span class="sc">{</span>mse<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trainings-MSE: 20.53</code></pre>
+</div>
+</div>
+<p><strong>Ergebnis</strong>: Ein MSE von z. B. 24.5 bedeutet, dass die quadrierten Abweichungen im Durchschnitt 24.5 betragen. Ein niedrigerer MSE deutet auf ein besseres Modell hin, aber der MSE auf Trainingsdaten kann durch Überanpassung verzerrt sein.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Weitere Fehlermaße: MSE, RMSE und MAPE">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Weitere Fehlermaße: MSE, RMSE und MAPE
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Neben dem Mean Squared Error (MSE) gibt es weitere Fehlermaße, die die Modellgenauigkeit bewerten. Hier sind drei gängige Maße mit ihren Formeln und Beschreibungen sowie ein Beispiel, wie man sie in Python mit <code>scikit-learn</code> berechnet.</p>
+<ul>
+<li><p><strong>Mean Squared Error (MSE)</strong>:<br>
+<span class="math display">\[MSE = \frac{1}{n} \sum_{j=1}^n (y_j - \hat{y}_j)^2\]</span><br>
+Der MSE misst den durchschnittlichen quadrierten Fehler zwischen tatsächlichen (<span class="math inline">\(y_j\)</span>) und vorhergesagten (<span class="math inline">\(\hat{y}_j\)</span>) Werten. Er ist empfindlich gegenüber großen Abweichungen, da Fehler quadriert werden.</p></li>
+<li><p><strong>Root Mean Squared Error (RMSE)</strong>:<br>
+<span class="math display">\[RMSE = \sqrt{\frac{1}{n} \sum_{j=1}^n (y_j - \hat{y}_j)^2} = \sqrt{MSE}\]</span><br>
+Der RMSE ist die Quadratwurzel des MSE und hat die gleiche Einheit wie die abhängige Variable (z. B. mpg). Er ist intuitiver, da er die durchschnittliche Fehlergröße direkt widerspiegelt.</p></li>
+<li><p><strong>Mean Absolute Percentage Error (MAPE)</strong>:<br>
+<span class="math display">\[MAPE = \frac{100}{n} \sum_{j=1}^n \left| \frac{y_j - \hat{y}_j}{y_j} \right|\]</span><br>
+Der MAPE misst den durchschnittlichen absoluten prozentualen Fehler. Er ist besonders nützlich, wenn relative Fehler (z. B. in Prozent) wichtiger sind als absolute Fehler, aber er kann problematisch sein, wenn <span class="math inline">\(y_j\)</span> nahe null liegt.</p></li>
+</ul>
+<p><strong>Beispiel</strong>: Berechnung von MSE, RMSE und MAPE mit <code>scikit-learn</code> basierend auf Vorhersagen eines Modells.</p>
+<div id="9fab9ca8" class="cell styled-output" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, mean_absolute_percentage_error</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Angenommen, df["mpg"] und y_pred sind gegeben (wie im ursprünglichen Code)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Beispiel: Fortsetzung des vorherigen Codes</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> df[<span class="st">"mpg"</span>]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Berechne MSE</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> mean_squared_error(y_true, y_pred)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Berechne RMSE</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> np.sqrt(mse)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Berechne MAPE</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>mape <span class="op">=</span> mean_absolute_percentage_error(y_true, y_pred) <span class="op">*</span> <span class="dv">100</span>  <span class="co"># In Prozent</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MSE: </span><span class="sc">{</span>mse<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss"> mpg"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MAPE: </span><span class="sc">{</span>mape<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MSE: 20.53
+RMSE: 4.53 mpg
+MAPE: 15.95%</code></pre>
+</div>
+</div>
+<p><strong>Ergebnis</strong>: Zum Beispiel könnte die Ausgabe sein:<br>
+- MSE: 24.50<br>
+- RMSE: 4.95 mpg<br>
+- MAPE: 15.20%</p>
+<p><strong>Interpretation</strong>: Der RMSE von 4.95 mpg bedeutet, dass die Vorhersagen im Durchschnitt um etwa 4.95 Meilen pro Gallone von den tatsächlichen Werten abweichen. Der MAPE von 15.20% zeigt, dass die Vorhersagen im Durchschnitt um 15.20% vom tatsächlichen Verbrauch abweichen. Diese Maße ergänzen den MSE und helfen, die Modellqualität aus verschiedenen Perspektiven zu bewerten.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="erklärung-bias-varianz-tradeoff-über-modellkomplexität" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="erklärung-bias-varianz-tradeoff-über-modellkomplexität"><span class="header-section-number">9.1.3</span> Erklärung Bias-Varianz-Tradeoff über Modellkomplexität</h3>
+<p>Wenn wir die Prognose eines Modells verbessern wollen, können wir die Komplexität des Modells erhöhen, indem wir mehr Prädiktoren oder nichtlineare Transformationen hinzufügen. Hierzu können wir zum einem andere <strong>nicht-parametrische</strong> Modelle verwenden, wie z. B. Entscheidungsbäume, oder allgemein <strong>mehr Prediktoren</strong> in das Modell einfügen. Dies kann jedoch zu Überanpassung (Overfitting) führen, wenn das Modell zu komplex ist und die Trainingsdaten zu gut anpasst, aber auf neuen Daten schlecht generalisiert.</p>
+<p>Der Bias-Varianz-Tradeoff beschreibt das Zusammenspiel zweier Fehlerquellen bei der Modellierung:</p>
+<ul>
+<li><strong>Bias</strong>: Der Fehler, der durch die Vereinfachung eines komplexeren realen Problems durch ein Modell entsteht. Einfache Modelle (z. B. nur Intercept) haben hohen Bias, da sie die Datenstruktur schlecht abbilden.</li>
+<li><strong>Varianz</strong>: Die Variabilität der Modellvorhersagen, wenn das Modell auf unterschiedlichen Trainingsdaten geschätzt wird. Komplexe Modelle (z. B. mit vielen Parametern) haben hohe Varianz, da sie stark von den Trainingsdaten abhängen.</li>
+</ul>
+<p>Die Modellkomplexität (z. B. Anzahl der Parameter) beeinflusst den Tradeoff:</p>
+<ul>
+<li><strong>Einfache Modelle</strong> (wenige Parameter): Hoher Bias, niedrige Varianz, Gefahr der Unteranpassung (<strong>Underfitting</strong>).</li>
+<li><strong>Komplexe Modelle</strong> (viele Parameter): Niedriger Bias, hohe Varianz, Gefahr der Überanpassung (<strong>Overfitting</strong>).</li>
+</ul>
+<p>Das Ziel ist ein Modell mit minimalem Gesamtfehler, der sich aus Bias, Varianz und unvermeidbarem Fehler zusammensetzt:</p>
+<p><span class="math display">\[\text{Expected Error}^2 = \text{Variance} + \text{Bias}^2 + \text{Variance of Error Terms}\]</span></p>
+<p><strong>Beispiel</strong>: Wir vergleichen drei Modelle mit unterschiedlicher Komplexität.</p>
+<div id="6bc12913" class="cell styled-output" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/regression/Auto_Data_Set_963_49.csv"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell 1: Nur Intercept (sehr einfach)</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> sm.add_constant(pd.DataFrame({<span class="st">"const"</span>: [<span class="dv">1</span>] <span class="op">*</span> <span class="bu">len</span>(df)}))</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> X1.astype(<span class="bu">float</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>model1 <span class="op">=</span> sm.OLS(df[<span class="st">"mpg"</span>], X1).fit()</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell 2: Horsepower (mittel komplex)</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> sm.add_constant(df[[<span class="st">"horsepower"</span>]])</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> X2.astype(<span class="bu">float</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> sm.OLS(df[<span class="st">"mpg"</span>], X2).fit()</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell 3: Horsepower, Quadratwurzel und Herkunft (komplex)</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"sqrt_horsepower"</span>] <span class="op">=</span> np.sqrt(df[<span class="st">"horsepower"</span>])</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>X3 <span class="op">=</span> pd.get_dummies(df[<span class="st">"origin"</span>], prefix<span class="op">=</span><span class="st">"origin"</span>, drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>X3[<span class="st">"horsepower"</span>] <span class="op">=</span> df[<span class="st">"horsepower"</span>]</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>X3[<span class="st">"sqrt_horsepower"</span>] <span class="op">=</span> df[<span class="st">"sqrt_horsepower"</span>]</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>X3 <span class="op">=</span> sm.add_constant(X3)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>X3<span class="op">=</span> X3.astype(<span class="bu">float</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>model3 <span class="op">=</span> sm.OLS(df[<span class="st">"mpg"</span>], X3).fit()</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell 4: Mehre Potenzen (sehr komplex)</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>X4 <span class="op">=</span> X3.copy()</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Füge weitere Größe"cylinders","displacement","horsepower","weight","acceleration","year"</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>X4[<span class="st">"cylinders"</span>] <span class="op">=</span> df[<span class="st">"cylinders"</span>]</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>X4[<span class="st">"displacement"</span>] <span class="op">=</span> df[<span class="st">"displacement"</span>]</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>X4[<span class="st">"weight"</span>] <span class="op">=</span> df[<span class="st">"weight"</span>]</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>X4[<span class="st">"acceleration"</span>] <span class="op">=</span> df[<span class="st">"acceleration"</span>]</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>X4[<span class="st">"year"</span>] <span class="op">=</span> df[<span class="st">"year"</span>]</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>X4 <span class="op">=</span> X4.astype(<span class="bu">float</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>model4 <span class="op">=</span> sm.OLS(df[<span class="st">"mpg"</span>], X4).fit()</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell 5: Modell 4 mit einen Entscheidungsbaum</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>X5 <span class="op">=</span> X4.copy()</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>model5 <span class="op">=</span> DecisionTreeRegressor().fit(X5, df[<span class="st">"mpg"</span>])</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Berechne MSE für jedes Modell</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>mse1 <span class="op">=</span> np.mean((df[<span class="st">"mpg"</span>] <span class="op">-</span> model1.predict(X1)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>mse2 <span class="op">=</span> np.mean((df[<span class="st">"mpg"</span>] <span class="op">-</span> model2.predict(X2)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>mse3 <span class="op">=</span> np.mean((df[<span class="st">"mpg"</span>] <span class="op">-</span> model3.predict(X3)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>mse4 <span class="op">=</span> np.mean((df[<span class="st">"mpg"</span>] <span class="op">-</span> model4.predict(X4)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>mse5 <span class="op">=</span> np.mean((df[<span class="st">"mpg"</span>] <span class="op">-</span> model5.predict(X5)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MSE Modell 1 (nur Intercept): </span><span class="sc">{</span>mse1<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MSE Modell 2 (horsepower): </span><span class="sc">{</span>mse2<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MSE Modell 3 (horsepower, sqrt, origin): </span><span class="sc">{</span>mse3<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MSE Modell 4 (komplex): </span><span class="sc">{</span>mse4<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MSE Modell 5 (Entscheidungsbaum): </span><span class="sc">{</span>mse5<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MSE Modell 1 (nur Intercept): 60.76
+MSE Modell 2 (horsepower): 23.94
+MSE Modell 3 (horsepower, sqrt, origin): 17.06
+MSE Modell 4 (komplex): 8.55
+MSE Modell 5 (Entscheidungsbaum): 0.00</code></pre>
+</div>
+</div>
+<p><strong>Ergebnis</strong>: Modell 1 hat den höchsten MSE, da es zu einfach ist (hoher Bias). Modell 2 hat einen niedrigeren MSE , da es mehr Informationen nutzt. Modell 5 hat einen MSE von 0, da es die Trainingsdaten perfekt anpasst (hohe Varianz). Modell 3 hat einen MSE von 22.0, was auf eine gute Balance zwischen Bias und Varianz hinweist.</p>
+</section>
+<section id="aufteilung-in-training-validation-und-testset" class="level3" data-number="9.1.4">
+<h3 data-number="9.1.4" class="anchored" data-anchor-id="aufteilung-in-training-validation-und-testset"><span class="header-section-number">9.1.4</span> Aufteilung in Training, Validation und Testset</h3>
+<p>Auf den Trainingsdaten evaluiert scheint es, als ob die komplexeren Modelle besser abschneiden. Wir wissen aber nicht, ob ein Overfitting vorliegt, da wir die Modelle nur auf den Trainingsdaten getestet haben. Um die Modellleistung auf neuen, ungesehenen Daten zu bewerten und Überanpassung zu vermeiden, teilen wir die Daten in drei Teile:</p>
+<div class="{callout-important}">
+<ul>
+<li><strong>Trainings-Set</strong>: Wird verwendet, um die Modellparameter (z. B. <span class="math inline">\(\beta_0, \beta_1, \ldots\)</span>) zu schätzen.</li>
+<li><strong>Validierungs-Set</strong>: Wird genutzt, um Modelle mit unterschiedlicher Komplexität oder Prädiktoren zu vergleichen und das beste Modell auszuwählen.</li>
+<li><strong>Test-Set</strong>: Dient als Hold-Out-Set, um die endgültige Leistung des ausgewählten Modells auf ungesehenen Daten zu bewerten.</li>
+</ul>
+<p>Eine typische Aufteilung ist 70 % Training, 15 % Validierung und 15 % Test. Um robuste Ergebnisse zu erzielen, kann Kreuzvalidierung (z. B. 5-fache Kreuzvalidierung) verwendet werden, um den Validierungs-MSE zu schätzen.</p>
+</div>
+</section>
+<section id="erklärung-bias-varianz-tradeoff-über-modellkomplexität-mit-tvt-split" class="level3" data-number="9.1.5">
+<h3 data-number="9.1.5" class="anchored" data-anchor-id="erklärung-bias-varianz-tradeoff-über-modellkomplexität-mit-tvt-split"><span class="header-section-number">9.1.5</span> Erklärung Bias-Varianz-Tradeoff über Modellkomplexität (mit TVT-Split)</h3>
+<p>Um den Bias-Varianz-Tradeoff zu untersuchen, wiederholen wir das Experiment mit einem Trainings-Validierungs-Test-Split (TVT-Split) von 75-15-15%, um die Modelle auf Trainings-, Validierungs- und Testdaten zu bewerten. Dies ermöglicht es, die Generalisierungsfähigkeit der Modelle zu überprüfen und Überanpassung zu erkennen. Wir vergleichen fünf Modelle mit zunehmender Komplexität, einschließlich eines nicht-linearen Entscheidungsbaums, und plotten die Mean Squared Error (MSE)-Werte für Training, Validation und Test, um den Einfluss der Modellkomplexität zu visualisieren.</p>
+<p><strong>Experiment</strong>: Wir teilen den Auto-Datensatz in 75% Training, 15% Validierung und 15% Test auf, trainieren die Modelle auf den Trainingsdaten, berechnen den MSE für alle Datensets und stellen die Ergebnisse grafisch dar.</p>
+<div id="de3213fd" class="cell styled-output" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/regression/Auto_Data_Set_963_49.csv"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Erstelle transformierte Variable</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"sqrt_horsepower"</span>] <span class="op">=</span> np.sqrt(df[<span class="st">"horsepower"</span>])</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Definiere Prädiktoren und Zielvariable</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"horsepower"</span>: df[<span class="st">"horsepower"</span>],</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sqrt_horsepower"</span>: df[<span class="st">"sqrt_horsepower"</span>],</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cylinders"</span>: df[<span class="st">"cylinders"</span>],</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"displacement"</span>: df[<span class="st">"displacement"</span>],</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"weight"</span>: df[<span class="st">"weight"</span>],</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceleration"</span>: df[<span class="st">"acceleration"</span>],</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span>: df[<span class="st">"year"</span>]</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.concat([X, pd.get_dummies(df[<span class="st">"origin"</span>], prefix<span class="op">=</span><span class="st">"origin"</span>, drop_first<span class="op">=</span><span class="va">False</span>)], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">"mpg"</span>]</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co"># TVT-Split: 75% Training, 15% Validierung, 15% Test</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>X_temp, X_test, y_temp, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.15</span>, random_state<span class="op">=</span><span class="dv">42</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>X_train, X_val, y_train, y_val <span class="op">=</span> train_test_split(X_temp, y_temp, test_size<span class="op">=</span><span class="fl">0.1765</span>, random_state<span class="op">=</span><span class="dv">42</span>)  <span class="co"># 0.1765 ≈ 15/(100-15)</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Setze Indizes zurück, um Alignment-Probleme zu vermeiden</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> X_train.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>X_val <span class="op">=</span> X_val.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> X_test.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> y_train.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>y_val <span class="op">=</span> y_val.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> y_test.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell 1: Nur Intercept (sehr einfach)</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>X1_train <span class="op">=</span> sm.add_constant(pd.DataFrame({<span class="st">"const"</span>: [<span class="dv">1</span>] <span class="op">*</span> <span class="bu">len</span>(y_train)})).astype(<span class="bu">float</span>)</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>X1_val <span class="op">=</span> sm.add_constant(pd.DataFrame({<span class="st">"const"</span>: [<span class="dv">1</span>] <span class="op">*</span> <span class="bu">len</span>(y_val)})).astype(<span class="bu">float</span>)</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>X1_test <span class="op">=</span> sm.add_constant(pd.DataFrame({<span class="st">"const"</span>: [<span class="dv">1</span>] <span class="op">*</span> <span class="bu">len</span>(y_test)})).astype(<span class="bu">float</span>)</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>model1 <span class="op">=</span> sm.OLS(y_train, X1_train).fit()</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell 2: Horsepower (mittel komplex)</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>X2_train <span class="op">=</span> sm.add_constant(X_train[[<span class="st">"horsepower"</span>]]).astype(<span class="bu">float</span>)</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>X2_val <span class="op">=</span> sm.add_constant(X_val[[<span class="st">"horsepower"</span>]]).astype(<span class="bu">float</span>)</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>X2_test <span class="op">=</span> sm.add_constant(X_test[[<span class="st">"horsepower"</span>]]).astype(<span class="bu">float</span>)</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> sm.OLS(y_train, X2_train).fit()</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell 3: Horsepower, Quadratwurzel und Herkunft (komplex)</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>X3_train <span class="op">=</span> sm.add_constant(X_train[[<span class="st">"horsepower"</span>, <span class="st">"sqrt_horsepower"</span>, <span class="st">"origin_Europe"</span>, <span class="st">"origin_Japan"</span>]]).astype(<span class="bu">float</span>)</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>X3_val <span class="op">=</span> sm.add_constant(X_val[[<span class="st">"horsepower"</span>, <span class="st">"sqrt_horsepower"</span>, <span class="st">"origin_Europe"</span>, <span class="st">"origin_Japan"</span>]]).astype(<span class="bu">float</span>)</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>X3_test <span class="op">=</span> sm.add_constant(X_test[[<span class="st">"horsepower"</span>, <span class="st">"sqrt_horsepower"</span>, <span class="st">"origin_Europe"</span>, <span class="st">"origin_Japan"</span>]]).astype(<span class="bu">float</span>)</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>model3 <span class="op">=</span> sm.OLS(y_train, X3_train).fit()</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell 4: Mehrere Prädiktoren (sehr komplex)</span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>X4_train <span class="op">=</span> sm.add_constant(X_train).astype(<span class="bu">float</span>)</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>X4_val <span class="op">=</span> sm.add_constant(X_val).astype(<span class="bu">float</span>)</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>X4_test <span class="op">=</span> sm.add_constant(X_test).astype(<span class="bu">float</span>)</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>model4 <span class="op">=</span> sm.OLS(y_train, X4_train).fit()</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Modell 5: Entscheidungsbaum</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>model5 <span class="op">=</span> DecisionTreeRegressor(random_state<span class="op">=</span><span class="dv">42</span>).fit(X4_train, y_train)</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Berechne MSE für jedes Modell auf Training, Validierung und Test</span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>mse1_train <span class="op">=</span> np.mean((y_train <span class="op">-</span> model1.predict(X1_train)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>mse1_val <span class="op">=</span> np.mean((y_val <span class="op">-</span> model1.predict(X1_val)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>mse1_test <span class="op">=</span> np.mean((y_test <span class="op">-</span> model1.predict(X1_test)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>mse2_train <span class="op">=</span> np.mean((y_train <span class="op">-</span> model2.predict(X2_train)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>mse2_val <span class="op">=</span> np.mean((y_val <span class="op">-</span> model2.predict(X2_val)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>mse2_test <span class="op">=</span> np.mean((y_test <span class="op">-</span> model2.predict(X2_test)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>mse3_train <span class="op">=</span> np.mean((y_train <span class="op">-</span> model3.predict(X3_train)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>mse3_val <span class="op">=</span> np.mean((y_val <span class="op">-</span> model3.predict(X3_val)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>mse3_test <span class="op">=</span> np.mean((y_test <span class="op">-</span> model3.predict(X3_test)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>mse4_train <span class="op">=</span> np.mean((y_train <span class="op">-</span> model4.predict(X4_train)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>mse4_val <span class="op">=</span> np.mean((y_val <span class="op">-</span> model4.predict(X4_val)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>mse4_test <span class="op">=</span> np.mean((y_test <span class="op">-</span> model4.predict(X4_test)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>mse5_train <span class="op">=</span> np.mean((y_train <span class="op">-</span> model5.predict(X4_train)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>mse5_val <span class="op">=</span> np.mean((y_val <span class="op">-</span> model5.predict(X4_val)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>mse5_test <span class="op">=</span> np.mean((y_test <span class="op">-</span> model5.predict(X4_test)) <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a><span class="co"># Ausgabe der MSE-Werte</span></span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Modell 1 (nur Intercept): Train MSE = </span><span class="sc">{</span>mse1_train<span class="sc">:.2f}</span><span class="ss">, Val MSE = </span><span class="sc">{</span>mse1_val<span class="sc">:.2f}</span><span class="ss">, Test MSE = </span><span class="sc">{</span>mse1_test<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Modell 2 (horsepower): Train MSE = </span><span class="sc">{</span>mse2_train<span class="sc">:.2f}</span><span class="ss">, Val MSE = </span><span class="sc">{</span>mse2_val<span class="sc">:.2f}</span><span class="ss">, Test MSE = </span><span class="sc">{</span>mse2_test<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Modell 3 (horsepower, sqrt, origin): Train MSE = </span><span class="sc">{</span>mse3_train<span class="sc">:.2f}</span><span class="ss">, Val MSE = </span><span class="sc">{</span>mse3_val<span class="sc">:.2f}</span><span class="ss">, Test MSE = </span><span class="sc">{</span>mse3_test<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Modell 4 (komplex): Train MSE = </span><span class="sc">{</span>mse4_train<span class="sc">:.2f}</span><span class="ss">, Val MSE = </span><span class="sc">{</span>mse4_val<span class="sc">:.2f}</span><span class="ss">, Test MSE = </span><span class="sc">{</span>mse4_test<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Modell 5 (Entscheidungsbaum): Train MSE = </span><span class="sc">{</span>mse5_train<span class="sc">:.2f}</span><span class="ss">, Val MSE = </span><span class="sc">{</span>mse5_val<span class="sc">:.2f}</span><span class="ss">, Test MSE = </span><span class="sc">{</span>mse5_test<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot der MSE-Werte</span></span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))  <span class="co"># Kleinere Größe</span></span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> [<span class="st">"Modell 1"</span>, <span class="st">"Modell 2"</span>, <span class="st">"Modell 3"</span>, <span class="st">"Modell 4"</span>, <span class="st">"Modell 5"</span>]</span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>sets <span class="op">=</span> [<span class="st">"Training"</span>, <span class="st">"Validation"</span>, <span class="st">"Test"</span>]</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>mse_values <span class="op">=</span> [</span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>    [mse1_train, mse1_val, mse1_test],</span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>    [mse2_train, mse2_val, mse2_test],</span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>    [mse3_train, mse3_val, mse3_test],</span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>    [mse4_train, mse4_val, mse4_test],</span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>    [mse5_train, mse5_val, mse5_test]</span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Verwende viridis-Farbpalette</span></span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> plt.cm.viridis(np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="bu">len</span>(models)))</span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot mit verbundenen Linien</span></span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, model <span class="kw">in</span> <span class="bu">enumerate</span>(models):</span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>    plt.plot(sets, mse_values[i], marker<span class="op">=</span><span class="st">'o'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, color<span class="op">=</span>colors[i], label<span class="op">=</span>model)</span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Datensets"</span>)</span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Mean Squared Error (MSE)"</span>)</span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"MSE der Modelle auf Training, Validierung und Test"</span>)</span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Modell 1 (nur Intercept): Train MSE = 61.40, Val MSE = 60.18, Test MSE = 58.54
+Modell 2 (horsepower): Train MSE = 23.71, Val MSE = 26.24, Test MSE = 22.78
+Modell 3 (horsepower, sqrt, origin): Train MSE = 15.61, Val MSE = 23.75, Test MSE = 17.52
+Modell 4 (komplex): Train MSE = 8.62, Val MSE = 8.92, Test MSE = 8.30
+Modell 5 (Entscheidungsbaum): Train MSE = 0.00, Val MSE = 11.47, Test MSE = 12.35</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="predictions_linear_regression_files/figure-html/cell-6-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="predictions_linear_regression_files/figure-html/cell-6-output-2.png" width="758" height="374" class="figure-img"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Ergebnis und Interpretation</strong>: Der Plot zeigt die MSE-Werte der fünf Modelle für Training, Validierung und Test. Typischerweise gilt:</p>
+<ul>
+<li><strong>Modell 1 (nur Intercept)</strong>: Hoher MSE auf allen Datensets, da das Modell zu einfach ist (hoher Bias, niedrige Varianz).</li>
+<li><strong>Modell 2 (horsepower)</strong>: Niedrigerer MSE, da es mehr Informationen nutzt, aber immer noch relativ einfach.</li>
+<li><strong>Modell 3 (horsepower, sqrt, origin)</strong>: Noch niedrigerer MSE, da es nicht-lineare Effekte und kategorische Variablen einbezieht.</li>
+<li><strong>Modell 4 (komplex)</strong>: Sehr niedriger Trainings-MSE, aber potenziell höherer Validierungs- und Test-MSE durch Überanpassung (niedriger Bias, hohe Varianz).</li>
+<li><strong>Modell 5 (Entscheidungsbaum)</strong>: Sehr niedriger Trainings-MSE (nahe 0), aber oft deutlich höherer Validierungs- und Test-MSE, da Entscheidungsbäume stark überanpassen können.</li>
+</ul>
+<p>Ein Modell mit ähnlichem MSE auf Validierung und Test generalisiert gut. Ein großer Anstieg des MSE von Training zu Validierung/Test deutet auf Überanpassung hin, wie es bei Modell 5 häufig der Fall ist. Der Plot hilft, den Bias-Varianz-Tradeoff visuell zu verstehen: Einfache Modelle haben hohe Bias-Fehler, während komplexe Modelle (insbesondere nicht-parametrische wie Entscheidungsbäume) hohe Varianz-Fehler aufweisen.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Resampling-Methoden
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Resampling-Methoden wie Cross-Validation (CV) ermöglichen eine robuste Bewertung der Modellleistung, indem sie die Daten mehrfach aufteilen und den Fehler über verschiedene Trainings- und Validierungssets mitteln. Dies ist besonders nützlich, um die Generalisierungsfähigkeit eines Modells zu testen und Überanpassung zu vermeiden. Hier sind drei gängige Methoden mit ihren Beschreibungen und ein Beispiel, wie man sie mit <code>scikit-learn</code> implementiert.</p>
+<ul>
+<li><p><strong>k-Fold Cross-Validation</strong>:<br>
+Die Daten werden in <span class="math inline">\(k\)</span> gleich große Teile (Folds) aufgeteilt. Das Modell wird <span class="math inline">\(k\)</span>-mal trainiert, wobei jeweils ein Fold als Validierungsset und die restlichen <span class="math inline">\(k-1\)</span> Folds als Trainingsset verwendet werden. Der MSE wird über alle <span class="math inline">\(k\)</span> Iterationen gemittelt.<br>
+<strong>Vorteile</strong>: Gute Balance zwischen Rechenaufwand und Stabilität; typisch <span class="math inline">\(k=5\)</span> oder <span class="math inline">\(k=10\)</span>.<br>
+<strong>Nachteile</strong>: Zufällige Aufteilung kann für strukturierte Daten (z. B. Zeitreihen) problematisch sein.</p></li>
+<li><p><strong>Leave-One-Out Cross-Validation (LOOCV)</strong>:<br>
+Eine spezielle Form von k-Fold CV, bei der <span class="math inline">\(k = n\)</span> (Anzahl der Datenpunkte). In jeder Iteration wird ein einzelner Datenpunkt als Validierungsset verwendet, und die restlichen <span class="math inline">\(n-1\)</span> Datenpunkte dienen als Trainingsset. Der MSE wird über alle <span class="math inline">\(n\)</span> Iterationen gemittelt.<br>
+<strong>Vorteile</strong>: Nutzt fast alle Daten zum Training, sehr präzise Schätzung.<br>
+<strong>Nachteile</strong>: Sehr rechenintensiv für große Datensätze.</p></li>
+<li><p><strong>Zeitreihen-Cross-Validation</strong>:<br>
+Für Zeitreihendaten, bei denen die Reihenfolge wichtig ist, wird eine zeitliche Aufteilung verwendet. Das Modell wird auf einem wachsenden Trainingsfenster trainiert und auf einem nachfolgenden Validierungsfenster getestet, ohne zukünftige Daten zu verwenden.<br>
+<strong>Vorteile</strong>: Respektiert die zeitliche Struktur der Daten.<br>
+<strong>Nachteile</strong>: Weniger Daten für Training/Validierung, da keine zufällige Aufteilung möglich ist.</p></li>
+</ul>
+<p><strong>Beispiel</strong>: Berechnung des MSE für Modell 4 (komplexes lineares Modell) mit k-Fold CV (<span class="math inline">\(k=5\)</span>), LOOCV und Zeitreihen-CV unter Verwendung von <code>scikit-learn</code>. Für Zeitreihen-CV wird angenommen, dass die Daten nach <code>year</code> sortiert sind.</p>
+<div id="8a76dba5" class="cell styled-output" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold, LeaveOneOut, TimeSeriesSplit</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/regression/Auto_Data_Set_963_49.csv"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Erstelle transformierte Variable</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"sqrt_horsepower"</span>] <span class="op">=</span> np.sqrt(df[<span class="st">"horsepower"</span>])</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Definiere Prädiktoren und Zielvariable (wie Modell 4)</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"horsepower"</span>: df[<span class="st">"horsepower"</span>],</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sqrt_horsepower"</span>: df[<span class="st">"sqrt_horsepower"</span>],</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cylinders"</span>: df[<span class="st">"cylinders"</span>],</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"displacement"</span>: df[<span class="st">"displacement"</span>],</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"weight"</span>: df[<span class="st">"weight"</span>],</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"acceleration"</span>: df[<span class="st">"acceleration"</span>],</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span>: df[<span class="st">"year"</span>]</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.concat([X, pd.get_dummies(df[<span class="st">"origin"</span>], prefix<span class="op">=</span><span class="st">"origin"</span>, drop_first<span class="op">=</span><span class="va">True</span>)], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">"mpg"</span>]</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialisiere Modell (LinearRegression statt statsmodels für CV-Kompatibilität)</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. k-Fold Cross-Validation (k=5)</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>mse_kf <span class="op">=</span> []</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> train_idx, val_idx <span class="kw">in</span> kf.split(X):</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    X_train, X_val <span class="op">=</span> X.iloc[train_idx], X.iloc[val_idx]</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    y_train, y_val <span class="op">=</span> y.iloc[train_idx], y.iloc[val_idx]</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    model.fit(X_train, y_train)</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.predict(X_val)</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    mse_kf.append(mean_squared_error(y_val, y_pred))</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>mse_kf_mean <span class="op">=</span> np.mean(mse_kf)</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Leave-One-Out Cross-Validation</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>loo <span class="op">=</span> LeaveOneOut()</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>mse_loo <span class="op">=</span> []</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> train_idx, val_idx <span class="kw">in</span> loo.split(X):</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    X_train, X_val <span class="op">=</span> X.iloc[train_idx], X.iloc[val_idx]</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    y_train, y_val <span class="op">=</span> y.iloc[train_idx], y.iloc[val_idx]</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    model.fit(X_train, y_train)</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.predict(X_val)</span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    mse_loo.append(mean_squared_error(y_val, y_pred))</span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>mse_loo_mean <span class="op">=</span> np.mean(mse_loo)</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Zeitreihen-Cross-Validation (angenommen, Daten sind nach 'year' sortiert)</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>df_sorted <span class="op">=</span> df.sort_values(<span class="st">"year"</span>)</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>X_sorted <span class="op">=</span> X.loc[df_sorted.index]</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>y_sorted <span class="op">=</span> y.loc[df_sorted.index]</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>tscv <span class="op">=</span> TimeSeriesSplit(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>mse_tscv <span class="op">=</span> []</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> train_idx, val_idx <span class="kw">in</span> tscv.split(X_sorted):</span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    X_train, X_val <span class="op">=</span> X_sorted.iloc[train_idx], X_sorted.iloc[val_idx]</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>    y_train, y_val <span class="op">=</span> y_sorted.iloc[train_idx], y_sorted.iloc[val_idx]</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    model.fit(X_train, y_train)</span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.predict(X_val)</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>    mse_tscv.append(mean_squared_error(y_val, y_pred))</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>mse_tscv_mean <span class="op">=</span> np.mean(mse_tscv)</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Ausgabe der Ergebnisse</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"5-Fold CV MSE: </span><span class="sc">{</span>mse_kf_mean<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"LOOCV MSE: </span><span class="sc">{</span>mse_loo_mean<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Zeitreihen-CV MSE: </span><span class="sc">{</span>mse_tscv_mean<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5-Fold CV MSE: 9.14
+LOOCV MSE: 9.10
+Zeitreihen-CV MSE: 13.94</code></pre>
+</div>
+</div>
+<p><strong>Ergebnis</strong>: Beispielausgabe könnte sein:</p>
+<ul>
+<li>5-Fold CV MSE: 15.50<br>
+</li>
+<li>LOOCV MSE: 15.70<br>
+</li>
+<li>Zeitreihen-CV MSE: 16.20</li>
+</ul>
+<p><strong>Interpretation</strong>: Die MSE-Werte der verschiedenen CV-Methoden geben Einblick in die Modellleistung. 5-Fold CV ist effizient und stabil, LOOCV ist präzise, aber rechenintensiv, und Zeitreihen-CV respektiert die zeitliche Struktur, was für den Auto-Datensatz (sortiert nach <code>year</code>) relevant sein kann. Ein ähnlicher MSE über die Methoden hinweg deutet auf ein robustes Modell hin.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/jhumci\.github\.io\/MECH-B-4-MLDS-MLDS1");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../regression/advanced_linear_regression.html" class="pagination-link" aria-label="Erweiterungen der Linearen Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Erweiterungen der Linearen Regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../regression/tutorial.html" class="pagination-link" aria-label="Tutorial 1: Vorhersage von Netzlasten">
+        <span class="nav-page-text">Tutorial 1: Vorhersage von Netzlasten</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Machine Learning and Data Science 1 SoSe 2025 (MECH-B-4-MLDS-MLDS1)</p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> Julian Huber</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/regression/predictions_linear_regression.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

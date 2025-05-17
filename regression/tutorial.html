@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>tutorial – Machine Learning and Data Science 1</title>
+<title>Tutorial 1: Vorhersage von Netzlasten – Machine Learning and Data Science 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,8 +50,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../regression/logistic_regression.html" rel="next">
-<link href="../regression/advanced_linear_regression.html" rel="prev">
+<link href="../summary.html" rel="next">
+<link href="../regression/predictions_linear_regression.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -41,8 +61,8 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0dcfa715ff78e6c9e420b65659cecc0b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-ce4f9dfd6588762908eabe2a4339186d.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-48139c6f82674e6584ecd5021c8b5c10.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-53336226cf64bb1cd90aa1b6f45a17db.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -74,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-sidebar floating fullcontent">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -83,7 +103,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/tutorial.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/tutorial.html">Tutorial 1: Vorhersage von Netzlasten</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -222,12 +242,6 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Regressions-Analyse</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../regression/basic_linear_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
   </div>
@@ -235,19 +249,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/advanced_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Erweiterungen der Linearen Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/predictions_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Vorhersagen mittels Linearen Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/tutorial.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/logistic_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text">Tutorial 1: Vorhersage von Netzlasten</span></a>
   </div>
 </li>
       </ul>
@@ -269,15 +283,64 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#ziel" id="toc-ziel" class="nav-link active" data-scroll-target="#ziel">Ziel</a>
+  <ul class="collapse">
+  <li><a href="#aufgaben" id="toc-aufgaben" class="nav-link" data-scroll-target="#aufgaben">Aufgaben</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/regression/tutorial.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/tutorial.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/tutorial.html">Tutorial 1: Vorhersage von Netzlasten</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Tutorial 1: Vorhersage von Netzlasten</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
 
+
+<section id="ziel" class="level2">
+<h2 class="anchored" data-anchor-id="ziel">Ziel</h2>
+<p>Nachdem wir in Tutorial 2 Muster in den Netzlasten analysiert und Unterschiede zwischen Wochentagen und Sonn-/Feiertagen identifiziert haben, ist das Ziel dieses Tutorials, die Netzlast basierend auf historischen Daten vorherzusagen. Wir nutzen die bereinigten Daten der <strong>Global Energy Forecasting Competition</strong> <span class="citation" data-cites="HONG2014357">Hong, Pinson, and Fan (<a href="../references.html#ref-HONG2014357" role="doc-biblioref">2014</a>)</span> und entwickeln zwei verschiedene Modelle, um die Netzlast zu prognostizieren. Die Vorhersagen und die tatsächlichen Werte werden mit Plotly interaktiv visualisiert, um die Modellleistung intuitiv zu vergleichen. Zusätzlich berechnen wir den Mean Absolute Percentage Error (MAPE) für Trainings-, Validierungs- und Testsets, um die Genauigkeit der Modelle zu bewerten.</p>
+<section id="aufgaben" class="level3">
+<h3 class="anchored" data-anchor-id="aufgaben">Aufgaben</h3>
+<ol type="1">
+<li><strong>Datenaufteilung</strong>: Teilen Sie die Zeitreihendaten in 70% Training, 15% Validierung und 15% Test auf, wobei die zeitliche Reihenfolge erhalten bleibt (kein Shuffling).</li>
+<li><strong>Modellentwicklung</strong>: Entwickeln Sie zwei verschiedene Modelle zur Vorhersage der Netzlast z.B.:
+<ul>
+<li>Modell 1: Lineare Regression mit Prädiktoren wie Wochentag, Stunde des Tages, Temperatur und einer <a href="https://de.wikipedia.org/wiki/Interaktionseffekt">Interaktion</a> zwischen Wochentag und Stunde.</li>
+<li>Modell 2: Entscheidungsbaum mit denselben Prädiktoren, ergänzt um eine Transformation (z. B. quadratische Temperatur).</li>
+</ul></li>
+<li><em>Fehlerbewertung</em>: Berechnen Sie den MAPE für Trainings-, Validierungs- und Testsets für beide Modelle.</li>
+<li><em>Visualisierung</em>: Erstellen Sie eine interaktive Zeitreihenvisualisierung mit Plotly, die die tatsächliche Netzlast und die Vorhersagen beider Modelle für das Testset darstellt.</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-HONG2014357" class="csl-entry" role="listitem">
+Hong, Tao, Pierre Pinson, and Shu Fan. 2014. <span>“Global Energy Forecasting Competition 2012.”</span> <em>International Journal of Forecasting</em> 30 (2): 357–63. https://doi.org/<a href="https://doi.org/10.1016/j.ijforecast.2013.07.001">https://doi.org/10.1016/j.ijforecast.2013.07.001</a>.
+</div>
+</div>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -843,13 +906,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../regression/advanced_linear_regression.html" class="pagination-link" aria-label="Lineare Regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span>
+      <a href="../regression/predictions_linear_regression.html" class="pagination-link" aria-label="Vorhersagen mittels Linearen Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Vorhersagen mittels Linearen Regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../regression/logistic_regression.html" class="pagination-link" aria-label="Logistic Regression">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../summary.html" class="pagination-link" aria-label="Summary">
+        <span class="nav-page-text">Summary</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -861,7 +924,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
 <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> Julian Huber</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/regression/tutorial.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/regression/tutorial.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

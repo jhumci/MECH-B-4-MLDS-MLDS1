@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Lineare Regression – Machine Learning and Data Science 1</title>
+<title>8&nbsp; Erweiterungen der Linearen Regression – Machine Learning and Data Science 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../regression/tutorial.html" rel="next">
+<link href="../regression/predictions_linear_regression.html" rel="next">
 <link href="../regression/basic_linear_regression.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -75,8 +75,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0dcfa715ff78e6c9e420b65659cecc0b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-ce4f9dfd6588762908eabe2a4339186d.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-48139c6f82674e6584ecd5021c8b5c10.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-53336226cf64bb1cd90aa1b6f45a17db.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
@@ -149,7 +149,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/advanced_linear_regression.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/advanced_linear_regression.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Erweiterungen der Linearen Regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -288,12 +288,6 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Regressions-Analyse</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../regression/basic_linear_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
   </div>
@@ -301,19 +295,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/advanced_linear_regression.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Erweiterungen der Linearen Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/predictions_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Vorhersagen mittels Linearen Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/tutorial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/logistic_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text">Tutorial 1: Vorhersage von Netzlasten</span></a>
   </div>
 </li>
       </ul>
@@ -345,18 +339,18 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#dummy-variablen" id="toc-dummy-variablen" class="nav-link" data-scroll-target="#dummy-variablen"><span class="header-section-number">8.2.1</span> Dummy-Variablen</a></li>
   <li><a href="#one-hot-encoding" id="toc-one-hot-encoding" class="nav-link" data-scroll-target="#one-hot-encoding"><span class="header-section-number">8.2.2</span> One-Hot-Encoding</a></li>
+  <li><a href="#modell-nur-mit-kategorischen-variablen" id="toc-modell-nur-mit-kategorischen-variablen" class="nav-link" data-scroll-target="#modell-nur-mit-kategorischen-variablen"><span class="header-section-number">8.2.3</span> Modell nur mit Kategorischen Variablen</a></li>
+  <li><a href="#modell-mit-allen-variablen" id="toc-modell-mit-allen-variablen" class="nav-link" data-scroll-target="#modell-mit-allen-variablen"><span class="header-section-number">8.2.4</span> Modell mit allen Variablen</a></li>
   </ul></li>
-  <li><a href="#modell-nur-mit-kategorischen-variablen" id="toc-modell-nur-mit-kategorischen-variablen" class="nav-link" data-scroll-target="#modell-nur-mit-kategorischen-variablen"><span class="header-section-number">8.3</span> Modell nur mit Kategorischen Variablen</a></li>
-  <li><a href="#modell-mit-allem" id="toc-modell-mit-allem" class="nav-link" data-scroll-target="#modell-mit-allem"><span class="header-section-number">8.4</span> Modell mit allem</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/edit/main/regression/advanced_linear_regression.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/jhumci/MECH-B-4-MLDS-MLDS1/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/advanced_linear_regression.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../regression/index.html">Regressions-Analyse</a></li><li class="breadcrumb-item"><a href="../regression/advanced_linear_regression.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Erweiterungen der Linearen Regression</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-regression-linear-advanced" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></h1>
+<h1 class="title"><span id="sec-regression-linear-advanced" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Erweiterungen der Linearen Regression</span></span></h1>
 </div>
 
 
@@ -378,7 +372,7 @@ window.Quarto = {
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon
 \]</span></p>
 <p>Als Beispiel könnten wir nicht nur die Absatzmenge eines Produkts in Abhängigkeit von der Werbeausgabe für TV-Spots, sondern auch von der Werbeausgabe für Radio-Spots modellieren. Wir simuliieren die Daten wieder mit Python, so dass wir die Zusammenhänge kennen.</p>
-<div id="5d1e5444" class="cell styled-output" data-execution_count="1">
+<div id="06f607b9" class="cell styled-output" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -417,7 +411,7 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon
 </div>
 </div>
 <p>Wir können nun drei unabhängige Modelle fitten und visualisieren.</p>
-<div id="f4edc188" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression_three" data-execution_count="2">
+<div id="c6e8fbca" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression_three" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">"TV advertising spending (€)"</span>, <span class="st">"Radio advertising spending (€)"</span>, <span class="st">"Newspaper advertising spending (€)"</span>]</span>
@@ -463,7 +457,7 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon
 </div>
 </div>
 <p>Offensichtlich sind die Modelle von mittlerer Qualität. Wir können die drei unabhängigen Variablen auch in einem Modell zusammenfassen.</p>
-<div id="a9bd2421" class="cell styled-output" data-execution_count="3">
+<div id="84095887" class="cell styled-output" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -479,8 +473,8 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon
 Dep. Variable:              Y (Sales)   R-squared:                       0.853
 Model:                            OLS   Adj. R-squared:                  0.848
 Method:                 Least Squares   F-statistic:                     185.7
-Date:                Tue, 22 Apr 2025   Prob (F-statistic):           7.83e-40
-Time:                        14:16:37   Log-Likelihood:                -683.06
+Date:                Sat, 17 May 2025   Prob (F-statistic):           7.83e-40
+Time:                        10:23:26   Log-Likelihood:                -683.06
 No. Observations:                 100   AIC:                             1374.
 Df Residuals:                      96   BIC:                             1385.
 Df Model:                           3                                         
@@ -504,7 +498,7 @@ Notes:
 </div>
 </div>
 <p>Wir können das Modell visualisieren, indem wir dreidimensionale Daten plotten. Wir lassen <span class="math inline">\(x_3\)</span> weg, da es den geringsten Einfluss auf die abhängige Variable zu haben scheint.</p>
-<div id="b8df2a81" class="cell styled-output" data-execution_count="4">
+<div id="82e79631" class="cell styled-output" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -527,7 +521,7 @@ Notes:
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3323/1194729202.py:14: FutureWarning:
+<pre><code>/tmp/ipykernel_3484/1194729202.py:14: FutureWarning:
 
 Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
 </code></pre>
@@ -556,7 +550,7 @@ Y =  -689.7 + 4.9 X_1 + 13.3 X_2 + 0.6 X_3,
 </ul></li>
 <li>Wie stark ist der Zusammenhang?
 <ul>
-<li>*Der Wer des Koeffizienten ergibt z.B. ca. 4.9 abgesetzte Einheiten pro € TV-Budget**</li>
+<li><em>Der Wer des Koeffizienten ergibt z.B. ca. 4.9 abgesetzte Einheiten pro € TV-Budget</em></li>
 </ul></li>
 <li>Welche Ausgaben haben den größten Einfluss auf die Verkäufe?
 <ul>
@@ -564,7 +558,7 @@ Y =  -689.7 + 4.9 X_1 + 13.3 X_2 + 0.6 X_3,
 </ul></li>
 <li>Ist die Beziehung linear oder nicht-linear?
 <ul>
-<li>*Das Lineare Modell ist eine gute Näherung für die Daten, da <span class="math inline">\(R^2=0.85\)</span></li>
+<li><em>Das Lineare Modell ist eine gute Näherung für die Daten, da <span class="math inline">\(R^2=0.85\)</span></em></li>
 </ul></li>
 </ul>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -594,7 +588,7 @@ Korrelation und Kausalität
 <section id="abbildung-nicht-linearer-zusammenhänge-mit-linearen-modellen" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="abbildung-nicht-linearer-zusammenhänge-mit-linearen-modellen"><span class="header-section-number">8.1</span> Abbildung nicht-linearer Zusammenhänge mit Linearen Modellen</h2>
 <p>In der Praxis hört man oft, dass sich lineare Modelle nur für lineare Zusammenhänge eignen. Das ist nicht ganz richtig. Lineare Modelle können auch nicht-lineare Zusammenhänge abbilden. Zunächst vergegenwärtigen wir uns nochmal was passiert, wenn wir die Vorhersage unseres Modells nur in Abhängigkeit von einer Variablen betrachten. Jeder schwarze Punkt in <span class="citation" data-cites="fig:regression-linear-advanced-linear-regression">(<a href="../references.html#ref-fig:regression-linear-advanced-linear-regression" role="doc-biblioref"><strong>fig:regression-linear-advanced-linear-regression?</strong></a>)</span> zeigt die beobachtete Absatzmenge zu einem Zeitpunkt in Abhängigkeit von den Werbeausgaben für TV-Spots. Der blaue Punkt zeigt die Vorhersage unseres Modells, in das Modell geht natürlich auch die Werbeausgaben für Radio- und Zeitungswerbung ein. Deswegen liegen die blauen Punkte nicht auf einer Linie, obwohl wir ein lineares Modell verwenden.</p>
-<div id="6a4cbf60" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression" data-execution_count="5">
+<div id="55d8924e" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prediction for TV advertising spending</span></span>
@@ -609,7 +603,7 @@ Korrelation und Kausalität
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">"Data"</span>, <span class="st">"Prediction"</span>])</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3323/1829400649.py:6: FutureWarning:
+<pre><code>/tmp/ipykernel_3484/1829400649.py:6: FutureWarning:
 
 Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
 </code></pre>
@@ -624,7 +618,7 @@ Series.__getitem__ treating keys as positions is deprecated. In a future version
 </div>
 </div>
 <p>Manchmal begegnen wir Zusammenhängen, die ganz klar nicht linear sind, beispielsweise der zwischen Verbrauch in Meilen pro Gallone und der Leistung eines Autos. Offensichtlich sinkt der Verbrauch nicht linear mit der Leistung:</p>
-<div id="cf792e08" class="cell" data-execution_count="6">
+<div id="c99f1c67" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -656,11 +650,11 @@ Series.__getitem__ treating keys as positions is deprecated. In a future version
 </div>
 </div>
 </div>
-<p>Eine Lösung ist die Transformation der unabhängigen Variablen. In unserem Beispiel könnten wir die Quadratwurzel der Werbeausgaben verwenden. Das Modell wird dann wie folgt aussehen:</p>
+<p>Eine Lösung ist die <strong>Transformation</strong> der unabhängigen Variablen. In unserem Beispiel könnten wir die Quadratwurzel der Leistung verwenden. Das Modell wird dann wie folgt aussehen:</p>
 <p><span class="math display">\[
 \text{mpg} = \beta_0 + \beta_1 \sqrt{\text{horsepower}} + \epsilon
 \]</span></p>
-<div id="9c14710f" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression-transformed" data-execution_count="7">
+<div id="34525465" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression-transformed" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformation of the independent variable</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"sqrt_horsepower"</span>] <span class="op">=</span> np.sqrt(df[<span class="st">"horsepower"</span>])</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -708,7 +702,7 @@ Feature Engineering
 <section id="umgang-mit-kategorischen-variablen" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="umgang-mit-kategorischen-variablen"><span class="header-section-number">8.2</span> Umgang mit Kategorischen Variablen</h2>
 <p>Bisher haben wir nur numerische Variablen betrachtet. In der Praxis haben wir es aber oft mit kategorischen Variablen zu tun. Kategorische Variablen sind Variablen, die eine endliche Anzahl von Kategorien haben. Beispiele sind Geschlecht, Region oder Produkttyp. Beispielsweise wird im Car-Data-Set die Herkunft der Autos erfasst.</p>
-<div id="cdc768da" class="cell styled-output" data-execution_count="8">
+<div id="31ec2c43" class="cell styled-output" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>].value_counts().plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Origin"</span>)</span>
@@ -725,7 +719,7 @@ Feature Engineering
 </div>
 </div>
 <p>Nun wollen wir untersuchen, ob wir die Herkunft der Autos verwenden können, um den Verbrauch vorherzusagemn. Wie immer starten wir mit einer explorativen Analyse.</p>
-<div id="7d7e6eff" class="cell styled-output" data-execution_count="9">
+<div id="53dc5974" class="cell styled-output" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">"origin"</span>, y<span class="op">=</span><span class="st">"mpg"</span>, data<span class="op">=</span>df)</span>
@@ -745,18 +739,219 @@ Feature Engineering
 <p>Offensichtlich gibt es hier einen Zusammenhang. Wir wollen unser Modell von vorhin erweiten, um es weiter zu verbessern. Um kategoriale Variablen in einer Linearen Regression zu Berücksichtigen gibt es zwei Möglichkeiten.</p>
 <section id="dummy-variablen" class="level3" data-number="8.2.1">
 <h3 data-number="8.2.1" class="anchored" data-anchor-id="dummy-variablen"><span class="header-section-number">8.2.1</span> Dummy-Variablen</h3>
+<p>Dummy-Variablen ermöglichen die Einbindung kategorischer Variablen in lineare Regressionsmodelle, indem sie jede Kategorie (außer einer Referenzkategorie) durch eine binäre Variable (0 oder 1) darstellen. Für eine Variable mit <span class="math inline">\(k\)</span> Kategorien benötigt man <span class="math inline">\(k-1\)</span> Dummy-Variablen, da die Referenzkategorie durch das Fehlen aller Dummy-Variablen kodiert wird. Dies vermeidet Mehrkollinearität, da die Kategorien sonst linear abhängig wären.</p>
+<p><strong>Beispiel</strong>: Wir verwenden die Spalte „origin“ (USA, Europe, Japan) aus dem Auto-Datensatz und erstellen Dummy-Variablen mit USA als Referenzkategorie.</p>
+<div id="3796a370" class="cell styled-output" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/regression/Auto_Data_Set_963_49.csv"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Erstelle Dummy-Variablen</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>dummy_df <span class="op">=</span> pd.get_dummies(df[<span class="st">"origin"</span>], prefix<span class="op">=</span><span class="st">"origin"</span>, drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Füge die Dummy-Variablen zum DataFrame hinzu</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>df_with_dummies <span class="op">=</span> pd.concat([df[[<span class="st">"mpg"</span>, <span class="st">"horsepower"</span>]], dummy_df], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Zeige die ersten Zeilen des DataFrames</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_with_dummies.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    mpg  horsepower  origin_Japan  origin_USA
+0  18.0         130         False        True
+1  15.0         165         False        True
+2  18.0         150         False        True
+3  16.0         150         False        True
+4  17.0         140         False        True</code></pre>
+</div>
+</div>
+<p><strong>Ergebnis</strong>: Der DataFrame enthält nun zwei neue Spalten: <code>origin_Japan</code> und <code>origin_USA</code>. Wenn <code>origin_Japan = 1</code>, ist das Auto aus Japan; wenn <code>origin_USA = 1</code>, aus den USA; wenn beide 0 sind, aus Europa (Referenzkategorie).</p>
+<p><strong>Interpretation</strong>: Diese Dummy-Variablen können in eine lineare Regression eingebunden werden, um den Einfluss der Herkunft auf den Verbrauch (<code>mpg</code>) zu modellieren. Der Koeffizient von <code>origin_Japan</code> gibt den Unterschied im durchschnittlichen Verbrauch zwischen europäischen und japanischen Autos an, bei konstanten anderen Variablen.</p>
 </section>
 <section id="one-hot-encoding" class="level3" data-number="8.2.2">
 <h3 data-number="8.2.2" class="anchored" data-anchor-id="one-hot-encoding"><span class="header-section-number">8.2.2</span> One-Hot-Encoding</h3>
+<p>One-Hot-Encoding kodiert jede Kategorie einer kategorischen Variable durch eine eigene binäre Spalte, was <span class="math inline">\(k\)</span> Spalten für <span class="math inline">\(k\)</span> Kategorien ergibt. Im Gegensatz zu Dummy-Variablen wird keine Referenzkategorie weggelassen, was in linearen Regressionen zu Mehrkollinearität führen kann, wenn der Intercept im Modell enthalten ist. In solchen Fällen wird oft eine Spalte entfernt oder der Intercept ausgeschlossen.</p>
+<p><strong>Beispiel</strong>: Wir erstellen ein One-Hot-Encoding für die Spalte „origin“ (USA, Europe, Japan) im Auto-Datensatz.</p>
+<div id="8af08b2c" class="cell styled-output" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/regression/Auto_Data_Set_963_49.csv"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Erstelle One-Hot-Encoding</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>one_hot_df  <span class="op">=</span>  pd.get_dummies(df[<span class="st">"origin"</span>], prefix<span class="op">=</span><span class="st">"origin"</span>, drop_first<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Füge die One-Hot-Encoding-Spalten zum DataFrame hinzu</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>df_with_one_hot <span class="op">=</span> pd.concat([df[[<span class="st">"mpg"</span>, <span class="st">"horsepower"</span>]], one_hot_df], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Zeige die ersten Zeilen des DataFrames</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_with_one_hot.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    mpg  horsepower  origin_Europe  origin_Japan  origin_USA
+0  18.0         130          False         False        True
+1  15.0         165          False         False        True
+2  18.0         150          False         False        True
+3  16.0         150          False         False        True
+4  17.0         140          False         False        True</code></pre>
+</div>
+</div>
+<p><strong>Ergebnis</strong>: Der DataFrame enthält drei neue Spalten: <code>origin_USA</code>, <code>origin_Europe</code> und <code>origin_Japan</code>. Jede Spalte zeigt an, ob ein Auto der jeweiligen Kategorie angehört (1) oder nicht (0).</p>
+<p><strong>Interpretation</strong>: In einer linearen Regression mit diesen One-Hot-kodierten Variablen und einem Intercept würde eine der Spalten (z. B. <code>origin_USA</code>) entfernt werden müssen, um Mehrkollinearität zu vermeiden. Alternativ kann das Modell ohne Intercept geschätzt werden, wobei jede Spalte den durchschnittlichen Verbrauch der jeweiligen Kategorie repräsentiert.</p>
 </section>
+<section id="modell-nur-mit-kategorischen-variablen" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="modell-nur-mit-kategorischen-variablen"><span class="header-section-number">8.2.3</span> Modell nur mit Kategorischen Variablen</h3>
+<p>Ein Regressionsmodell, das ausschließlich kategorische Variablen verwendet, schätzt die Mittelwerte der abhängigen Variable für jede Kategorie. Für die Herkunft (USA, Europe, Japan) modelliert das Modell den durchschnittlichen Kraftstoffverbrauch (<code>mpg</code>) pro Land. Der Intercept entspricht dem durchschnittlichen Verbrauch der Referenzkategorie, während die Koeffizienten der Dummy-Variablen die Differenz im Verbrauch der anderen Kategorien im Vergleich zur Referenzkategorie angeben.</p>
+<p><strong>Beispiel</strong>: Wir erstellen ein Modell, das den Verbrauch (<code>mpg</code>) basierend auf der Herkunft vorhersagt, mit USA als Referenzkategorie.</p>
+<div id="6778d39d" class="cell styled-output" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/regression/Auto_Data_Set_963_49.csv"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Erstelle Dummy-Variablen (USA als Referenzkategorie)</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.get_dummies(df[<span class="st">"origin"</span>], prefix<span class="op">=</span><span class="st">"origin"</span>, drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> sm.add_constant(X)  <span class="co"># Füge Intercept hinzu</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Wandle Booleans in numerische Werte um</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.astype(<span class="bu">int</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X.head())</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitte das Modell</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(df[<span class="st">"mpg"</span>], X).fit()</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Zeige die Zusammenfassung</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   const  origin_Japan  origin_USA
+0      1             0           1
+1      1             0           1
+2      1             0           1
+3      1             0           1
+4      1             0           1
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    mpg   R-squared:                       0.332
+Model:                            OLS   Adj. R-squared:                  0.328
+Method:                 Least Squares   F-statistic:                     96.60
+Date:                Sat, 17 May 2025   Prob (F-statistic):           8.67e-35
+Time:                        10:23:28   Log-Likelihood:                -1282.2
+No. Observations:                 392   AIC:                             2570.
+Df Residuals:                     389   BIC:                             2582.
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+================================================================================
+                   coef    std err          t      P&gt;|t|      [0.025      0.975]
+--------------------------------------------------------------------------------
+const           27.6029      0.776     35.587      0.000      26.078      29.128
+origin_Japan     2.8477      1.058      2.691      0.007       0.767       4.928
+origin_USA      -7.5695      0.877     -8.634      0.000      -9.293      -5.846
+==============================================================================
+Omnibus:                       26.330   Durbin-Watson:                   0.763
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               30.217
+Skew:                           0.679   Prob(JB):                     2.74e-07
+Kurtosis:                       3.066   Cond. No.                         5.42
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+<p><strong>Ergebnis und Interpretation</strong>:</p>
+<ul>
+<li><strong>Intercept</strong>: Der Intercept repräsentiert den durchschnittlichen Verbrauch (<code>mpg</code>) von Autos aus den USA (Referenzkategorie). Zum Beispiel, wenn der Intercept 27.6 ist, bedeutet dies, dass europäische Autos im Durchschnitt 27.6 Meilen pro Gallone erreichen.</li>
+<li><strong>Koeffizienten</strong>:
+<ul>
+<li>Der Koeffizient für <code>origin_Japan</code> gibt die Differenz im durchschnittlichen Verbrauch zwischen europäischen und japanischen Autos an. Ein positiver Koeffizient (z. B. 2.8) bedeutet, dass japanische Autos im Durchschnitt 2.8 Meilen pro Gallone sparsamer sind als europäische Autos.</li>
+<li>Der Koeffizient für <code>origin_USA</code> interpretiert sich analog.</li>
+</ul></li>
+<li><strong>Modellqualität</strong>: Der <span class="math inline">\(R^2\)</span>-Wert gibt an, wie viel der Varianz im Verbrauch durch die Herkunft erklärt wird. Ein niedriger <span class="math inline">\(R^2\)</span> deutet darauf hin, dass andere Faktoren (z. B. Leistung) ebenfalls wichtig sind.</li>
+</ul>
+<p>Dieses Modell ist einfach zu interpretieren, da es nur die Mittelwerte pro Kategorie vergleicht, ähnlich einer ANOVA oder einem T-Test.</p>
 </section>
-<section id="modell-nur-mit-kategorischen-variablen" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="modell-nur-mit-kategorischen-variablen"><span class="header-section-number">8.3</span> Modell nur mit Kategorischen Variablen</h2>
-</section>
-<section id="modell-mit-allem" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="modell-mit-allem"><span class="header-section-number">8.4</span> Modell mit allem</h2>
+<section id="modell-mit-allen-variablen" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="modell-mit-allen-variablen"><span class="header-section-number">8.2.4</span> Modell mit allen Variablen</h3>
+<p>Ein Modell, das numerische und kategorische Variablen kombiniert, nutzt alle verfügbaren Prädiktoren, um die abhängige Variable zu modellieren. Dies führt oft zu einer höheren Erklärungskraft (z. B. höherem <span class="math inline">\(R^2\)</span>), da mehr Informationen berücksichtigt werden. Die Interpretation wird jedoch komplexer, da die Koeffizienten unter der Annahme interpretiert werden, dass alle anderen Variablen konstant sind.</p>
+<p><strong>Beispiel</strong>: Wir modellieren den Verbrauch (<code>mpg</code>) basierend auf der Leistung (<code>horsepower</code>), deren Quadratwurzel (für nicht-lineare Effekte) und der Herkunft (als Dummy-Variablen, USA als Referenzkategorie).</p>
+<div id="153d011f" class="cell styled-output" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"../_assets/regression/Auto_Data_Set_963_49.csv"</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Erstelle transformierte Variable</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"sqrt_horsepower"</span>] <span class="op">=</span> np.sqrt(df[<span class="st">"horsepower"</span>])</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Erstelle Dummy-Variablen</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.get_dummies(df[<span class="st">"origin"</span>], prefix<span class="op">=</span><span class="st">"origin"</span>, drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Füge numerische Variablen hinzu</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>X[<span class="st">"horsepower"</span>] <span class="op">=</span> df[<span class="st">"horsepower"</span>]</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>X[<span class="st">"sqrt_horsepower"</span>] <span class="op">=</span> df[<span class="st">"sqrt_horsepower"</span>]</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Füge Intercept hinzu</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Wandle Booleans in numerische Werte um</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.astype(<span class="bu">float</span>)</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitte das Modell</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(df[<span class="st">"mpg"</span>], X).fit()</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Zeige die Zusammenfassung</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    mpg   R-squared:                       0.719
+Model:                            OLS   Adj. R-squared:                  0.716
+Method:                 Least Squares   F-statistic:                     247.8
+Date:                Sat, 17 May 2025   Prob (F-statistic):          2.51e-105
+Time:                        10:23:28   Log-Likelihood:                -1112.2
+No. Observations:                 392   AIC:                             2234.
+Df Residuals:                     387   BIC:                             2254.
+Df Model:                           4                                         
+Covariance Type:            nonrobust                                         
+===================================================================================
+                      coef    std err          t      P&gt;|t|      [0.025      0.975]
+-----------------------------------------------------------------------------------
+const              95.6047      6.489     14.734      0.000      82.847     108.362
+origin_Japan        2.8432      0.688      4.134      0.000       1.491       4.195
+origin_USA         -1.2807      0.632     -2.026      0.043      -2.523      -0.038
+horsepower          0.3650      0.057      6.456      0.000       0.254       0.476
+sqrt_horsepower   -10.9359      1.232     -8.875      0.000     -13.359      -8.513
+==============================================================================
+Omnibus:                       17.102   Durbin-Watson:                   1.198
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               26.045
+Skew:                           0.324   Prob(JB):                     2.21e-06
+Kurtosis:                       4.084   Cond. No.                     3.52e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 3.52e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.</code></pre>
+</div>
+</div>
+<p><strong>Ergebnis und Interpretation</strong>:</p>
+<ul>
+<li><strong>Modellgüte</strong>: Der <span class="math inline">\(R^2\)</span>-Wert ist höher als in Modellen mit nur numerischen oder nur kategorischen Variablen, da das Modell mehr Informationen nutzt. Zum Beispiel könnte <span class="math inline">\(R^2 = 0.75\)</span> bedeuten, dass 75 % der Varianz im Verbrauch erklärt werden.</li>
+<li><strong>Koeffizienten</strong>:
+<ul>
+<li>Der Koeffizient für <code>horsepower</code> und <code>sqrt_horsepower</code> gibt den Einfluss der Leistung auf den Verbrauch an, unter Berücksichtigung der nicht-linearen Beziehung.</li>
+</ul></li>
+<li><strong>Interpretationsschwierigkeit</strong>: Die Koeffizienten sind schwerer zu interpretieren, da sie unter der Annahme konstanter anderer Variablen gelten. Zum Beispiel könnte der Einfluss von <code>horsepower</code> durch die Quadratwurzel-Transformation komplexer sein.</li>
+<li><strong>Vorsicht</strong>: Ein komplexeres Modell kann zu Überanpassung führen, insbesondere bei kleinen Datensätzen, und die Interpretation kann für praktische Entscheidungen unpraktisch werden.</li>
+</ul>
+<p>Dieses Modell ist leistungsfähiger, aber die Interpretation erfordert ein tieferes Verständnis der Zusammenhänge und der Modellannahmen.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1328,8 +1523,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../regression/tutorial.html" class="pagination-link" aria-label="tutorial.html">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../regression/predictions_linear_regression.html" class="pagination-link" aria-label="Vorhersagen mittels Linearen Regression">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Vorhersagen mittels Linearen Regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -41,8 +41,8 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0dcfa715ff78e6c9e420b65659cecc0b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-ce4f9dfd6588762908eabe2a4339186d.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-48139c6f82674e6584ecd5021c8b5c10.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-53336226cf64bb1cd90aa1b6f45a17db.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -251,12 +251,6 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Regressions-Analyse</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../regression/basic_linear_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
   </div>
@@ -264,19 +258,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/advanced_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Erweiterungen der Linearen Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/predictions_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Vorhersagen mittels Linearen Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/tutorial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/logistic_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text">Tutorial 1: Vorhersage von Netzlasten</span></a>
   </div>
 </li>
       </ul>
@@ -323,17 +317,17 @@ window.Quarto = {
 </header>
 
 
-<p>Im Allgemeinen kann die Regressionsanalyse als eine Sammlung von Werkzeugen verstanden werden, die dazu verwendet werden, eine Beziehung zwischen einer abhängigen Variable <span class="math inline">\(Y\)</span>$ (auch Zielvariable, Antwortvariable oder Label genannt) und der unabhängigen Variable <span class="math inline">\(X\)</span> (auch Regressor, Prädiktoren, Kovariaten, erklärende Variable oder Feature genannt) zu schätzen oder festzustellen.</p>
+<p>Im Allgemeinen kann die Regressionsanalyse als eine Sammlung von Werkzeugen verstanden werden, die dazu verwendet werden, eine Beziehung zwischen einer abhängigen Variable <span class="math inline">\(Y\)</span> (auch Zielvariable, Antwortvariable oder Label genannt) und der unabhängigen Variable <span class="math inline">\(X\)</span> (auch Regressor, Prädiktoren, Kovariaten, erklärende Variable oder Feature genannt) zu schätzen oder festzustellen.</p>
 <p>Wenn wir eine Regressionsfunktion <span class="math inline">\(f\)</span> als Modell für die Beziehung zwischen <span class="math inline">\(X\)</span> und <span class="math inline">\(Y\)</span> annehmen, können wir die Regressionsanalyse als die Suche nach den Parametern <span class="math inline">\(\theta\)</span> verstehen, die die Funktion <span class="math inline">\(f\)</span> am besten an die Daten anpassen.</p>
 <p>Das Problem der Regressionsanalyse kann also wie folgt formuliert werden: <span class="math display">\[
 Y = f(X, \theta) + \epsilon,
 \]</span></p>
 <p>wobei <span class="math inline">\(\theta\)</span> durch die Optimierung für <em>eine gute Anpassung</em> von <span class="math inline">\(f\)</span> an die Daten gefunden wird. In der Regel erhalten wir dabei einen Fehlerterm <span class="math inline">\(\epsilon\)</span>, der – wenn wir Glück haben – normalverteilt mit einem Erwartungswert von null und konstanter Varianz ist.</p>
-<p>Regessionen sind ein mächtiges Werkzeug für die <em>Interpetation von Daten</em> und die <em>Vorhersage von Werten</em>. In der Praxis gibt es viele verschiedene Arten von Regressionsmodellen, die sich in ihrer Komplexität und den Annahmen, die sie machen, unterscheiden. In diesem Kapitel werden wir uns auf die lineare Regression konzentrieren, die eine der einfachsten und am häufigsten verwendeten Formen der Regressionsanalyse ist und sich für Zusammenhänge zwischen einer abhängigen und einer unabhängigen Variablen mit intervallskalierten Daten eignet.</p>
-<p>Zuerst führen wir eine einfache Lineare Regression mit einer unabhängigen Variable durch. Anschließend erweitern wir das Modell auf mehrere unabhängige und auch kategorische Variablen. Hierzu nutzen wird die Matrix-Schreibweise.</p>
-<p>Erweiterte Themen Intercepts und Regularisierung</p>
-<p>Diskussion von Statistischem Lernen und Resampling</p>
-<p>Logistische Regression als Beispiel für Klassifikation</p>
+<p>Regessionen sind ein mächtiges Werkzeug für die <em>Interpetation von Daten</em> und die <em>Vorhersage von Werten</em>. In der Praxis gibt es viele verschiedene Arten von Regressionsmodellen, die sich in ihrer Komplexität und den Annahmen, die sie machen, unterscheiden. In diesem Kapitel werden wir uns zunächst auf die lineare Regression konzentrieren, die eine der einfachsten und am häufigsten verwendeten Formen der Regressionsanalyse ist und sich für Zusammenhänge zwischen einer abhängigen und einer unabhängigen Variablen mit intervallskalierten Daten eignet.</p>
+<p>Zunächst werden wir eine einfache lineare Regression mit einer einzigen unabhängigen Variable durchführen. Dieses Modell beschreibt eine lineare Beziehung zwischen der abhängigen Variable <span class="math inline">\(Y\)</span> und einer unabhängigen Variable <span class="math inline">\(X\)</span>. Anschließend erweitern wir das Modell, um mehrere unabhängige Variablen sowie kategorische Variablen zu berücksichtigen. Um diese komplexeren Modelle mathematisch effizient zu formulieren, werden wir die Matrix-Schreibweise verwenden, die eine kompakte Darstellung der Beziehungen zwischen mehreren Variablen ermöglicht.</p>
+<p>Im nächsten Abschnitt behandeln wir fortgeschrittene Konzepte wie den Intercept (Achsenabschnitt) und die Regularisierung. Der Intercept repräsentiert den Wert der abhängigen Variable, wenn alle unabhängigen Variablen gleich null sind, und spielt eine zentrale Rolle in der Interpretation des Modells. Regularisierungstechniken, wie z. B. Ridge- oder Lasso-Regression, werden eingeführt, um Überanpassung (Overfitting) zu vermeiden und die Stabilität sowie die Vorhersagegenauigkeit des Modells zu verbessern, insbesondere bei hochdimensionalen Daten.</p>
+<p>Ein weiterer Schwerpunkt liegt auf der Diskussion statistischer Lernverfahren und Resampling-Techniken. Statistische Lernverfahren umfassen Ansätze, wie Modelle aus Daten lernen können, und deren Evaluation. Resampling-Methoden, wie z. B. Kreuzvalidierung oder Bootstrapping, werden vorgestellt, um die Robustheit und Verallgemeinerungsfähigkeit von Regressionsmodellen zu überprüfen und die Modellleistung auf neuen Daten zu schätzen.</p>
+<p>Logistische Regression für Klassifikationsaufgaben Abschließend betrachten wir die logistische Regression als ein Beispiel für ein Regressionsmodell, das für Klassifikationsaufgaben verwendet wird. Im Gegensatz zur linearen Regression, die kontinuierliche Zielvariablen vorhersagt, modelliert die logistische Regression die Wahrscheinlichkeit, dass eine Beobachtung zu einer bestimmten Kategorie gehört. Dies macht sie besonders nützlich für binäre Klassifikationsprobleme, wie z. B. die Vorhersage, ob ein Ereignis eintritt oder nicht.</p>
 
 
 

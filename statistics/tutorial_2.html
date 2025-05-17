@@ -95,8 +95,8 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0dcfa715ff78e6c9e420b65659cecc0b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-ce4f9dfd6588762908eabe2a4339186d.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-48139c6f82674e6584ecd5021c8b5c10.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-53336226cf64bb1cd90aa1b6f45a17db.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -305,12 +305,6 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../regression/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Regressions-Analyse</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../regression/basic_linear_regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
   </div>
@@ -318,19 +312,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/advanced_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lineare Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Erweiterungen der Linearen Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../regression/predictions_linear_regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Vorhersagen mittels Linearen Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../regression/tutorial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">tutorial.html</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../regression/logistic_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text">Tutorial 1: Vorhersage von Netzlasten</span></a>
   </div>
 </li>
       </ul>
@@ -412,7 +406,7 @@ window.Quarto = {
 <section id="schritt-1-visualisierung-der-wochentag-verteilungen" class="level3">
 <h3 class="anchored" data-anchor-id="schritt-1-visualisierung-der-wochentag-verteilungen">Schritt 1: Visualisierung der Wochentag-Verteilungen</h3>
 <p>Wir generieren Netzlast-Daten für jeden Wochentag und visualisieren die Verteilungen in einem Violin-Plot, wobei Wochenenden anders gefärbt sind.</p>
-<div id="4255b8af" class="cell" data-execution_count="1">
+<div id="b4fc2057" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -455,7 +449,7 @@ window.Quarto = {
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3211/3092400038.py:33: FutureWarning:
+<pre><code>/tmp/ipykernel_3371/3092400038.py:33: FutureWarning:
 
 
 
@@ -477,7 +471,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <h3 class="anchored" data-anchor-id="schritt-2-t-test-für-mittelwerte-wochentage-vs.-sonn-feiertage">Schritt 2: t-Test für Mittelwerte (Wochentage vs.&nbsp;Sonn-/Feiertage)</h3>
 <p>Wir teilen die Daten in zwei Gruppen: - <strong>Wochentage</strong>: Montag bis Freitag. - <strong>Sonn-/Feiertage</strong>: Samstag, Sonntag und Feiertage.</p>
 <p>Dann führen wir einen <strong>zweiseitigen t-Test</strong> durch, um die Mittelwerte der Netzlasten zu vergleichen.</p>
-<div id="d73a2745" class="cell" data-execution_count="2">
+<div id="6111190b" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Gruppen erstellen</span></span>
@@ -540,7 +534,7 @@ D = \sup_x |F_1(x) - F_2(x)|,
 <section id="python-implementierung-und-visualisierung" class="level4">
 <h4 class="anchored" data-anchor-id="python-implementierung-und-visualisierung">Python-Implementierung und Visualisierung</h4>
 <p>Wir führen den KS-Test durch und visualisieren die CDFs der beiden Gruppen.</p>
-<div id="1737d841" class="cell" data-execution_count="3">
+<div id="97aad06d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ks_2samp</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
