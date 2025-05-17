@@ -2,7 +2,7 @@
 lightbox: true
 ---
 
-# Lineare Regression {#sec-regression-linear-advanced}
+# Erweiterungen der Linearen Regression {#sec-regression-linear-advanced}
 
 Zusammenhänge können auch zwischen mehr als zwei Variablen bestehen. In diesem Fall sprechen wir von einer multiplen linearen Regression. Das Modell kann dann wie folgt formuliert werden:
 
@@ -129,11 +129,11 @@ Dieses lineare Modell eigent sich ausgezeichnet für eine Interpretation des Dat
 - Gibt es einen Zusammenhang zwischen den Werbeausgaben und den Verkäufen?
     - *Aus den p-Werten Koeffizienten können wir ablesen, dass die Koeffizienten für TV- und Radio-Werbung signifikant sind, während der Koeffizient für Zeitungswerbung nicht signifikant ist.*
 - Wie stark ist der Zusammenhang?
-    - *Der Wer des Koeffizienten ergibt z.B. ca. 4.9 abgesetzte Einheiten pro € TV-Budget**
+    - *Der Wer des Koeffizienten ergibt z.B. ca. 4.9 abgesetzte Einheiten pro € TV-Budget*
 - Welche Ausgaben haben den größten Einfluss auf die Verkäufe?
     - *Radio-Werbung hat den größten Einfluss auf die Verkäufe.*
 - Ist die Beziehung linear oder nicht-linear?
-    - *Das Lineare Modell ist eine gute Näherung für die Daten, da $R^2=0.85$
+    - *Das Lineare Modell ist eine gute Näherung für die Daten, da $R^2=0.85$*
 
 :::::: {.callout-warning}
 ## Korrelation und Kausalität
@@ -207,7 +207,7 @@ plt.show()
 ```
 
 
-Eine Lösung ist die Transformation der unabhängigen Variablen. In unserem Beispiel könnten wir die Quadratwurzel der Werbeausgaben verwenden. Das Modell wird dann wie folgt aussehen:
+Eine Lösung ist die __Transformation__ der unabhängigen Variablen. In unserem Beispiel könnten wir die Quadratwurzel der Leistung verwenden. Das Modell wird dann wie folgt aussehen:
 
 $$
 \text{mpg} = \beta_0 + \beta_1 \sqrt{\text{horsepower}} + \epsilon
@@ -281,13 +281,146 @@ Offensichtlich gibt es hier einen Zusammenhang. Wir wollen unser Modell von vorh
 
 ### Dummy-Variablen
 
+Dummy-Variablen ermöglichen die Einbindung kategorischer Variablen in lineare Regressionsmodelle, indem sie jede Kategorie (außer einer Referenzkategorie) durch eine binäre Variable (0 oder 1) darstellen. Für eine Variable mit $k$ Kategorien benötigt man $k-1$ Dummy-Variablen, da die Referenzkategorie durch das Fehlen aller Dummy-Variablen kodiert wird. Dies vermeidet Mehrkollinearität, da die Kategorien sonst linear abhängig wären.
+
+**Beispiel**: Wir verwenden die Spalte „origin“ (USA, Europe, Japan) aus dem Auto-Datensatz und erstellen Dummy-Variablen mit USA als Referenzkategorie.
+
+```{python}
+#| classes: styled-output
+import pandas as pd
+
+# Lade den Datensatz
+df = pd.read_csv(r"../_assets/regression/Auto_Data_Set_963_49.csv")
+df["origin"] = df["origin"].map({1: "USA", 2: "Europe", 3: "Japan"})
+
+# Erstelle Dummy-Variablen
+dummy_df = pd.get_dummies(df["origin"], prefix="origin", drop_first=True)
+
+# Füge die Dummy-Variablen zum DataFrame hinzu
+df_with_dummies = pd.concat([df[["mpg", "horsepower"]], dummy_df], axis=1)
+
+# Zeige die ersten Zeilen des DataFrames
+print(df_with_dummies.head())
+```
+
+**Ergebnis**: Der DataFrame enthält nun zwei neue Spalten: `origin_Japan` und `origin_USA`. Wenn `origin_Japan = 1`, ist das Auto aus Japan; wenn `origin_USA = 1`, aus den USA; wenn beide 0 sind, aus Europa (Referenzkategorie).
+
+**Interpretation**: Diese Dummy-Variablen können in eine lineare Regression eingebunden werden, um den Einfluss der Herkunft auf den Verbrauch (`mpg`) zu modellieren. Der Koeffizient von `origin_Japan` gibt den Unterschied im durchschnittlichen Verbrauch zwischen europäischen und japanischen Autos an, bei konstanten anderen Variablen.
 
 ### One-Hot-Encoding
 
+One-Hot-Encoding kodiert jede Kategorie einer kategorischen Variable durch eine eigene binäre Spalte, was $k$ Spalten für $k$ Kategorien ergibt. Im Gegensatz zu Dummy-Variablen wird keine Referenzkategorie weggelassen, was in linearen Regressionen zu Mehrkollinearität führen kann, wenn der Intercept im Modell enthalten ist. In solchen Fällen wird oft eine Spalte entfernt oder der Intercept ausgeschlossen.
 
-## Modell nur mit Kategorischen Variablen
+**Beispiel**: Wir erstellen ein One-Hot-Encoding für die Spalte „origin“ (USA, Europe, Japan) im Auto-Datensatz.
 
+```{python}
+#| classes: styled-output
+import pandas as pd
 
-## Modell mit allem
+# Lade den Datensatz
+df = pd.read_csv(r"../_assets/regression/Auto_Data_Set_963_49.csv")
+df["origin"] = df["origin"].map({1: "USA", 2: "Europe", 3: "Japan"})
 
+# Erstelle One-Hot-Encoding
+one_hot_df  =  pd.get_dummies(df["origin"], prefix="origin", drop_first=False)
+# Füge die One-Hot-Encoding-Spalten zum DataFrame hinzu
+df_with_one_hot = pd.concat([df[["mpg", "horsepower"]], one_hot_df], axis=1)
+
+# Zeige die ersten Zeilen des DataFrames
+print(df_with_one_hot.head())
+```
+
+**Ergebnis**: Der DataFrame enthält drei neue Spalten: `origin_USA`, `origin_Europe` und `origin_Japan`. Jede Spalte zeigt an, ob ein Auto der jeweiligen Kategorie angehört (1) oder nicht (0).
+
+**Interpretation**: In einer linearen Regression mit diesen One-Hot-kodierten Variablen und einem Intercept würde eine der Spalten (z. B. `origin_USA`) entfernt werden müssen, um Mehrkollinearität zu vermeiden. Alternativ kann das Modell ohne Intercept geschätzt werden, wobei jede Spalte den durchschnittlichen Verbrauch der jeweiligen Kategorie repräsentiert.
+
+### Modell nur mit Kategorischen Variablen
+
+Ein Regressionsmodell, das ausschließlich kategorische Variablen verwendet, schätzt die Mittelwerte der abhängigen Variable für jede Kategorie. Für die Herkunft (USA, Europe, Japan) modelliert das Modell den durchschnittlichen Kraftstoffverbrauch (`mpg`) pro Land. Der Intercept entspricht dem durchschnittlichen Verbrauch der Referenzkategorie, während die Koeffizienten der Dummy-Variablen die Differenz im Verbrauch der anderen Kategorien im Vergleich zur Referenzkategorie angeben.
+
+**Beispiel**: Wir erstellen ein Modell, das den Verbrauch (`mpg`) basierend auf der Herkunft vorhersagt, mit USA als Referenzkategorie.
+
+```{python}
+#| classes: styled-output
+import pandas as pd
+import statsmodels.api as sm
+
+# Lade den Datensatz
+df = pd.read_csv(r"../_assets/regression/Auto_Data_Set_963_49.csv")
+df["origin"] = df["origin"].map({1: "USA", 2: "Europe", 3: "Japan"})
+
+# Erstelle Dummy-Variablen (USA als Referenzkategorie)
+X = pd.get_dummies(df["origin"], prefix="origin", drop_first=True)
+X = sm.add_constant(X)  # Füge Intercept hinzu
+
+# Wandle Booleans in numerische Werte um
+X = X.astype(int)
+
+print(X.head())
+
+# Fitte das Modell
+model = sm.OLS(df["mpg"], X).fit()
+
+# Zeige die Zusammenfassung
+print(model.summary())
+```
+
+**Ergebnis und Interpretation**: 
+
+- **Intercept**: Der Intercept repräsentiert den durchschnittlichen Verbrauch (`mpg`) von Autos aus den USA (Referenzkategorie). Zum Beispiel, wenn der Intercept 27.6 ist, bedeutet dies, dass europäische Autos im Durchschnitt 27.6 Meilen pro Gallone erreichen.
+- **Koeffizienten**:
+  - Der Koeffizient für `origin_Japan` gibt die Differenz im durchschnittlichen Verbrauch zwischen europäischen und japanischen Autos an. Ein positiver Koeffizient (z. B. 2.8) bedeutet, dass japanische Autos im Durchschnitt 2.8 Meilen pro Gallone sparsamer sind als europäische Autos.
+  - Der Koeffizient für `origin_USA` interpretiert sich analog.
+- **Modellqualität**: Der $R^2$-Wert gibt an, wie viel der Varianz im Verbrauch durch die Herkunft erklärt wird. Ein niedriger $R^2$ deutet darauf hin, dass andere Faktoren (z. B. Leistung) ebenfalls wichtig sind.
+
+Dieses Modell ist einfach zu interpretieren, da es nur die Mittelwerte pro Kategorie vergleicht, ähnlich einer ANOVA oder einem T-Test.
+
+### Modell mit allen Variablen
+
+Ein Modell, das numerische und kategorische Variablen kombiniert, nutzt alle verfügbaren Prädiktoren, um die abhängige Variable zu modellieren. Dies führt oft zu einer höheren Erklärungskraft (z. B. höherem $R^2$), da mehr Informationen berücksichtigt werden. Die Interpretation wird jedoch komplexer, da die Koeffizienten unter der Annahme interpretiert werden, dass alle anderen Variablen konstant sind.
+
+**Beispiel**: Wir modellieren den Verbrauch (`mpg`) basierend auf der Leistung (`horsepower`), deren Quadratwurzel (für nicht-lineare Effekte) und der Herkunft (als Dummy-Variablen, USA als Referenzkategorie).
+
+```{python}
+#| classes: styled-output
+import pandas as pd
+import statsmodels.api as sm
+import numpy as np
+
+# Lade den Datensatz
+df = pd.read_csv(r"../_assets/regression/Auto_Data_Set_963_49.csv")
+df["origin"] = df["origin"].map({1: "USA", 2: "Europe", 3: "Japan"})
+
+# Erstelle transformierte Variable
+df["sqrt_horsepower"] = np.sqrt(df["horsepower"])
+
+# Erstelle Dummy-Variablen
+X = pd.get_dummies(df["origin"], prefix="origin", drop_first=True)
+
+# Füge numerische Variablen hinzu
+X["horsepower"] = df["horsepower"]
+X["sqrt_horsepower"] = df["sqrt_horsepower"]
+
+# Füge Intercept hinzu
+X = sm.add_constant(X)
+
+# Wandle Booleans in numerische Werte um
+X = X.astype(float)
+
+# Fitte das Modell
+model = sm.OLS(df["mpg"], X).fit()
+
+# Zeige die Zusammenfassung
+print(model.summary())
+```
+
+**Ergebnis und Interpretation**:
+
+- **Modellgüte**: Der $R^2$-Wert ist höher als in Modellen mit nur numerischen oder nur kategorischen Variablen, da das Modell mehr Informationen nutzt. Zum Beispiel könnte $R^2 = 0.75$ bedeuten, dass 75 % der Varianz im Verbrauch erklärt werden.
+- **Koeffizienten**:
+  - Der Koeffizient für `horsepower` und `sqrt_horsepower` gibt den Einfluss der Leistung auf den Verbrauch an, unter Berücksichtigung der nicht-linearen Beziehung.
+- **Interpretationsschwierigkeit**: Die Koeffizienten sind schwerer zu interpretieren, da sie unter der Annahme konstanter anderer Variablen gelten. Zum Beispiel könnte der Einfluss von `horsepower` durch die Quadratwurzel-Transformation komplexer sein.
+- **Vorsicht**: Ein komplexeres Modell kann zu Überanpassung führen, insbesondere bei kleinen Datensätzen, und die Interpretation kann für praktische Entscheidungen unpraktisch werden.
+
+Dieses Modell ist leistungsfähiger, aber die Interpretation erfordert ein tieferes Verständnis der Zusammenhänge und der Modellannahmen.
 

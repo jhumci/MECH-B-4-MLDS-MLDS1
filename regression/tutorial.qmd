@@ -1,0 +1,14 @@
+# Tutorial 1: Vorhersage von Netzlasten {.unnumbered}
+
+## Ziel
+
+Nachdem wir in Tutorial 2 Muster in den Netzlasten analysiert und Unterschiede zwischen Wochentagen und Sonn-/Feiertagen identifiziert haben, ist das Ziel dieses Tutorials, die Netzlast basierend auf historischen Daten vorherzusagen. Wir nutzen die bereinigten Daten der **Global Energy Forecasting Competition** @HONG2014357 und entwickeln zwei verschiedene Modelle, um die Netzlast zu prognostizieren. Die Vorhersagen und die tatsächlichen Werte werden mit Plotly interaktiv visualisiert, um die Modellleistung intuitiv zu vergleichen. Zusätzlich berechnen wir den Mean Absolute Percentage Error (MAPE) für Trainings-, Validierungs- und Testsets, um die Genauigkeit der Modelle zu bewerten.
+
+### Aufgaben
+
+1. **Datenaufteilung**: Teilen Sie die Zeitreihendaten in 70% Training, 15% Validierung und 15% Test auf, wobei die zeitliche Reihenfolge erhalten bleibt (kein Shuffling).
+2. **Modellentwicklung**: Entwickeln Sie zwei verschiedene Modelle zur Vorhersage der Netzlast z.B.:
+    - Modell 1: Lineare Regression mit Prädiktoren wie Wochentag, Stunde des Tages, Temperatur und einer [Interaktion](https://de.wikipedia.org/wiki/Interaktionseffekt) zwischen Wochentag und Stunde.
+    - Modell 2: Entscheidungsbaum mit denselben Prädiktoren, ergänzt um eine Transformation (z. B. quadratische Temperatur).
+3. *Fehlerbewertung*: Berechnen Sie den MAPE für Trainings-, Validierungs- und Testsets für beide Modelle.
+4. *Visualisierung*: Erstellen Sie eine interaktive Zeitreihenvisualisierung mit Plotly, die die tatsächliche Netzlast und die Vorhersagen beider Modelle für das Testset darstellt.

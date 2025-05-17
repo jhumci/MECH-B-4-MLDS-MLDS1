@@ -46,18 +46,77 @@ verfolgt wird.
 
 ## Beispiel: Vorhersage von Zeitungenverkäufen
 
-![](images/tv.png)
+```{python}
+#| echo: false
+#| classes: styled-output
+#| #| fig-cap: Simulierte Daten für eine multiple lineare Regression
+#| #| fig-label: fig:regression-linear-advanced-simulated-data
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
-::: {.callout-note} {.collapsed = "true"}
+# Simulate population data
+np.random.seed(0)
+X_1 = 300 * np.random.rand(100, 1)
+X_2 = 100 * np.random.rand(100, 1)
+X_3 = 200 * np.random.rand(100, 1)
+
+Y = 7 + 0.05 * X_1 + 0.1 * X_2 + 0.2 * X_3 + 5 * np.random.randn(100, 1) +  0.1 * X_1 * X_2
+
+# Simulate sample data
+sample_size = 100
+idx = np.random.choice(100, sample_size, replace=False)
+X_sample = [X_1[idx], X_2[idx], X_3[idx]]
+Y_sample = Y[idx]
+
+# Store data in a tidy dataframe
+data = pd.DataFrame({"X_1 (TV advertising spending (€))": X_sample[0].flatten(), "X_2 (Radio advertising spending (€))": X_sample[1].flatten(), "X_3 (Newspaper advertising spending (€))": X_sample[2].flatten(), "Y (Sales)": Y_sample.flatten()})
+```
+
+```{python}
+#| echo: false
+#| classes: styled-output
+#| fig-cap: Lineare Regression für die drei unabhängigen Variablen
+#| fig-label: fig:regression-linear-advanced-linear-regression_three
+from sklearn.linear_model import LinearRegression
+
+labels = ["TV advertising spending (€)", "Radio advertising spending (€)", "Newspaper advertising spending (€)"]
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 4), constrained_layout=True)
+
+for predictor in range(3):
+    ax = axes[predictor]
+    model = LinearRegression()
+    X_pred = X_sample[predictor].reshape(-1, 1)
+    model.fit(X_pred, Y_sample)
+    Y_pred = model.predict(X_pred)
+    
+    ax.scatter(X_sample[predictor], Y_sample, color='black', s=20)
+    ax.plot(X_sample[predictor], Y_pred, color='blue', linewidth=2)
+    ax.set_xlabel(labels[predictor])
+    if predictor == 0:
+        ax.set_ylabel("Sales")
+    ax.set_title(f"Linear Regression\n{labels[predictor]}")
+    ax.text(0.05, 0.95, 
+            f"$R^2$ = {model.score(X_pred, Y_sample):.2f}\nY = {model.intercept_[0]:.2f} + {model.coef_[0][0]:.2f} * X$", 
+            transform=ax.transAxes, 
+            fontsize=9, 
+            verticalalignment='top')
+
+plt.show()
+```
+
+
+::: {.callout-note}
 ### Wenn wir diese Grafik stellen, welche Fragen können wir uns stellen? Fallen diese Fragen in die Kategorie der Interpretation oder der Prognose?
 
-- Interpretation:
+- __Interpretation__:
     - Gibt es einen Zusammenhang zwischen den Werbeausgaben und den Verkäufen?
     - Wie stark ist der Zusammenhang?
     - Welche Ausgaben haben den größten Einfluss auf die Verkäufe?
     - Ist die Beziehung linear oder nicht-linear?
     - Gibt es Synergieeffekte zwischen den verschiedenen Werbekanälen?
-- Prognose:
+- __Prognose__:
     - Wie gut können wir die Verkäufe vorhersagen, wenn wir die Werbeausgaben kennen?
     - Wie genau sind unsere Vorhersagen?
 :::
@@ -76,8 +135,8 @@ $$
 
 Die Parameter $β_0$ und $β_1$ haben dabei bestimmt Bedeutungen:
 
-- $β_0$ ... intercept oder y-Achsenabschnitt
-- $β_1$ ... slope oder Steigung
+- $β_0$ ... __intercept__ oder y-Achsenabschnitt
+- $β_1$ ... __slope__ oder Steigung
 
 Als nächstes müssen wir einen Weg finden die Parameter $β_0$ und $β_1$ zu schätzen. Dafür gibt es verschiedene Methoden. Die Klassische Methode ist die Methode der kleinsten Quadrate (OLS). Diese Methode minimiert die Summe der quadrierten Abweichungen zwischen den beobachteten Werten und den vorhergesagten Werten. 
 
@@ -109,137 +168,140 @@ $$
 
 ::: {.callout-important}
 ### Kostenfunktion $J$
+
 Die Methode der kleinsten Quadrate kann auch als Optimierungsproblem formuliert werden, bei dem wir eine __Kostenfunktion__ (Cost Function) minimieren, die die Summe der quadrierten Fehler zwischen den beobachteten und den vorhergesagten Werten beschreibt. Die Kostenfunktion ist in diesem Fall die Residual Sum of Squares (RSS), die wir minimieren, um die besten Parameter für das Modell zu finden.
 Kostenfunktionen hängen in der Regel von Modell, den Daten und den Parametern ab und dienen dazu, die Güte des Modells zu bewerten und zu optimieren. Da wir meist ein festes Modell und Daten haben und nur die Parameter anpassen, können wir die Kostenfunktion als Funktion der Parameter betrachten, die wir minimieren wollen.
 Ein eng verwandtes Konzept ist die Verlustfunktion (Loss Function) oder Accuracy Measures, die in der Regel den Fehler zwischen den beobachteten und den vorhergesagten Werten beschreiben Die Kostenfunktion ist in der Regel eine Summe der Verlustfunktionen über alle Datenpunkte.
 :::
 
 
+::: {.callout-note}
 ## Schätzung der Parameter mittels Odinary Least Squares (OLS)
-
 Die Methode der kleinsten Quadrate (Ordinary Least Squares, OLS) wird verwendet, um die Parameter einer linearen Regression zu schätzen. Ziel ist es, die Gerade
 
-$$
-y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
-$$
+$$ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, $$
 
-so zu bestimmen, dass die Summe der quadrierten Fehler (Residual Sum of Squares, RSS) minimiert wird:
+wobei $y_i$ die beobachtete abhängige Variable, $\beta_0$ der Achsenabschnitt, $\beta_1$ die Steigung und $\varepsilon_i$ der Fehlerterm ist, so zu bestimmen, dass die Summe der quadrierten Fehler (Residual Sum of Squares, RSS) minimiert wird:
 
-$$
-RSS = \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right)^2.
-$$
+$$ RSS = \sum_{i=1}^{n} \left(y_i - \hat{y}i\right)^2 = \sum{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right)^2. $$
 
-### 1. Berechnung der Mittelwerte  
+Hierbei ist $\hat{y}_i = \beta_0 + \beta_1 x_i$ die geschätzte abhängige Variable. Im Folgenden leiten wir die optimalen Parameter $\hat{\beta}_0$ und $\hat{\beta}_1$ Schritt für Schritt her.
 
-Für spätere Berechnungen ist es nützlich, die Mittelwerte der Variablen $x$ und $y$ zu bestimmen:
+1. Berechnung der Mittelwerte
 
-$$
-\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad \bar{y} = \frac{1}{n} \sum_{i=1}^{n} y_i.
-$$
+Für die Herleitung der Parameter ist es hilfreich, zunächst die Mittelwerte der unabhängigen Variable $x$ und der abhängigen Variable $y$ zu berechnen:
 
-### 2. Minimierung der Kostenfunktion nach $\beta_1$
+$$ \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad \bar{y} = \frac{1}{n} \sum_{i=1}^{n} y_i. $$
 
-Um $\beta_1$ zu bestimmen, setzen wir die erste Ableitung der Kostenfunktion $J = RSS$ gleich null:
+Diese Mittelwerte werden später verwendet, um die Formeln für $\hat{\beta}_0$ und $\hat{\beta}_1$ zu vereinfachen.
 
-$$
-\frac{\partial RSS}{\partial \beta_1} = 0.
-$$
+2. Minimierung der Kostenfunktion nach $\hat{\beta}_1$
 
-Die Ableitung der Kostenfunktion lautet:
+Um den optimalen Wert für $\hat{\beta}_1$ zu finden, minimieren wir die Kostenfunktion $RSS$ durch Ableiten nach $\beta_1$ und Setzen der Ableitung gleich null:
 
-$$
-\frac{\partial RSS}{\partial \beta_1} = \frac{\partial}{\partial \beta_1} \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right)^2.
-$$
+$$ \frac{\partial RSS}{\partial \beta_1} = 0. $$
 
-::: {.callout-tip} {.collapsed = "true"}
-#### Anwendung der Kettenregel  
-Die Kettenregel besagt:
+Die Kostenfunktion lautet:
 
-$$
-[f(g(x))]' = f'(g(x)) \cdot g'(x),
-$$
+$$ RSS = \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right)^2. $$
 
-wobei hier $f(x) = x^2$ und $g(x) = y_i - \beta_0 - \beta_1 x_i$.
-:::
+Die partielle Ableitung nach $\beta_1$ erfordert die Anwendung der Kettenregel.
 
-Angewendet ergibt dies:
+::::: {.callout-note} 
+### Anwendung der Kettenregel
+Die Kettenregel ist ein zentrales Werkzeug in der Optimierung, da die Kostenfunktion $RSS$ eine zusammengesetzte Funktion ist. Für eine Funktion $f(g(x)) = [g(x)]^2$, wobei $g(x) = y_i - \beta_0 - \beta_1 x_i$, lautet die Ableitung:
 
-$$
-\frac{\partial RSS}{\partial \beta_1} = -2 \sum_{i=1}^{n} x_i \left(y_i - \beta_0 - \beta_1 x_i\right).
-$$
+$$ \frac{d}{dx} [g(x)]^2 = 2 \cdot g(x) \cdot g'(x). $$
 
-Setzen wir die Ableitung gleich null:
+In unserem Fall ist $g(\beta_1) = y_i - \beta_0 - \beta_1 x_i$, und die Ableitung von $g$ nach $\beta_1$ ergibt:
 
-$$
--2 \sum_{i=1}^{n} x_i \left(y_i - \beta_0 - \beta_1 x_i\right) = 0.
-$$
+$$ \frac{\partial}{\partial \beta_1} (y_i - \beta_0 - \beta_1 x_i) = -x_i. $$
 
-Vereinfachen der Gleichung:
+Somit wird die partielle Ableitung der Kostenfunktion:
 
-$$
-\sum_{i=1}^{n} x_i y_i - \beta_0 \sum_{i=1}^{n} x_i - \beta_1 \sum_{i=1}^{n} x_i^2 = 0.
-$$
+$$ \frac{\partial RSS}{\partial \beta_1} = \sum_{i=1}^{n} \frac{\partial}{\partial \beta_1} \left(y_i - \beta_0 - \beta_1 x_i\right)^2 = \sum_{i=1}^{n} 2 \left(y_i - \beta_0 - \beta_1 x_i\right) \cdot (-x_i). $$
 
-Setzen wir die Mittelwerte ein:
+Dies vereinfacht sich zu:
 
-$$
-\sum_{i=1}^{n} x_i y_i - \beta_0 n \bar{x} - \beta_1 \sum_{i=1}^{n} x_i^2 = 0.
-$$
+$$ \frac{\partial RSS}{\partial \beta_1} = -2 \sum_{i=1}^{n} x_i \left(y_i - \beta_0 - \beta_1 x_i\right). $$ 
 
-### 3. Minimierung der Kostenfunktion nach $\beta_0$
-
-Analog leiten wir $J$ nach $\beta_0$ ab:
-
-$$
-\frac{\partial RSS}{\partial \beta_0} = 0.
-$$
-
-$$
-\frac{\partial RSS}{\partial \beta_0} = -2 \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right).
-$$
+:::::
 
 Setzen wir die Ableitung gleich null:
 
-$$
-\sum_{i=1}^{n} y_i - \beta_0 \sum_{i=1}^{n} 1 - \beta_1 \sum_{i=1}^{n} x_i = 0.
-$$
+$$ -2 \sum_{i=1}^{n} x_i \left(y_i - \beta_0 - \beta_1 x_i\right) = 0. $$
 
-Da $\sum_{i=1}^{n} 1 = n$, folgt:
+Dividieren durch $-2$ ergibt:
 
-$$
-n \beta_0 + \beta_1 \sum_{i=1}^{n} x_i = \sum_{i=1}^{n} y_i.
-$$
+$$ \sum_{i=1}^{n} x_i \left(y_i - \beta_0 - \beta_1 x_i\right) = 0. $$
 
-Umformen ergibt:
+Ausklammern und Umformen führt zu:
 
-$$
-\beta_0 = \frac{1}{n} \sum_{i=1}^{n} y_i - \beta_1 \frac{1}{n} \sum_{i=1}^{n} x_i.
-$$
+$$ \sum_{i=1}^{n} x_i y_i - \beta_0 \sum_{i=1}^{n} x_i - \beta_1 \sum_{i=1}^{n} x_i^2 = 0. $$
 
-### 4. Einsetzen von $\beta_1$ in die Gleichung für $\beta_0$
+Mit $\sum_{i=1}^{n} x_i = n \bar{x}$ wird dies:
 
-Die optimale Steigung $\hat{\beta_1}$ erhält man durch:
+$$ \sum_{i=1}^{n} x_i y_i - \beta_0 n \bar{x} - \beta_1 \sum_{i=1}^{n} x_i^2 = 0. $$
 
-$$
-\hat{\beta_1} = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2}.
-$$
+3. Minimierung der Kostenfunktion nach $\hat{\beta}_0$
 
-Dies ist die Kovarianz zwischen $x$ und $y$ geteilt durch die Varianz von $x$ (vgl. Kapitel )
-Für den Achsenabschnitt $\hat{\beta_0}$ setzen wir $\hat{\beta_1}$ ein:
+Analog leiten wir die Kostenfunktion nach $\beta_0$ ab:
 
-$$
-\hat{\beta_0} = \bar{y} - \hat{\beta_1} \bar{x}.
-$$
+$$ \frac{\partial RSS}{\partial \beta_0} = 0. $$
 
-### 5. Ergebnis  
+Die partielle Ableitung lautet:
+
+$$ \frac{\partial RSS}{\partial \beta_0} = \sum_{i=1}^{n} \frac{\partial}{\partial \beta_0} \left(y_i - \beta_0 - \beta_1 x_i\right)^2 = -2 \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right). $$
+
+Setzen wir gleich null:
+
+$$ -2 \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right) = 0. $$
+
+Dividieren durch $-2$ ergibt:
+
+$$ \sum_{i=1}^{n} \left(y_i - \beta_0 - \beta_1 x_i\right) = 0. $$
+
+Dies führt zu:
+
+$$ \sum_{i=1}^{n} y_i - \beta_0 \sum_{i=1}^{n} 1 - \beta_1 \sum_{i=1}^{n} x_i = 0. $$
+
+Da $\sum_{i=1}^{n} 1 = n$ und $\sum_{i=1}^{n} x_i = n \bar{x}$, folgt:
+
+$$ \sum_{i=1}^{n} y_i - n \beta_0 - \beta_1 n \bar{x} = 0. $$
+
+Umformen nach $\beta_0$ ergibt:
+
+$$ n \beta_0 = \sum_{i=1}^{n} y_i - \beta_1 n \bar{x}. $$
+
+Teilen durch $n$ liefert:
+
+$$ \beta_0 = \frac{1}{n} \sum_{i=1}^{n} y_i - \beta_1 \frac{1}{n} \sum_{i=1}^{n} x_i = \bar{y} - \beta_1 \bar{x}. $$
+
+4. Berechnung von $\hat{\beta}_1$
+
+Um $\hat{\beta}_1$ zu bestimmen, lösen wir die Gleichung aus Schritt 2 weiter auf. Wir verwenden die Formel für $\hat{\beta}_1$, die sich aus der Minimierung ergibt. Eine alternative und intuitivere Darstellung ist:
+
+$$ \hat{\beta}1 = \frac{\sum{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n} (x_i - \bar{x})^2}. $$
+
+Diese Formel entspricht der Kovarianz von $x$ und $y$ geteilt durch die Varianz von $x$. Die Kovarianz misst, wie stark $x$ und $y$ gemeinsam variieren, während die Varianz die Streuung von $x$ beschreibt.
+
+5. Berechnung von $\hat{\beta}_0$
+
+Setzen wir $\hat{\beta}_1$ in die Gleichung für $\beta_0$ ein:
+
+$$ \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}. $$
+
+Dies stellt sicher, dass die Regressionsgerade durch den Mittelpunkt der Daten $(\bar{x}, \bar{y})$ verläuft.
+
+6. Ergebnis
 
 Die geschätzte Regressionsgerade lautet:
 
-$$
-\hat{y} = \hat{\beta_0} + \hat{\beta_1} x.
-$$
+$$ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x. $$
 
-Hiermit haben wir die OLS-Schätzung der Parameter $\beta_0$ und $\beta_1$ abgeschlossen.
+Mit den berechneten Werten für $\hat{\beta}_0$ und $\hat{\beta}_1$ ist die OLS-Schätzung der Parameter abgeschlossen. Diese Parameter minimieren die Summe der quadrierten Fehler und liefern das beste lineare Modell für die gegebenen Daten.
+:::
+
 
 
 ## Beispiel: Lineare Regression mit einer Variablen
@@ -373,7 +435,7 @@ Wenn wir die Ergebnisse der OLS-Schätzung betrachten, sehen wir einige Zusatzin
 
 #### Koeffizienten und deren Konfidenzintervalle
 
-Wir können die geschätzen Koeffizienten $\hat{\beta}_0$ und $\hat{\beta}_1$ sowie deren Konfidenzintervalle ablesen. Die Konfidenzintervalle geben an. Es wird davon ausgegangen, dass die Schätzer der Koeffizienten normalverteilt sind. Entsprechend sind die Konfidenzintervalle symmetrisch um den Schätzer und 95% der Werte liegen innerhalb von zwei Standardabweichung des Schätzers z.B:
+Wir können die geschätzen Koeffizienten (`coef`) $\hat{\beta}_0$ und $\hat{\beta}_1$ sowie deren Konfidenzintervalle `[0.025      0.975]` ablesen. Es wird davon ausgegangen, dass die Schätzer der Koeffizienten normalverteilt sind. Entsprechend sind die Konfidenzintervalle symmetrisch um den Schätzer und 95% der Werte liegen innerhalb von zwei Standardabweichung des Schätzers z.B:
 
 $$
 [CI_{0.025}^{\beta_0}, CI^{\beta_0}_{0.975}] = [8.1108 - 2 0.966 , 8.1108 + 2 0.966] = [6.193, 10.029]
@@ -386,21 +448,21 @@ Eine weitere wichtige Frage ist, ob ein Koeffizient (Parameter) tatsächlich sig
 - $H_0$: $\beta_1 = 0$ (kein Effekt)
 - $H_1$: $\beta_1 \neq 0$ (Effekt)
 
-Die Teststatistik $t$ gibt an, wie viele Standardabweichungen der Schätzer $\hat{\beta}_1$ vom Wert $0$ entfernt ist. Ein hoher $t$-Wert deutet darauf hin, dass der Schätzer signifikant von $0$ verschieden ist. Der $p$-Wert gibt die Wahrscheinlichkeit an, dass der beobachtete Effekt auftritt, wenn die Nullhypothese wahr ist. Ein $p$-Wert kleiner als $0.05$ wird oft als Hinweis darauf interpretiert, dass der Effekt signifikant ist.
+Die Teststatistik $t$ (`t`) gibt an, wie viele Standardabweichungen der Schätzer $\hat{\beta}_1$ vom Wert $0$ entfernt ist. Ein hoher $t$-Wert deutet darauf hin, dass der Schätzer signifikant von $0$ verschieden ist. Der $p$-Wert (`P>|t|`) gibt die Wahrscheinlichkeit an, dass der beobachtete Effekt auftritt, wenn die Nullhypothese wahr ist. Ein $p$-Wert kleiner als $0.05$ wird oft als Hinweis darauf interpretiert, dass der Effekt signifikant ist.
 
 Im Vorliegenden Fall können wir also die Nullhypothese, dass der Umsatz unabhängig von den Werbeausgaben ist mit hoher Konfidenz ablehnen.
 
 
-#### Koeffizient der Determination $R^2$
+#### Bestimmtheitsmaß $R^2$
 
-Der Koeffizient der Determination $R^2$ gibt an, wie gut das Modell die beobachteten Daten erklärt. Er liegt zwischen $0$ und $1$ und gibt den Anteil der Varianz der abhängigen Variable $Y$ an, der durch das Modell erklärt wird. Ein $R^2$ von $1$ bedeutet, dass das Modell alle Variationen in $Y$ erklärt, während ein $R^2$ von $0$ bedeutet, dass das Modell keine Variationen erklärt. In unserem Fall beträgt $R^2 = 0.41$, was darauf hindeutet, dass das Modell etwa $41\%$ der Variationen in den Verkäufen erklärt.
+Der das Bestimmtheitsmaß $R^2$ gibt an, wie gut das Modell die beobachteten Daten erklärt. Er liegt zwischen $0$ und $1$ und gibt den Anteil der Varianz der abhängigen Variable $Y$ an, der durch das Modell erklärt wird. Ein $R^2$ von $1$ bedeutet, dass das Modell alle Variationen in $Y$ erklärt, während ein $R^2$ von $0$ bedeutet, dass das Modell keine Variationen erklärt. In unserem Fall beträgt $R^2 = 0.41$, was darauf hindeutet, dass das Modell etwa $41\%$ der Variationen in den Verkäufen erklärt.
 
 Das Bestimmtheitsmaß $R^2$ ist definiert als:
 $$
 R^2 = \frac{TSS-RSS}{TSS} = 1- \frac{RSS}{TSS},
 $$
 
-wobei $RSS$ die Residual Sum of Squares und $TSS$ die Total Sum of Squares ist. $TSS$ ist die Summe der quadrierten Abweichungen der abhängigen Variable $Y$ von ihrem Mittelwert $\bar{y}$.
+wobei $RSS$ die Residual Sum of Squares (siehe oben) und $TSS$ die Total Sum of Squares ist. $TSS$ ist die Summe der quadrierten Abweichungen der abhängigen Variable $Y$ von ihrem Mittelwert $\bar{y}$.
 
 Die Varianz und TSS hängen eng miteinander zusammen:
 
@@ -408,7 +470,7 @@ $$
 TSS = \sum_{i=1}^{n} (y_i - \bar{y})^2 = n \text{Var}(Y).
 $$
 
-Intuitiv kann man sagen, R² gibt an, wie viel Prozent der Varianz der abhängigen Variable durch die unabhängigen Variablen erklärt wird, bzw. genauer. Wie veringern sich die Fehler, wenn man ein naives Mittel-Wert-Modells ($f(x)=\bar(y)$) durch das lineare Modell ersetzt.
+Intuitiv kann man sagen, R² gibt an, wie viel Prozent der Varianz der abhängigen Variable durch die unabhängigen Variablen erklärt wird, bzw. genauer: Wie veringern sich die Fehler, wenn man ein naives Mittel-Wert-Modells ($f(x)=\bar{y}$) durch das lineare Modell ersetzt.
 
 ```{python}
 #| classes: styled-output
@@ -431,7 +493,7 @@ plt.show()
 - Ein niedriger $R^2$ bedeutet nicht unbedingt, dass das Modell schlecht ist. Ein Modell mit einem niedrigen $R^2$ kann immer noch nützlich sein, wenn es die Beziehung zwischen den Variablen gut erklärt.
 - $R^2$ hängt von der Anzahl der Variablen im Modell ab. Ein Modell mit mehr Variablen wird tendenziell ein höheres $R^2$ haben, auch wenn es nicht besser ist.
 
-Die Folgede Abbildung zeigt zudem verschiende Zusammenhänge und den $R^2$ Wert für die jeweiligen Modelle. 
+Die folgede Abbildung zeigt zudem verschiende Zusammenhänge und den $R^2$ Wert für die jeweiligen Modelle. 
 :::
 
 
@@ -449,5 +511,7 @@ Damit eine Lineare Regression sinnvoll ist und die Schätzung der Parameter gut 
 - Unabhängigkeit: Die Beobachtungen sind unabhängig voneinander.
 - Homoskedastizität: Die Varianz der Fehler ist konstant.
 - Normalverteilung: Die Fehler sind normalverteilt.
-- Keine Multikollinearität: Die unabhängigen Variablen sind nicht stark miteinander korreliert.
+- Keine Multikollinearität: Die unabhängigen Variablen sind nicht stark miteinander korreliert
+
+Nach Lehrbuch sind die Annahmen für die lineare Regression immer zu testen, wenn wir Sie für eine statische Analyse und Interpretation verwenden wollen. In der Praxis, vorallem im Fall von Vorhersagen, sind die Annahmen jedoch oft nicht erfüllt, und es ist wichtig, die Robustheit der Ergebnisse zu überprüfen und gegebenenfalls alternative Modelle oder Transformationen in Betracht zu ziehen.
 :::

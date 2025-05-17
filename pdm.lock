@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:33a5e6c89c26aca13a4c4c487ae8921707a1e4b67e4ba378eaa8f7d3c44350d2"
+content_hash = "sha256:bdf8868ebcba9f2275101013f0eadfbced09d444b191e07cef04e8b8152c901f"
 
 [[metadata.targets]]
 requires_python = "==3.12.*"
@@ -1920,6 +1920,25 @@ files = [
     {file = "pyzmq-26.2.0-cp312-cp312-win_amd64.whl", hash = "sha256:2a50625acdc7801bc6f74698c5c583a491c61d73c6b7ea4dee3901bb99adb27a"},
     {file = "pyzmq-26.2.0-cp312-cp312-win_arm64.whl", hash = "sha256:4d29ab8592b6ad12ebbf92ac2ed2bedcfd1cec192d8e559e2e099f648570e19b"},
     {file = "pyzmq-26.2.0.tar.gz", hash = "sha256:070672c258581c8e4f640b5159297580a9974b026043bd4ab0470be9ed324f1f"},
+]
+
+[[package]]
+name = "quarto"
+version = "0.1.0"
+requires_python = ">=3.6"
+summary = "Python Interface to 'Quarto' Markdown Publishing System"
+groups = ["default"]
+marker = "python_version == \"3.12\""
+dependencies = [
+    "ipykernel",
+    "jupyter-core",
+    "nbclient",
+    "nbformat",
+    "pyyaml",
+]
+files = [
+    {file = "quarto-0.1.0-py3-none-any.whl", hash = "sha256:8138fc9d1bee6269a5436837baedc699a262be1478f96444d6f99029f1a114f0"},
+    {file = "quarto-0.1.0.tar.gz", hash = "sha256:d9a4978110204f5b9d3af39faa9e195083efcbac8f6a23789e29cb27c72ded15"},
 ]
 
 [[package]]
