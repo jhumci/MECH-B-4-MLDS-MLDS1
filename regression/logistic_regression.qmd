@@ -2,17 +2,324 @@
 lightbox: true
 ---
 
-# Logistic Regression {#sec-regression-logistic}
+# Klassifikation {#sec-regression-linear}
+
+Klassifikation ist eine Methode des überwachten Lernens, bei der die abhängige Variable $Y$ kategorisch ist, d.h., sie nimmt diskrete Werte an (z.B. "ja/nein" oder "USA/nicht USA"). Ziel der Klassifikation ist es, die Wahrscheinlichkeit zu schätzen, dass eine Beobachtung zu einer bestimmten Klasse gehört. Dieses Kapitel konzentriert sich auf binäre Klassifikation und verwendet den Auto-Datensatz, um die Konzepte anhand von `horsepower` und `weight` zu illustrieren.
+
+Wir klassifizieren, ob ein Auto aus den USA stammt (`origin == "USA"`, kodiert als 1) oder nicht (`origin != "USA"`, kodiert als 0), basierend auf `horsepower` und `weight`. Ein Scatterplot visualisiert die Daten, wobei die Klasse durch den Farbton (`hue`) dargestellt wird, und die Entscheidungsgrenze der logistischen Regression wird eingezeichnet.
+
+::: {.callout-warning collapse="true" title="Warum keine lineare Regression für Klassifikation?"}
+
+Die lineare Regression ist für kontinuierliche Zielvariablen geeignet, aber unpassend für binäre Klassifikation (z.B. $Y \in \{0, 1\}$), da sie:
+
+1. **Ungeeignete Vorhersagen** liefert: Die vorhergesagten Werte $\hat{y} = \beta_0 + \beta_1 X$ können beliebige reelle Zahlen sein, nicht nur Werte zwischen 0 und 1, wie es für Wahrscheinlichkeiten $p(Y=1 | X)$ erforderlich ist. Dies führt zu negativen oder >1 Wahrscheinlichkeiten.
+2. **Falsche Annahmen** trifft: Lineare Regression geht von normalverteilten Fehlern aus, während binäre Daten binomialverteilt sind.
+3. **Inadäquate Modellierung**: Sie kann die S-förmige Beziehung zwischen Prädiktoren und Wahrscheinlichkeiten nicht erfassen, wie es die logistische Regression mit der Sigmoid-Funktion $p(Y=1 | X) = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}$ tut.
+
+**Beispiel mit dem Auto-Datensatz**: Wir versuchen, zu klassifizieren, ob ein Auto aus den USA stammt (`origin == "USA"`, kodiert als 0/1), basierend auf `horsepower`. Eine lineare Regression wird mit einer logistischen Regression verglichen, und die Ergebnisse werden visualisiert.
+
+```{python}
+#| echo: true
+#| classes: styled-output
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.linear_model import LinearRegression
+import statsmodels.api as sm
+
+# Lade den Datensatz
+df = pd.read_csv(r"../_assets/regression/Auto_Data_Set_963_49.csv")
+df["origin"] = df["origin"].map({1: "USA", 2: "Europe", 3: "Japan"})
+df["is_usa"] = (df["origin"] == "USA").astype(int)
+
+# Prädiktor und Zielvariable
+X = df[["weight"]]
+y = df["is_usa"]
+
+# Modell 1: Lineare Regression
+lin_reg = LinearRegression()
+lin_reg.fit(X, y)
+y_pred_lin = lin_reg.predict(X)
+
+# Modell 2: Logistische Regression
+X_const = sm.add_constant(X)
+logit_model = sm.Logit(y, X_const).fit(disp=0)
+y_pred_logit = logit_model.predict(X_const)
+
+# Plot
+plt.figure(figsize=(8, 5))
+# Scatterplot mit hue für Klasse
+sns.scatterplot(x=df["weight"], y=df["is_usa"], hue=df["is_usa"], style=df["is_usa"], 
+                palette={0: "red", 1: "blue"}, markers={0: "o", 1: "s"}, 
+                legend="full")
+# Lineare Regression
+plt.plot(df["weight"], y_pred_lin, color="red", label="Lineare Regression")
+# Logistische Regression
+plt.plot(df["weight"], y_pred_logit, color="green", label="Logistische Regression", linestyle="", marker="*", markersize=3)
+plt.xlabel("Gewicht (lbs)")
+plt.ylabel("Klasse (0=nicht USA, 1=USA)")
+plt.title("Lineare vs. Logistische Regression: Klassifikation (USA vs. nicht USA)")
+
+plt.legend(title="Klasse", loc="upper left", labels=["USA", "nicht USA","Logistische Regression", "Lineare Regression"])
 
 
-Was sind Odds
+plt.grid(True, alpha=0.3)
+plt.show()
+```
 
-Beispiel Klassifikation
 
-Matrix
+Ergebnis und Interpretation: Der Plot zeigt, dass die lineare Regression ungeeignete Werte liefert: Für kleine horsepower-Werte werden negative Wahrscheinlichkeiten vorhergesagt, und für große Werte können Wahrscheinlichkeiten >1 auftreten. Die logistische Regression hingegen liefert eine S-förmige Kurve, die Wahrscheinlichkeiten korrekt zwischen 0 und 1 hält und die Daten besser modelliert.
 
-TP / FP / TPR 
+Fazit: Für binäre Klassifikation ist die logistische Regression die richtige Wahl, da sie die Anforderungen an Wahrscheinlichkeiten und die Verteilung der Daten berücksichtigt.
+:::
 
-F1 Score
 
-AUC, ROC
+## Logistische Regression
+
+
+
+
+Die logistische Regression ist ein Standardmodell für binäre Klassifikation. Sie schätzt die Wahrscheinlichkeit $p(Y=1 | X)$, dass $Y=1$ ist, gegeben die Prädiktoren $X$. Die logistische Funktion (Sigmoid-Funktion) stellt sicher, dass die vorhergesagte Wahrscheinlichkeit zwischen 0 und 1 liegt:
+
+$$
+p(Y=1 | X) = \frac{e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}
+$$
+
+Die Logit-Transformation erleichtert die Interpretation:
+
+$$
+\log\left(\frac{p}{1 - p}\right) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p
+$$
+
+Hierbei stellen $\frac{p}{1 - p}$ die *Odds* (Chancen) dar, dass $Y=1$ ist.
+
+### Beispiel mit dem Auto-Datensatz
+
+Wir klassifizieren, ob ein Auto aus den USA stammt (`origin == "USA"`), basierend auf `horsepower` und `weight`.
+
+```{python}
+import pandas as pd
+import statsmodels.api as sm
+
+# Lade den Datensatz
+df = pd.read_csv(r"../_assets/regression/Auto_Data_Set_963_49.csv")
+df["origin"] = df["origin"].map({1: "USA", 2: "Europe", 3: "Japan"})
+df["is_usa"] = (df["origin"] == "USA").astype(int)
+
+# Prädiktoren und Zielvariable
+X = df[["horsepower", "weight"]]
+X = sm.add_constant(X)
+y = df["is_usa"]
+
+# Fitte logistische Regression
+logit_model = sm.Logit(y, X).fit()
+print(logit_model.summary())
+```
+
+**Ergebnis**: Die Koeffizienten zeigen den Einfluss der Prädiktoren. Ein positiver Koeffizient für `weight` bedeutet, dass schwerere Autos eher aus den USA stammen, während ein negativer Koeffizient für `horsepower` darauf hinweist, dass Autos mit höherer Leistung weniger wahrscheinlich aus den USA kommen.
+
+
+
+##  Evaluierung der Ergebnisse
+
+### Confusion Matrix
+
+Die Confusion Matrix bewertet die Leistung eines Klassifikationsmodells, indem sie korrekte und falsche Vorhersagen in einer Tabelle darstellt:
+
+- **True Positives (TP)**: Korrekte positive Vorhersagen.
+- **True Negatives (TN)**: Korrekte negative Vorhersagen.
+- **False Positives (FP)**: Falsche positive Vorhersagen (Typ-I-Fehler).
+- **False Negatives (FN)**: Falsche negative Vorhersagen (Typ-II-Fehler).
+
+#### Beispiel mit dem Auto-Datensatz
+
+Wir klassifizieren Autos als "USA" oder "nicht USA" mit einem Schwellenwert von 0.5:
+
+```{python}
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+
+# Vorhersagen
+y_pred_prob = logit_model.predict(X)
+y_pred = (y_pred_prob > 0.5).astype(int)
+
+# Confusion Matrix
+cm = confusion_matrix(y, y_pred)
+print("Confusion Matrix:\n", cm)
+
+# Visualisierung
+plt.figure(figsize=(5, 5))
+plt.imshow(cm, cmap="Blues")
+plt.colorbar()
+plt.title("Confusion Matrix")
+plt.xlabel("Vorhergesagt")
+plt.ylabel("Tatsächlich")
+plt.xticks([0, 1], ["nicht USA", "USA"])
+plt.yticks([0, 1], ["nicht USA", "USA"])
+plt.show()
+```
+
+**Ergebnis**: Die Matrix könnte z.B. zeigen:  
+- TN = 200 (korrekt "nicht USA"),  
+- TP = 150 (korrekt "USA"),  
+- FP = 30 (falsch "USA"),  
+- FN = 20 (falsch "nicht USA").
+
+#### Beispiel: Corona-Test
+
+Ein Corona-Test-Beispiel verdeutlicht die Fehlerarten:
+
+| Hat Corona ($y$) | Testwahrscheinlichkeit ($\hat{p}(y)$) | Klassifikation (Schwelle 0.5) | Fehlerart |
+|------------------|------------------------------|-------------------------------|-----------|
+| 0                | 0.4                          | 0                             | TN        |
+| 1                | 0.9                          | 1                             | TP        |
+| 0                | 0.7                          | 1                             | FP        |
+| 1                | 0.4                          | 0                             | FN        |
+
+Die Confusion Matrix dazu:
+
+|                  | Vorhergesagt 0 | Vorhergesagt 1 |
+|------------------|----------------|----------------|
+| Tatsächlich 0    | TN = 1         | FP = 1         |
+| Tatsächlich 1    | FN = 1         | TP = 1         |
+
+Hier sehen wir, dass ein FN (falsch negativ) gefährlich sein könnte, da eine infizierte Person nicht erkannt wird.
+
+
+::: {.callout-tip collapse="true" title="Multi-Class Klassifikation: Confusion Matrix für dreifache Klassifikation"}
+
+Die Confusion Matrix für binäre Klassifikation lässt sich auf Multi-Class Klassifikation erweitern, indem sie für jede Klasse die korrekten und falschen Vorhersagen darstellt. Bei einer dreifachen Klassifikation mit Klassen $C_1, C_2, C_3$ (z.B. "USA", "Europe", "Japan") ist die Matrix eine $3 \times 3$-Tabelle, wobei:
+
+- **Diagonalelemente** ($cm_{ii}$): Anzahl der korrekten Vorhersagen für Klasse $i$ (True Positives für diese Klasse).
+- **Nicht-Diagonalelemente** ($cm_{ij}$, $i \neq j$): Anzahl der falschen Vorhersagen, bei denen Klasse $i$ tatsächlich ist, aber Klasse $j$ vorhergesagt wurde.
+- **Formel für Genauigkeit (Accuracy)**: $\text{Accuracy} = \frac{\sum_{i=1}^k cm_{ii}}{\sum_{i,j} cm_{ij}}$, wobei $k$ die Anzahl der Klassen ist.
+
+**Beispiel mit dem Auto-Datensatz**: Wir klassifizieren die Herkunft (`origin`) eines Autos in drei Klassen: "USA", "Europe", "Japan", basierend auf `weight` und `horsepower`. Eine logistische Regression (mit `multi_class="multinomial"`) wird verwendet, und die Confusion Matrix wird visualisiert.
+
+```{python}
+#| echo: true
+#| classes: styled-output
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
+
+# Lade den Datensatz
+df = pd.read_csv(r"../_assets/regression/Auto_Data_Set_963_49.csv")
+df["origin"] = df["origin"].map({1: "USA", 2: "Europe", 3: "Japan"})
+
+# Prädiktoren und Zielvariable
+X = df[["weight", "horsepower"]]
+y_multi = df["origin"]
+
+# Fitte logistische Regression für Multi-Class
+log_reg = LogisticRegression(multi_class="multinomial", max_iter=1000, random_state=42)
+log_reg.fit(X, y_multi)
+
+# Vorhersagen
+y_pred_multi = log_reg.predict(X)
+
+# Confusion Matrix
+cm_multi = confusion_matrix(y_multi, y_pred_multi, labels=["USA", "Europe", "Japan"])
+print("Confusion Matrix:\n", cm_multi)
+
+# Visualisierung
+plt.figure(figsize=(6, 6))
+sns.heatmap(cm_multi, annot=True, fmt="d", cmap="Blues", 
+            xticklabels=["USA", "Europe", "Japan"], 
+            yticklabels=["USA", "Europe", "Japan"])
+plt.title("Confusion Matrix: Dreifache Klassifikation (USA, Europe, Japan)")
+plt.xlabel("Vorhergesagt")
+plt.ylabel("Tatsächlich")
+plt.show()
+
+# Berechne Genauigkeit
+accuracy = np.trace(cm_multi) / np.sum(cm_multi)
+print(f"Genauigkeit: {accuracy:.2f}")
+```
+
+__Fazit__: Die Multi-Class Confusion Matrix ist ein mächtiges Werkzeug, um die Leistung eines Klassifikators für mehr als zwei Klassen zu bewerten. Sie ermöglicht eine detaillierte Analyse der Fehlerarten und hilft, Schwächen des Modells zu identifizieren.
+
+:::
+
+### Fehlermetriken für Klassifikation
+
+
+Bei der Bewertung eines Klassifikationsmodells liefert die Confusion Matrix detaillierte Informationen, aber einzelne Metriken wie Precision, Recall (Sensitivität), Spezifität und F1-Score fassen die Leistung prägnant zusammen. Diese Metriken sind besonders nützlich, um die Balance zwischen korrekten und falschen Vorhersagen zu verstehen, insbesondere bei unbalancierten Datensätzen.
+
+
+- __Precision (Präzision)__: Anteil der korrekten positiven Vorhersagen unter allen positiven Vorhersagen. Sie beantwortet: „Wie viele der als positiv klassifizierten Fälle sind tatsächlich positiv?“
+$\text{Precision} = \frac{TP}{TP + FP}$, wobei $TP$ True Positives und $FP$ False Positives sind.
+- __Recall__ (Sensitivität, True Positive Rate): Anteil der korrekt identifizierten positiven Fälle unter allen tatsächlichen positiven Fällen. Sie beantwortet: „Wie viele der tatsächlichen positiven Fälle wurden gefunden?“
+$\text{Recall} = \frac{TP}{TP + FN}$, wobei $FN$ False Negatives sind.
+- __Spezifität__ (True Negative Rate): Anteil der korrekt identifizierten negativen Fälle unter allen tatsächlichen negativen Fällen. Sie beantwortet: „Wie gut erkennt das Modell die negativen Fälle?“
+$\text{Spezifität} = \frac{TN}{TN + FP}$, wobei $TN$ True Negatives sind.
+- __F1-Score__: Harmonisches Mittel von Precision und Recall, um eine ausgewogene Metrik zu erhalten. Er ist besonders nützlich, wenn Precision und Recall unterschiedlich stark sind.
+$F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$.
+
+
+```{python}
+# Confusion Matrix
+cm = confusion_matrix(y, y_pred)
+tn, fp, fn, tp = cm.ravel()
+print("Confusion Matrix:\n", cm)
+
+# Berechne Metriken
+from sklearn.metrics import precision_score, recall_score, f1_score
+precision = precision_score(y, y_pred)
+recall= recall_score(y, y_pred)
+specificity = tn / (tn + fp)  # Spezifität manuell berechnet
+f1 = f1_score(y, y_pred)
+
+# Ausgabe in einer Tabelle
+metrics = pd.DataFrame({
+    "Metrik": ["Precision", "Recall (Sensitivität)", "Spezifität", "F1-Score"],
+    "Wert": [precision, recall, specificity, f1]
+})
+print("\nEvaluierungsmetriken:")
+print(metrics.round(2))
+```
+
+
+### ROC-Kurve und AUC
+
+
+Die **ROC-Kurve** (Receiver Operating Characteristic) zeigt die True Positive Rate (TPR) gegen die False Positive Rate (FPR) über verschiedene Schwellenwerte:
+
+- **TPR (Recall)**: $\frac{TP}{TP + FN}$
+- **FPR**: $\frac{FP}{FP + TN}$
+
+Die **AUC** (Area Under the Curve) misst die Gesamtleistung: AUC = 1 bedeutet perfekte Klassifikation, AUC = 0.5 entspricht einem Zufallsklassifikator.
+
+#### Beispiel mit dem Auto-Datensatz
+
+Wir berechnen die ROC-Kurve und AUC für unser Modell:
+
+```{python}
+from sklearn.metrics import roc_curve, auc
+
+# ROC-Kurve und AUC
+fpr, tpr, thresholds = roc_curve(y, y_pred_prob)
+roc_auc = auc(fpr, tpr)
+
+# Plot
+plt.figure(figsize=(6, 6))
+plt.plot(fpr, tpr, color="blue", label=f"AUC = {roc_auc:.2f}")
+plt.plot([0, 1], [0, 1], color="gray", linestyle="--")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("ROC-Kurve")
+plt.legend(loc="lower right")
+plt.show()
+```
+
+**Ergebnis**: Ein AUC von z.B. 0.85 zeigt eine gute Unterscheidungsfähigkeit des Modells zwischen "USA" und "nicht USA".
+
+
+
+## Fazit
+
+Die logistische Regression ist ein effektives Werkzeug zur binären Klassifikation, wie am Beispiel des Auto-Datensatzes gezeigt. Die Confusion Matrix liefert detaillierte Einblicke in die Vorhersagefehler, während die ROC-Kurve und AUC die Modellleistung über verschiedene Schwellenwerte bewerten. Diese Methoden helfen, fundierte Entscheidungen über die Klassifikation von Autos basierend auf `horsepower` und `weight` zu treffen.

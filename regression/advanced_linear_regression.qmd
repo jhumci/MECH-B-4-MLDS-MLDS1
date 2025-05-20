@@ -424,3 +424,103 @@ print(model.summary())
 
 Dieses Modell ist leistungsfähiger, aber die Interpretation erfordert ein tieferes Verständnis der Zusammenhänge und der Modellannahmen.
 
+## Matrixschreibweise der linearen Regression
+
+
+
+Die lineare Regression schätzt die abhängige Variable $y$ als lineare Kombination der Prädiktoren $x_1, x_2, \dots, x_p$ plus eines Intercepts. Mathematisch wird dies als Matrixmultiplikation dargestellt, was die Berechnung effizient macht, insbesondere bei vielen Beobachtungen und Prädiktoren.
+Formel
+Die lineare Regression für $n$ Beobachtungen und $p$ Prädiktoren (inkl. Intercept) lautet:
+$$\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$$
+
+- $\mathbf{y}$: Vektor der abhängigen Variable ($n \times 1$).
+- $\mathbf{X}$: Designmatrix ($n \times (p+1)$), enthält eine Spalte für den Intercept (konstante 1) und die Prädiktoren.
+- $\boldsymbol{\beta}$: Koeffizientenvektor ($((p+1) \times 1)$), enthält Intercept und Koeffizienten der Prädiktoren.
+- $\boldsymbol{\epsilon}$: Fehlervektor ($n \times 1$).
+
+Die vorhergesagten Werte sind:
+$$\hat{\mathbf{y}} = \mathbf{X} \boldsymbol{\beta}$$
+Matrixdarstellung mit Variablen
+Für die OLS-Regression mit mpg als abhängige Variable und Prädiktoren origin_Japan, origin_USA, horsepower, sqrt_horsepower lautet die Matrixform:
+
+$$
+\begin{bmatrix}
+\hat{y}_1 \\
+\hat{y}_2 \\
+\vdots \\
+\hat{y}_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & x_{1,\text{Japan}} & x_{1,\text{USA}} & x_{1,\text{hp}} & x_{1,\text{sqrt\_hp}} \\
+1 & x_{2,\text{Japan}} & x_{2,\text{USA}} & x_{2,\text{hp}} & x_{2,\text{sqrt\_hp}} \\
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+1 & x_{n,\text{Japan}} & x_{n,\text{USA}} & x_{n,\text{hp}} & x_{n,\text{sqrt\_hp}}
+\end{bmatrix}
+\begin{bmatrix}
+\beta_0 \\
+\beta_1 \\
+\beta_2 \\
+\beta_3 \\
+\beta_4
+\end{bmatrix}
+$$
+
+- $\beta_0$: Intercept (const).
+- $\beta_1, \beta_2$: Koeffizienten für origin_Japan, origin_USA.
+- $\beta_3, \beta_4$: Koeffizienten für horsepower, sqrt_horsepower.
+- $x_{i,\text{Japan}}, x_{i,\text{USA}}$: Dummy-Variablen (0 oder 1).
+- $x_{i,\text{hp}}, x_{i,\text{sqrt\_hp}}$: Werte für horsepower und dessen Quadratwurzel.
+
+### Konkretes Beispiel
+
+Nehmen wir die Koeffizienten aus der OLS-Ausgabe:
+
+- $\beta_0 = 95.6047$ (const)
+- $\beta_1 = 2.8432$ (origin_Japan)
+- $\beta_2 = -1.2807$ (origin_USA)
+- $\beta_3 = 0.3650$ (horsepower)
+- $\beta_4 = -10.9359$ (sqrt_horsepower)
+
+Für drei Beobachtungen aus dem Datensatz (angenommen):
+
+| Beobachtung | origin  | horsepower | sqrt_horsepower           |
+|-------------|---------|------------|---------------------------|
+| 1           | USA     | 130        | $\sqrt{130} \approx 11.40$|
+| 2           | Japan   | 88         | $\sqrt{88} \approx 9.38$  |
+| 3           | Europe  | 100        | $\sqrt{100} = 10.00$      |
+
+Die Designmatrix $\mathbf{X}$ für diese Beobachtungen ist:
+
+$$
+\mathbf{X} =
+\begin{bmatrix}
+1 & 0 & 1 & 130 & 11.40 \\
+1 & 1 & 0 & 88 & 9.38 \\
+1 & 0 & 0 & 100 & 10.00 \\
+\end{bmatrix}
+$$
+
+Der Koeffizientenvektor ist:
+
+$$
+\boldsymbol{\beta} =
+\begin{bmatrix}
+95.6047 \\
+2.8432 \\
+-1.2807 \\
+0.3650 \\
+-10.9359 \\
+\end{bmatrix}
+$$
+
+Die vorhergesagten Werte $\hat{\mathbf{y}}$ berechnen sich durch $\hat{\mathbf{y}} = \mathbf{X} \boldsymbol{\beta}$. Für Beobachtung 1 (USA):
+
+$$
+\begin{align*}
+\hat{y}_1 &= 95.6047 + 0 \cdot 2.8432 + 1 \cdot (-1.2807) + 130 \cdot 0.3650 + 11.40 \cdot (-10.9359) \\
+          &= 95.6047 - 1.2807 + 47.45 - 124.66 \\
+          &= 17.11
+\end{align*}
+$$
+
