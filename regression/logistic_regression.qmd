@@ -4,9 +4,9 @@ lightbox: true
 
 # Klassifikation {#sec-regression-linear}
 
-Klassifikation ist eine Methode des überwachten Lernens, bei der die abhängige Variable $Y$ kategorisch ist, d.h., sie nimmt diskrete Werte an (z.B. "ja/nein" oder "USA/nicht USA"). Ziel der Klassifikation ist es, die Wahrscheinlichkeit zu schätzen, dass eine Beobachtung zu einer bestimmten Klasse gehört. Dieses Kapitel konzentriert sich auf binäre Klassifikation und verwendet den Auto-Datensatz, um die Konzepte anhand von `horsepower` und `weight` zu illustrieren.
+Klassifikation ist eine Methode des überwachten Lernens, bei der die abhängige Variable $Y$ kategorisch ist, d.h., sie nimmt diskrete Werte an (z.B. "ja/nein" oder "USA/nicht USA"). Ziel der Klassifikation ist es, die Wahrscheinlichkeit zu schätzen, dass eine Beobachtung zu einer bestimmten Klasse gehört. Dieses Kapitel konzentriert sich auf binäre Klassifikation und verwendet den Auto-Datensatz.
 
-Wir klassifizieren, ob ein Auto aus den USA stammt (`origin == "USA"`, kodiert als 1) oder nicht (`origin != "USA"`, kodiert als 0), basierend auf `horsepower` und `weight`. Ein Scatterplot visualisiert die Daten, wobei die Klasse durch den Farbton (`hue`) dargestellt wird, und die Entscheidungsgrenze der logistischen Regression wird eingezeichnet.
+Wir klassifizieren, ob ein Auto aus den USA stammt (`origin == "USA"`, kodiert als 1) oder nicht (`origin != "USA"`, kodiert als 0), z.B. basierend auf `horsepower` und `weight`. In diesem Fall haben wir eine einzelne Dummy-Variable als Zielvariable, die angibt, ob das Auto aus den USA stammt oder nicht. 
 
 ::: {.callout-warning collapse="true" title="Warum keine lineare Regression für Klassifikation?"}
 
@@ -71,7 +71,6 @@ plt.show()
 
 Ergebnis und Interpretation: Der Plot zeigt, dass die lineare Regression ungeeignete Werte liefert: Für kleine horsepower-Werte werden negative Wahrscheinlichkeiten vorhergesagt, und für große Werte können Wahrscheinlichkeiten >1 auftreten. Die logistische Regression hingegen liefert eine S-förmige Kurve, die Wahrscheinlichkeiten korrekt zwischen 0 und 1 hält und die Daten besser modelliert.
 
-Fazit: Für binäre Klassifikation ist die logistische Regression die richtige Wahl, da sie die Anforderungen an Wahrscheinlichkeiten und die Verteilung der Daten berücksichtigt.
 :::
 
 
@@ -86,17 +85,19 @@ $$
 p(Y=1 | X) = \frac{e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}
 $$
 
-Die Logit-Transformation erleichtert die Interpretation:
+Diese Darstellung ist nicht-linear, was bedeutet, dass die Beziehung zwischen den Prädiktoren und der Wahrscheinlichkeit nicht linear ist. Wir können Sie also nicht mit dem OLS-Ansatz (Ordinary Least Squares) die optimalen Koeffizienten $\beta_0, \beta_1, \ldots, \beta_p$ finden.
+Allerdings können wir das Problem auch so umformulieren, dass wir eine Linearität herstellen:
 
 $$
 \log\left(\frac{p}{1 - p}\right) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p
 $$
 
-Hierbei stellen $\frac{p}{1 - p}$ die *Odds* (Chancen) dar, dass $Y=1$ ist.
+Hierbei stellen $\frac{p}{1 - p}$ die *Odds* (Chancen) dar, dass $Y=1$ ist. Die **Odds** sind das Verhältnis der Wahrscheinlichkeit, dass $Y=1$ ist, zu der Wahrscheinlichkeit, dass $Y=0$ ist. Anwendung finden Sie heute z.B. in Sportswetten, wo die Quoten die Chancen für den Gewinn eines Teams darstellen.
 
 ### Beispiel mit dem Auto-Datensatz
 
-Wir klassifizieren, ob ein Auto aus den USA stammt (`origin == "USA"`), basierend auf `horsepower` und `weight`.
+In der Anwendung verändert sich für uns wenig. Unsere Zielvariable `y` ist binär (Zugehörigkeit zur Klassen), und wir verwenden die logistische Regression, um die Wahrscheinlichkeit zu schätzen, dass ein Auto aus den USA stammt. Wir verwenden `horsepower` und `weight` als Prädiktoren.
+
 
 ```{python}
 import pandas as pd
@@ -117,20 +118,27 @@ logit_model = sm.Logit(y, X).fit()
 print(logit_model.summary())
 ```
 
-**Ergebnis**: Die Koeffizienten zeigen den Einfluss der Prädiktoren. Ein positiver Koeffizient für `weight` bedeutet, dass schwerere Autos eher aus den USA stammen, während ein negativer Koeffizient für `horsepower` darauf hinweist, dass Autos mit höherer Leistung weniger wahrscheinlich aus den USA kommen.
+**Ergebnis**: Die Koeffizienten zeigen den Einfluss der Prädiktoren. Ein positiver Koeffizient für `weight` bedeutet, dass schwerere Autos eher aus den USA stammen, während ein negativer Koeffizient für `horsepower` darauf hinweist, dass Autos mit höherer Leistung weniger wahrscheinlich aus den USA kommen. Allerdings sin die genauen Werte der Koeffizienten nicht direkt interpretierbar, da sie die Veränderung der Log-Odds darstellen.
 
 
 
-##  Evaluierung der Ergebnisse
+##  Evaluation der Ergebnisse
+
+Für jede Klassifikation mit dem Modell schätzen wir eine Wahrscheinlichkeit $p(Y=1 | X)$, die angibt, wie wahrscheinlich es ist, dass ein Auto aus den USA stammt. Hierbei können wir richtig liegen oder auch nicht.
+
+
+![](https://www.superheuristics.com/wp-content/uploads/2021/03/confusion4.png)
 
 ### Confusion Matrix
 
 Die Confusion Matrix bewertet die Leistung eines Klassifikationsmodells, indem sie korrekte und falsche Vorhersagen in einer Tabelle darstellt:
 
-- **True Positives (TP)**: Korrekte positive Vorhersagen.
-- **True Negatives (TN)**: Korrekte negative Vorhersagen.
-- **False Positives (FP)**: Falsche positive Vorhersagen (Typ-I-Fehler).
-- **False Negatives (FN)**: Falsche negative Vorhersagen (Typ-II-Fehler).
+- **True Positives (TP)**: Korrekte positive Vorhersagen (_USA, wenn wirklich aus USA_).
+- **True Negatives (TN)**: Korrekte negative Vorhersagen (_nicht USA, wenn nicht aus USA_).
+- **False Positives (FP)**: Falsche positive Vorhersagen (Typ-I-Fehler) (_USA, wenn nicht aus USA_).
+- **False Negatives (FN)**: Falsche negative Vorhersagen (Typ-II-Fehler) (_nicht USA, wenn wirklich aus USA_).
+
+Beim T-Test sind diese Fehler vergleichbar, wenn wir die Nullhypothese ablehnen, obwohl sie wahr ist (FP) oder die Nullhypothese nicht ablehnen, obwohl sie falsch ist (FN).
 
 #### Beispiel mit dem Auto-Datensatz
 
@@ -184,11 +192,29 @@ Die Confusion Matrix dazu:
 | Tatsächlich 0    | TN = 1         | FP = 1         |
 | Tatsächlich 1    | FN = 1         | TP = 1         |
 
-Hier sehen wir, dass ein FN (falsch negativ) gefährlich sein könnte, da eine infizierte Person nicht erkannt wird.
+Hier sehen wir, dass ein FN (falsch negativ) gefährlich sein könnte, da eine infizierte Person nicht erkannt wird. Eine Möglichkeit, dies zu verbessern, wäre die Anpassung des Schwellenwerts (Thresholds), um die Sensitivität zu erhöhen, auch wenn dies die Spezifität verringert. Wenn wir z.B. sicherstellen wollen, dass alle infizierten Personen erkannt werden, könnten wir den Schwellenwert auf 0.3 senken, was zu mehr TP führen würde, aber auch die FP erhöhen könnte.
+
+| Hat Corona ($y$) | Testwahrscheinlichkeit ($\hat{p}(y)$) | Klassifikation (Schwelle 0.3) | Fehlerart |
+|------------------|------------------------------|-------------------------------|-----------|
+| 0                | 0.4                          | 1                             | FP        |
+| 1                | 0.9                          | 1                             | TP        |
+| 0                | 0.7                          | 1                             | FP        |
+| 1                | 0.4                          | 1                             | TP        |
+
+
+Die Confusion Matrix dazu:
+
+|                  | Vorhergesagt 0 | Vorhergesagt 1 |
+|------------------|----------------|----------------|
+| Tatsächlich 0    | TN = 0         | FP = 2         |
+| Tatsächlich 1    | FN = 0         | TP = 2         |
+
+Die Anpassung des Schwellenwerts ist eine gängige Praxis, um die Balance zwischen Sensitivität und Spezifität zu steuern, abhängig von den Anforderungen der spezifischen Anwendung. Dabei wird das eigentliche Modell nicht verändert, sondern nur die Entscheidung, ab welcher Wahrscheinlichkeit eine Klasse zugeordnet wird.
 
 
 ::: {.callout-tip collapse="true" title="Multi-Class Klassifikation: Confusion Matrix für dreifache Klassifikation"}
 
+Es gibtverschiedene Möglichkeiten einen Klassifikator für mehr als zwei Klassen zu erstellen. Bei der logistischen Regression können einfach drei Klassen (z.B. "USA", "Europe", "Japan") als binäre Klassifikationen behandelt werden, indem für jede Klasse ein separates Modell trainiert wird. 
 Die Confusion Matrix für binäre Klassifikation lässt sich auf Multi-Class Klassifikation erweitern, indem sie für jede Klasse die korrekten und falschen Vorhersagen darstellt. Bei einer dreifachen Klassifikation mit Klassen $C_1, C_2, C_3$ (z.B. "USA", "Europe", "Japan") ist die Matrix eine $3 \times 3$-Tabelle, wobei:
 
 - **Diagonalelemente** ($cm_{ii}$): Anzahl der korrekten Vorhersagen für Klasse $i$ (True Positives für diese Klasse).
@@ -250,7 +276,8 @@ __Fazit__: Die Multi-Class Confusion Matrix ist ein mächtiges Werkzeug, um die 
 
 Bei der Bewertung eines Klassifikationsmodells liefert die Confusion Matrix detaillierte Informationen, aber einzelne Metriken wie Precision, Recall (Sensitivität), Spezifität und F1-Score fassen die Leistung prägnant zusammen. Diese Metriken sind besonders nützlich, um die Balance zwischen korrekten und falschen Vorhersagen zu verstehen, insbesondere bei unbalancierten Datensätzen.
 
-
+- __Genauigkeit (Accuracy)__: Anteil der korrekten Vorhersagen (TP + TN) an allen Vorhersagen. Sie beantwortet: „Wie viele Vorhersagen waren insgesamt korrekt?“
+$\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}$, wobei $TP$ True Positives, $TN$ True Negatives, $FP$ False Positives und $FN$ False Negatives sind.
 - __Precision (Präzision)__: Anteil der korrekten positiven Vorhersagen unter allen positiven Vorhersagen. Sie beantwortet: „Wie viele der als positiv klassifizierten Fälle sind tatsächlich positiv?“
 $\text{Precision} = \frac{TP}{TP + FP}$, wobei $TP$ True Positives und $FP$ False Positives sind.
 - __Recall__ (Sensitivität, True Positive Rate): Anteil der korrekt identifizierten positiven Fälle unter allen tatsächlichen positiven Fällen. Sie beantwortet: „Wie viele der tatsächlichen positiven Fälle wurden gefunden?“
@@ -287,7 +314,7 @@ print(metrics.round(2))
 ### ROC-Kurve und AUC
 
 
-Die **ROC-Kurve** (Receiver Operating Characteristic) zeigt die True Positive Rate (TPR) gegen die False Positive Rate (FPR) über verschiedene Schwellenwerte:
+Die **ROC-Kurve** (Receiver Operating Characteristic) zeigt die True Positive Rate (TPR) gegen die False Positive Rate (FPR) über verschiedene Schwellenwerte. Dies lässt einen Vergleich verschidener Modelle zu, da sie die Leistung über alle möglichen Schwellenwerte hinweg darstellt.
 
 - **TPR (Recall)**: $\frac{TP}{TP + FN}$
 - **FPR**: $\frac{FP}{FP + TN}$
