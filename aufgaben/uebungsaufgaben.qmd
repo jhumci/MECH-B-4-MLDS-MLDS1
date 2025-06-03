@@ -145,7 +145,7 @@ Eine kontinuierliche Verteilung beschreibt Zufallsvariablen, deren Werte jeden b
 ::: {.callout  collapse="true" title="Lösung Aufgabe 5"}
 **Korrelation vs. Kausalität:**
 
-* **Korrelation:** Beschreibt einen statistischen Zusammenhang zwischen zwei oder mehr Variablen, bei dem Änderungen in einer Variablen mit Änderungen in einer oder mehreren anderen Variablen einhergehen. Eine Korrelation sagt nichts über die Ursache-Wirkungs-Beziehung aus. Sie zeigt lediglich, dass die Variablen in einer bestimmten Weise *zusammenhängen*. Die Korrelation kann positiv (beide Variablen steigen oder fallen zusammen), negativ (eine Variable steigt, während die andere fällt) oder gar nicht vorhanden sein. Gemessen wird die Korrelation oft durch den Pearson-Korrelationskoeffizienten, der zwischen -1 und 1 liegt, wobei 0 keine Korrelation bedeutet.
+* **Korrelation:** Beschreibt einen statistischen Zusammenhang zwischen zwei oder mehr Variablen, bei dem Änderungen in einer Variablen mit Änderungen in einer oder mehreren anderen Variablen einhergehen. Eine Korrelation sagt nichts über die Ursache-Wirkungs-Beziehung aus. Sie zeigt lediglich, dass die Variablen in einer bestimmten Weise *zusammenhängen*. Die Korrelation kann positiv (beide Variablen steigen oder fallen zusammen), negativ (eine Variable steigt, während die andere fällt) oder gar nicht vorhanden sein. Gemessen wird die Korrelation oft durch den __Pearson-Korrelationskoeffizienten__, der zwischen -1 und 1 liegt, wobei 0 keine Korrelation bedeutet. Alternativ kann die __Kovarianz__ verwendet werden, die die Richtung der Beziehung angibt, aber nicht standardisiert ist.
 
 * **Kausalität:** Bedeutet, dass eine Variable (die Ursache) direkt eine Veränderung in einer anderen Variablen (die Wirkung) hervorruft. Eine kausale Beziehung impliziert immer eine Korrelation, aber eine Korrelation impliziert nicht zwangsläufig eine Kausalität. Hierzu sind oft Experimente oder spezielle statistische Methoden erforderlich, um die Richtung und das Vorhandensein der Ursache-Wirkungs-Beziehung zu bestätigen.
 
@@ -177,6 +177,7 @@ Kurz gesagt: Korrelation ist ein Werkzeug zur Entdeckung von Mustern, aber Kausa
 
 ::: {.callout  collapse="true" title="Lösung Aufgabe 6"}
 **Der Zentrale Grenzwertsatz in eigenen Worten:**
+Der Zentrale Grenzwertsatz besagt, dass die Summe unabhängiger, identisch verteilter Zufallsvariablen (z.B. Stichprobenmittelwerte) eine Normalverteilung annimmt, wenn die Stichprobengröße groß genug ist, unabhängig von der ursprünglichen Verteilung der Daten.
 Der Zentrale Grenzwertsatz (ZGS) besagt, dass, wenn man genügend große Stichproben aus *irgendeiner* Population zieht (egal welche Verteilungsform diese Population hat – sie kann schief, uniform oder jede andere Form haben), dann wird die Verteilung der *Mittelwerte dieser Stichproben* annähernd normalverteilt sein. Je größer die Stichprobengröße ist, desto besser nähert sich diese Stichprobenmittelwertverteilung einer Normalverteilung an. Das ist erstaunlich, da die ursprüngliche Population selbst nicht normalverteilt sein muss. Der Mittelwert dieser Verteilung der Stichprobenmittelwerte ist der wahre Populationsmittelwert, und ihre Standardabweichung ist der Standardfehler des Mittelwerts.
 
 **Bedeutung für die statistische Inferenz:**
@@ -282,7 +283,7 @@ Dies ist ein zweiseitiger Test, da wir prüfen, ob der Wert *abweicht* (größer
 
 #### 9. Multiple Lineare Regression
 
-* Erweitern Sie das Modell aus Aufgabe 7, indem Sie zusätzlich das Gewicht (`weight`) als Prädiktor für `mpg` aufnehmen.
+* Erweitern Sie das Modell aus Aufgabe 7, indem Sie zusätzlich das Gewicht (`weight`) und Herkunft (aus USA, Europa oder Japan) als Prädiktor für `mpg` aufnehmen.
     * Formulieren Sie das multiple lineare Regressionsmodell.
     * Würden Sie erwarten, dass die Koeffizienten für den Intercept und horsepower signifikant anders sind als im einfachen linearen Modell? Warum?
 
@@ -291,7 +292,7 @@ Dies ist ein zweiseitiger Test, da wir prüfen, ob der Wert *abweicht* (größer
 Das multiple lineare Regressionsmodell für `mpg` unter Verwendung von `horsepower` und `weight` lautet:
 
 $$
-\text{mpg} = \beta_0 + \beta_1 \cdot \text{horsepower} + \beta_2 \cdot \text{weight} + \epsilon
+\text{mpg} = \beta_0 + \beta_1 \cdot \text{horsepower} + \beta_2 \cdot \text{weight} + \beta_3 \text{from_US} + \beta_4 \text{from_EU} + \epsilon
 $$
 Wobei:
 * $\text{mpg}$ ist der Kraftstoffverbrauch (abhängige Variable).
@@ -300,11 +301,13 @@ Wobei:
 * $\beta_0$ ist der Achsenabschnitt.
 * $\beta_1$ ist der Steigungskoeffizient für `horsepower`.
 * $\beta_2$ ist der Steigungskoeffizient für `weight`.
+* $\beta_3$ ist der Koeffizient für die Herkunft des Autos (kategoriale Variable, hier als Dummy-Variablen kodiert: `from_US`).
+* $\beta_4$ ist der Koeffizient für die Herkunft des Autos (kategoriale Variable, hier als Dummy-Variablen kodiert: `from_EU`) alle anderen Autos kommen aus Japan.
 * $\epsilon$ ist der Fehlerterm.
 
 * **2. Erwartung bezüglich der Koeffizienten für den Intercept und `horsepower`:**
 * **Intercept ($\beta_0$):**
-    * Der Intercept könnte sich ändern, da wir nun zwei Prädiktoren haben. Der Wert von $\beta_0$ repräsentiert den geschätzten `mpg`, wenn sowohl `horsepower` als auch `weight` Null sind. Da es in der Praxis keine Autos mit 0 PS und 0 Gewicht gibt, ist die Interpretation des Intercepts in diesem Kontext oft weniger sinnvoll. Er dient hauptsächlich dazu, die Regressionsgerade korrekt zu positionieren.
+    * Der Intercept könnte sich ändern, da wir nun mehr Prädiktoren haben. Der Wert von $\beta_0$ repräsentiert den geschätzten `mpg`, wenn sowohl `horsepower` als auch `weight` Null sind. Da es in der Praxis keine Autos mit 0 PS und 0 Gewicht gibt, ist die Interpretation des Intercepts in diesem Kontext oft weniger sinnvoll. Er dient hauptsächlich dazu, die Regressionsgerade korrekt zu positionieren.
 
 
 :::
@@ -356,7 +359,7 @@ Der Bias-Varianz-Tradeoff ist ein zentrales Konzept im maschinellen Lernen, das 
 * **Bias (Verzerrung):**
     * **Was es ist:** Der Bias ist der Fehler, der durch vereinfachende Annahmen im Lernalgorithmus entsteht. Ein Modell mit hohem Bias ist zu einfach, um den zugrunde liegenden komplexen Zusammenhang in den Daten zu erfassen. Es "unterschätzt" die Komplexität der wahren Beziehung.
     * **Folge:** Führt zu **Underfitting** (Unteranpassung), d.h., das Modell ist auf den Trainingsdaten und erst recht auf neuen, ungesehenen Daten schlecht.
-    * **Beispiel:** Eine lineare Regression, die versucht, eine nicht-lineare Beziehung zu modellieren.
+    * **Beispiel:** Eine lineare Regression, die versucht, eine nicht-lineare Beziehung zu modellieren oder zu wenige Features verwendet, um die zugrunde liegende Struktur der Daten zu erfassen. 
 
 * **Varianz:**
     * **Was es ist:** Die Varianz ist der Fehler, der durch die Sensitivität des Modells gegenüber kleinen Schwankungen in den Trainingsdaten entsteht. Ein Modell mit hoher Varianz ist zu komplex oder zu "empfindlich" für die Trainingsdaten und lernt dabei auch das Rauschen in den Daten.
@@ -369,7 +372,7 @@ Der Bias-Varianz-Tradeoff ist ein zentrales Konzept im maschinellen Lernen, das 
 
 #### 12. Kreuzvalidierung
 
-* Erläutern Sie das Prinzip der $k$-Fold-Kreuzvalidierung. Warum ist diese Methode dem einfachen Train-Test-Split bei der Modellbewertung oft überlegen? Nennen Sie mindestens einen Vorteil. Was ist ein Vorteil der $k$-Fold-Kreuzvalidierung gegenübert der Leave-One-Out-Kreuzvalidierung (LOOCV)?
+* Erläutern Sie das Prinzip der $k$-Fold-Kreuzvalidierung (gerne mit einer Sizze). Warum ist diese Methode dem einfachen Train-Test-Split bei der Modellbewertung oft überlegen? Nennen Sie mindestens einen Vorteil. Was ist ein Vorteil der $k$-Fold-Kreuzvalidierung gegenübert der Leave-One-Out-Kreuzvalidierung (LOOCV)?
 
 ::: {.callout collapse="true" title="Lösung Aufgabe 12"}
 **Prinzip der $k$-Fold-Kreuzvalidierung:**
@@ -407,7 +410,7 @@ Die $k$-Fold-Kreuzvalidierung hat gegenüber der LOOCV (Leave-One-Out-Kreuzvalid
 
 #### 13. Logistische Regression - Grundlagen
 
-* Erklären Sie, warum lineare Regression für binäre Klassifikationsprobleme ungeeignet ist. Wie löst die logistische Regression dieses Problem?
+* Erklären Sie, warum lineare Regression für binäre Klassifikationsprobleme ungeeignet ist. Wie löst die logistische Regression dieses Problem? Wie viel Aussagekraft haben die Koeffizienten in der logistischen Regression im Vergleich zu denen in der linearen Regression?
 
 ::: {.callout  collapse="true" title="Lösung Aufgabe 13"}
 **Warum Lineare Regression für binäre Klassifikationsprobleme ungeeignet ist:**
@@ -419,13 +422,6 @@ Die lineare Regression ist aus folgenden Gründen für solche Probleme ungeeigne
 1.  **Ungeeignete Vorhersagewerte:**
     * Die lineare Regression versucht, $Y = \beta_0 + \beta_1 X + \epsilon$ zu schätzen. Die vorhergesagten Werte $\hat{Y}$ können jedoch beliebige reelle Zahlen annehmen ($\pm \infty$).
     * Bei binären Daten ist $Y$ jedoch 0 oder 1. Wenn wir die linearen Vorhersagen als Wahrscheinlichkeiten interpretieren würden ($P(Y=1|X)$), könnten diese Werte kleiner als 0 oder größer als 1 sein, was als Wahrscheinlichkeit mathematisch unsinnig ist.
-
-2.  **Falsche Annahmen über den Fehlerterm:**
-    * Lineare Regression geht davon aus, dass die Fehlerterme ($\epsilon$) normalverteilt sind und eine konstante Varianz (Homoskedastizität) aufweisen.
-    * Bei binären Daten ist der Fehlerterm nicht normalverteilt. Da $Y$ nur 0 oder 1 sein kann, ist der Fehler $\epsilon = Y - \hat{Y}$. Wenn $\hat{Y}$ beispielsweise eine Wahrscheinlichkeit ist, können die Fehler nur $1 - \hat{Y}$ oder $0 - \hat{Y}$ sein, was zu einer nicht-normalen und heteroskedastischen Fehlerverteilung führt (die Varianz hängt von der Wahrscheinlichkeit $p$ ab).
-
-3.  **Fehlinterpretierbarkeit der Koeffizienten:**
-    * In der linearen Regression wird $\beta_1$ als die durchschnittliche Änderung in $Y$ für eine Einheit Änderung in $X$ interpretiert. Bei binären Daten wäre dies eine Änderung in $0/1$, was schwer sinnvoll zu interpretieren ist.
 
 **Wie die logistische Regression dieses Problem löst:**
 
@@ -447,10 +443,8 @@ Die logistische Regression löst diese Probleme, indem sie die Lineare Regressio
         $$
     * Diese Sigmoid-Funktion hat die Eigenschaft, dass sie jeden reellen Wert als Eingabe akzeptiert und eine Ausgabe im Bereich von 0 bis 1 liefert. Dadurch können die Vorhersagen direkt als Wahrscheinlichkeiten interpretiert werden.
 
-3.  **Natürliche Modellierung der binomischen Verteilung:**
-    * Die logistische Regression geht von der Annahme aus, dass die abhängige Variable einer **Bernoulli-Verteilung** (oder Binomialverteilung für mehrere Versuche) folgt, was für binäre Daten angemessen ist.
+3. Die Richtung der Koeffizienten in der logistischen Regression bleibt ähnlich wie in der linearen Regression: Ein positiver Koeffizient ($\beta_i > 0$) bedeutet, dass eine Erhöhung von $X_i$ die Wahrscheinlichkeit erhöht, dass $Y=1$ (z.B. "Kunde kauft"), während ein negativer Koeffizient ($\beta_i < 0$) die Wahrscheinlichkeit verringert. Allerdings ist der Wert schwer zu interpretieren, da er nicht direkt die Änderung der Wahrscheinlichkeit angibt, sondern die Änderung der Log-Odds.
 
-Zusammenfassend löst die logistische Regression das Problem der ungeeigneten Vorhersagewerte und Annahmen der linearen Regression, indem sie eine nicht-lineare Transformation verwendet, um die Wahrscheinlichkeit eines binären Ereignisses vorherzusagen, deren Werte natürlicherweise zwischen 0 und 1 liegen.
 :::
 
 #### 14. Konfidenzintervalle
@@ -752,7 +746,7 @@ Um Reproduzierbarkeit zu gewährleisten, sollten alle Datenbereinigungs- und Tra
 Gegeben sei eine Stichprobe von Autogeschwindigkeiten (in mph): $[60, 65, 70, 72, 75, 80, 85, 90]$.
 
 * Berechnen Sie den Mittelwert und die Standardabweichung dieser Stichprobe.
-* Angenommen, diese Geschwindigkeiten sind annähernd normalverteilt. Wie würden Sie die Geschwindigkeit von 72 mph in einen Z-Wert umwandeln? Interpretieren Sie das Ergebnis.
+* Angenommen, diese Geschwindigkeiten sind annähernd normalverteilt. Wie würden Sie die Geschwindigkeit von 72 mph in einen Z-Wert umwandeln? Interpretieren Sie das Ergebnis (Skizze).
 
 ::: {.callout  collapse="true" title="Lösung Aufgabe 1"}
 **Mittelwert ($\bar{X}$):**
@@ -777,7 +771,7 @@ $$
 
 #### 2. Wahrscheinlichkeitsberechnung - Normalverteilung
 
-Die Lebensdauer von Glühbirnen sei normalverteilt mit einem Mittelwert von $1200$ Stunden und einer Standardabweichung von $150$ Stunden.
+Die Lebensdauer von Glühbirnen sei normalverteilt mit einem Mittelwert von $1200$ Stunden und einer Standardabweichung von $150$ Stunden. Auf für Skizzen der Verteilung und der Wahrscheinlichkeiten gibt es Teilpunkte.
 
 * Wie groß ist die Wahrscheinlichkeit, dass eine zufällig ausgewählte Glühbirne weniger als $1000$ Stunden brennt?
 * Wie groß ist die Wahrscheinlichkeit, dass sie zwischen $1100$ und $1300$ Stunden brennt? (Verwenden Sie eine [Z-Tabelle](https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle) oder einen Taschenrechner/Software für die Normalverteilung).
@@ -849,12 +843,13 @@ Sie haben die folgenden Beobachtungen für $X$ (Werbeausgaben in Tsd. €) und $
 * $X = [10, 20, 30, 40, 50]$
 * $Y = [5, 12, 18, 25, 30]$
 
-* Schätzen Sie die Parameter $\beta_0$ (Achsenabschnitt) und $\beta_1$ (Steigung) der einfachen linearen Regression $Y = \beta_0 + \beta_1 X + \epsilon$ mittels der Formeln für die Kleinste-Quadrate-Schätzung oder eine Skizze:
+* Schätzen Sie die Parameter $\beta_0$ (Achsenabschnitt) und $\beta_1$ (Steigung) der einfachen linearen Regression $Y = \beta_0 + \beta_1 X + \epsilon$ mittels der Formeln für die Kleinste-Quadrate-Schätzung oder einer Skizze:
     * $\beta_1 = \frac{\sum (X_i - \bar{X})(Y_i - \bar{Y})}{\sum (X_i - \bar{X})^2}$
     * $\beta_0 = \bar{Y} - \beta_1 \bar{X}$
 * Interpretieren Sie die geschätzten Koeffizienten.
 
 ::: {.callout  collapse="true" title="Lösung Aufgabe 4"}
+
 **1. Mittelwerte berechnen:**
 $\bar{X} = \frac{10+20+30+40+50}{5} = \frac{150}{5} = 30$
 $\bar{Y} = \frac{5+12+18+25+30}{5} = \frac{90}{5} = 18$
@@ -891,11 +886,12 @@ $Y = -0.9 + 0.63 X$
 
 #### 5. Hypothesentest - Einstichproben-t-Test
 
-Ein Hersteller behauptet, dass seine neuen Batterien eine durchschnittliche Lebensdauer von $50$ Stunden haben ($\mu_0 = 50$). Eine Stichprobe von $25$ Batterien ergibt eine durchschnittliche Lebensdauer von $48$ Stunden mit einer Standardabweichung von $5$ Stunden.
+Ein Hersteller behauptet, dass seine neuen Batterien eine durchschnittliche Lebensdauer von $50$ Stunden haben ($\mu_0 = 50$). Eine Stichprobe von $25$ Batterien ergibt eine durchschnittliche Lebensdauer von $48$ Stunden mit einer Standardabweichung von $5$ Stunden. 
 
 * Führen Sie einen Einstichproben-t-Test durch, um zu prüfen, ob die wahre Lebensdauer signifikant von $50$ Stunden abweicht (zweiseitiger Test) bei einem Signifikanzniveau von $\alpha = 0.05$.
 * Berechnen Sie die Teststatistik $t = \frac{\bar{X} - \mu_0}{\frac{S}{\sqrt{n}}}$.
 * Vergleichen Sie den berechneten $t$-Wert mit dem kritischen $t$-Wert oder dem p-Wert (wenn Sie eine $t$-Tabelle oder Software verwenden können). Was ist Ihre Schlussfolgerung?
+* Es gibt wieder Teilpunkte für die Skizze von der Hypothesentest-Skizze, der Teststatistik und dem kritischen Bereich.
 
 ::: {.callout  collapse="true" title="Lösung Aufgabe 5"}
 Gegeben: $\mu_0 = 50$, $n = 25$, $\bar{X} = 48$, $S = 5$.
@@ -1022,6 +1018,9 @@ Sie haben die folgenden beobachteten ($Y$) und vorhergesagten ($\hat{Y}$) Werte:
 * Berechnen Sie den Mean Squared Error (MSE) und den Root Mean Squared Error (RMSE) für diese Vorhersagen.
 * MSE $= \frac{1}{n} \sum (Y_i - \hat{Y}_i)^2$
 * RMSE $= \sqrt{MSE}$
+* MAPE $= \frac{1}{n} \sum |Y_i - \hat{Y}_i|$ (optional, aber hilfreich für die Interpretation).
+
+* Welchen Nachteil kann der MAPE haben?
 
 ::: {.callout collapse="true" title="Lösung Aufgabe 8"}
 Gegeben:
@@ -1048,6 +1047,13 @@ $$
 RMSE = \sqrt{MSE} = \sqrt{1.75} \approx 1.3228
 $$
 Der MSE beträgt $1.75$ und der RMSE beträgt ungefähr $1.3228$.
+
+**5. Mean Absolute Percentage Error (MAPE) berechnen (optional):**
+$$
+MAPE = \frac{1}{n} \sum \left| \frac{Y_i - \hat{Y}_i}{Y_i} \right| = \frac{1}{4} \left( \left| \frac{10 - 11}{10} \right| + \left| \frac{15 - 14}{15} \right| + \left| \frac{20 - 21}{20} \right| + \left| \frac{25 - 23}{25} \right| \right)
+$$
+
+Der MAPE hat einen Nachteil, da er bei Werten von $Y_i$ nahe Null sehr große prozentuale Fehlerwerte erzeugen kann. Dies kann zu einer Verzerrung führen, wenn die tatsächlichen Werte sehr klein sind, was die Interpretation des MAPE erschwert. Daher sollte der MAPE mit Vorsicht verwendet werden, insbesondere wenn die Daten Werte nahe Null enthalten. Im Extremfall kann der MAPE sogar unendlich werden, wenn $Y_i = 0$.
 :::
 
 #### 9. Konfusionsmatrix & Metriken
