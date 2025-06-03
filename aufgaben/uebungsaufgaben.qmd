@@ -1112,8 +1112,8 @@ Für diese Aufgabe nutzen wir den loan50-Datensatz, der 50 Beobachtungen über K
 Die relevante Kreuztabelle aus dem Skript ist wie folgt gegeben:
 
 ```
-homeownership  False  True
-homeownership             
+second_income  False  True
+             
 Mortgage          20     6
 Own                2     1
 Rent              18     3
