@@ -308,8 +308,6 @@ Wobei:
 * **2. Erwartung bezüglich der Koeffizienten für den Intercept und `horsepower`:**
 * **Intercept ($\beta_0$):**
     * Der Intercept könnte sich ändern, da wir nun mehr Prädiktoren haben. Der Wert von $\beta_0$ repräsentiert den geschätzten `mpg`, wenn sowohl `horsepower` als auch `weight` Null sind. Da es in der Praxis keine Autos mit 0 PS und 0 Gewicht gibt, ist die Interpretation des Intercepts in diesem Kontext oft weniger sinnvoll. Er dient hauptsächlich dazu, die Regressionsgerade korrekt zu positionieren.
-
-
 :::
 
 #### 10. Fehlermaße in der Regression
@@ -342,7 +340,7 @@ Sowohl MSE als auch RMSE sind Maße für die durchschnittliche Größe der Fehle
 Der RMSE wird dem MSE aus einem entscheidenden Grund oft vorgezogen:
 
 * **Interpretierbarkeit in der Originaleinheit:** Das größte Argument für RMSE ist, dass seine Einheit dieselbe ist wie die der abhängigen Variablen, während die Einheit des MSE die quadrierte Einheit ist. Dies macht den RMSE wesentlich **leichter interpretierbar** im Kontext des Problems.
-    * Wenn Sie beispielsweise den Preis eines Hauses vorhersagen (in Euro), wäre ein RMSE von 10.000 € intuitiver zu verstehen als ein MSE von 100.000.000 $€^2$. Der RMSE gibt direkt an, wie groß die durchschnittliche Abweichung der Vorhersagen in den originalen Einheiten der abhängigen Variablen ist.
+    * Wenn Sie beispielsweise den Preis eines Hauses vorhersagen (in Euro), wäre ein RMSE von 10.000 € intuitiver zu verstehen als ein MSE von 100.000.000 €. Der RMSE gibt direkt an, wie groß die durchschnittliche Abweichung der Vorhersagen in den originalen Einheiten der abhängigen Variablen ist.
 
 Obwohl beide Maße ähnliche Informationen über die Modellleistung liefern (ein niedrigerer Wert ist immer besser), ist die intuitive Verständlichkeit des RMSE ein großer Vorteil für die Kommunikation der Modellergebnisse. Das MSE ist jedoch nützlich, weil die Quadrierung die Ableitung erleichtert, was es zu einem bevorzugten Kriterium für die Optimierung in vielen Algorithmen macht. Für die Präsentation der Ergebnisse wird dann oft der RMSE berechnet.
 :::
