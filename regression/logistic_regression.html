@@ -397,7 +397,7 @@ Warum keine lineare Regression für Klassifikation?
 <li><strong>Inadäquate Modellierung</strong>: Sie kann die S-förmige Beziehung zwischen Prädiktoren und Wahrscheinlichkeiten nicht erfassen, wie es die logistische Regression mit der Sigmoid-Funktion <span class="math inline">\(p(Y=1 | X) = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}\)</span> tut.</li>
 </ol>
 <p><strong>Beispiel mit dem Auto-Datensatz</strong>: Wir versuchen, zu klassifizieren, ob ein Auto aus den USA stammt (<code>origin == "USA"</code>, kodiert als 0/1), basierend auf <code>horsepower</code>. Eine lineare Regression wird mit einer logistischen Regression verglichen, und die Ergebnisse werden visualisiert.</p>
-<div id="bef838aa" class="cell styled-output" data-execution_count="1">
+<div id="6e60a6d0" class="cell styled-output" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -469,7 +469,7 @@ p(Y=1 | X) = \frac{e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}{1 + e^{\bet
 <section id="beispiel-mit-dem-auto-datensatz" class="level3" data-number="10.1.1">
 <h3 data-number="10.1.1" class="anchored" data-anchor-id="beispiel-mit-dem-auto-datensatz"><span class="header-section-number">10.1.1</span> Beispiel mit dem Auto-Datensatz</h3>
 <p>In der Anwendung verändert sich für uns wenig. Unsere Zielvariable <code>y</code> ist binär (Zugehörigkeit zur Klassen), und wir verwenden die logistische Regression, um die Wahrscheinlichkeit zu schätzen, dass ein Auto aus den USA stammt. Wir verwenden <code>horsepower</code> und <code>weight</code> als Prädiktoren.</p>
-<div id="72419dd9" class="cell" data-execution_count="2">
+<div id="d98ee410" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -496,7 +496,7 @@ Dep. Variable:                 is_usa   No. Observations:                  392
 Model:                          Logit   Df Residuals:                      389
 Method:                           MLE   Df Model:                            2
 Date:                Tue, 03 Jun 2025   Pseudo R-squ.:                  0.3589
-Time:                        13:52:15   Log-Likelihood:                -166.26
+Time:                        14:20:06   Log-Likelihood:                -166.26
 converged:                       True   LL-Null:                       -259.33
 Covariance Type:            nonrobust   LLR p-value:                 3.788e-41
 ==============================================================================
@@ -528,7 +528,7 @@ weight         0.0027      0.000      6.671      0.000       0.002       0.003
 <section id="beispiel-mit-dem-auto-datensatz-1" class="level4" data-number="10.2.1.1">
 <h4 data-number="10.2.1.1" class="anchored" data-anchor-id="beispiel-mit-dem-auto-datensatz-1"><span class="header-section-number">10.2.1.1</span> Beispiel mit dem Auto-Datensatz</h4>
 <p>Wir klassifizieren Autos als “USA” oder “nicht USA” mit einem Schwellenwert von 0.5:</p>
-<div id="58ce4d19" class="cell" data-execution_count="3">
+<div id="b4bea019" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -726,7 +726,7 @@ Multi-Class Klassifikation: Confusion Matrix für dreifache Klassifikation
 <li><strong>Formel für Genauigkeit (Accuracy)</strong>: <span class="math inline">\(\text{Accuracy} = \frac{\sum_{i=1}^k cm_{ii}}{\sum_{i,j} cm_{ij}}\)</span>, wobei <span class="math inline">\(k\)</span> die Anzahl der Klassen ist.</li>
 </ul>
 <p><strong>Beispiel mit dem Auto-Datensatz</strong>: Wir klassifizieren die Herkunft (<code>origin</code>) eines Autos in drei Klassen: “USA”, “Europe”, “Japan”, basierend auf <code>weight</code> und <code>horsepower</code>. Eine logistische Regression (mit <code>multi_class="multinomial"</code>) wird verwendet, und die Confusion Matrix wird visualisiert.</p>
-<div id="4c212f35" class="cell styled-output" data-execution_count="4">
+<div id="fef7c4ce" class="cell styled-output" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -820,7 +820,7 @@ Multi-Class Klassifikation: Confusion Matrix für dreifache Klassifikation
 <ul>
 <li><strong>F1-Score</strong>: Harmonisches Mittel von Precision und Recall, um eine ausgewogene Metrik zu erhalten. Er ist besonders nützlich, wenn Precision und Recall unterschiedlich stark sind. <span class="math display">\[F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}\]</span>.</li>
 </ul>
-<div id="dcbd95cf" class="cell" data-execution_count="5">
+<div id="b357f26e" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion Matrix</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(y, y_pred)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>tn, fp, fn, tp <span class="op">=</span> cm.ravel()</span>
@@ -865,7 +865,7 @@ Evaluierungsmetriken:
 <section id="beispiel-mit-dem-auto-datensatz-2" class="level4" data-number="10.2.3.1">
 <h4 data-number="10.2.3.1" class="anchored" data-anchor-id="beispiel-mit-dem-auto-datensatz-2"><span class="header-section-number">10.2.3.1</span> Beispiel mit dem Auto-Datensatz</h4>
 <p>Wir berechnen die ROC-Kurve und AUC für unser Modell:</p>
-<div id="2a6d2342" class="cell" data-execution_count="6">
+<div id="4ea5df3e" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve, auc</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ROC-Kurve und AUC</span></span>
