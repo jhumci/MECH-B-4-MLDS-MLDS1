@@ -83,7 +83,6 @@ Erklären Sie die folgenden deskriptiven Statistiken: Arithmetischer Mittelwert,
 - Maximum: Der größte Wert in der Datenreihe. Auch hier kann ein einzelner extrem hoher Wert den Maximumwert stark beeinflussen.
 - Interquartilsabstand (IQR): Der IQR misst die Spannweite der mittleren 50% der Daten und ist robust gegenüber Ausreißern, da er nur die Quartile berücksichtigt.
 
-
 :::
 
 #### 3. Grundlagen der Verteilungen
@@ -110,6 +109,7 @@ Eine kontinuierliche Verteilung beschreibt Zufallsvariablen, deren Werte jeden b
 
 * **Beispiel 2: T-Verteilung**
     * Beschreibung: Eine Verteilung, die ähnlich wie die Normalverteilung aussieht, aber dickere Ränder hat. Sie wird häufig verwendet, wenn die Stichprobengröße klein ist und die Populationsstandardabweichung unbekannt ist.
+:::
 
 #### 4. Datenvisualisierung
 
