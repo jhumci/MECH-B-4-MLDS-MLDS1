@@ -431,7 +431,7 @@ Interpreation und Prognose
 </section>
 <section id="beispiel-vorhersage-von-zeitungenverkäufen" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="beispiel-vorhersage-von-zeitungenverkäufen"><span class="header-section-number">7.2</span> Beispiel: Vorhersage von Zeitungenverkäufen</h2>
-<div id="b7a76a98" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression_three" data-execution_count="2">
+<div id="57abd391" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression_three" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -615,7 +615,7 @@ Anwendung der Kettenregel
 Y = 7 + 0.05 \cdot X + \epsilon
 \]</span></p>
 <p>generiert, wobei <span class="math inline">\(\epsilon\)</span> ein normalverteilter Fehler mit einer Standardabweichung von <span class="math inline">\(5\)</span> ist.</p>
-<div id="c7fd2ced" class="cell styled-output" data-execution_count="3">
+<div id="907cca9f" class="cell styled-output" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -643,7 +643,7 @@ Y = 7 + 0.05 \cdot X + \epsilon
 4                        19.244249  12.709316</code></pre>
 </div>
 </div>
-<div id="c4e21e7e" class="cell styled-output" data-fig-label="fig-tv-advertising" data-execution_count="4">
+<div id="b3d63810" class="cell styled-output" data-fig-label="fig-tv-advertising" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot data</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(X, Y)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"TV advertising spending (€)"</span>)</span>
@@ -660,7 +660,7 @@ Y = 7 + 0.05 \cdot X + \epsilon
 </div>
 </div>
 <p>Nun können wir unsere Formel für die OLS-Schätzung der Parameter <span class="math inline">\(\beta_0\)</span> und <span class="math inline">\(\beta_1\)</span> anwenden:</p>
-<div id="61ed816c" class="cell styled-output" data-execution_count="5">
+<div id="5662472b" class="cell styled-output" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate means</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>X_mean <span class="op">=</span> np.mean(X_sample)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Y_mean <span class="op">=</span> np.mean(Y_sample)</span>
@@ -684,7 +684,7 @@ Intercept (beta_0): 8.110755387236143</code></pre>
 <section id="scikit-learn" class="level3" data-number="7.4.1">
 <h3 data-number="7.4.1" class="anchored" data-anchor-id="scikit-learn"><span class="header-section-number">7.4.1</span> <code>scikit-learn</code></h3>
 <p><a href="https://scikit-learn.org/stable/"><code>scikit-learn</code></a> ist eine der bekanntesten Bibliotheken für maschinelles Lernen in Python. Sie bietet eine Vielzahl von Algorithmen und Werkzeugen für die Modellierung und Analyse von Daten. Wir werden es später und im kommenden Semester noch ausführlich verwenden.</p>
-<div id="cfe489fc" class="cell styled-output" data-execution_count="6">
+<div id="cf29f042" class="cell styled-output" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Defines what kind of model we want to use</span></span>
@@ -708,7 +708,7 @@ Intercept (beta_0): 8.110755387236143</code></pre>
 <section id="statsmodels" class="level3" data-number="7.4.2">
 <h3 data-number="7.4.2" class="anchored" data-anchor-id="statsmodels"><span class="header-section-number">7.4.2</span> <code>statsmodels</code></h3>
 <p><a href="https://www.statsmodels.org/stable/index.html"><code>statsmodels</code></a> ist eine Bibliothek für statistische Modellierung in Python. Sie bietet eine Vielzahl von statistischen Modellen und Tests, darunter auch die lineare Regression. Die Ausgabe von <code>statsmodels</code> ist oft detaillierter und enthält mehr statistische Informationen als die von <code>scikit-learn</code>.</p>
-<div id="69abb5eb" class="cell styled-output" data-execution_count="7">
+<div id="539e63c3" class="cell styled-output" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regression model</span></span>
@@ -724,7 +724,7 @@ Dep. Variable:                      y   R-squared:                       0.419
 Model:                            OLS   Adj. R-squared:                  0.413
 Method:                 Least Squares   F-statistic:                     70.80
 Date:                Tue, 03 Jun 2025   Prob (F-statistic):           3.29e-13
-Time:                        13:50:43   Log-Likelihood:                -302.46
+Time:                        13:51:58   Log-Likelihood:                -302.46
 No. Observations:                 100   AIC:                             608.9
 Df Residuals:                      98   BIC:                             614.1
 Df Model:                           1                                         
@@ -756,7 +756,7 @@ Arbeit mit DataFrames und Formula-Strings
 </div>
 <div class="callout-body-container callout-body">
 <p>Anstelle die Daten in einem Numpy-Array zu speichern, können wir auch ein Pandas DataFrame verwenden. Dies hat den Vorteil, dass wir die Spalten mit ihren Namen ansprechen können und so den Code besser lesbar machen. Zudem läss sich die lineare Regression auch mit Hilfe von Formel-Strings durchführen, die die Beziehung zwischen den Variablen angeben.</p>
-<div id="af6503ab" class="cell styled-output" data-execution_count="8">
+<div id="0fbf7db0" class="cell styled-output" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DataFrame</span></span>
@@ -796,7 +796,7 @@ R^2 = \frac{TSS-RSS}{TSS} = 1- \frac{RSS}{TSS},
 TSS = \sum_{i=1}^{n} (y_i - \bar{y})^2 = n \text{Var}(Y).
 \]</span></p>
 <p>Intuitiv kann man sagen, R² gibt an, wie viel Prozent der Varianz der abhängigen Variable durch die unabhängigen Variablen erklärt wird, bzw. genauer: Wie veringern sich die Fehler, wenn man ein naives Mittel-Wert-Modells (<span class="math inline">\(f(x)=\bar{y}\)</span>) durch das lineare Modell ersetzt.</p>
-<div id="b7f707b8" class="cell styled-output" data-fig-label="fig-tv-advertising" data-execution_count="9">
+<div id="cf77ecae" class="cell styled-output" data-fig-label="fig-tv-advertising" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot data</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(X, Y)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot(X, beta_0 <span class="op">+</span> beta_1 <span class="op">*</span> X, color<span class="op">=</span><span class="st">"red"</span>, label<span class="op">=</span><span class="st">"OLS regression"</span>)</span>
