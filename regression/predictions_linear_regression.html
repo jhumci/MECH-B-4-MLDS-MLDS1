@@ -378,7 +378,7 @@ window.Quarto = {
 <h2 data-number="9.1" class="anchored" data-anchor-id="anwendungsfall-vorhersage-des-verbrauchs-eines-einzelnen-autos"><span class="header-section-number">9.1</span> Anwendungsfall: Vorhersage des Verbrauchs eines einzelnen Autos</h2>
 <p><strong>Ziel</strong>: Wir möchten den Kraftstoffverbrauch (<code>mpg</code>, Meilen pro Gallone) eines einzelnen Autos basierend auf Prädiktoren wie Leistung (<code>horsepower</code>) und Herkunft (<code>origin</code>) vorhersagen. Dies ist ein typisches Problem des überwachten Lernens, bei dem wir ein Modell trainieren, um eine kontinuierliche abhängige Variable (<span class="math inline">\(Y\)</span>) aus unabhängigen Variablen (<span class="math inline">\(\vec{X}\)</span>) zu schätzen.</p>
 <p><strong>Beispiel</strong>: Gegeben ein Auto mit 120 PS und Herkunft „Japan“, wie hoch ist der zu erwartende Verbrauch? Wir verwenden den Auto-Datensatz, um ein lineares Regressionsmodell zu trainieren und Vorhersagen zu treffen.</p>
-<div id="570c4395" class="cell styled-output" data-execution_count="1">
+<div id="86444526" class="cell styled-output" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -429,7 +429,7 @@ window.Quarto = {
 <p>Der <span class="math display">\[RSS\]</span> ist nur schwer interpretierbar, da er von der Anzahl der Beobachtungen abhängt. Daher verwenden wir den Mean Squared Error (MSE), um den RSS zu normalisieren und die durchschnittliche Abweichung pro Beobachtung zu erhalten. Der Mean Squared Error (MSE) ist der durchschnittliche quadratische Fehler, der durch Division des RSS durch die Anzahl der Beobachtungen <span class="math inline">\(n\)</span> berechnet wird:</p>
 <p><span class="math display">\[MSE = \frac{1}{n} \sum_{j=1}^n (y_j - \hat{y}_j)^2\]</span></p>
 <p><strong>Beispiel</strong>: Wir berechnen den MSE für das obige Modell auf den Trainingsdaten.</p>
-<div id="11858ccb" class="cell styled-output" data-execution_count="2">
+<div id="6e4ca39e" class="cell styled-output" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -483,7 +483,7 @@ Der RMSE ist die Quadratwurzel des MSE und hat die gleiche Einheit wie die abhä
 Der MAPE misst den durchschnittlichen absoluten prozentualen Fehler. Er ist besonders nützlich, wenn relative Fehler (z. B. in Prozent) wichtiger sind als absolute Fehler, aber er kann problematisch sein, wenn <span class="math inline">\(y_j\)</span> nahe null liegt.</p></li>
 </ul>
 <p><strong>Beispiel</strong>: Berechnung von MSE, RMSE und MAPE mit <code>scikit-learn</code> basierend auf Vorhersagen eines Modells.</p>
-<div id="330e9e9b" class="cell styled-output" data-execution_count="3">
+<div id="ccd4dc16" class="cell styled-output" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, mean_absolute_percentage_error</span>
@@ -536,7 +536,7 @@ MAPE: 15.95%</code></pre>
 <p>Das Ziel ist ein Modell mit minimalem Gesamtfehler, der sich aus Bias, Varianz und unvermeidbarem Fehler zusammensetzt:</p>
 <p><span class="math display">\[\text{Expected Error}^2 = \text{Variance} + \text{Bias}^2 + \text{Variance of Error Terms}\]</span></p>
 <p><strong>Beispiel</strong>: Wir vergleichen drei Modelle mit unterschiedlicher Komplexität.</p>
-<div id="35217dc7" class="cell styled-output" data-execution_count="4">
+<div id="f5ca4fcf" class="cell styled-output" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -620,7 +620,7 @@ MSE Modell 5 (Entscheidungsbaum): 0.00</code></pre>
 <h3 data-number="9.1.5" class="anchored" data-anchor-id="erklärung-bias-varianz-tradeoff-über-modellkomplexität-mit-tvt-split"><span class="header-section-number">9.1.5</span> Erklärung Bias-Varianz-Tradeoff über Modellkomplexität (mit TVT-Split)</h3>
 <p>Um den Bias-Varianz-Tradeoff zu untersuchen, wiederholen wir das Experiment mit einem Trainings-Validierungs-Test-Split (TVT-Split) von 75-15-15%, um die Modelle auf Trainings-, Validierungs- und Testdaten zu bewerten. Dies ermöglicht es, die Generalisierungsfähigkeit der Modelle zu überprüfen und Überanpassung zu erkennen. Wir vergleichen fünf Modelle mit zunehmender Komplexität, einschließlich eines nicht-linearen Entscheidungsbaums, und plotten die Mean Squared Error (MSE)-Werte für Training, Validation und Test, um den Einfluss der Modellkomplexität zu visualisieren.</p>
 <p><strong>Experiment</strong>: Wir teilen den Auto-Datensatz in 75% Training, 15% Validierung und 15% Test auf, trainieren die Modelle auf den Trainingsdaten, berechnen den MSE für alle Datensets und stellen die Ergebnisse grafisch dar.</p>
-<div id="dac5d16c" class="cell styled-output" data-execution_count="5">
+<div id="20d70ab2" class="cell styled-output" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -791,7 +791,7 @@ Für Zeitreihendaten, bei denen die Reihenfolge wichtig ist, wird eine zeitliche
 <strong>Nachteile</strong>: Weniger Daten für Training/Validierung, da keine zufällige Aufteilung möglich ist.</p></li>
 </ul>
 <p><strong>Beispiel</strong>: Berechnung des MSE für Modell 4 (komplexes lineares Modell) mit k-Fold CV (<span class="math inline">\(k=5\)</span>), LOOCV und Zeitreihen-CV unter Verwendung von <code>scikit-learn</code>. Für Zeitreihen-CV wird angenommen, dass die Daten nach <code>year</code> sortiert sind.</p>
-<div id="2ce262bd" class="cell styled-output" data-execution_count="6">
+<div id="4339f797" class="cell styled-output" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold, LeaveOneOut, TimeSeriesSplit</span>
