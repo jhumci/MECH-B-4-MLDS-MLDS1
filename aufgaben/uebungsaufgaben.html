@@ -618,7 +618,7 @@ Lösung Aufgabe 5
 <div class="callout-body-container callout-body">
 <p><strong>Korrelation vs.&nbsp;Kausalität:</strong></p>
 <ul>
-<li><p><strong>Korrelation:</strong> Beschreibt einen statistischen Zusammenhang zwischen zwei oder mehr Variablen, bei dem Änderungen in einer Variablen mit Änderungen in einer oder mehreren anderen Variablen einhergehen. Eine Korrelation sagt nichts über die Ursache-Wirkungs-Beziehung aus. Sie zeigt lediglich, dass die Variablen in einer bestimmten Weise <em>zusammenhängen</em>. Die Korrelation kann positiv (beide Variablen steigen oder fallen zusammen), negativ (eine Variable steigt, während die andere fällt) oder gar nicht vorhanden sein. Gemessen wird die Korrelation oft durch den Pearson-Korrelationskoeffizienten, der zwischen -1 und 1 liegt, wobei 0 keine Korrelation bedeutet.</p></li>
+<li><p><strong>Korrelation:</strong> Beschreibt einen statistischen Zusammenhang zwischen zwei oder mehr Variablen, bei dem Änderungen in einer Variablen mit Änderungen in einer oder mehreren anderen Variablen einhergehen. Eine Korrelation sagt nichts über die Ursache-Wirkungs-Beziehung aus. Sie zeigt lediglich, dass die Variablen in einer bestimmten Weise <em>zusammenhängen</em>. Die Korrelation kann positiv (beide Variablen steigen oder fallen zusammen), negativ (eine Variable steigt, während die andere fällt) oder gar nicht vorhanden sein. Gemessen wird die Korrelation oft durch den <strong>Pearson-Korrelationskoeffizienten</strong>, der zwischen -1 und 1 liegt, wobei 0 keine Korrelation bedeutet. Alternativ kann die <strong>Kovarianz</strong> verwendet werden, die die Richtung der Beziehung angibt, aber nicht standardisiert ist.</p></li>
 <li><p><strong>Kausalität:</strong> Bedeutet, dass eine Variable (die Ursache) direkt eine Veränderung in einer anderen Variablen (die Wirkung) hervorruft. Eine kausale Beziehung impliziert immer eine Korrelation, aber eine Korrelation impliziert nicht zwangsläufig eine Kausalität. Hierzu sind oft Experimente oder spezielle statistische Methoden erforderlich, um die Richtung und das Vorhandensein der Ursache-Wirkungs-Beziehung zu bestätigen.</p></li>
 </ul>
 <p><strong>Selbstgewähltes Beispiel:</strong></p>
@@ -658,7 +658,7 @@ Lösung Aufgabe 6
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><strong>Der Zentrale Grenzwertsatz in eigenen Worten:</strong> Der Zentrale Grenzwertsatz (ZGS) besagt, dass, wenn man genügend große Stichproben aus <em>irgendeiner</em> Population zieht (egal welche Verteilungsform diese Population hat – sie kann schief, uniform oder jede andere Form haben), dann wird die Verteilung der <em>Mittelwerte dieser Stichproben</em> annähernd normalverteilt sein. Je größer die Stichprobengröße ist, desto besser nähert sich diese Stichprobenmittelwertverteilung einer Normalverteilung an. Das ist erstaunlich, da die ursprüngliche Population selbst nicht normalverteilt sein muss. Der Mittelwert dieser Verteilung der Stichprobenmittelwerte ist der wahre Populationsmittelwert, und ihre Standardabweichung ist der Standardfehler des Mittelwerts.</p>
+<p><strong>Der Zentrale Grenzwertsatz in eigenen Worten:</strong> Der Zentrale Grenzwertsatz besagt, dass die Summe unabhängiger, identisch verteilter Zufallsvariablen (z.B. Stichprobenmittelwerte) eine Normalverteilung annimmt, wenn die Stichprobengröße groß genug ist, unabhängig von der ursprünglichen Verteilung der Daten. Der Zentrale Grenzwertsatz (ZGS) besagt, dass, wenn man genügend große Stichproben aus <em>irgendeiner</em> Population zieht (egal welche Verteilungsform diese Population hat – sie kann schief, uniform oder jede andere Form haben), dann wird die Verteilung der <em>Mittelwerte dieser Stichproben</em> annähernd normalverteilt sein. Je größer die Stichprobengröße ist, desto besser nähert sich diese Stichprobenmittelwertverteilung einer Normalverteilung an. Das ist erstaunlich, da die ursprüngliche Population selbst nicht normalverteilt sein muss. Der Mittelwert dieser Verteilung der Stichprobenmittelwerte ist der wahre Populationsmittelwert, und ihre Standardabweichung ist der Standardfehler des Mittelwerts.</p>
 <p><strong>Bedeutung für die statistische Inferenz:</strong> Der Zentrale Grenzwertsatz ist fundamental für die statistische Inferenz, da er es uns ermöglicht, Schlussfolgerungen über eine Population zu ziehen, selbst wenn wir ihre ursprüngliche Verteilung nicht kennen.</p>
 <ol type="1">
 <li><strong>Hypothesentests:</strong> Er ist die Grundlage für viele parametrische Hypothesentests (z.B. <span class="math inline">\(t\)</span>-Tests, <span class="math inline">\(z\)</span>-Tests). Durch ihn können wir annehmen, dass die Stichprobenmittelwerte normalverteilt sind, selbst wenn die Einzeldaten nicht normalverteilt sind. Das ermöglicht die Verwendung von Standard-Normalverteilungs- oder <span class="math inline">\(t\)</span>-Verteilungs-Tabellen, um p-Werte zu berechnen und Hypothesen zu testen.</li>
@@ -795,7 +795,7 @@ Lösung Aufgabe 8
 <section id="multiple-lineare-regression" class="level4">
 <h4 class="anchored" data-anchor-id="multiple-lineare-regression">9. Multiple Lineare Regression</h4>
 <ul>
-<li>Erweitern Sie das Modell aus Aufgabe 7, indem Sie zusätzlich das Gewicht (<code>weight</code>) als Prädiktor für <code>mpg</code> aufnehmen.
+<li>Erweitern Sie das Modell aus Aufgabe 7, indem Sie zusätzlich das Gewicht (<code>weight</code>) und Herkunft (aus USA, Europa oder Japan) als Prädiktor für <code>mpg</code> aufnehmen.
 <ul>
 <li>Formulieren Sie das multiple lineare Regressionsmodell.</li>
 <li>Würden Sie erwarten, dass die Koeffizienten für den Intercept und horsepower signifikant anders sind als im einfachen linearen Modell? Warum?</li>
@@ -815,13 +815,13 @@ Lösung Aufgabe 9
 <div class="callout-body-container callout-body">
 <p><strong>1. Formulierung des multiplen linearen Regressionsmodells:</strong> Das multiple lineare Regressionsmodell für <code>mpg</code> unter Verwendung von <code>horsepower</code> und <code>weight</code> lautet:</p>
 <p><span class="math display">\[
-\text{mpg} = \beta_0 + \beta_1 \cdot \text{horsepower} + \beta_2 \cdot \text{weight} + \epsilon
-\]</span> Wobei: * <span class="math inline">\(\text{mpg}\)</span> ist der Kraftstoffverbrauch (abhängige Variable). * <span class="math inline">\(\text{horsepower}\)</span> ist die Leistung des Autos (unabhängige Variable 1). * <span class="math inline">\(\text{weight}\)</span> ist das Gewicht des Autos (unabhängige Variable 2). * <span class="math inline">\(\beta_0\)</span> ist der Achsenabschnitt. * <span class="math inline">\(\beta_1\)</span> ist der Steigungskoeffizient für <code>horsepower</code>. * <span class="math inline">\(\beta_2\)</span> ist der Steigungskoeffizient für <code>weight</code>. * <span class="math inline">\(\epsilon\)</span> ist der Fehlerterm.</p>
+\text{mpg} = \beta_0 + \beta_1 \cdot \text{horsepower} + \beta_2 \cdot \text{weight} + \beta_3 \text{from_US} + \beta_4 \text{from_EU} + \epsilon
+\]</span> Wobei: * <span class="math inline">\(\text{mpg}\)</span> ist der Kraftstoffverbrauch (abhängige Variable). * <span class="math inline">\(\text{horsepower}\)</span> ist die Leistung des Autos (unabhängige Variable 1). * <span class="math inline">\(\text{weight}\)</span> ist das Gewicht des Autos (unabhängige Variable 2). * <span class="math inline">\(\beta_0\)</span> ist der Achsenabschnitt. * <span class="math inline">\(\beta_1\)</span> ist der Steigungskoeffizient für <code>horsepower</code>. * <span class="math inline">\(\beta_2\)</span> ist der Steigungskoeffizient für <code>weight</code>. * <span class="math inline">\(\beta_3\)</span> ist der Koeffizient für die Herkunft des Autos (kategoriale Variable, hier als Dummy-Variablen kodiert: <code>from_US</code>). * <span class="math inline">\(\beta_4\)</span> ist der Koeffizient für die Herkunft des Autos (kategoriale Variable, hier als Dummy-Variablen kodiert: <code>from_EU</code>) alle anderen Autos kommen aus Japan. * <span class="math inline">\(\epsilon\)</span> ist der Fehlerterm.</p>
 <ul>
 <li><strong>2. Erwartung bezüglich der Koeffizienten für den Intercept und <code>horsepower</code>:</strong></li>
 <li><strong>Intercept (<span class="math inline">\(\beta_0\)</span>):</strong>
 <ul>
-<li>Der Intercept könnte sich ändern, da wir nun zwei Prädiktoren haben. Der Wert von <span class="math inline">\(\beta_0\)</span> repräsentiert den geschätzten <code>mpg</code>, wenn sowohl <code>horsepower</code> als auch <code>weight</code> Null sind. Da es in der Praxis keine Autos mit 0 PS und 0 Gewicht gibt, ist die Interpretation des Intercepts in diesem Kontext oft weniger sinnvoll. Er dient hauptsächlich dazu, die Regressionsgerade korrekt zu positionieren.</li>
+<li>Der Intercept könnte sich ändern, da wir nun mehr Prädiktoren haben. Der Wert von <span class="math inline">\(\beta_0\)</span> repräsentiert den geschätzten <code>mpg</code>, wenn sowohl <code>horsepower</code> als auch <code>weight</code> Null sind. Da es in der Praxis keine Autos mit 0 PS und 0 Gewicht gibt, ist die Interpretation des Intercepts in diesem Kontext oft weniger sinnvoll. Er dient hauptsächlich dazu, die Regressionsgerade korrekt zu positionieren.</li>
 </ul></li>
 </ul>
 </div>
@@ -908,7 +908,7 @@ Lösung Aufgabe 11
 <ul>
 <li><strong>Was es ist:</strong> Der Bias ist der Fehler, der durch vereinfachende Annahmen im Lernalgorithmus entsteht. Ein Modell mit hohem Bias ist zu einfach, um den zugrunde liegenden komplexen Zusammenhang in den Daten zu erfassen. Es “unterschätzt” die Komplexität der wahren Beziehung.</li>
 <li><strong>Folge:</strong> Führt zu <strong>Underfitting</strong> (Unteranpassung), d.h., das Modell ist auf den Trainingsdaten und erst recht auf neuen, ungesehenen Daten schlecht.</li>
-<li><strong>Beispiel:</strong> Eine lineare Regression, die versucht, eine nicht-lineare Beziehung zu modellieren.</li>
+<li><strong>Beispiel:</strong> Eine lineare Regression, die versucht, eine nicht-lineare Beziehung zu modellieren oder zu wenige Features verwendet, um die zugrunde liegende Struktur der Daten zu erfassen.</li>
 </ul></li>
 <li><strong>Varianz:</strong>
 <ul>
@@ -925,7 +925,7 @@ Lösung Aufgabe 11
 <section id="kreuzvalidierung" class="level4">
 <h4 class="anchored" data-anchor-id="kreuzvalidierung">12. Kreuzvalidierung</h4>
 <ul>
-<li>Erläutern Sie das Prinzip der <span class="math inline">\(k\)</span>-Fold-Kreuzvalidierung. Warum ist diese Methode dem einfachen Train-Test-Split bei der Modellbewertung oft überlegen? Nennen Sie mindestens einen Vorteil. Was ist ein Vorteil der <span class="math inline">\(k\)</span>-Fold-Kreuzvalidierung gegenübert der Leave-One-Out-Kreuzvalidierung (LOOCV)?</li>
+<li>Erläutern Sie das Prinzip der <span class="math inline">\(k\)</span>-Fold-Kreuzvalidierung (gerne mit einer Sizze). Warum ist diese Methode dem einfachen Train-Test-Split bei der Modellbewertung oft überlegen? Nennen Sie mindestens einen Vorteil. Was ist ein Vorteil der <span class="math inline">\(k\)</span>-Fold-Kreuzvalidierung gegenübert der Leave-One-Out-Kreuzvalidierung (LOOCV)?</li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled" title="Lösung Aufgabe 12">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
@@ -976,7 +976,7 @@ Lösung Aufgabe 12
 <section id="logistische-regression---grundlagen" class="level4">
 <h4 class="anchored" data-anchor-id="logistische-regression---grundlagen">13. Logistische Regression - Grundlagen</h4>
 <ul>
-<li>Erklären Sie, warum lineare Regression für binäre Klassifikationsprobleme ungeeignet ist. Wie löst die logistische Regression dieses Problem?</li>
+<li>Erklären Sie, warum lineare Regression für binäre Klassifikationsprobleme ungeeignet ist. Wie löst die logistische Regression dieses Problem? Wie viel Aussagekraft haben die Koeffizienten in der logistischen Regression im Vergleich zu denen in der linearen Regression?</li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled" title="Lösung Aufgabe 13">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
@@ -999,15 +999,6 @@ Lösung Aufgabe 13
 <li>Die lineare Regression versucht, <span class="math inline">\(Y = \beta_0 + \beta_1 X + \epsilon\)</span> zu schätzen. Die vorhergesagten Werte <span class="math inline">\(\hat{Y}\)</span> können jedoch beliebige reelle Zahlen annehmen (<span class="math inline">\(\pm \infty\)</span>).</li>
 <li>Bei binären Daten ist <span class="math inline">\(Y\)</span> jedoch 0 oder 1. Wenn wir die linearen Vorhersagen als Wahrscheinlichkeiten interpretieren würden (<span class="math inline">\(P(Y=1|X)\)</span>), könnten diese Werte kleiner als 0 oder größer als 1 sein, was als Wahrscheinlichkeit mathematisch unsinnig ist.</li>
 </ul></li>
-<li><strong>Falsche Annahmen über den Fehlerterm:</strong>
-<ul>
-<li>Lineare Regression geht davon aus, dass die Fehlerterme (<span class="math inline">\(\epsilon\)</span>) normalverteilt sind und eine konstante Varianz (Homoskedastizität) aufweisen.</li>
-<li>Bei binären Daten ist der Fehlerterm nicht normalverteilt. Da <span class="math inline">\(Y\)</span> nur 0 oder 1 sein kann, ist der Fehler <span class="math inline">\(\epsilon = Y - \hat{Y}\)</span>. Wenn <span class="math inline">\(\hat{Y}\)</span> beispielsweise eine Wahrscheinlichkeit ist, können die Fehler nur <span class="math inline">\(1 - \hat{Y}\)</span> oder <span class="math inline">\(0 - \hat{Y}\)</span> sein, was zu einer nicht-normalen und heteroskedastischen Fehlerverteilung führt (die Varianz hängt von der Wahrscheinlichkeit <span class="math inline">\(p\)</span> ab).</li>
-</ul></li>
-<li><strong>Fehlinterpretierbarkeit der Koeffizienten:</strong>
-<ul>
-<li>In der linearen Regression wird <span class="math inline">\(\beta_1\)</span> als die durchschnittliche Änderung in <span class="math inline">\(Y\)</span> für eine Einheit Änderung in <span class="math inline">\(X\)</span> interpretiert. Bei binären Daten wäre dies eine Änderung in <span class="math inline">\(0/1\)</span>, was schwer sinnvoll zu interpretieren ist.</li>
-</ul></li>
 </ol>
 <p><strong>Wie die logistische Regression dieses Problem löst:</strong></p>
 <p>Die logistische Regression löst diese Probleme, indem sie die Lineare Regression nicht direkt auf die binäre Variable <span class="math inline">\(Y\)</span> anwendet, sondern auf eine <strong>Transformation</strong> der Wahrscheinlichkeit, dass <span class="math inline">\(Y=1\)</span>.</p>
@@ -1028,12 +1019,8 @@ Lösung Aufgabe 13
   \]</span></li>
 <li>Diese Sigmoid-Funktion hat die Eigenschaft, dass sie jeden reellen Wert als Eingabe akzeptiert und eine Ausgabe im Bereich von 0 bis 1 liefert. Dadurch können die Vorhersagen direkt als Wahrscheinlichkeiten interpretiert werden.</li>
 </ul></li>
-<li><strong>Natürliche Modellierung der binomischen Verteilung:</strong>
-<ul>
-<li>Die logistische Regression geht von der Annahme aus, dass die abhängige Variable einer <strong>Bernoulli-Verteilung</strong> (oder Binomialverteilung für mehrere Versuche) folgt, was für binäre Daten angemessen ist.</li>
-</ul></li>
+<li>Die Richtung der Koeffizienten in der logistischen Regression bleibt ähnlich wie in der linearen Regression: Ein positiver Koeffizient (<span class="math inline">\(\beta_i &gt; 0\)</span>) bedeutet, dass eine Erhöhung von <span class="math inline">\(X_i\)</span> die Wahrscheinlichkeit erhöht, dass <span class="math inline">\(Y=1\)</span> (z.B. “Kunde kauft”), während ein negativer Koeffizient (<span class="math inline">\(\beta_i &lt; 0\)</span>) die Wahrscheinlichkeit verringert. Allerdings ist der Wert schwer zu interpretieren, da er nicht direkt die Änderung der Wahrscheinlichkeit angibt, sondern die Änderung der Log-Odds.</li>
 </ol>
-<p>Zusammenfassend löst die logistische Regression das Problem der ungeeigneten Vorhersagewerte und Annahmen der linearen Regression, indem sie eine nicht-lineare Transformation verwendet, um die Wahrscheinlichkeit eines binären Ereignisses vorherzusagen, deren Werte natürlicherweise zwischen 0 und 1 liegen.</p>
 </div>
 </div>
 </div>
@@ -1446,7 +1433,7 @@ Lösung Aufgabe 19
 <p>Gegeben sei eine Stichprobe von Autogeschwindigkeiten (in mph): <span class="math inline">\([60, 65, 70, 72, 75, 80, 85, 90]\)</span>.</p>
 <ul>
 <li>Berechnen Sie den Mittelwert und die Standardabweichung dieser Stichprobe.</li>
-<li>Angenommen, diese Geschwindigkeiten sind annähernd normalverteilt. Wie würden Sie die Geschwindigkeit von 72 mph in einen Z-Wert umwandeln? Interpretieren Sie das Ergebnis.</li>
+<li>Angenommen, diese Geschwindigkeiten sind annähernd normalverteilt. Wie würden Sie die Geschwindigkeit von 72 mph in einen Z-Wert umwandeln? Interpretieren Sie das Ergebnis (Skizze).</li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled" title="Lösung Aufgabe 1">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
@@ -1475,7 +1462,7 @@ Z = \frac{X - \bar{X}}{S} = \frac{72 - 74.625}{10.057} \approx \frac{-2.625}{10.
 </section>
 <section id="wahrscheinlichkeitsberechnung---normalverteilung" class="level4">
 <h4 class="anchored" data-anchor-id="wahrscheinlichkeitsberechnung---normalverteilung">2. Wahrscheinlichkeitsberechnung - Normalverteilung</h4>
-<p>Die Lebensdauer von Glühbirnen sei normalverteilt mit einem Mittelwert von <span class="math inline">\(1200\)</span> Stunden und einer Standardabweichung von <span class="math inline">\(150\)</span> Stunden.</p>
+<p>Die Lebensdauer von Glühbirnen sei normalverteilt mit einem Mittelwert von <span class="math inline">\(1200\)</span> Stunden und einer Standardabweichung von <span class="math inline">\(150\)</span> Stunden. Auf für Skizzen der Verteilung und der Wahrscheinlichkeiten gibt es Teilpunkte.</p>
 <ul>
 <li>Wie groß ist die Wahrscheinlichkeit, dass eine zufällig ausgewählte Glühbirne weniger als <span class="math inline">\(1000\)</span> Stunden brennt?</li>
 <li>Wie groß ist die Wahrscheinlichkeit, dass sie zwischen <span class="math inline">\(1100\)</span> und <span class="math inline">\(1300\)</span> Stunden brennt? (Verwenden Sie eine <a href="https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle">Z-Tabelle</a> oder einen Taschenrechner/Software für die Normalverteilung).</li>
@@ -1544,7 +1531,7 @@ SE = \frac{S}{\sqrt{n}} = \frac{14}{\sqrt{49}} = \frac{14}{7} = 2
 <ul>
 <li><p><span class="math inline">\(X = [10, 20, 30, 40, 50]\)</span></p></li>
 <li><p><span class="math inline">\(Y = [5, 12, 18, 25, 30]\)</span></p></li>
-<li><p>Schätzen Sie die Parameter <span class="math inline">\(\beta_0\)</span> (Achsenabschnitt) und <span class="math inline">\(\beta_1\)</span> (Steigung) der einfachen linearen Regression <span class="math inline">\(Y = \beta_0 + \beta_1 X + \epsilon\)</span> mittels der Formeln für die Kleinste-Quadrate-Schätzung oder eine Skizze:</p>
+<li><p>Schätzen Sie die Parameter <span class="math inline">\(\beta_0\)</span> (Achsenabschnitt) und <span class="math inline">\(\beta_1\)</span> (Steigung) der einfachen linearen Regression <span class="math inline">\(Y = \beta_0 + \beta_1 X + \epsilon\)</span> mittels der Formeln für die Kleinste-Quadrate-Schätzung oder einer Skizze:</p>
 <ul>
 <li><span class="math inline">\(\beta_1 = \frac{\sum (X_i - \bar{X})(Y_i - \bar{Y})}{\sum (X_i - \bar{X})^2}\)</span></li>
 <li><span class="math inline">\(\beta_0 = \bar{Y} - \beta_1 \bar{X}\)</span></li>
@@ -1654,6 +1641,7 @@ Lösung Aufgabe 4
 <li>Führen Sie einen Einstichproben-t-Test durch, um zu prüfen, ob die wahre Lebensdauer signifikant von <span class="math inline">\(50\)</span> Stunden abweicht (zweiseitiger Test) bei einem Signifikanzniveau von <span class="math inline">\(\alpha = 0.05\)</span>.</li>
 <li>Berechnen Sie die Teststatistik <span class="math inline">\(t = \frac{\bar{X} - \mu_0}{\frac{S}{\sqrt{n}}}\)</span>.</li>
 <li>Vergleichen Sie den berechneten <span class="math inline">\(t\)</span>-Wert mit dem kritischen <span class="math inline">\(t\)</span>-Wert oder dem p-Wert (wenn Sie eine <span class="math inline">\(t\)</span>-Tabelle oder Software verwenden können). Was ist Ihre Schlussfolgerung?</li>
+<li>Es gibt wieder Teilpunkte für die Skizze von der Hypothesentest-Skizze, der Teststatistik und dem kritischen Bereich.</li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled" title="Lösung Aufgabe 5">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
@@ -1782,6 +1770,8 @@ P(\text{Mindestens eine 6}) = \frac{11}{36} \approx 0.3056
 <li><p>Berechnen Sie den Mean Squared Error (MSE) und den Root Mean Squared Error (RMSE) für diese Vorhersagen.</p></li>
 <li><p>MSE <span class="math inline">\(= \frac{1}{n} \sum (Y_i - \hat{Y}_i)^2\)</span></p></li>
 <li><p>RMSE <span class="math inline">\(= \sqrt{MSE}\)</span></p></li>
+<li><p>MAPE <span class="math inline">\(= \frac{1}{n} \sum |Y_i - \hat{Y}_i|\)</span> (optional, aber hilfreich für die Interpretation).</p></li>
+<li><p>Welchen Nachteil kann der MAPE haben?</p></li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled" title="Lösung Aufgabe 8">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
@@ -1804,6 +1794,10 @@ MSE = \frac{1}{n} \sum (Y_i - \hat{Y}_i)^2 = \frac{7}{4} = 1.75
 <p><strong>4. Root Mean Squared Error (RMSE) berechnen:</strong> <span class="math display">\[
 RMSE = \sqrt{MSE} = \sqrt{1.75} \approx 1.3228
 \]</span> Der MSE beträgt <span class="math inline">\(1.75\)</span> und der RMSE beträgt ungefähr <span class="math inline">\(1.3228\)</span>.</p>
+<p><strong>5. Mean Absolute Percentage Error (MAPE) berechnen (optional):</strong> <span class="math display">\[
+MAPE = \frac{1}{n} \sum \left| \frac{Y_i - \hat{Y}_i}{Y_i} \right| = \frac{1}{4} \left( \left| \frac{10 - 11}{10} \right| + \left| \frac{15 - 14}{15} \right| + \left| \frac{20 - 21}{20} \right| + \left| \frac{25 - 23}{25} \right| \right)
+\]</span></p>
+<p>Der MAPE hat einen Nachteil, da er bei Werten von <span class="math inline">\(Y_i\)</span> nahe Null sehr große prozentuale Fehlerwerte erzeugen kann. Dies kann zu einer Verzerrung führen, wenn die tatsächlichen Werte sehr klein sind, was die Interpretation des MAPE erschwert. Daher sollte der MAPE mit Vorsicht verwendet werden, insbesondere wenn die Daten Werte nahe Null enthalten. Im Extremfall kann der MAPE sogar unendlich werden, wenn <span class="math inline">\(Y_i = 0\)</span>.</p>
 </div>
 </div>
 </div>
