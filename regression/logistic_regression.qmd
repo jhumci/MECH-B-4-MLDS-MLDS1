@@ -169,6 +169,7 @@ plt.show()
 ```
 
 **Ergebnis**: Die Matrix könnte z.B. zeigen:  
+
 - TN = 200 (korrekt "nicht USA"),  
 - TP = 150 (korrekt "USA"),  
 - FP = 30 (falsch "USA"),  
@@ -277,15 +278,30 @@ __Fazit__: Die Multi-Class Confusion Matrix ist ein mächtiges Werkzeug, um die 
 Bei der Bewertung eines Klassifikationsmodells liefert die Confusion Matrix detaillierte Informationen, aber einzelne Metriken wie Precision, Recall (Sensitivität), Spezifität und F1-Score fassen die Leistung prägnant zusammen. Diese Metriken sind besonders nützlich, um die Balance zwischen korrekten und falschen Vorhersagen zu verstehen, insbesondere bei unbalancierten Datensätzen.
 
 - __Genauigkeit (Accuracy)__: Anteil der korrekten Vorhersagen (TP + TN) an allen Vorhersagen. Sie beantwortet: „Wie viele Vorhersagen waren insgesamt korrekt?“
-$\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}$, wobei $TP$ True Positives, $TN$ True Negatives, $FP$ False Positives und $FN$ False Negatives sind.
+
+$$\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}$$
+
+, wobei $TP$ True Positives, $TN$ True Negatives, $FP$ False Positives und $FN$ False Negatives sind.
+
 - __Precision (Präzision)__: Anteil der korrekten positiven Vorhersagen unter allen positiven Vorhersagen. Sie beantwortet: „Wie viele der als positiv klassifizierten Fälle sind tatsächlich positiv?“
-$\text{Precision} = \frac{TP}{TP + FP}$, wobei $TP$ True Positives und $FP$ False Positives sind.
+
+$$\text{Precision} = \frac{TP}{TP + FP}$$
+
+, wobei $TP$ True Positives und $FP$ False Positives sind.
+
 - __Recall__ (Sensitivität, True Positive Rate): Anteil der korrekt identifizierten positiven Fälle unter allen tatsächlichen positiven Fällen. Sie beantwortet: „Wie viele der tatsächlichen positiven Fälle wurden gefunden?“
-$\text{Recall} = \frac{TP}{TP + FN}$, wobei $FN$ False Negatives sind.
+
+$$\text{Recall} = \frac{TP}{TP + FN}$$
+
+, wobei $FN$ False Negatives sind.
+
 - __Spezifität__ (True Negative Rate): Anteil der korrekt identifizierten negativen Fälle unter allen tatsächlichen negativen Fällen. Sie beantwortet: „Wie gut erkennt das Modell die negativen Fälle?“
-$\text{Spezifität} = \frac{TN}{TN + FP}$, wobei $TN$ True Negatives sind.
+
+$$\text{Spezifität} = \frac{TN}{TN + FP}$$
+, wobei $TN$ True Negatives sind.
+
 - __F1-Score__: Harmonisches Mittel von Precision und Recall, um eine ausgewogene Metrik zu erhalten. Er ist besonders nützlich, wenn Precision und Recall unterschiedlich stark sind.
-$F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$.
+$$F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$$.
 
 
 ```{python}
