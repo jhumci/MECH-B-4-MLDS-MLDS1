@@ -42,10 +42,7 @@ book:
         - regression/predictions_linear_regression.qmd
         - regression/tutorial.qmd
         - regression/logistic_regression.qmd
-#        - regression/expansions_linear_regression.qmd 
-#        - regression/statistical_learning.qmd 
-#        - regression/tutorial2.qmd
-    - summary.qmd
+    - aufgaben/uebungsaufgaben.qmd
     - references.qmd
 
 bibliography: references.bib

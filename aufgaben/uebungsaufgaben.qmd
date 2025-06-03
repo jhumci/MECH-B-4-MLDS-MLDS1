@@ -1,0 +1,1141 @@
+# Übungsaufgaben Klausurvorbereitung {.unnumbered}
+
+- In der Klausur kann ein zwei-seitiges Dokument (Vorder- und Rückseite) mit den wichtigsten Formeln, Tests und Konzepten verwendet werden. Notwendige Z-Wert-Tabellen werden gestellt.
+- Folgende Übungsaufgaben sollen Ihnen helfen, sich auf die Klausur vorzubereiten. 
+
+
+## Theorieaufgaben für einen Bachelorstudiengang
+
+#### 1. Variablentypen und Tidy Data
+
+* Beschreiben Sie die Konzepte von "Tidy Data" nach Hadley Wickham. Geben Sie ein Beispiel für einen "unordentlichen" Datensatz und zeigen Sie, wie er in ein Tidy Data-Format umgewandelt werden könnte.
+* Nennen und erklären Sie mindestens vier verschiedene Variablentypen (z.B. nominal, ordinal, intervall, verhältnis/ratio) und geben Sie für jeden Typ ein Beispiel
+
+::: {.callout collapse="true" title="Lösung Aufgabe 1"}
+**Tidy Data nach Hadley Wickham:**
+"Tidy Data" ist ein Standard für die Strukturierung von Datensätzen, der drei Hauptprinzipien umfasst:
+1.  Jede Variable bildet eine Spalte.
+2.  Jede Beobachtung bildet eine Zeile.
+3.  Jede Art von Beobachtungseinheit bildet eine Tabelle.
+
+**Beispiel für "unordentlichen" Datensatz und Umwandlung:**
+
+* **Unordentlich:** Eine Tabelle, in der die Spalten die Jahre darstellen und die Zeilen Produkte mit ihren Verkaufszahlen für diese Jahre sind.
+
+| Produkt | 2020 | 2021 | 2022 |
+| :------ | :--- | :--- | :--- |
+| A       | 100  | 120  | 110  |
+| B       | 50   | 60   | 70   |
+
+* **Tidy Data:** Die Jahre werden zu einer Variablen (Spalte "Jahr"), die Verkaufszahlen zu einer Variablen (Spalte "Verkäufe").
+
+| Produkt | Jahr | Verkäufe |
+| :------ | :--- | :------- |
+| A       | 2020 | 100      |
+| A       | 2021 | 120      |
+| A       | 2022 | 110      |
+| B       | 2020 | 50       |
+| B       | 2021 | 60       |
+| B       | 2022 | 70       |
+
+**Variablentypen und Beispiele aus dem "Auto"-Datensatz:**
+
+1.  **Nominalskala:** Kategorien ohne natürliche Ordnung.
+    * **Beispiel:** `origin` (USA, Europe, Japan). Die Reihenfolge hat keine Bedeutung.
+
+2.  **Ordinalskala:** Kategorien mit einer natürlichen Ordnung, aber ohne gleichmäßige Abstände zwischen den Kategorien.
+    * **Beispiel:** Eine hypothetische Variable für Fahrzeugzustand wie "schlecht", "mittel", "gut". Die Reihenfolge ist klar, aber der Unterschied zwischen "schlecht" und "mittel" muss nicht gleich dem zwischen "mittel" und "gut" sein. (Im echten "Auto"-Datensatz gibt es keine direkte Variable dafür; `cylinders` könnte als ordinal betrachtet werden, da es eine Ordnung (4, 6, 8 Zylinder) gibt, die Abstände aber nicht intervallbasiert sind).
+
+3.  **Intervallskala:** Numerische Daten mit gleichmäßigen Abständen zwischen den Werten, aber ohne einen natürlichen Nullpunkt (Verhältnisse sind nicht sinnvoll).
+    * **Beispiel:** `model_year`. Der Unterschied zwischen 70 und 71 ist derselbe wie zwischen 78 und 79, aber ein Jahr 0 existiert nicht im Sinne eines absoluten Nullpunkts der Zeitrechnung für dieses Dataset.
+
+4.  **Verhältnisskala:** Numerische Daten mit gleichmäßigen Abständen und einem natürlichen Nullpunkt (Verhältnisse sind sinnvoll).
+    * **Beispiel:** `mpg`, `horsepower`, `weight`. Ein Auto mit 100 PS hat doppelt so viel Leistung wie ein Auto mit 50 PS. Ein Gewicht von 0 lbs bedeutet kein Gewicht.
+:::
+
+#### 2. Deskriptive Statistik
+
+Erklären Sie die folgenden deskriptiven Statistiken: Arithmetischer Mittelwert, Median, Standardabweichung, Minimum, Maximum und den Interquartilsabstand (IQR) und erklären Sie jeweils, wie empfindlich sie gegenüber Ausreißern sind. Welche beiden Definitionen der Standardabweichung kennen Sie und wie unterscheiden sie sich?
+
+**Hypothetische Ergebnisse für den "Auto"-Datensatz:**
+
+| Statistik       | `mpg` | `horsepower` | `weight` |
+| :-------------- | :---- | :----------- | :------- |
+| **Mittelwert** | 23.5  | 104.5        | 2970     |
+| **Median** | 23.0  | 93.5         | 2800     |
+| **Standardabw.**| 7.8   | 38.5         | 840      |
+| **Minimum** | 9.0   | 46           | 1600     |
+| **Maximum** | 46.6  | 230          | 5100     |
+| **IQR** | 10.0  | 50.0         | 1400     |
+
+::: {.callout collapse="true" title="Lösung Aufgabe 2"}
+
+
+
+
+**Interpretation der hypothetischen Ergebnisse:**
+
+-Arithmetischer Mittelwert: Gleich-gewichteter Durchschnittswert der Variablen ist ein Lagemaß, das die zentrale Tendenz beschreibt. Es ist empfindlich gegenüber Ausreißern.
+- Median: Der Median teilt die Daten in zwei Hälften und ist robuster gegenüber Ausreißern.
+- Standardabweichung: Ein Maß für die Streuung der Daten um den Mittelwert. Eine hohe Standardabweichung zeigt, dass die Daten weit gestreut sind.
+    - Es gibt die *populationsbezogene Standardabweichung* ($\sigma$) und die *stichprobenbezogene Standardabweichung* ($s$). Die Stichprobenbezogene Standardabweichung wird mit $n-1$ im Nenner berechnet, um die Schätzung der Populationsstandardabweichung zu korrigieren. Die populationsbezogene Standardabweichung verwendet $n$ im Nenner.
+- Minimum: Der kleinste Wert in der Datenreihe. Es ist empfindlich gegenüber Ausreißern, da ein einzelner extrem niedriger Wert den Minimumwert stark beeinflussen kann.
+- Maximum: Der größte Wert in der Datenreihe. Auch hier kann ein einzelner extrem hoher Wert den Maximumwert stark beeinflussen.
+- Interquartilsabstand (IQR): Der IQR misst die Spannweite der mittleren 50% der Daten und ist robust gegenüber Ausreißern, da er nur die Quartile berücksichtigt.
+
+
+:::
+
+#### 3. Grundlagen der Verteilungen
+
+* Erklären Sie den Unterschied zwischen diskreten und kontinuierlichen Verteilungen. Nennen Sie jeweils zwei Beispiele für jede Art von Verteilung und beschreiben Sie kurz, wo sie in der Praxis Anwendung finden könnten.
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 3"}
+**Diskrete Verteilungen:**
+Eine diskrete Verteilung beschreibt Zufallsvariablen, deren Werte nur abzählbare, separate Werte annehmen können. Zwischen zwei aufeinanderfolgenden Werten gibt es keine weiteren möglichen Werte.
+
+* **Beispiel 1: Binomialverteilung**
+    * Beschreibung: Beschreibt die Anzahl der Erfolge in einer festen Anzahl von unabhängigen Bernoulli-Versuchen (z.B. Münzwürfe oder ja/nein-Fragen), wobei jeder Versuch nur zwei mögliche Ergebnisse hat.
+    * Anwendung: Anzahl der fehlerhaften Produkte in einer Stichprobe von 100 produzierten Artikeln.
+
+* **Beispiel 2: Poisson-Verteilung**
+    * Beschreibung: Beschreibt die Anzahl der Ereignisse, die in einem festen Zeitintervall oder Raumgebiet auftreten, wenn diese Ereignisse mit einer bekannten durchschnittlichen Rate unabhängig voneinander geschehen.
+    * Anwendung: Anzahl der Kundenanrufe in einem Callcenter pro Stunde; Anzahl der Verkehrsunfälle an einer Kreuzung pro Monat.
+
+**Kontinuierliche Verteilungen:**
+Eine kontinuierliche Verteilung beschreibt Zufallsvariablen, deren Werte jeden beliebigen Wert innerhalb eines bestimmten Intervalls annehmen können. Die Wahrscheinlichkeit, dass die Variable einen *bestimmten* einzelnen Wert annimmt, ist Null; stattdessen werden Wahrscheinlichkeiten für Intervalle berechnet.
+
+* **Beispiel 1: Normalverteilung (Gauß-Verteilung)**
+    * Beschreibung: Eine symmetrische, glockenförmige Verteilung, die häufig in der Natur und in vielen Messprozessen auftritt. Sie ist durch ihren Mittelwert ($\mu$) und ihre Standardabweichung ($\sigma$) vollständig definiert.
+    * Anwendung: Körpergröße von Menschen in einer Population; Messfehler bei physikalischen Experimenten; Intelligenzquotient (IQ) in einer Bevölkerung.
+
+* **Beispiel 2: Exponentialverteilung**
+    * Beschreibung: Beschreibt die Zeit bis zum Eintreten eines Ereignisses in einem Poisson-Prozess, d.h., die Zeit bis zum ersten Ereignis oder die Zeit zwischen zwei aufeinanderfolgenden Ereignissen. Sie ist "gedächtnislos".
+    * Anwendung: Lebensdauer von elektronischen Bauteilen; Zeit zwischen aufeinanderfolgenden Erdbeben; Wartezeit auf den nächsten Kunden in einem Servicegeschäft.
+:::
+
+#### 4. Datenvisualisierung
+
+* Wählen Sie zwei geeignete Variablen aus dem "Auto"-Datensatz oder einem anderen Datensatz ihrer Wahl und skizzieren Sie:
+    * Ein Histogramm für eine kontinuierliche Variable.
+    * Ein Box-Plot für eine kontinuierliche Variable in Abhänigkeit einer kategorialen Variable.
+* Erläutern Sie, welche Informationen aus diesen Visualisierungen gewonnen werden können.
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 4"}
+**Auswahl der Variablen aus dem "Auto"-Datensatz:**
+* Kontinuierliche Variable: `mpg` (Meilen pro Gallone)
+* Kategoriale Variable: `mpg` über `origin` (Herkunftsland: USA, Europe, Japan)
+
+**1. Histogramm für `mpg`:**
+* **Visualisierung (Beschreibung):** Ein Histogramm würde die Verteilung der `mpg`-Werte in verschiedenen "Bins" (Intervalle) darstellen. Die x-Achse würde die `mpg`-Werte zeigen, und die y-Achse die Häufigkeit (oder Dichte) der Autos, die in jeden `mpg`-Bereich fallen.
+* **Informationen/Interpretation:**
+    * **Form der Verteilung:** Man könnte erkennen, ob die Verteilung symmetrisch, links- oder rechtsschief ist (z.B. ob es mehr Autos mit geringem oder hohem Verbrauch gibt).
+    * **Zentrale Tendenz:** Der Bereich mit der höchsten Häufigkeit (der "Gipfel" des Histogramms) würde den häufigsten Kraftstoffverbrauch anzeigen.
+    * **Streuung:** Die Breite des Histogramms würde Auskunft über die Variabilität des Kraftstoffverbrauchs geben.
+    * **Ausreißer/Anomalien:** Einzelne Balken weit entfernt vom Hauptteil der Verteilung könnten auf Ausreißer hindeuten.
+    * **Multimodalität:** Mehrere "Gipfel" könnten auf verschiedene Subgruppen innerhalb des Datensatzes hindeuten (z.B. verschiedene Fahrzeugtypen mit unterschiedlichem Verbrauch).
+
+**2. Box-Plot für `origin`:**
+* **Visualisierung (Beschreibung):** Ein Box-Plot würde die Verteilung der `mpg`-Werte für jede Kategorie von `origin` (USA, Europe, Japan) darstellen. Jede Box zeigt den Interquartilsabstand (IQR), den Median und mögliche Ausreißer.
+
+:::
+
+
+#### 5. Korrelation vs. Kausalität
+
+* Erläutern Sie den Unterschied zwischen Korrelation und Kausalität anhand eines selbstgewählten Beispiels (nicht das Piraten-Beispiel aus dem Skript). Diskutieren Sie, warum es wichtig ist, diese Unterscheidung zu verstehen, insbesondere im Kontext von Datenanalyse und maschinellem Lernen. Was von beiden kann direkt aus den Daten gemessen werden und was nicht? Wie können wir Kausalität in der Praxis untersuchen?
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 5"}
+**Korrelation vs. Kausalität:**
+
+* **Korrelation:** Beschreibt einen statistischen Zusammenhang zwischen zwei oder mehr Variablen, bei dem Änderungen in einer Variablen mit Änderungen in einer oder mehreren anderen Variablen einhergehen. Eine Korrelation sagt nichts über die Ursache-Wirkungs-Beziehung aus. Sie zeigt lediglich, dass die Variablen in einer bestimmten Weise *zusammenhängen*. Die Korrelation kann positiv (beide Variablen steigen oder fallen zusammen), negativ (eine Variable steigt, während die andere fällt) oder gar nicht vorhanden sein. Gemessen wird die Korrelation oft durch den Pearson-Korrelationskoeffizienten, der zwischen -1 und 1 liegt, wobei 0 keine Korrelation bedeutet.
+
+* **Kausalität:** Bedeutet, dass eine Variable (die Ursache) direkt eine Veränderung in einer anderen Variablen (die Wirkung) hervorruft. Eine kausale Beziehung impliziert immer eine Korrelation, aber eine Korrelation impliziert nicht zwangsläufig eine Kausalität. Hierzu sind oft Experimente oder spezielle statistische Methoden erforderlich, um die Richtung und das Vorhandensein der Ursache-Wirkungs-Beziehung zu bestätigen.
+
+**Selbstgewähltes Beispiel:**
+
+* **Beobachtung:** Im Sommer steigt sowohl der Verkauf von Eiscreme als auch die Anzahl der Ertrinkungsfälle in einem See.
+* **Korrelation:** Es gibt eine positive Korrelation zwischen dem Verkauf von Eiscreme und der Anzahl der Ertrinkungsfälle. Wenn der Eiscremeverkauf steigt, steigen auch die Ertrinkungsfälle.
+* **Fehlerhafte Kausalität:** Es wäre ein Fehler zu schlussfolgern, dass der Kauf von Eiscreme dazu führt, dass Menschen ertrinken, oder dass Ertrinkungsfälle den Eiscremeverkauf ankurbeln.
+* **Wahre Kausalität/Dritte Variable:** Die wahre Ursache für beide Phänomene ist eine dritte, nicht direkt beobachtete Variable: die Außentemperatur. Wenn die Temperatur steigt (Sommer), essen mehr Menschen Eiscreme und mehr Menschen gehen im See schwimmen, was zu einer erhöhten Anzahl von Ertrinkungsfällen führt. Die Temperatur ist hier die gemeinsame Ursache für beide Effekte.
+
+**Wichtigkeit der Unterscheidung in Datenanalyse und maschinellem Lernen:**
+
+Das Verständnis des Unterschieds ist aus mehreren Gründen von entscheidender Bedeutung:
+
+1.  **Fehlgeleitete Entscheidungen und Interventionen:** Wenn wir Korrelationen fälschlicherweise als Kausalitäten interpretieren, könnten wir ineffektive oder sogar schädliche Maßnahmen ergreifen. Im Beispiel würde das Verbot von Eiscreme den Ertrinkungsfällen nicht entgegenwirken. Im Business-Kontext könnte dies zu falschen Investitionen oder Strategien führen.
+
+2.  **Modellinterpretation und Erklärbarkeit:** In der Datenanalyse wollen wir oft nicht nur Vorhersagen treffen, sondern auch verstehen, *warum* etwas passiert. Wenn ein Modell eine hohe Korrelation zwischen zwei Variablen findet, dies aber keine Kausalität ist, liefert das Modell keine wahren kausalen Erklärungen. Dies ist besonders wichtig in Bereichen wie Medizin, Sozialwissenschaften oder Politikgestaltung, wo kausale Zusammenhänge für effektive Interventionen unerlässlich sind.
+
+3.  **Robuste Vorhersagemodelle:** Obwohl viele maschinelle Lernmodelle auch mit korrelativen Beziehungen gute Vorhersagen treffen können, sind Modelle, die kausale Zusammenhänge berücksichtigen, oft robuster und generalisierbarer, insbesondere wenn sich die zugrunde liegenden Verteilungen der Daten ändern. Wenn wir die Kausalität verstehen, können wir Modelle entwickeln, die auch unter neuen Bedingungen zuverlässig sind.
+
+4.  **Umgang mit Störvariablen (Confoundern):** Das Ignorieren von Störvariablen (wie die Temperatur im Beispiel) kann zu Scheinkorrelationen führen. Das Bewusstsein für Kausalität hilft uns, solche Variablen zu identifizieren und zu kontrollieren, um aussagekräftigere Analysen zu ermöglichen.
+
+Kurz gesagt: Korrelation ist ein Werkzeug zur Entdeckung von Mustern, aber Kausalität ist der Schlüssel zum Verständnis und zur Beeinflussung der realen Welt.
+:::
+
+#### 6. Zentraler Grenzwertsatz
+
+* Erklären Sie den Zentralen Grenzwertsatz in eigenen Worten. Warum ist er für die statistische Inferenz so wichtig?
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 6"}
+**Der Zentrale Grenzwertsatz in eigenen Worten:**
+Der Zentrale Grenzwertsatz (ZGS) besagt, dass, wenn man genügend große Stichproben aus *irgendeiner* Population zieht (egal welche Verteilungsform diese Population hat – sie kann schief, uniform oder jede andere Form haben), dann wird die Verteilung der *Mittelwerte dieser Stichproben* annähernd normalverteilt sein. Je größer die Stichprobengröße ist, desto besser nähert sich diese Stichprobenmittelwertverteilung einer Normalverteilung an. Das ist erstaunlich, da die ursprüngliche Population selbst nicht normalverteilt sein muss. Der Mittelwert dieser Verteilung der Stichprobenmittelwerte ist der wahre Populationsmittelwert, und ihre Standardabweichung ist der Standardfehler des Mittelwerts.
+
+**Bedeutung für die statistische Inferenz:**
+Der Zentrale Grenzwertsatz ist fundamental für die statistische Inferenz, da er es uns ermöglicht, Schlussfolgerungen über eine Population zu ziehen, selbst wenn wir ihre ursprüngliche Verteilung nicht kennen.
+
+1.  **Hypothesentests:** Er ist die Grundlage für viele parametrische Hypothesentests (z.B. $t$-Tests, $z$-Tests). Durch ihn können wir annehmen, dass die Stichprobenmittelwerte normalverteilt sind, selbst wenn die Einzeldaten nicht normalverteilt sind. Das ermöglicht die Verwendung von Standard-Normalverteilungs- oder $t$-Verteilungs-Tabellen, um p-Werte zu berechnen und Hypothesen zu testen.
+2.  **Konfidenzintervalle:** Er erlaubt uns, Konfidenzintervalle für Populationsparameter (insbesondere den Mittelwert) zu konstruieren. Wir können mit einer bestimmten Wahrscheinlichkeit (z.B. 95%) angeben, in welchem Bereich der wahre Populationsmittelwert liegt, basierend auf einer Stichprobe.
+3.  **Schätzung von Parametern:** Der ZGS rechtfertigt die Verwendung des Stichprobenmittelwerts als einen guten Schätzer für den Populationsmittelwert.
+
+Ohne den ZGS müssten wir für viele Tests und Schätzungen annehmen, dass die zugrunde liegende Population normalverteilt ist, was in der Realität oft nicht der Fall ist.
+
+:::
+
+#### 7. Einfache Lineare Regression
+
+* Nehmen Sie an, Sie möchten den Kraftstoffverbrauch (`mpg`) eines Autos mithilfe der Leistung (`horsepower`) vorhersagen.
+    * Formulieren Sie ein einfaches lineares Regressionsmodell.
+    * Erläutern Sie die Bedeutung der Parameter $\beta_0$ und $\beta_1$ in diesem Kontext.
+    * Diskutieren Sie, was ein hohes $R^2$ in diesem Modell bedeuten würde.
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 7"}
+**1. Formulierung des einfachen linearen Regressionsmodells:**
+Das einfache lineare Regressionsmodell, das den Kraftstoffverbrauch (`mpg`) als abhängige Variable ($Y$) und die Leistung (`horsepower`) als unabhängige Variable ($X$) verwendet, kann wie folgt formuliert werden:
+
+$$
+Y = \beta_0 + \beta_1 X + \epsilon
+$$
+oder spezifischer für dieses Beispiel:
+$$
+\text{mpg} = \beta_0 + \beta_1 \cdot \text{horsepower} + \epsilon
+$$
+Wobei:
+* $\text{mpg}$ ist der zu modellierende Kraftstoffverbrauch (abhängige Variable).
+* $\text{horsepower}$ ist die Leistung des Autos (unabhängige Variable).
+* $\beta_0$ ist der Achsenabschnitt (Intercept).
+* $\beta_1$ ist der Steigungskoeffizient (Slope).
+* $\epsilon$ ist der Fehlerterm, der die nicht durch das Modell erklärten Variationen und zufällige Fehler darstellt.
+
+**2. Erläuterung der Bedeutung der Parameter $\beta_0$ und $\beta_1$:**
+
+* **$\beta_0$ (Achsenabschnitt):**
+    * Dieser Parameter stellt den *geschätzten* Wert von `mpg` dar, wenn `horsepower` Null ist.
+    * **Interpretation im Kontext:** Ein $\beta_0$ von, sagen wir, 35 würde bedeuten, dass ein hypothetisches Auto mit 0 PS einen Verbrauch von 35 mpg hätte. In vielen realen Szenarien, wie diesem, ist die Interpretation des Achsenabschnitts als tatsächlicher Wert oft nicht sinnvoll oder sogar unmöglich, da 0 PS in der Praxis nicht vorkommen. Er dient eher dazu, die Position der Regressionsgeraden im Koordinatensystem festzulegen.
+
+* **$\beta_1$ (Steigungskoeffizient):**
+    * Dieser Parameter gibt an, um wie viele Einheiten sich der geschätzte Wert von `mpg` ändert, wenn `horsepower` um *eine* Einheit (hier: 1 PS) steigt, unter der Annahme, dass alle anderen Faktoren konstant bleiben (was hier nur `horsepower` ist).
+    * **Interpretation im Kontext:** Ein $\beta_1$ von, sagen wir, -0.15 würde bedeuten, dass der Kraftstoffverbrauch um 0.15 mpg *sinkt*, wenn die Leistung des Autos um 1 PS steigt. Dies wäre ein negatives Verhältnis, was typisch ist, da leistungsstärkere Autos tendenziell mehr Kraftstoff verbrauchen (geringere mpg-Werte).
+
+**3. Diskussion eines hohen $R^2$ in diesem Modell:**
+
+* **Definition von $R^2$:** Der $R^2$-Wert (Bestimmtheitsmaß) ist ein Maß dafür, welcher Anteil der Gesamtvariation in der abhängigen Variablen ($Y$, hier `mpg`) durch die unabhängige Variable ($X$, hier `horsepower`) erklärt wird. Er liegt immer zwischen 0 und 1 (oder 0% und 100%).
+
+* **Bedeutung eines hohen $R^2$:**
+    * Ein hoher $R^2$-Wert (z.B. 0.8 oder 80%) würde bedeuten, dass ein großer Teil der Variabilität im Kraftstoffverbrauch (`mpg`) durch die Leistung (`horsepower`) erklärt werden kann.
+    * Dies würde darauf hindeuten, dass `horsepower` ein sehr starker Prädiktor für `mpg` ist. Das Modell passt gut zu den beobachteten Daten, und die Residuen (die unerklärten Variationen) wären relativ klein.
+    * **Praktische Implikation:** Wenn das $R^2$ hoch ist, könnten wir relativ genaue Vorhersagen des Kraftstoffverbrauchs eines Autos allein auf Basis seiner Leistung machen.
+    * **Wichtiger Hinweis:** Ein hohes $R^2$ bedeutet nicht unbedingt, dass das Modell kausal ist oder dass es das "beste" Modell ist. Es zeigt nur, wie gut die Linie die Punkte "erklärt". Es sagt nichts über die Richtigkeit der Modellannahmen oder das Vorhandensein von Ausreißern aus. Es könnte auch überzähligen Variablen (Overfitting) geschuldet sein, wenn andere Faktoren im Modell enthalten wären, hier aber nicht der Fall, da es sich um eine einfache Regression handelt.
+:::
+
+#### 8. Hypothesentest - T-Test Grundlagen
+
+* Erläutern Sie die Schritte eines Hypothesentests. Nehmen Sie an, Sie möchten testen, ob der durchschnittliche Kraftstoffverbrauch (`mpg`) von US-Autos signifikant von 20 Meilen pro Gallone abweicht. Formulieren Sie die Null- und Alternativhypothese für diesen Test.
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 8"}
+**Schritte eines Hypothesentests:**
+
+Ein Hypothesentest ist ein statistisches Verfahren, um eine Aussage (Hypothese) über eine Population anhand von Stichprobendaten zu überprüfen. Die typischen Schritte sind:
+
+1.  **Formulierung der Hypothesen:**
+    * **Nullhypothese ($H_0$):** Dies ist die Aussage, die man widerlegen möchte. Sie repräsentiert typischerweise den "Status quo" oder keine Effekt/kein Unterschied.
+    * **Alternativhypothese ($H_1$):** Dies ist die Aussage, die man beweisen möchte, wenn die Nullhypothese abgelehnt wird. Sie stellt einen Effekt oder einen Unterschied dar.
+
+2.  **Festlegung des Signifikanzniveaus ($\alpha$):**
+    * $\alpha$ ist die Wahrscheinlichkeit, die Nullhypothese abzulehnen, obwohl sie wahr ist (Fehler 1. Art). Übliche Werte sind 0.05 (5%) oder 0.01 (1%).
+
+3.  **Auswahl des geeigneten Testverfahrens:**
+    * Basierend auf der Art der Daten (kategorial, numerisch), der Anzahl der Stichproben, der Verteilung und der Fragestellung wird ein passender statistischer Test gewählt (z.B. **$t$-Test**, Chi-Quadrat-Test, ANOVA).
+
+4.  **Berechnung der Teststatistik:**
+    * Mithilfe der Stichprobendaten wird ein Wert berechnet, der als Teststatistik bezeichnet wird. Dieser Wert quantifiziert, wie stark die Stichprobendaten von der Nullhypothese abweichen.
+
+5.  **Bestimmung des kritischen Wertes oder des p-Wertes:**
+    * **Kritischer Wert-Ansatz:** Man bestimmt einen oder mehrere kritische Werte aus der Verteilung der Teststatistik unter $H_0$. Liegt die berechnete Teststatistik außerhalb des Annahmebereichs (d.h., im Ablehnungsbereich), wird $H_0$ abgelehnt.
+    * **p-Wert-Ansatz:** Man berechnet die Wahrscheinlichkeit (den p-Wert), einen so extremen oder extremeren Wert der Teststatistik zu beobachten, *unter der Annahme, dass die Nullhypothese wahr ist*.
+
+6.  **Entscheidung und Schlussfolgerung:**
+    * **Wenn der p-Wert $\le \alpha$:** Die Nullhypothese wird abgelehnt. Es gibt genügend statistische Evidenz für die Alternativhypothese.
+    * **Wenn der p-Wert $> \alpha$:** Die Nullhypothese wird nicht abgelehnt. Es gibt nicht genügend statistische Evidenz, um die Alternativhypothese zu unterstützen.
+    * Die Schlussfolgerung sollte im Kontext des ursprünglichen Problems formuliert werden.
+
+**Hypothesen für den Test des durchschnittlichen Kraftstoffverbrauchs von US-Autos:**
+
+**Fragestellung:** Weicht der durchschnittliche Kraftstoffverbrauch (`mpg`) von US-Autos signifikant von 20 Meilen pro Gallone ab?
+
+* **Nullhypothese ($H_0$):** Der wahre durchschnittliche Kraftstoffverbrauch von US-Autos beträgt 20 Meilen pro Gallone.
+    * In Symbolen: $H_0: \mu_{\text{US-Autos}} = 20$
+
+* **Alternativhypothese ($H_1$):** Der wahre durchschnittliche Kraftstoffverbrauch von US-Autos weicht von 20 Meilen pro Gallone ab.
+    * In Symbolen: $H_1: \mu_{\text{US-Autos}} \neq 20$
+
+Dies ist ein zweiseitiger Test, da wir prüfen, ob der Wert *abweicht* (größer oder kleiner sein kann) und nicht spezifisch, ob er größer oder kleiner ist als 20.
+:::
+
+#### 9. Multiple Lineare Regression
+
+* Erweitern Sie das Modell aus Aufgabe 7, indem Sie zusätzlich das Gewicht (`weight`) als Prädiktor für `mpg` aufnehmen.
+    * Formulieren Sie das multiple lineare Regressionsmodell.
+    * Würden Sie erwarten, dass die Koeffizienten für den Intercept und horsepower signifikant anders sind als im einfachen linearen Modell? Warum?
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 9"}
+**1. Formulierung des multiplen linearen Regressionsmodells:**
+Das multiple lineare Regressionsmodell für `mpg` unter Verwendung von `horsepower` und `weight` lautet:
+
+$$
+\text{mpg} = \beta_0 + \beta_1 \cdot \text{horsepower} + \beta_2 \cdot \text{weight} + \epsilon
+$$
+Wobei:
+* $\text{mpg}$ ist der Kraftstoffverbrauch (abhängige Variable).
+* $\text{horsepower}$ ist die Leistung des Autos (unabhängige Variable 1).
+* $\text{weight}$ ist das Gewicht des Autos (unabhängige Variable 2).
+* $\beta_0$ ist der Achsenabschnitt.
+* $\beta_1$ ist der Steigungskoeffizient für `horsepower`.
+* $\beta_2$ ist der Steigungskoeffizient für `weight`.
+* $\epsilon$ ist der Fehlerterm.
+
+* **2. Erwartung bezüglich der Koeffizienten für den Intercept und `horsepower`:**
+* **Intercept ($\beta_0$):**
+    * Der Intercept könnte sich ändern, da wir nun zwei Prädiktoren haben. Der Wert von $\beta_0$ repräsentiert den geschätzten `mpg`, wenn sowohl `horsepower` als auch `weight` Null sind. Da es in der Praxis keine Autos mit 0 PS und 0 Gewicht gibt, ist die Interpretation des Intercepts in diesem Kontext oft weniger sinnvoll. Er dient hauptsächlich dazu, die Regressionsgerade korrekt zu positionieren.
+
+
+:::
+
+#### 10. Fehlermaße in der Regression
+
+* Erklären Sie die Bedeutung von "Mean Squared Error" (MSE) und "Root Mean Squared Error" (RMSE) als Fehlermaße in der linearen Regression. Warum wird oft der RMSE dem MSE vorgezogen?
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 10"}
+**Bedeutung von Mean Squared Error (MSE) und Root Mean Squared Error (RMSE):**
+
+Sowohl MSE als auch RMSE sind Maße für die durchschnittliche Größe der Fehler in einem Regressionsmodell. Sie quantifizieren, wie stark die vorhergesagten Werte von den tatsächlichen Werten abweichen.
+
+* **Mean Squared Error (MSE):**
+    * **Definition:** Das MSE ist der Durchschnitt der quadrierten Differenzen zwischen den vorhergesagten Werten ($\hat{Y}_i$) und den tatsächlichen Werten ($Y_i$).
+    * **Formel:** $MSE = \frac{1}{n} \sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2$
+    * **Eigenschaften:**
+        * Große Fehler werden stärker bestraft als kleine Fehler, da sie quadriert werden.
+        * Der Wert liegt immer im Bereich $[0, \infty)$, wobei 0 ein perfektes Modell anzeigt.
+        * Die Einheit des MSE ist die quadrierte Einheit der abhängigen Variablen (z.B. wenn $Y$ in Metern ist, ist MSE in Quadratmetern).
+
+* **Root Mean Squared Error (RMSE):**
+    * **Definition:** Das RMSE ist die Quadratwurzel des MSE.
+    * **Formel:** $RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (Y_i - \hat{Y}_i)^2} = \sqrt{MSE}$
+    * **Eigenschaften:**
+        * Wie MSE bestraft es große Fehler stärker.
+        * Der Wert liegt immer im Bereich $[0, \infty)$, wobei 0 ein perfektes Modell anzeigt.
+        * Die Einheit des RMSE ist dieselbe wie die Einheit der abhängigen Variablen (z.B. wenn $Y$ in Metern ist, ist RMSE in Metern).
+
+**Warum wird oft der RMSE dem MSE vorgezogen?**
+
+Der RMSE wird dem MSE aus einem entscheidenden Grund oft vorgezogen:
+
+* **Interpretierbarkeit in der Originaleinheit:** Das größte Argument für RMSE ist, dass seine Einheit dieselbe ist wie die der abhängigen Variablen, während die Einheit des MSE die quadrierte Einheit ist. Dies macht den RMSE wesentlich **leichter interpretierbar** im Kontext des Problems.
+    * Wenn Sie beispielsweise den Preis eines Hauses vorhersagen (in Euro), wäre ein RMSE von 10.000 € intuitiver zu verstehen als ein MSE von 100.000.000 $€^2$. Der RMSE gibt direkt an, wie groß die durchschnittliche Abweichung der Vorhersagen in den originalen Einheiten der abhängigen Variablen ist.
+
+Obwohl beide Maße ähnliche Informationen über die Modellleistung liefern (ein niedrigerer Wert ist immer besser), ist die intuitive Verständlichkeit des RMSE ein großer Vorteil für die Kommunikation der Modellergebnisse. Das MSE ist jedoch nützlich, weil die Quadrierung die Ableitung erleichtert, was es zu einem bevorzugten Kriterium für die Optimierung in vielen Algorithmen macht. Für die Präsentation der Ergebnisse wird dann oft der RMSE berechnet.
+:::
+
+#### 11. Bias-Varianz-Tradeoff
+
+* Beschreiben Sie den Bias-Varianz-Tradeoff im Kontext von Vorhersagemodellen (Prognosemodellen). 
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 11"}
+**Der Bias-Varianz-Tradeoff:**
+
+Der Bias-Varianz-Tradeoff ist ein zentrales Konzept im maschinellen Lernen, das die Beziehung zwischen der Komplexität eines Modells und seiner Fähigkeit, genaue Vorhersagen auf unbekannten Daten zu treffen, beschreibt. Ziel ist es, ein Modell zu finden, das eine gute Balance zwischen Bias und Varianz hat, um eine optimale Generalisierungsfähigkeit zu erreichen.
+
+* **Bias (Verzerrung):**
+    * **Was es ist:** Der Bias ist der Fehler, der durch vereinfachende Annahmen im Lernalgorithmus entsteht. Ein Modell mit hohem Bias ist zu einfach, um den zugrunde liegenden komplexen Zusammenhang in den Daten zu erfassen. Es "unterschätzt" die Komplexität der wahren Beziehung.
+    * **Folge:** Führt zu **Underfitting** (Unteranpassung), d.h., das Modell ist auf den Trainingsdaten und erst recht auf neuen, ungesehenen Daten schlecht.
+    * **Beispiel:** Eine lineare Regression, die versucht, eine nicht-lineare Beziehung zu modellieren.
+
+* **Varianz:**
+    * **Was es ist:** Die Varianz ist der Fehler, der durch die Sensitivität des Modells gegenüber kleinen Schwankungen in den Trainingsdaten entsteht. Ein Modell mit hoher Varianz ist zu komplex oder zu "empfindlich" für die Trainingsdaten und lernt dabei auch das Rauschen in den Daten.
+    * **Folge:** Führt zu **Overfitting** (Überanpassung), d.h., das Modell ist auf den Trainingsdaten sehr gut, aber auf neuen, ungesehenen Daten schlecht, weil es die spezifischen Merkmale des Trainingsdatensatzes zu stark verinnerlicht hat.
+    * **Beispiel:** Ein sehr komplexes Polynommodell, das alle Datenpunkte perfekt trifft, aber dann stark oszilliert, wenn neue Datenpunkte außerhalb der Trainingsdaten kommen.
+
+* **Tradeoff:** Es gibt einen inhärenten Kompromiss: Wenn wir den Bias reduzieren (Modell komplexer machen), steigt typischerweise die Varianz, und umgekehrt. Ein gutes Modell muss eine Balance finden, um den Gesamtfehler (oft gemessen als Mean Squared Error) auf ungesehenen Daten zu minimieren.
+
+:::
+
+#### 12. Kreuzvalidierung
+
+* Erläutern Sie das Prinzip der $k$-Fold-Kreuzvalidierung. Warum ist diese Methode dem einfachen Train-Test-Split bei der Modellbewertung oft überlegen? Nennen Sie mindestens einen Vorteil. Was ist ein Vorteil der $k$-Fold-Kreuzvalidierung gegenübert der Leave-One-Out-Kreuzvalidierung (LOOCV)?
+
+::: {.callout collapse="true" title="Lösung Aufgabe 12"}
+**Prinzip der $k$-Fold-Kreuzvalidierung:**
+
+Die $k$-Fold-Kreuzvalidierung ist eine Technik zur Modellbewertung und -auswahl, die die Leistung eines Modells auf einem Datensatz zuverlässiger einschätzt, indem sie den Datensatz in $k$ gleich große Teilmengen (Folds) aufteilt. Der Prozess läuft wie folgt ab:
+
+1.  **Aufteilung:** Der gesamte Datensatz wird in $k$ (z.B. 5 oder 10) annähernd gleich große, disjunkte Folds aufgeteilt.
+2.  **Iterativer Trainings- und Validierungsprozess:**
+    * In jeder der $k$ Iterationen (oder "Folds") wird ein anderer Fold als **Validierungs- (oder Test-)Set** verwendet.
+    * Die verbleibenden $k-1$ Folds werden zusammen als **Trainingsset** verwendet.
+    * Das Modell wird auf dem Trainingsset trainiert und seine Leistung (z.B. MSE, Genauigkeit) auf dem Validierungsset bewertet.
+3.  **Aggregation:** Nach $k$ Iterationen hat jede Beobachtung genau einmal zum Validierungsset gehört. Die $k$ erhaltenen Leistungsmetriken werden gemittelt, um eine robustere Schätzung der Modellleistung zu erhalten.
+
+**Warum ist die $k$-Fold-Kreuzvalidierung dem einfachen Train-Test-Split überlegen?**
+
+Die $k$-Fold-Kreuzvalidierung bietet mehrere Vorteile gegenüber dem einfachen Train-Test-Split:
+
+1.  **Bessere Nutzung der Daten:**
+    * **Vorteil:** Beim einfachen Train-Test-Split wird ein signifikanter Teil der Daten (das Testset) nicht zum Training des Modells verwendet. Dies ist besonders bei kleinen Datensätzen problematisch, da das Modell weniger Daten zum Lernen hat. Bei der $k$-Fold-Kreuzvalidierung wird *jede* Beobachtung sowohl zum Training (in $k-1$ Folds) als auch zur Validierung (in einem Fold) verwendet. Dies führt zu einer effizienteren Nutzung des gesamten Datensatzes für Training und Bewertung.
+
+2.  **Robustere Schätzung der Modellleistung (geringere Varianz):**
+    * **Vorteil:** Der einfache Train-Test-Split hängt stark von der zufälligen Aufteilung ab. Eine "unglückliche" Aufteilung könnte dazu führen, dass das Testset nicht repräsentativ für die Gesamtpopulation ist, was die Bewertung der Modellleistung verzerrt. Die $k$-Fold-Kreuzvalidierung mittelt die Leistung über $k$ verschiedene Train-Test-Splits. Dies reduziert die Varianz der Leistungsschätzung und liefert eine stabilere und weniger zufälligkeitsanfällige Bewertung der Generalisierungsfähigkeit des Modells.
+
+3.  **Reduziertes Risiko von Overfitting auf das Testset:**
+    * **Vorteil:** Wenn beim einfachen Train-Test-Split das Testset wiederholt für Modelloptimierung oder Hyperparameter-Tuning verwendet wird, besteht die Gefahr, dass das Modell am Ende auf dieses spezifische Testset überangepasst wird. Die $k$-Fold-Kreuzvalidierung bietet einen eingebauten Mechanismus zur Validierung auf verschiedenen Teilmengen der Daten, was hilft, die Generalisierungsfähigkeit besser einzuschätzen, bevor das Modell eventuell auf einem endgültigen, ungesehenen Testset evaluiert wird (falls vorhanden).
+
+Zusammenfassend lässt sich sagen, dass die $k$-Fold-Kreuzvalidierung eine zuverlässigere und stabilere Methode zur Bewertung der Modellleistung darstellt, insbesondere bei kleineren oder heterogenen Datensätzen, da sie die Auswirkungen einer einzelnen, zufälligen Datenaufteilung minimiert und die verfügbaren Daten effizienter nutzt.
+
+Gegenüber der Leave-One-Out-Kreuzvalidierung (LOOCV):
+Die $k$-Fold-Kreuzvalidierung hat gegenüber der LOOCV (Leave-One-Out-Kreuzvalidierung) mehrere Vorteile:
+1.  **Rechenaufwand:**
+    * **Vorteil:** LOOCV erfordert $n$ Trainingsläufe (wobei $n$ die Anzahl der Beobachtungen im Datensatz ist), da jede einzelne Beobachtung einmal als Testset verwendet wird. Dies kann bei großen Datensätzen sehr rechenintensiv sein. Bei der $k$-Fold-Kreuzvalidierung wird das Modell nur $k$ Mal trainiert, was den Rechenaufwand erheblich reduziert, insbesondere bei großen Datensätzen.
+
+:::
+
+#### 13. Logistische Regression - Grundlagen
+
+* Erklären Sie, warum lineare Regression für binäre Klassifikationsprobleme ungeeignet ist. Wie löst die logistische Regression dieses Problem?
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 13"}
+**Warum Lineare Regression für binäre Klassifikationsprobleme ungeeignet ist:**
+
+Ein binäres Klassifikationsproblem liegt vor, wenn die abhängige Variable ($Y$) nur zwei diskrete Werte annehmen kann, typischerweise 0 oder 1 (z.B. "Kunde kauft" vs. "Kunde kauft nicht", "Kredit gewährt" vs. "Kredit abgelehnt").
+
+Die lineare Regression ist aus folgenden Gründen für solche Probleme ungeeignet:
+
+1.  **Ungeeignete Vorhersagewerte:**
+    * Die lineare Regression versucht, $Y = \beta_0 + \beta_1 X + \epsilon$ zu schätzen. Die vorhergesagten Werte $\hat{Y}$ können jedoch beliebige reelle Zahlen annehmen ($\pm \infty$).
+    * Bei binären Daten ist $Y$ jedoch 0 oder 1. Wenn wir die linearen Vorhersagen als Wahrscheinlichkeiten interpretieren würden ($P(Y=1|X)$), könnten diese Werte kleiner als 0 oder größer als 1 sein, was als Wahrscheinlichkeit mathematisch unsinnig ist.
+
+2.  **Falsche Annahmen über den Fehlerterm:**
+    * Lineare Regression geht davon aus, dass die Fehlerterme ($\epsilon$) normalverteilt sind und eine konstante Varianz (Homoskedastizität) aufweisen.
+    * Bei binären Daten ist der Fehlerterm nicht normalverteilt. Da $Y$ nur 0 oder 1 sein kann, ist der Fehler $\epsilon = Y - \hat{Y}$. Wenn $\hat{Y}$ beispielsweise eine Wahrscheinlichkeit ist, können die Fehler nur $1 - \hat{Y}$ oder $0 - \hat{Y}$ sein, was zu einer nicht-normalen und heteroskedastischen Fehlerverteilung führt (die Varianz hängt von der Wahrscheinlichkeit $p$ ab).
+
+3.  **Fehlinterpretierbarkeit der Koeffizienten:**
+    * In der linearen Regression wird $\beta_1$ als die durchschnittliche Änderung in $Y$ für eine Einheit Änderung in $X$ interpretiert. Bei binären Daten wäre dies eine Änderung in $0/1$, was schwer sinnvoll zu interpretieren ist.
+
+**Wie die logistische Regression dieses Problem löst:**
+
+Die logistische Regression löst diese Probleme, indem sie die Lineare Regression nicht direkt auf die binäre Variable $Y$ anwendet, sondern auf eine **Transformation** der Wahrscheinlichkeit, dass $Y=1$.
+
+1.  **Modellierung der Wahrscheinlichkeit über die Logit-Funktion:**
+    * Anstatt $Y$ direkt zu modellieren, modelliert die logistische Regression die **Log-Odds** (oder Logit) der Wahrscheinlichkeit $P(Y=1|X)$.
+    * Die Logit-Funktion ist definiert als: $\text{logit}(p) = \ln\left(\frac{p}{1-p}\right)$.
+    * Die lineare Beziehung wird auf diese Log-Odds angewendet:
+        $$
+        \ln\left(\frac{P(Y=1|X)}{1-P(Y=1|X)}\right) = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p
+        $$
+    * Die linke Seite der Gleichung kann Werte von $-\infty$ bis $+\infty$ annehmen, was mit der linearen Regression vereinbar ist.
+
+2.  **Transformation zurück zur Wahrscheinlichkeit mit der Sigmoid-Funktion:**
+    * Um die Wahrscheinlichkeit $P(Y=1|X)$ zu erhalten, wird die inverse der Logit-Funktion verwendet, die **Sigmoid-Funktion** (oder logistische Funktion):
+        $$
+        P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \dots + \beta_p X_p)}}
+        $$
+    * Diese Sigmoid-Funktion hat die Eigenschaft, dass sie jeden reellen Wert als Eingabe akzeptiert und eine Ausgabe im Bereich von 0 bis 1 liefert. Dadurch können die Vorhersagen direkt als Wahrscheinlichkeiten interpretiert werden.
+
+3.  **Natürliche Modellierung der binomischen Verteilung:**
+    * Die logistische Regression geht von der Annahme aus, dass die abhängige Variable einer **Bernoulli-Verteilung** (oder Binomialverteilung für mehrere Versuche) folgt, was für binäre Daten angemessen ist.
+
+Zusammenfassend löst die logistische Regression das Problem der ungeeigneten Vorhersagewerte und Annahmen der linearen Regression, indem sie eine nicht-lineare Transformation verwendet, um die Wahrscheinlichkeit eines binären Ereignisses vorherzusagen, deren Werte natürlicherweise zwischen 0 und 1 liegen.
+:::
+
+#### 14. Konfidenzintervalle
+
+* Erläutern Sie das Konzept eines Konfidenzintervalls. Was bedeutet es, wenn Sie ein 95%-Konfidenzintervall für den Mittelwert einer Stichprobe berechnet haben?
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 14"}
+**Konzept eines Konfidenzintervalls:**
+
+Ein Konfidenzintervall ist ein Bereich von Werten, der dazu dient, einen unbekannten Populationsparameter (z.B. den Populationsmittelwert $\mu$, die Populationsstandardabweichung $\sigma$ oder den Populationsanteil $p$) zu schätzen. Es wird auf Basis von Stichprobendaten berechnet.
+
+Es besteht aus zwei Hauptkomponenten:
+
+1.  **Punktschätzer:** Das ist der beste Schätzwert für den Parameter, der direkt aus der Stichprobe abgeleitet wird (z.B. der Stichprobenmittelwert $\bar{X}$ für den Populationsmittelwert $\mu$).
+2.  **Fehlermarge:** Dies ist ein Bereich um den Punktschätzer herum, der die Unsicherheit der Schätzung widerspiegelt. Die Größe der Fehlermarge hängt von der Variabilität der Daten, der Stichprobengröße und dem gewählten Konfidenzniveau ab.
+
+Das Konfidenzintervall gibt an, wie präzise die Schätzung ist und mit welcher "Sicherheit" der wahre Populationsparameter in diesem Intervall liegt.
+
+**Was bedeutet es, wenn Sie ein 95%-Konfidenzintervall für den Mittelwert einer Stichprobe berechnet haben?**
+
+Wenn Sie ein 95%-Konfidenzintervall für den Mittelwert einer Population auf Basis einer Stichprobe berechnet haben, bedeutet dies Folgendes:
+
+* **Interpretation der "Sicherheit":** Es ist *nicht* die Wahrscheinlichkeit, dass der *eine* berechnete Intervall den wahren Populationsmittelwert enthält. Der wahre Populationsmittelwert ist ein fester, unbekannter Wert; er liegt entweder im Intervall oder nicht.
+* **Wiederholte Stichprobenziehung:** Die korrekte Interpretation bezieht sich auf das Verfahren: Wenn wir den Prozess der Stichprobenziehung und der Berechnung des Konfidenzintervalls **sehr oft wiederholen** würden (z.B. 100 Mal), dann würden wir erwarten, dass **ungefähr 95% dieser Intervalle den wahren, unbekannten Populationsmittelwert enthalten**.
+* **"Wir sind zu 95% sicher, dass..."**: In der Praxis formulieren wir dies oft als: "Wir sind zu 95% zuversichtlich/sicher, dass der wahre Populationsmittelwert zwischen der unteren und oberen Grenze dieses spezifischen Intervalls liegt." Dies ist eine praktische, wenn auch leicht vereinfachte Formulierung der obigen, formal korrekten Interpretation.
+
+**Beispiel:** Wenn Sie aus einer Stichprobe ein 95%-Konfidenzintervall für die durchschnittliche Körpergröße von Studierenden zwischen 170 cm und 175 cm berechnet haben, bedeutet dies, dass, wenn Sie diesen Prozess viele Male wiederholen würden, etwa 95% der so erzeugten Intervalle die tatsächliche durchschnittliche Körpergröße aller Studierenden (die wir nicht kennen) umfassen würden.
+:::
+
+#### 15. Chi-Quadrat-Test
+
+* Sie möchten untersuchen, ob es einen Zusammenhang zwischen der Herkunft (`origin`) eines Autos und dem Vorhandensein eines Turboladers (hypothetische kategoriale Variable, die Sie erstellen könnten) gibt.
+    * Welchen statistischen Test würden Sie verwenden? Begründen Sie Ihre Wahl.
+    * Formulieren Sie die Null- und Alternativhypothese für diesen Test.
+    * Erklären Sie, warum dieser Test als nicht-parametrisch gilt.
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 15"}
+**1. Welchen statistischen Test würden Sie verwenden? Begründen Sie Ihre Wahl.**
+
+Ich würde den **Chi-Quadrat-Unabhängigkeitstest** (engl. Chi-squared test of independence) verwenden.
+
+**Begründung:**
+* Die Fragestellung zielt darauf ab, einen **Zusammenhang** (oder dessen Fehlen) zwischen zwei **kategorialen Variablen** zu prüfen: `origin` (z.B. USA, Europa, Japan) und `Turbolader` (z.B. Ja, Nein).
+* Der Chi-Quadrat-Unabhängigkeitstest ist speziell dafür konzipiert, zu testen, ob eine statistische Abhängigkeit zwischen zwei oder mehr kategorialen Variablen besteht. Er vergleicht die beobachteten Häufigkeiten in einer Kontingenztafel mit den erwarteten Häufigkeiten unter der Annahme, dass die Variablen unabhängig sind.
+
+**2. Formulieren Sie die Null- und Alternativhypothese für diesen Test.**
+
+* **Nullhypothese ($H_0$):** Es gibt keinen statistischen Zusammenhang zwischen der Herkunft eines Autos und dem Vorhandensein eines Turboladers. Die beiden Variablen sind statistisch unabhängig.
+    * (Formal: Die Verteilung der Turbolader hängt nicht von der Herkunft ab, und umgekehrt.)
+
+* **Alternativhypothese ($H_1$):** Es gibt einen statistischen Zusammenhang zwischen der Herkunft eines Autos und dem Vorhandensein eines Turboladers. Die beiden Variablen sind statistisch abhängig.
+    * (Formal: Die Verteilung der Turbolader hängt von der Herkunft ab.)
+
+**3. Erklären Sie, warum dieser Test als nicht-parametrisch gilt.**
+
+Der Chi-Quadrat-Test gilt als **nicht-parametrisch**, weil er **keine Annahmen über die spezifische Verteilungsform** (z.B. Normalverteilung) der zugrunde liegenden Populationen macht.
+
+* Im Gegensatz zu parametrischen Tests (wie dem $t$-Test oder ANOVA), die Annahmen über Parameter wie Mittelwert, Varianz und Normalität der Daten treffen, basiert der Chi-Quadrat-Test auf der **Häufigkeitsverteilung von Daten in Kategorien**.
+* Er arbeitet direkt mit **Häufigkeiten oder Zählungen** und vergleicht, ob die beobachteten Häufigkeiten signifikant von den erwarteten Häufigkeiten abweichen, die unter der Annahme der Unabhängigkeit berechnet werden.
+* Diese Eigenschaft macht ihn besonders geeignet für kategoriale Daten, wo metrische Annahmen (wie Mittelwerte oder Normalverteilung) nicht anwendbar sind.
+:::
+
+#### 16. ROC-Kurve und AUC
+
+* Erklären Sie, was eine ROC-Kurve darstellt und wie sie interpretiert wird. Was misst die AUC (Area Under the Curve) und welche Werte sind wünschenswert? Warum sind diese Metriken besonders nützlich für die Bewertung von Klassifikationsmodellen?
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 16"}
+**Was eine ROC-Kurve darstellt und wie sie interpretiert wird:**
+
+Die **ROC-Kurve (Receiver Operating Characteristic Curve)** ist ein grafisches Werkzeug zur Bewertung der Leistung eines binären Klassifikationsmodells bei verschiedenen Klassifikationsschwellenwerten.
+
+* Sie wird geplottet, indem die **True Positive Rate (TPR)** (auch Sensitivität oder Recall genannt) auf der y-Achse gegen die **False Positive Rate (FPR)** auf der x-Achse aufgetragen wird.
+    * **TPR (Sensitivität / Recall):** Der Anteil der tatsächlich positiven Fälle, die korrekt als positiv identifiziert wurden ($TPR = \frac{TP}{TP + FN}$).
+    * **FPR (1 - Spezifität):** Der Anteil der tatsächlich negativen Fälle, die fälschlicherweise als positiv identifiziert wurden ($FPR = \frac{FP}{FP + TN}$).
+
+* **Interpretation der ROC-Kurve:**
+    * Jeder Punkt auf der ROC-Kurve repräsentiert ein bestimmtes Schwellenwertpaar für TPR und FPR. Durch Variieren des Schwellenwerts, ab dem eine Beobachtung als positiv klassifiziert wird (z.B. Wahrscheinlichkeit > 0.5), bewegen wir uns entlang der Kurve.
+    * Eine **ideale Kurve** würde im oberen linken Eck des Diagramms verlaufen (TPR = 1, FPR = 0), was bedeutet, dass alle positiven Fälle korrekt identifiziert werden, ohne dass falsche positive Fälle erzeugt werden.
+    * Eine **Diagonallinie** von (0,0) nach (1,1) repräsentiert einen Zufallsklassifikator (z.B. Münzwurf). Ein Modell unterhalb dieser Linie ist schlechter als zufällig.
+    * Je weiter die Kurve nach oben links verläuft, desto besser ist die Unterscheidungsfähigkeit des Modells zwischen den positiven und negativen Klassen.
+
+**Was misst die AUC (Area Under the Curve) und welche Werte sind wünschenswert?**
+
+* Die **AUC (Area Under the Curve)** ist ein einzelner Skalarwert, der die gesamte Fläche unter der ROC-Kurve misst. Sie fasst die Gesamtleistung des Modells über alle möglichen Klassifikationsschwellenwerte hinweg zusammen.
+* **Wertebereich:** Die AUC liegt typischerweise zwischen 0 und 1.
+* **Wünschenswerte Werte:**
+    * **AUC = 1.0:** Perfekte Klassifikation (Modell unterscheidet positive und negative Klassen fehlerfrei).
+    * **AUC = 0.5:** Zufallsklassifikator (Modell ist nicht besser als zufälliges Raten).
+    * **AUC < 0.5:** Das Modell ist schlechter als Zufall (kann oft durch Invertieren der Vorhersagen behoben werden).
+    * **Allgemein:** Höhere AUC-Werte sind wünschenswert, wobei Werte über 0.70 oft als akzeptabel und Werte über 0.85 als sehr gut angesehen werden.
+
+**Warum sind diese Metriken besonders nützlich für die Bewertung von Klassifikationsmodellen?**
+
+ROC-Kurve und AUC sind aus mehreren Gründen nützlich:
+
+1.  **Schwellenwert-unabhängig:** Im Gegensatz zu anderen Metriken wie Accuracy, Precision oder Recall, die von einem bestimmten Klassifikationsschwellenwert abhängen, bewerten ROC und AUC die Leistung eines Modells über *alle möglichen Schwellenwerte*. Dies ist entscheidend, da der optimale Schwellenwert je nach Anwendungsfall (z.B. höhere Sensitivität vs. höhere Spezifität) variieren kann.
+
+2.  **Umgang mit unbalancierten Daten:** Bei stark unbalancierten Datensätzen (z.B. 99% negative Fälle, 1% positive Fälle) kann die Accuracy irreführend sein. Ein Modell, das immer "negativ" vorhersagt, hätte eine hohe Genauigkeit (99%), wäre aber nutzlos. ROC und AUC sind weniger anfällig für dieses Problem, da sie die Fähigkeit des Modells bewerten, positive Fälle von negativen zu unterscheiden, unabhängig von deren Häufigkeit.
+
+3.  **Vergleich von Modellen:** Sie ermöglichen einen fairen Vergleich verschiedener Klassifikationsmodelle, selbst wenn diese unterschiedliche Schwellenwerte verwenden oder auf unterschiedlich großen Datensätzen trainiert wurden. Das Modell mit der größeren AUC wird im Allgemeinen als das leistungsstärkere Modell angesehen.
+
+4.  **Visualisierung der Trade-offs:** Die ROC-Kurve visualisiert den Kompromiss zwischen TPR (Nutzen) und FPR (Kosten) bei verschiedenen Schwellenwerten, was für die Entscheidungsfindung wichtig ist. Man kann den Punkt auf der Kurve wählen, der am besten zu den spezifischen Anforderungen des Problems passt.
+:::
+
+#### 17. Overfitting und Underfitting
+
+* Definieren Sie Overfitting und Underfitting im Kontext von maschinellem Lernen. Welche Auswirkungen haben sie auf die Generalisierungsfähigkeit eines Modells? Nennen Sie jeweils eine Strategie zur Vermeidung von Overfitting und Underfitting.
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 17"}
+**Definition von Overfitting und Underfitting:**
+
+Im Kontext des maschinellen Lernens beschreiben Overfitting und Underfitting zwei grundlegende Probleme, die die Leistung eines Modells beeinflussen können, insbesondere seine Fähigkeit, auf neuen, ungesehenen Daten genaue Vorhersagen zu treffen.
+
+* **Underfitting (Unteranpassung):**
+    * **Definition:** Underfitting tritt auf, wenn ein Modell zu einfach ist, um die zugrunde liegenden Muster und die Struktur in den Trainingsdaten zu erfassen. Es "lernt" die Daten nicht ausreichend.
+    * **Symptome:** Das Modell zeigt sowohl auf den Trainingsdaten als auch auf den Testdaten eine schlechte Leistung. Es ist nicht komplex genug, um die Variabilität in den Daten zu modellieren.
+    * **Beispiel:** Eine lineare Regression, die versucht, eine sehr komplexe, nicht-lineare Beziehung zu modellieren. Das Modell ist zu "starr".
+
+* **Overfitting (Überanpassung):**
+    * **Definition:** Overfitting tritt auf, wenn ein Modell zu komplex oder zu flexibel ist und nicht nur die zugrunde liegenden Muster, sondern auch das Rauschen und die zufälligen Schwankungen (Fehler) in den Trainingsdaten lernt. Es "memorisiert" die Trainingsdaten.
+    * **Symptome:** Das Modell zeigt eine ausgezeichnete Leistung auf den Trainingsdaten, aber eine deutlich schlechtere Leistung auf neuen, ungesehenen Testdaten. Es hat die spezifischen Merkmale des Trainingsdatensatzes zu stark verinnerlicht und kann nicht auf die allgemeine Population verallgemeinern.
+    * **Beispiel:** Ein sehr komplexes Polynommodell oder ein tiefer Entscheidungsbaum, der so viele Verzweigungen hat, dass er jeden einzelnen Trainingsdatenpunkt perfekt klassifiziert oder vorhersagt.
+
+**Auswirkungen auf die Generalisierungsfähigkeit eines Modells:**
+
+Die **Generalisierungsfähigkeit** ist die Fähigkeit eines Modells, gute Vorhersagen oder Klassifikationen auf neuen, ungesehenen Daten zu treffen, die nicht Teil des Trainingsdatensatzes waren.
+
+* **Auswirkung von Underfitting:** Ein unterangepasstes Modell hat eine **schlechte Generalisierungsfähigkeit**, weil es die grundlegenden Beziehungen in den Daten nicht einmal auf den Trainingsdaten gelernt hat. Es ist sowohl auf bekannten als auch auf unbekannten Daten ungenau.
+
+* **Auswirkung von Overfitting:** Ein überangepasstes Modell hat ebenfalls eine **schlechte Generalisierungsfähigkeit**, obwohl es auf den Trainingsdaten gut abschneidet. Es hat Rauschen und spezifische Details der Trainingsdaten gelernt, die nicht repräsentativ für die Gesamtpopulation sind. Daher versagt es, wenn es mit neuen Daten konfrontiert wird.
+
+Das Ziel beim Modelltraining ist es, ein Modell zu finden, das eine **gute Balance** zwischen Underfitting und Overfitting aufweist, um eine optimale Generalisierungsfähigkeit zu erreichen.
+
+**Strategien zur Vermeidung:**
+
+* **Strategie zur Vermeidung von Underfitting:**
+    * **Modellkomplexität erhöhen:** Verwenden Sie ein komplexeres Modell (z.B. von linearer Regression zu Polynomregression wechseln, von einfachen Entscheidungsbäumen zu komplexeren Strukturen oder neuronalen Netzen).
+    * **Mehr relevante Features hinzufügen:** Die Aufnahme weiterer Variablen, die für das Problem relevant sind, kann dem Modell helfen, komplexere Muster zu erfassen.
+    * **Feature Engineering:** Erstellen Sie neue Features aus bestehenden Daten, die dem Modell helfen, den Zusammenhang besser zu verstehen (z.B. interaktive Terme, polynomiale Terme).
+
+* **Strategie zur Vermeidung von Overfitting:**
+    * **Mehr Trainingsdaten sammeln:** Der einfachste und oft effektivste Weg. Mehr Daten helfen dem Modell, die wahren Muster vom Rauschen zu unterscheiden.
+    * **Modellkomplexität reduzieren (Regularisierung):**
+        * **Regularisierungstechniken:** Fügen Sie dem Verlustfunktionsterm eine Strafe für die Modellkomplexität hinzu (z.B. L1-Regularisierung (Lasso) oder L2-Regularisierung (Ridge) bei linearen Modellen, Dropout bei neuronalen Netzen). Dies zwingt das Modell, einfachere Gewichte zu lernen.
+        * **Weniger Features verwenden/Feature-Auswahl:** Wenn zu viele irrelevante Features vorhanden sind, kann das Modell Rauschen lernen. Entfernen Sie Features oder nutzen Sie Feature-Auswahlmethoden.
+        * **Einfachere Modelle verwenden:** Wechseln Sie zu einem weniger komplexen Modelltyp (z.B. von einem tiefen neuronalen Netz zu einem flacheren, oder von einem komplexen Ensemble zu einem einfacheren Baum).
+    * **Kreuzvalidierung:** Verwenden Sie Methoden wie $k$-Fold-Kreuzvalidierung, um die Modellleistung auf verschiedenen Teilen der Daten zu bewerten und ein robusteres Leistungsmaß zu erhalten, was hilft, Overfitting frühzeitig zu erkennen.
+    * **Early Stopping:** Beim iterativen Training (z.B. bei neuronalen Netzen) das Training beenden, wenn die Leistung auf einem Validierungsset beginnt zu sinken, auch wenn sie auf dem Trainingsset noch steigt.
+:::
+
+#### 18. Anwendung des CRISP-DM Modells
+
+* Nehmen Sie ein beliebiges Problem, das Sie mit Datenanalyse lösen möchten (z.B. Vorhersage von Immobilienpreisen). Beschreiben Sie, wie Sie die ersten drei Phasen des CRISP-DM Modells (Business Understanding, Data Understanding, Data Preparation) auf dieses Problem anwenden würden, basierend auf den im Kurs behandelten Konzepten und den bereitgestellten Dokumenten.
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 18"}
+**Problem:** Vorhersage von Immobilienpreisen in einer bestimmten Region.
+
+**Anwendung des CRISP-DM Modells (Phasen 1-3):**
+
+**Phase 1: Business Understanding (Geschäftsverständnis)**
+
+In dieser Phase geht es darum, die Geschäftsziele und das Problem aus der Perspektive des Auftraggebers zu verstehen.
+
+* **Ziele definieren:**
+    * **Geschäftsziel:** Eine präzise und zuverlässige Vorhersage der Immobilienpreise ermöglichen, um Käufern und Verkäufern eine fundierte Entscheidungsgrundlage zu bieten, Banken bei der Kreditbewertung zu unterstützen oder Immobilienmaklern bei der Preisgestaltung zu helfen.
+    * **Data-Mining-Ziel:** Ein Vorhersagemodell entwickeln, das den Immobilienpreis (Zielvariable) basierend auf verschiedenen Immobilienmerkmalen (Prädiktoren) mit hoher Genauigkeit schätzt.
+    * **Erfolgskriterien:** Das Modell sollte einen RMSE (Root Mean Squared Error) von unter X Euro erreichen oder eine durchschnittliche Abweichung von weniger als Y% vom tatsächlichen Preis aufweisen.
+
+* **Problemformulierung:**
+    * Wie können wir den Einfluss verschiedener Faktoren (z.B. Lage, Größe, Zustand, Anzahl der Zimmer, Baujahr) auf den Immobilienpreis quantifizieren?
+    * Gibt es bestimmte "Hotspots" oder Immobilienmerkmale, die den Preis überproportional beeinflussen?
+    * Welche Art von Modell wäre am besten geeignet (z.B. Lineare Regression, Baum-basierte Modelle)?
+
+* **Kontextualisierung:** Verständnis der Marktbedingungen (Angebot/Nachfrage, Zinssätze, lokale Wirtschaft), der Zielgruppe (Privatpersonen, Investoren) und der Nutzung des Modells (einmalige Schätzung, kontinuierliche Überwachung).
+
+**Phase 2: Data Understanding (Datenverständnis)**
+
+In dieser Phase geht es darum, die Daten zu sammeln, zu untersuchen und ihre Qualität zu bewerten, um ein erstes Verständnis zu entwickeln.
+
+* **Datenerhebung:**
+    * Identifikation potenzieller Datenquellen: Immobilienportale, Katasterämter, amtliche Statistiken, Maklerdatenbanken.
+    * Sammeln von Daten über verkaufte Immobilien in der Region, einschließlich Merkmalen wie:
+        * `price` (Preis - Zielvariable)
+        * `living_area` (Wohnfläche in m²)
+        * `number_of_rooms` (Anzahl der Zimmer)
+        * `number_of_bathrooms` (Anzahl der Bäder)
+        * `lot_size` (Grundstücksgröße in m²)
+        * `year_built` (Baujahr)
+        * `property_type` (Immobilientyp: Haus, Wohnung, Reihenhaus - kategorial)
+        * `location` (PLZ, Stadtteil - kategorial/geografisch)
+        * `condition` (Zustand: z.B. neuwertig, gut, renovierungsbedürftig - ordinal)
+        * `last_renovation_year` (Letztes Renovierungsjahr)
+
+* **Datenerkundung (Exploratory Data Analysis - EDA):**
+    * **Deskriptive Statistik (Referenz: `data_sets.md`):** Berechnen von Mittelwert, Median, Standardabweichung, Min/Max für numerische Variablen (`price`, `living_area`, `lot_size`, `year_built`). Häufigkeiten für kategoriale Variablen (`property_type`, `location`, `condition`).
+    * **Datenvisualisierung (Referenz: `data_sets.md`, `distributions.md`):**
+        * Histogramme für `price`, `living_area`, `year_built`, um Verteilungen zu sehen (z.B. ob Preise rechtsschief verteilt sind).
+        * Balkendiagramme für `property_type`, `location`, `condition`, um die Verteilung der Kategorien zu sehen.
+        * Streudiagramme zwischen `price` und numerischen Variablen (z.B. `living_area` vs. `price`), um lineare oder nicht-lineare Beziehungen zu erkennen.
+        * Boxplots von `price` nach `property_type` oder `condition`, um Preisunterschiede zwischen Kategorien zu visualisieren.
+    * **Korrelationsanalyse (Referenz: `data_sets.md`):** Berechnung von Korrelationskoeffizienten (z.B. Pearson) zwischen `price` und numerischen Prädiktoren (`living_area`, `number_of_rooms`). Erste Einschätzung von Multikollinearität zwischen Prädiktoren.
+
+* **Qualitätsprüfung:**
+    * **Fehlende Werte:** Identifizieren, welche Variablen fehlende Werte haben und wie viele (z.B. `last_renovation_year` könnte fehlen, wenn nie renoviert).
+    * **Ausreißer:** Erkennen von extremen Werten (z.B. sehr große/kleine Immobilien, unrealistische Preise).
+    * **Datenkonsistenz:** Überprüfung auf Inkonsistenzen (z.B. `year_built` > aktuelles Jahr, `living_area` > `lot_size` bei einem Haus).
+    * **Datenformate:** Sicherstellen, dass alle Variablen im korrekten Format vorliegen (numerisch, kategorial).
+
+**Phase 3: Data Preparation (Datenaufbereitung)**
+
+Diese Phase konzentriert sich auf die Bereinigung und Transformation der Rohdaten in ein Format, das für die Modellierung geeignet ist.
+
+* **Datenauswahl:**
+    * Entscheidung, welche Variablen relevant sind und welche ausgeschlossen werden (z.B. irrelevante IDs).
+    * Umgang mit unvollständigen Daten (z.B. Spalten mit zu vielen fehlenden Werten entfernen).
+
+* **Datenbereinigung (Referenz: `tutorial.md`):**
+    * **Umgang mit fehlenden Werten:**
+        * Strategien: Imputation (z.B. mit Mittelwert, Median, Modus), Entfernung von Zeilen/Spalten (falls wenige). Begründung der Wahl.
+    * **Umgang mit Ausreißern:**
+        * Strategien: Entfernen, Transformieren (z.B. Log-Transformation, wenn die Verteilung schief ist), Capping/Flooring.
+    * **Umgang mit Duplikaten:** Identifizieren und Entfernen von doppelten Einträgen.
+    * **Inkonsistenzen beheben:** Korrektur von fehlerhaften oder inkonsistenten Einträgen (z.B. Vereinheitlichung von Stadtnamen).
+
+* **Datenkonstruktion (Feature Engineering):**
+    * **Erstellung neuer Features:**
+        * `age_of_property` = aktuelles Jahr - `year_built`
+        * `renovated_since` = aktuelles Jahr - `last_renovation_year` (falls vorhanden)
+        * `price_per_sqm` = `price` / `living_area` (für weitere Analysen oder als Zielvariable, wenn sinnvoll)
+        * Interaktionsterme (z.B. `living_area` * `number_of_rooms`).
+    * **Kategorien zusammenfassen:** Zusammenfassen seltener Kategorien in `property_type` oder `location` zu einer "Other"-Kategorie.
+
+* **Datenintegration:**
+    * Falls Daten aus mehreren Quellen stammen, diese zusammenführen (z.B. Immobilienmerkmale mit Daten zur Infrastruktur des Stadtteils).
+
+* **Datenformatierung/Transformation (Referenz: `advanced_linear_regression.md`, `logistic_regression.md`):**
+    * **Numerische Transformationen:** Log-Transformation von schiefen Variablen (`price`, `living_area`) zur besseren Anpassung an die Annahmen linearer Modelle.
+    * **Kategoriale Variablen kodieren:** One-Hot-Encoding für `property_type`, `location` und `condition` (wenn nicht ordinal interpretiert). Für `condition` könnte auch eine numerische Kodierung 1, 2, 3... in Betracht gezogen werden, wenn die Ordnung sinnvoll ist.
+    * **Skalierung:** Standardisierung (Z-Transformation) oder Normalisierung von numerischen Variablen (z.B. `living_area`, `horsepower`), besonders wichtig für Modelle, die auf Abständen basieren (z.B. k-NN, SVM) oder Regularisierung verwenden. Dies verhindert, dass Variablen mit größeren Werten den Modelllernprozess dominieren.
+
+Diese drei Phasen legen das Fundament für die anschließenden Schritte der Modellierung und Evaluation, indem sie sicherstellen, dass das Problem klar definiert ist und die Daten in einem geeigneten Format und ausreichender Qualität vorliegen.
+:::
+
+#### 19. Datenaufbereitung in der Praxis
+
+* Angenommen, Sie erhalten einen neuen Datensatz, der unsauber ist (z.B. fehlende Werte, inkonsistente Formate, Duplikate). Beschreiben Sie mindestens drei Schritte zur Datenbereinigung, die Sie durchführen würden, um den Datensatz für eine weitere Analyse vorzubereiten. Erläutern Sie die Wichtigkeit einer reproduzierbaren Datenaufbereitung.
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 19"}
+Angenommen, der Datensatz enthält Informationen über Kundenbestellungen mit Feldern wie `KundenID`, `Bestelldatum`, `Produktname`, `Menge`, `Preis` und `Versandstatus`.
+
+**Drei Schritte zur Datenbereinigung:**
+
+1.  **Umgang mit fehlenden Werten:**
+    * **Problem:** Fehlende Werte sind häufig und können die Analyse und Modellierung stark beeinflussen oder zu Fehlern führen. Sie können als `NaN`, `NULL`, leere Strings oder spezielle Platzhalter (`?`, `-999`) auftreten.
+    * **Vorgehen:**
+        1.  **Identifizieren:** Zuerst würde ich fehlende Werte in jeder Spalte identifizieren und ihren Anteil am Datensatz prüfen.
+        2.  **Strategie definieren:**
+            * **Löschen:** Wenn eine Spalte einen sehr hohen Anteil an fehlenden Werten hat (z.B. > 70-80%) oder wenn es nur sehr wenige Zeilen mit fehlenden Werten gibt, könnte ich die gesamte Spalte oder die betroffenen Zeilen entfernen. Für eine Variable wie `Versandstatus`, die für die Analyse essenziell ist, würde ich Zeilen mit fehlenden Werten entfernen, wenn es wenige sind.
+            * **Imputation:** Für numerische Variablen wie `Menge` oder `Preis` könnte ich fehlende Werte durch den Mittelwert, Median oder Modus der Spalte ersetzen. Für kategoriale Variablen wie `Produktname` könnte der Modus oder eine neue Kategorie "Unbekannt" verwendet werden. Die Wahl hängt von der Verteilung und der Bedeutung der Variable ab.
+    * **Beispiel:** Wenn `Menge` bei 5% der Bestellungen fehlt und die Verteilung rechtsschief ist, würde ich den Median zur Imputation verwenden, um Ausreißereinfluss zu minimieren.
+
+2.  **Standardisierung und Korrektur inkonsistenter Formate/Einträge:**
+    * **Problem:** Daten können in unterschiedlichen Formaten vorliegen oder inkonsistente Schreibweisen aufweisen, was eine korrekte Analyse verhindert.
+    * **Vorgehen:**
+        1.  **Datentypen prüfen:** Sicherstellen, dass jede Spalte den korrekten Datentyp hat (z.B. `Bestelldatum` als Datumsobjekt, `Menge` als Integer, `Preis` als Float).
+        2.  **Textuelle Inkonsistenzen:** Einheitliche Groß-/Kleinschreibung (z.B. alles in Kleinbuchstaben) für kategoriale Textfelder (`Produktname`). Korrektur von Tippfehlern oder Varianten (z.B. "TV", "t.v.", "Television" zu "Television" vereinheitlichen).
+        3.  **Numerische/Datum-Formatierung:** Entfernung unerwünschter Zeichen (z.B. Währungssymbole, Kommas als Tausendertrenner), Konvertierung von Datumsstrings in ein einheitliches Datumsformat (z.B. YYYY-MM-DD).
+    * **Beispiel:** Für `Bestelldatum`, das mal als "2023-01-15", mal als "15/01/2023" vorliegt, würde ich eine einheitliche Konvertierung zu `YYYY-MM-DD` durchführen, um Datumsberechnungen zu ermöglichen. Für `Preis`, der als "$123.45" vorliegt, würde ich das '$'-Symbol entfernen und zu einem numerischen Typ konvertieren.
+
+3.  **Umgang mit Duplikaten:**
+    * **Problem:** Doppelte Einträge können Analysen verzerren und die statistische Validität beeinträchtigen. Sie können durch Fehler bei der Datenerfassung oder -zusammenführung entstehen.
+    * **Vorgehen:**
+        1.  **Identifizieren:** Bestimmen, was eine "duplikate" Zeile ausmacht. Oft ist dies eine Kombination aus mehreren Spalten (z.B. `KundenID`, `Bestelldatum`, `Produktname`, `Menge`). Manchmal ist eine `KundenID` allein nicht ausreichend, wenn ein Kunde mehrere Bestellungen hat.
+        2.  **Strategie:** Entscheiden, ob die Duplikate entfernt werden sollen und welche der doppelten Zeilen (z.B. die erste, die letzte) behalten werden soll.
+        3.  **Entfernen:** Duplikate basierend auf der definierten Spaltenkombination entfernen.
+    * **Beispiel:** Wenn zwei Zeilen exakt dieselbe `KundenID`, `Bestelldatum`, `Produktname`, `Menge` und `Preis` aufweisen, deutet dies stark auf einen doppelten Eintrag hin, der entfernt werden sollte, um keine Überbewertung dieser "Bestellung" zu riskieren.
+
+**Wichtigkeit einer reproduzierbaren Datenaufbereitung:**
+
+Die Reproduzierbarkeit ist in der Datenanalyse von entscheidender Bedeutung, da sie Transparenz, Validierung und Effizienz gewährleistet:
+
+1.  **Validierung und Fehlerbehebung:** Wenn die Datenaufbereitung nicht reproduzierbar ist, kann man im Falle von Fehlern oder unerwarteten Ergebnissen nicht nachvollziehen, welche Schritte unternommen wurden. Dies erschwert die Fehlerbehebung und die Validierung der Analyse.
+
+2.  **Transparenz und Vertrauen:** Eine reproduzierbare Datenaufbereitung bedeutet, dass jeder die Schritte nachvollziehen und überprüfen kann. Dies schafft Vertrauen in die Ergebnisse, sowohl bei internen Stakeholdern als auch in wissenschaftlichen oder regulatorischen Kontexten.
+
+3.  **Zusammenarbeit:** In Teams können andere Mitglieder die Arbeit leichter verstehen, überprüfen und weiterführen. Ein standardisiertes Skript stellt sicher, dass alle mit denselben bereinigten Daten arbeiten.
+
+4.  **Wartbarkeit und Aktualisierung:** Daten ändern sich im Laufe der Zeit. Wenn neue Daten hinzukommen oder die Analyse aktualisiert werden muss, kann ein reproduzierbares Skript einfach erneut ausgeführt werden, anstatt die Bereinigungsschritte manuell zu wiederholen. Dies spart Zeit und reduziert das Fehlerrisiko erheblich (Referenz `tutorial.md` Abschnitt "Data Preprocessing").
+
+5.  **Auditierbarkeit:** Insbesondere in regulierten Branchen ist es oft erforderlich, jeden Schritt der Datenverarbeitung dokumentieren und bei Bedarf nachweisen zu können.
+
+Um Reproduzierbarkeit zu gewährleisten, sollten alle Datenbereinigungs- und Transformationsschritte in einem Skript (z.B. Python oder R) festgehalten werden, das ohne manuelle Eingriffe ausgeführt werden kann. Kommentare und eine klare Struktur sind dabei essenziell.
+:::
+
+## Rechenaufgaben
+
+#### 1. Deskriptive Statistik & Z-Transformation
+
+Gegeben sei eine Stichprobe von Autogeschwindigkeiten (in mph): $[60, 65, 70, 72, 75, 80, 85, 90]$.
+
+* Berechnen Sie den Mittelwert und die Standardabweichung dieser Stichprobe.
+* Angenommen, diese Geschwindigkeiten sind annähernd normalverteilt. Wie würden Sie die Geschwindigkeit von 72 mph in einen Z-Wert umwandeln? Interpretieren Sie das Ergebnis.
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 1"}
+**Mittelwert ($\bar{X}$):**
+$$
+\bar{X} = \frac{60 + 65 + 70 + 72 + 75 + 80 + 85 + 90}{8} = \frac{597}{8} = 74.625
+$$
+
+**Standardabweichung ($S$):**
+$$
+S = \sqrt{\frac{1}{n-1} \sum (X_i - \bar{X})^2}
+$$
+$S = \sqrt{\frac{(60-74.625)^2 + (65-74.625)^2 + (70-74.625)^2 + (72-74.625)^2 + (75-74.625)^2 + (80-74.625)^2 + (85-74.625)^2 + (90-74.625)^2}{8-1}}$
+$S = \sqrt{\frac{213.90625 + 92.640625 + 21.390625 + 6.990625 + 0.140625 + 28.890625 + 107.640625 + 236.390625}{7}}$
+$S = \sqrt{\frac{708}{7}} \approx \sqrt{101.14} \approx 10.057$
+
+**Z-Transformation für 72 mph:**
+$$
+Z = \frac{X - \bar{X}}{S} = \frac{72 - 74.625}{10.057} \approx \frac{-2.625}{10.057} \approx -0.261
+$$
+**Interpretation:** Ein Z-Wert von ca. -0.261 bedeutet, dass 72 mph etwa 0.26 Standardabweichungen unter dem Stichprobenmittelwert liegt.
+:::
+
+#### 2. Wahrscheinlichkeitsberechnung - Normalverteilung
+
+Die Lebensdauer von Glühbirnen sei normalverteilt mit einem Mittelwert von $1200$ Stunden und einer Standardabweichung von $150$ Stunden.
+
+* Wie groß ist die Wahrscheinlichkeit, dass eine zufällig ausgewählte Glühbirne weniger als $1000$ Stunden brennt?
+* Wie groß ist die Wahrscheinlichkeit, dass sie zwischen $1100$ und $1300$ Stunden brennt? (Verwenden Sie eine [Z-Tabelle](https://de.wikipedia.org/wiki/Standardnormalverteilungstabelle) oder einen Taschenrechner/Software für die Normalverteilung).
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 2"}
+Gegeben: $\mu = 1200$, $\sigma = 150$.
+
+**Wahrscheinlichkeit, dass eine Glühbirne weniger als $1000$ Stunden brennt ($P(X < 1000)$):**
+Z-Wert für $X = 1000$:
+$$
+Z = \frac{X - \mu}{\sigma} = \frac{1000 - 1200}{150} = \frac{-200}{150} \approx -1.33
+$$
+Mit einer Z-Tabelle (oder Software) finden wir $P(Z < -1.33) \approx 0.0918$.
+Die Wahrscheinlichkeit beträgt ca. $9.18\%$.
+
+**Wahrscheinlichkeit, dass sie zwischen $1100$ und $1300$ Stunden brennt ($P(1100 < X < 1300)$):**
+Z-Wert für $X = 1100$:
+$$
+Z_1 = \frac{1100 - 1200}{150} = \frac{-100}{150} \approx -0.67
+$$
+Z-Wert für $X = 1300$:
+$$
+Z_2 = \frac{1300 - 1200}{150} = \frac{100}{150} \approx 0.67
+$$
+$P(1100 < X < 1300) = P(-0.67 < Z < 0.67) = P(Z < 0.67) - P(Z < -0.67)$
+Mit einer Z-Tabelle (oder Software):
+$P(Z < 0.67) \approx 0.7486$
+$P(Z < -0.67) \approx 0.2514$
+$P(1100 < X < 1300) \approx 0.7486 - 0.2514 = 0.4972$.
+Die Wahrscheinlichkeit beträgt ca. $49.72\%$.
+:::
+
+#### 3. Konfidenzintervall für den Mittelwert
+
+Eine Stichprobe von $n=49$ Studierenden hatte eine durchschnittliche Bearbeitungszeit für eine Prüfung von $\bar{X} = 75$ Minuten mit einer Stichprobenstandardabweichung von $S = 14$ Minuten.
+
+* Konstruieren Sie ein $95\%$-Konfidenzintervall für die wahre durchschnittliche Bearbeitungszeit aller Studierenden. (Nutzen Sie den passenden kritischen Wert für die [$t$-Verteilung](https://de.wikipedia.org/wiki/Studentsche_t-Verteilung) mit $df = n-1$).
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 3"}
+Gegeben: $n = 49$, $\bar{X} = 75$, $S = 14$.
+Freiheitsgrade $df = n - 1 = 49 - 1 = 48$.
+Für ein $95\%$-Konfidenzintervall und $df=48$ ist der kritische $t$-Wert (zweiseitig) ungefähr $t_{krit} \approx 2.011$.
+
+Konfidenzintervall Formel:
+$$
+\bar{X} \pm t_{krit} \cdot \frac{S}{\sqrt{n}}
+$$
+Berechnung des Standardfehlers des Mittelwerts:
+$$
+SE = \frac{S}{\sqrt{n}} = \frac{14}{\sqrt{49}} = \frac{14}{7} = 2
+$$
+Berechnung des Konfidenzintervalls:
+$$
+75 \pm 2.011 \cdot 2
+$$
+$$
+75 \pm 4.022
+$$
+Untere Grenze: $75 - 4.022 = 70.978$
+Obere Grenze: $75 + 4.022 = 79.022$
+
+Das $95\%$-Konfidenzintervall für die wahre durchschnittliche Bearbeitungszeit liegt zwischen $70.978$ und $79.022$ Minuten.
+:::
+
+#### 4. Einfache Lineare Regression - Parameter Schätzung
+
+Sie haben die folgenden Beobachtungen für $X$ (Werbeausgaben in Tsd. €) und $Y$ (Verkaufszahlen in Tsd. Stück):
+
+* $X = [10, 20, 30, 40, 50]$
+* $Y = [5, 12, 18, 25, 30]$
+
+* Schätzen Sie die Parameter $\beta_0$ (Achsenabschnitt) und $\beta_1$ (Steigung) der einfachen linearen Regression $Y = \beta_0 + \beta_1 X + \epsilon$ mittels der Formeln für die Kleinste-Quadrate-Schätzung oder eine Skizze:
+    * $\beta_1 = \frac{\sum (X_i - \bar{X})(Y_i - \bar{Y})}{\sum (X_i - \bar{X})^2}$
+    * $\beta_0 = \bar{Y} - \beta_1 \bar{X}$
+* Interpretieren Sie die geschätzten Koeffizienten.
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 4"}
+**1. Mittelwerte berechnen:**
+$\bar{X} = \frac{10+20+30+40+50}{5} = \frac{150}{5} = 30$
+$\bar{Y} = \frac{5+12+18+25+30}{5} = \frac{90}{5} = 18$
+
+**2. Summen für $\beta_1$ berechnen:**
+
+| $X_i$ | $Y_i$ | $X_i - \bar{X}$ | $Y_i - \bar{Y}$ | $(X_i - \bar{X})(Y_i - \bar{Y})$ | $(X_i - \bar{X})^2$ |
+| :---- | :---- | :-------------- | :-------------- | :-------------------------------- | :------------------ |
+| 10    | 5     | -20             | -13             | 260                               | 400                 |
+| 20    | 12    | -10             | -6              | 60                                | 100                 |
+| 30    | 18    | 0               | 0               | 0                                 | 0                   |
+| 40    | 25    | 10              | 7               | 70                                | 100                 |
+| 50    | 30    | 20              | 12              | 240                               | 400                 |
+|       |       |                 | **Summe:** | **630** | **1000** |
+
+**3. $\beta_1$ berechnen:**
+$$
+\hat{\beta}_1 = \frac{630}{1000} = 0.63
+$$
+
+**4. $\beta_0$ berechnen:**
+$$
+\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{X} = 18 - (0.63 \cdot 30) = 18 - 18.9 = -0.9
+$$
+
+**Geschätztes Regressionsmodell:**
+$Y = -0.9 + 0.63 X$
+
+**Interpretation der Koeffizienten:**
+* **$\hat{\beta}_0 = -0.9$ (Achsenabschnitt):** Wenn die Werbeausgaben (X) 0 Tsd. € betragen, wären die geschätzten Verkaufszahlen -0.9 Tsd. Stück. Dieser Wert ist in diesem Kontext nicht sinnvoll interpretierbar, da Verkaufszahlen nicht negativ sein können und eine Extrapolation zu 0 Werbeausgaben außerhalb des beobachteten Bereichs liegt.
+* **$\hat{\beta}_1 = 0.63$ (Steigung):** Eine Erhöhung der Werbeausgaben um 1 Tsd. € ist mit einem Anstieg der Verkaufszahlen um 0.63 Tsd. Stück verbunden, unter der Annahme, dass alle anderen Faktoren konstant bleiben. Dies impliziert eine positive Beziehung zwischen Werbeausgaben und Verkaufszahlen.
+:::
+
+
+#### 5. Hypothesentest - Einstichproben-t-Test
+
+Ein Hersteller behauptet, dass seine neuen Batterien eine durchschnittliche Lebensdauer von $50$ Stunden haben ($\mu_0 = 50$). Eine Stichprobe von $25$ Batterien ergibt eine durchschnittliche Lebensdauer von $48$ Stunden mit einer Standardabweichung von $5$ Stunden.
+
+* Führen Sie einen Einstichproben-t-Test durch, um zu prüfen, ob die wahre Lebensdauer signifikant von $50$ Stunden abweicht (zweiseitiger Test) bei einem Signifikanzniveau von $\alpha = 0.05$.
+* Berechnen Sie die Teststatistik $t = \frac{\bar{X} - \mu_0}{\frac{S}{\sqrt{n}}}$.
+* Vergleichen Sie den berechneten $t$-Wert mit dem kritischen $t$-Wert oder dem p-Wert (wenn Sie eine $t$-Tabelle oder Software verwenden können). Was ist Ihre Schlussfolgerung?
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 5"}
+Gegeben: $\mu_0 = 50$, $n = 25$, $\bar{X} = 48$, $S = 5$.
+Signifikanzniveau $\alpha = 0.05$.
+
+**1. Hypothesen aufstellen:**
+
+* Nullhypothese ($H_0$): Die wahre durchschnittliche Lebensdauer beträgt 50 Stunden ($\mu = 50$).
+* Alternativhypothese ($H_1$): Die wahre durchschnittliche Lebensdauer weicht von 50 Stunden ab ($\mu \neq 50$). (Zweiseitiger Test)
+
+**2. Teststatistik berechnen:**
+$$
+t = \frac{\bar{X} - \mu_0}{\frac{S}{\sqrt{n}}} = \frac{48 - 50}{\frac{5}{\sqrt{25}}} = \frac{-2}{\frac{5}{5}} = \frac{-2}{1} = -2
+$$
+Die Teststatistik ist $t = -2$.
+
+**3. Kritischen Wert bestimmen:**
+Freiheitsgrade $df = n - 1 = 25 - 1 = 24$.
+Für einen zweiseitigen Test mit $\alpha = 0.05$ und $df = 24$ ist der kritische $t$-Wert (aus $t$-Tabelle oder Software) ungefähr $t_{krit} = \pm 2.064$.
+
+**4. Entscheidung treffen:**
+Der berechnete $t$-Wert ($|-2| = 2$) ist kleiner als der absolute kritische $t$-Wert ($2.064$). Das bedeutet, der Wert liegt innerhalb des Annahmebereichs.
+Alternativ, der p-Wert für $t = -2$ bei $df = 24$ (zweiseitig) ist ca. $0.0566$. Da $p = 0.0566 > \alpha = 0.05$, lehnen wir die Nullhypothese nicht ab.
+
+**Schlussfolgerung:**
+Es gibt keine ausreichenden statistischen Beweise, um zu behaupten, dass die wahre durchschnittliche Lebensdauer der Batterien signifikant von 50 Stunden abweicht. Die beobachtete Abweichung von 48 Stunden könnte rein zufällig sein.
+:::
+
+#### 6. Multiple Lineare Regression - Vorhersage
+
+Ein Modell zur Vorhersage des Kraftstoffverbrauchs (`mpg`) hat folgende geschätzte Parameter:
+
+* $\hat{\beta}_0 = 45$ (Konstante)
+* $\hat{\beta}_1 = -0.1$ (für `horsepower`)
+* $\hat{\beta}_2 = -0.005$ (für `weight`)
+
+* Berechnen Sie den vorhergesagten `mpg` für ein Auto mit $150$ PS (`horsepower`) und $3000$ lbs (`weight`).
+* Wie würde sich die Vorhersage ändern, wenn das Auto $100$ PS und $2000$ lbs hätte?
+
+::: {.callout collapse="true" title="Lösung Aufgabe 6"}
+Das multiple lineare Regressionsmodell lautet:
+$$
+\widehat{mpg} = \hat{\beta}_0 + \hat{\beta}_1 \cdot \text{horsepower} + \hat{\beta}_2 \cdot \text{weight}
+$$
+Einsetzen der gegebenen Parameter:
+$$
+\widehat{mpg} = 45 - 0.1 \cdot \text{horsepower} - 0.005 \cdot \text{weight}
+$$
+
+**1. Vorhersage für Auto 1:**
+* `horsepower` = 150
+* `weight` = 3000
+
+$$
+\widehat{mpg}_1 = 45 - (0.1 \cdot 150) - (0.005 \cdot 3000)
+$$
+$$
+\widehat{mpg}_1 = 45 - 15 - 15
+$$
+$$
+\widehat{mpg}_1 = 15
+$$
+Der vorhergesagte Kraftstoffverbrauch für Auto 1 beträgt $15$ mpg.
+
+**2. Vorhersage für Auto 2:**
+* `horsepower` = 100
+* `weight` = 2000
+
+$$
+\widehat{mpg}_2 = 45 - (0.1 \cdot 100) - (0.005 \cdot 2000)
+$$
+$$
+\widehat{mpg}_2 = 45 - 10 - 10
+$$
+$$
+\widehat{mpg}_2 = 25
+$$
+Der vorhergesagte Kraftstoffverbrauch für Auto 2 beträgt $25$ mpg.
+
+**Änderung der Vorhersage:**
+Die Vorhersage ändert sich von 15 mpg auf 25 mpg. Ein Auto mit weniger Leistung und geringerem Gewicht hat einen höheren vorhergesagten Kraftstoffverbrauch, was der Erwartung entspricht.
+:::
+
+#### 7. Würfelsumme
+
+Zwei faire Würfel werden geworfen.
+
+- Wie hoch ist die Wahrscheinlichkeit, dass die Summe der Augenzahlen kleiner als 5 ist?
+- Wie hoch ist die Wahrscheinlichkeit, dass mindestens ein Würfel eine 6 zeigt?
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 7"}
+
+Um die Wahrscheinlichkeit zu berechnen, dass die Summe der Augenzahlen kleiner als 5 ist, betrachten wir alle möglichen Kombinationen, bei denen die Summe 2, 3 oder 4 ergibt:
+
+- Summe 2: (1, 1)
+- Summe 3: (1, 2), (2, 1)
+- Summe 4: (1, 3), (2, 2), (3, 1)
+
+Es gibt insgesamt 6 günstige Kombinationen. Da es insgesamt 36 mögliche Kombinationen beim Werfen von zwei Würfeln gibt (6 Seiten pro Würfel), ist die Wahrscheinlichkeit:
+
+$$
+P(\text{Summe} < 5) = \frac{6}{36} = \frac{1}{6} \approx 0.1667
+$$
+
+Um die Wahrscheinlichkeit zu berechnen, dass mindestens ein Würfel eine 6 zeigt, betrachten wir alle Kombinationen, bei denen mindestens ein Würfel eine 6 zeigt:
+
+- (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6)
+- (1, 6), (2, 6), (3, 6), (4, 6), (5, 6)
+
+Es gibt insgesamt 11 günstige Kombinationen. Die Wahrscheinlichkeit ist:
+
+$$
+P(\text{Mindestens eine 6}) = \frac{11}{36} \approx 0.3056
+$$
+:::
+
+#### 8. Fehlermaße in der Regression
+
+Sie haben die folgenden beobachteten ($Y$) und vorhergesagten ($\hat{Y}$) Werte:
+
+* $Y = [10, 15, 20, 25]$
+* $\hat{Y} = [11, 14, 21, 23]$
+
+* Berechnen Sie den Mean Squared Error (MSE) und den Root Mean Squared Error (RMSE) für diese Vorhersagen.
+* MSE $= \frac{1}{n} \sum (Y_i - \hat{Y}_i)^2$
+* RMSE $= \sqrt{MSE}$
+
+::: {.callout collapse="true" title="Lösung Aufgabe 8"}
+Gegeben:
+$Y = [10, 15, 20, 25]$
+$\hat{Y} = [11, 14, 21, 23]$
+Anzahl der Beobachtungen $n = 4$.
+
+**1. Differenzen und quadrierte Differenzen berechnen:**
+* $(Y_1 - \hat{Y}_1)^2 = (10 - 11)^2 = (-1)^2 = 1$
+* $(Y_2 - \hat{Y}_2)^2 = (15 - 14)^2 = (1)^2 = 1$
+* $(Y_3 - \hat{Y}_3)^2 = (20 - 21)^2 = (-1)^2 = 1$
+* $(Y_4 - \hat{Y}_4)^2 = (25 - 23)^2 = (2)^2 = 4$
+
+**2. Summe der quadrierten Differenzen berechnen:**
+$\sum (Y_i - \hat{Y}_i)^2 = 1 + 1 + 1 + 4 = 7$
+
+**3. Mean Squared Error (MSE) berechnen:**
+$$
+MSE = \frac{1}{n} \sum (Y_i - \hat{Y}_i)^2 = \frac{7}{4} = 1.75
+$$
+
+**4. Root Mean Squared Error (RMSE) berechnen:**
+$$
+RMSE = \sqrt{MSE} = \sqrt{1.75} \approx 1.3228
+$$
+Der MSE beträgt $1.75$ und der RMSE beträgt ungefähr $1.3228$.
+:::
+
+#### 9. Konfusionsmatrix & Metriken
+
+Ein Klassifikationsmodell hat folgende Ergebnisse für ein binäres Problem geliefert:
+
+* Wahre Positive (TP): 80
+* Wahre Negative (TN): 150
+* Falsche Positive (FP): 20
+* Falsche Negative (FN): 50
+
+* Berechnen Sie:
+    * Genauigkeit (Accuracy)
+    * Präzision (Precision)
+    * Sensitivität (Recall / True Positive Rate)
+    * F1-Score (Optional, aber empfehlenswert für tiefere Einsicht)
+* Formeln:
+    * Accuracy $= \frac{TP+TN}{TP+TN+FP+FN}$
+    * Precision $= \frac{TP}{TP+FP}$
+    * Recall $= \frac{TP}{TP+FN}$
+    * F1-Score $= 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 9"}
+Gegeben: TP = 80, TN = 150, FP = 20, FN = 50.
+
+**1. Genauigkeit (Accuracy) berechnen:**
+Gesamtzahl der Beobachtungen: $80 + 150 + 20 + 50 = 300$
+$$
+\text{Accuracy} = \frac{TP+TN}{TP+TN+FP+FN} = \frac{80+150}{300} = \frac{230}{300} \approx 0.7667
+$$
+
+**2. Präzision (Precision) berechnen:**
+$$
+\text{Precision} = \frac{TP}{TP+FP} = \frac{80}{80+20} = \frac{80}{100} = 0.80
+$$
+
+**3. Sensitivität (Recall) berechnen:**
+$$
+\text{Recall} = \frac{TP}{TP+FN} = \frac{80}{80+50} = \frac{80}{130} \approx 0.6154
+$$
+
+**4. F1-Score berechnen:**
+$$
+\text{F1-Score} = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}} = 2 \cdot \frac{0.80 \cdot 0.6154}{0.80 + 0.6154} = 2 \cdot \frac{0.49232}{1.4154} \approx 2 \cdot 0.3478 \approx 0.6956
+$$
+
+**Ergebnisse:**
+* Accuracy: ca. $76.67\%$
+* Precision: $80\%$
+* Recall: ca. $61.54\%$
+* F1-Score: ca. $69.56\%$
+:::
+
+#### 10. Kreditnehmer-Datensatz
+
+
+Für diese Aufgabe nutzen wir den loan50-Datensatz, der 50 Beobachtungen über Kreditnehmer enthält. Gehen Sie davon aus, dass dieser Datensatz eine repräsentative Zufallsstichprobe der Grundgesamtheit von Kreditnehmern darstellt, und dass die relativen Häufigkeiten in dieser Stichprobe als Schätzungen für die tatsächlichen Wahrscheinlichkeiten in der Grundgesamtheit verwendet werden können.
+
+Die relevante Kreuztabelle aus dem Skript ist wie folgt gegeben:
+
+```
+homeownership  False  True
+homeownership             
+Mortgage          20     6
+Own                2     1
+Rent              18     3
+```
+
+Beantworten Sie die folgenden Fragen:
+
+- Wie hoch ist die Wahrscheinlichkeit, dass ein zufällig ausgewählter Kreditnehmer eine Hypothek (Mortgage) hat?
+- Wie hoch ist die Wahrscheinlichkeit, dass ein zufällig ausgewählter Kreditnehmer ein zweites Einkommen (has_second_income = True) hat, wenn bekannt ist, dass er eine Hypothek (homeownership = Mortgage) hat?
+
+::: {.callout  collapse="true" title="Lösung Aufgabe 10"}
+
+Aus der Tabelle geht hervor, dass von 50 Kreditnehmern 26 eine Hypothek haben. Die Wahrscheinlichkeit ist also:
+
+$$
+P(\text{Hypothek}) = \frac{26}{50} = 0.52
+$$
+
+Aus der Kreuztabelle geht hervor, dass von 26 Kreditnehmern mit Hypothek 6 ein zweites Einkommen haben. Die bedingte Wahrscheinlichkeit ist:
+
+$$
+P(\text{Zweiteinkommen} | \text{Hypothek}) = \frac{6}{26} \approx 0.2308
+$$
+
+:::
