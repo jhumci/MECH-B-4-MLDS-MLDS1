@@ -382,7 +382,7 @@ window.Quarto = {
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon
 \]</span></p>
 <p>Als Beispiel könnten wir nicht nur die Absatzmenge eines Produkts in Abhängigkeit von der Werbeausgabe für TV-Spots, sondern auch von der Werbeausgabe für Radio-Spots modellieren. Wir simuliieren die Daten wieder mit Python, so dass wir die Zusammenhänge kennen.</p>
-<div id="5bbb02cf" class="cell styled-output" data-execution_count="1">
+<div id="e0532141" class="cell styled-output" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -421,7 +421,7 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon
 </div>
 </div>
 <p>Wir können nun drei unabhängige Modelle fitten und visualisieren.</p>
-<div id="2773238c" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression_three" data-execution_count="2">
+<div id="ecdb6dc6" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression_three" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">"TV advertising spending (€)"</span>, <span class="st">"Radio advertising spending (€)"</span>, <span class="st">"Newspaper advertising spending (€)"</span>]</span>
@@ -467,7 +467,7 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon
 </div>
 </div>
 <p>Offensichtlich sind die Modelle von mittlerer Qualität. Wir können die drei unabhängigen Variablen auch in einem Modell zusammenfassen.</p>
-<div id="47f55580" class="cell styled-output" data-execution_count="3">
+<div id="917b85ac" class="cell styled-output" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -484,7 +484,7 @@ Dep. Variable:              Y (Sales)   R-squared:                       0.853
 Model:                            OLS   Adj. R-squared:                  0.848
 Method:                 Least Squares   F-statistic:                     185.7
 Date:                Tue, 03 Jun 2025   Prob (F-statistic):           7.83e-40
-Time:                        13:14:47   Log-Likelihood:                -683.06
+Time:                        13:25:09   Log-Likelihood:                -683.06
 No. Observations:                 100   AIC:                             1374.
 Df Residuals:                      96   BIC:                             1385.
 Df Model:                           3                                         
@@ -508,7 +508,7 @@ Notes:
 </div>
 </div>
 <p>Wir können das Modell visualisieren, indem wir dreidimensionale Daten plotten. Wir lassen <span class="math inline">\(x_3\)</span> weg, da es den geringsten Einfluss auf die abhängige Variable zu haben scheint.</p>
-<div id="f937377b" class="cell styled-output" data-execution_count="4">
+<div id="6082c5e5" class="cell styled-output" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -531,7 +531,7 @@ Notes:
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3531/1194729202.py:14: FutureWarning:
+<pre><code>/tmp/ipykernel_3415/1194729202.py:14: FutureWarning:
 
 Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
 </code></pre>
@@ -598,7 +598,7 @@ Korrelation und Kausalität
 <section id="abbildung-nicht-linearer-zusammenhänge-mit-linearen-modellen" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="abbildung-nicht-linearer-zusammenhänge-mit-linearen-modellen"><span class="header-section-number">8.1</span> Abbildung nicht-linearer Zusammenhänge mit Linearen Modellen</h2>
 <p>In der Praxis hört man oft, dass sich lineare Modelle nur für lineare Zusammenhänge eignen. Das ist nicht ganz richtig. Lineare Modelle können auch nicht-lineare Zusammenhänge abbilden. Zunächst vergegenwärtigen wir uns nochmal was passiert, wenn wir die Vorhersage unseres Modells nur in Abhängigkeit von einer Variablen betrachten. Jeder schwarze Punkt in <span class="citation" data-cites="fig:regression-linear-advanced-linear-regression">(<a href="../references.html#ref-fig:regression-linear-advanced-linear-regression" role="doc-biblioref"><strong>fig:regression-linear-advanced-linear-regression?</strong></a>)</span> zeigt die beobachtete Absatzmenge zu einem Zeitpunkt in Abhängigkeit von den Werbeausgaben für TV-Spots. Der blaue Punkt zeigt die Vorhersage unseres Modells, in das Modell geht natürlich auch die Werbeausgaben für Radio- und Zeitungswerbung ein. Deswegen liegen die blauen Punkte nicht auf einer Linie, obwohl wir ein lineares Modell verwenden.</p>
-<div id="d32aa41e" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression" data-execution_count="5">
+<div id="a5e0de38" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prediction for TV advertising spending</span></span>
@@ -613,7 +613,7 @@ Korrelation und Kausalität
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">"Data"</span>, <span class="st">"Prediction"</span>])</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3531/1829400649.py:6: FutureWarning:
+<pre><code>/tmp/ipykernel_3415/1829400649.py:6: FutureWarning:
 
 Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
 </code></pre>
@@ -628,7 +628,7 @@ Series.__getitem__ treating keys as positions is deprecated. In a future version
 </div>
 </div>
 <p>Manchmal begegnen wir Zusammenhängen, die ganz klar nicht linear sind, beispielsweise der zwischen Verbrauch in Meilen pro Gallone und der Leistung eines Autos. Offensichtlich sinkt der Verbrauch nicht linear mit der Leistung:</p>
-<div id="290ed252" class="cell" data-execution_count="6">
+<div id="32fa5ad8" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -664,7 +664,7 @@ Series.__getitem__ treating keys as positions is deprecated. In a future version
 <p><span class="math display">\[
 \text{mpg} = \beta_0 + \beta_1 \sqrt{\text{horsepower}} + \epsilon
 \]</span></p>
-<div id="87eb69f5" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression-transformed" data-execution_count="7">
+<div id="fbead8fd" class="cell styled-output" data-fig-label="fig:regression-linear-advanced-linear-regression-transformed" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformation of the independent variable</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"sqrt_horsepower"</span>] <span class="op">=</span> np.sqrt(df[<span class="st">"horsepower"</span>])</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -712,7 +712,7 @@ Feature Engineering
 <section id="umgang-mit-kategorischen-variablen" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="umgang-mit-kategorischen-variablen"><span class="header-section-number">8.2</span> Umgang mit Kategorischen Variablen</h2>
 <p>Bisher haben wir nur numerische Variablen betrachtet. In der Praxis haben wir es aber oft mit kategorischen Variablen zu tun. Kategorische Variablen sind Variablen, die eine endliche Anzahl von Kategorien haben. Beispiele sind Geschlecht, Region oder Produkttyp. Beispielsweise wird im Car-Data-Set die Herkunft der Autos erfasst.</p>
-<div id="c4a5df19" class="cell styled-output" data-execution_count="8">
+<div id="caa8ca7e" class="cell styled-output" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>] <span class="op">=</span> df[<span class="st">"origin"</span>].<span class="bu">map</span>({<span class="dv">1</span>: <span class="st">"USA"</span>, <span class="dv">2</span>: <span class="st">"Europe"</span>, <span class="dv">3</span>: <span class="st">"Japan"</span>})</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"origin"</span>].value_counts().plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Origin"</span>)</span>
@@ -729,7 +729,7 @@ Feature Engineering
 </div>
 </div>
 <p>Nun wollen wir untersuchen, ob wir die Herkunft der Autos verwenden können, um den Verbrauch vorherzusagemn. Wie immer starten wir mit einer explorativen Analyse.</p>
-<div id="672844e5" class="cell styled-output" data-execution_count="9">
+<div id="4d43ef07" class="cell styled-output" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">"origin"</span>, y<span class="op">=</span><span class="st">"mpg"</span>, data<span class="op">=</span>df)</span>
@@ -751,7 +751,7 @@ Feature Engineering
 <h3 data-number="8.2.1" class="anchored" data-anchor-id="dummy-variablen"><span class="header-section-number">8.2.1</span> Dummy-Variablen</h3>
 <p>Dummy-Variablen ermöglichen die Einbindung kategorischer Variablen in lineare Regressionsmodelle, indem sie jede Kategorie (außer einer Referenzkategorie) durch eine binäre Variable (0 oder 1) darstellen. Für eine Variable mit <span class="math inline">\(k\)</span> Kategorien benötigt man <span class="math inline">\(k-1\)</span> Dummy-Variablen, da die Referenzkategorie durch das Fehlen aller Dummy-Variablen kodiert wird. Dies vermeidet Mehrkollinearität, da die Kategorien sonst linear abhängig wären.</p>
 <p><strong>Beispiel</strong>: Wir verwenden die Spalte „origin“ (USA, Europe, Japan) aus dem Auto-Datensatz und erstellen Dummy-Variablen mit USA als Referenzkategorie.</p>
-<div id="be6716c8" class="cell styled-output" data-execution_count="10">
+<div id="cb3cf980" class="cell styled-output" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
@@ -782,7 +782,7 @@ Feature Engineering
 <h3 data-number="8.2.2" class="anchored" data-anchor-id="one-hot-encoding"><span class="header-section-number">8.2.2</span> One-Hot-Encoding</h3>
 <p>One-Hot-Encoding kodiert jede Kategorie einer kategorischen Variable durch eine eigene binäre Spalte, was <span class="math inline">\(k\)</span> Spalten für <span class="math inline">\(k\)</span> Kategorien ergibt. Im Gegensatz zu Dummy-Variablen wird keine Referenzkategorie weggelassen, was in linearen Regressionen zu Mehrkollinearität führen kann, wenn der Intercept im Modell enthalten ist. In solchen Fällen wird oft eine Spalte entfernt oder der Intercept ausgeschlossen.</p>
 <p><strong>Beispiel</strong>: Wir erstellen ein One-Hot-Encoding für die Spalte „origin“ (USA, Europe, Japan) im Auto-Datensatz.</p>
-<div id="0014b05c" class="cell styled-output" data-execution_count="11">
+<div id="72951d55" class="cell styled-output" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lade den Datensatz</span></span>
@@ -812,7 +812,7 @@ Feature Engineering
 <h3 data-number="8.2.3" class="anchored" data-anchor-id="modell-nur-mit-kategorischen-variablen"><span class="header-section-number">8.2.3</span> Modell nur mit Kategorischen Variablen</h3>
 <p>Ein Regressionsmodell, das ausschließlich kategorische Variablen verwendet, schätzt die Mittelwerte der abhängigen Variable für jede Kategorie. Für die Herkunft (USA, Europe, Japan) modelliert das Modell den durchschnittlichen Kraftstoffverbrauch (<code>mpg</code>) pro Land. Der Intercept entspricht dem durchschnittlichen Verbrauch der Referenzkategorie, während die Koeffizienten der Dummy-Variablen die Differenz im Verbrauch der anderen Kategorien im Vergleich zur Referenzkategorie angeben.</p>
 <p><strong>Beispiel</strong>: Wir erstellen ein Modell, das den Verbrauch (<code>mpg</code>) basierend auf der Herkunft vorhersagt, mit USA als Referenzkategorie.</p>
-<div id="60f848c0" class="cell styled-output" data-execution_count="12">
+<div id="8d24bfd1" class="cell styled-output" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -847,7 +847,7 @@ Dep. Variable:                    mpg   R-squared:                       0.332
 Model:                            OLS   Adj. R-squared:                  0.328
 Method:                 Least Squares   F-statistic:                     96.60
 Date:                Tue, 03 Jun 2025   Prob (F-statistic):           8.67e-35
-Time:                        13:14:48   Log-Likelihood:                -1282.2
+Time:                        13:25:10   Log-Likelihood:                -1282.2
 No. Observations:                 392   AIC:                             2570.
 Df Residuals:                     389   BIC:                             2582.
 Df Model:                           2                                         
@@ -885,7 +885,7 @@ Notes:
 <h3 data-number="8.2.4" class="anchored" data-anchor-id="modell-mit-allen-variablen"><span class="header-section-number">8.2.4</span> Modell mit allen Variablen</h3>
 <p>Ein Modell, das numerische und kategorische Variablen kombiniert, nutzt alle verfügbaren Prädiktoren, um die abhängige Variable zu modellieren. Dies führt oft zu einer höheren Erklärungskraft (z. B. höherem <span class="math inline">\(R^2\)</span>), da mehr Informationen berücksichtigt werden. Die Interpretation wird jedoch komplexer, da die Koeffizienten unter der Annahme interpretiert werden, dass alle anderen Variablen konstant sind.</p>
 <p><strong>Beispiel</strong>: Wir modellieren den Verbrauch (<code>mpg</code>) basierend auf der Leistung (<code>horsepower</code>), deren Quadratwurzel (für nicht-lineare Effekte) und der Herkunft (als Dummy-Variablen, USA als Referenzkategorie).</p>
-<div id="bf355279" class="cell styled-output" data-execution_count="13">
+<div id="cdc23442" class="cell styled-output" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -922,7 +922,7 @@ Dep. Variable:                    mpg   R-squared:                       0.719
 Model:                            OLS   Adj. R-squared:                  0.716
 Method:                 Least Squares   F-statistic:                     247.8
 Date:                Tue, 03 Jun 2025   Prob (F-statistic):          2.51e-105
-Time:                        13:14:48   Log-Likelihood:                -1112.2
+Time:                        13:25:11   Log-Likelihood:                -1112.2
 No. Observations:                 392   AIC:                             2234.
 Df Residuals:                     387   BIC:                             2254.
 Df Model:                           4                                         
