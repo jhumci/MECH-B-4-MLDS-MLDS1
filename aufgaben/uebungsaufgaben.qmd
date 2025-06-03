@@ -1,6 +1,6 @@
 # Übungsaufgaben Klausurvorbereitung {.unnumbered}
 
-- In der Klausur kann ein zwei-seitiges Dokument (Vorder- und Rückseite) mit den wichtigsten Formeln, Tests und Konzepten verwendet werden. Notwendige Z-Wert-Tabellen werden gestellt.
+- In der Klausur kann ein zwei-seitiges A4-Papier-Dokument (Vorder- und Rückseite) mit den wichtigsten Formeln, Tests und Konzepten verwendet werden. Notwendige Z-Wert-Tabellen werden gestellt.
 - Folgende Übungsaufgaben sollen Ihnen helfen, sich auf die Klausur vorzubereiten. 
 
 
