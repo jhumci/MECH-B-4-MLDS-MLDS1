@@ -9,7 +9,7 @@
 #### 1. Variablentypen und Tidy Data
 
 * Beschreiben Sie die Konzepte von "Tidy Data" nach Hadley Wickham. Geben Sie ein Beispiel für einen "unordentlichen" Datensatz und zeigen Sie, wie er in ein Tidy Data-Format umgewandelt werden könnte.
-* Nennen und erklären Sie mindestens vier verschiedene Variablentypen (z.B. nominal, ordinal, intervall, verhältnis/ratio) und geben Sie für jeden Typ ein Beispiel
+* Erklären Sie mindestens vier verschiedene Variablentypen (z.B. nominal, ordinal, intervall, verhältnis/ratio) und geben Sie für jeden Typ ein Beispiel
 
 ::: {.callout collapse="true" title="Lösung Aufgabe 1"}
 **Tidy Data nach Hadley Wickham:**
@@ -75,9 +75,9 @@ Erklären Sie die folgenden deskriptiven Statistiken: Arithmetischer Mittelwert,
 
 **Interpretation der hypothetischen Ergebnisse:**
 
--Arithmetischer Mittelwert: Gleich-gewichteter Durchschnittswert der Variablen ist ein Lagemaß, das die zentrale Tendenz beschreibt. Es ist empfindlich gegenüber Ausreißern.
+- Arithmetischer Mittelwert: Gleich-gewichteter Durchschnittswert der Variablen ist ein __Lagemaß__, das die zentrale Tendenz beschreibt. Es ist empfindlich gegenüber Ausreißern.
 - Median: Der Median teilt die Daten in zwei Hälften und ist robuster gegenüber Ausreißern.
-- Standardabweichung: Ein Maß für die Streuung der Daten um den Mittelwert. Eine hohe Standardabweichung zeigt, dass die Daten weit gestreut sind.
+- Standardabweichung: Ein Maß für die __Streuung__ der Daten um den Mittelwert. Eine hohe Standardabweichung zeigt, dass die Daten weit gestreut sind.
     - Es gibt die *populationsbezogene Standardabweichung* ($\sigma$) und die *stichprobenbezogene Standardabweichung* ($s$). Die Stichprobenbezogene Standardabweichung wird mit $n-1$ im Nenner berechnet, um die Schätzung der Populationsstandardabweichung zu korrigieren. Die populationsbezogene Standardabweichung verwendet $n$ im Nenner.
 - Minimum: Der kleinste Wert in der Datenreihe. Es ist empfindlich gegenüber Ausreißern, da ein einzelner extrem niedriger Wert den Minimumwert stark beeinflussen kann.
 - Maximum: Der größte Wert in der Datenreihe. Auch hier kann ein einzelner extrem hoher Wert den Maximumwert stark beeinflussen.
@@ -92,15 +92,14 @@ Erklären Sie die folgenden deskriptiven Statistiken: Arithmetischer Mittelwert,
 
 ::: {.callout  collapse="true" title="Lösung Aufgabe 3"}
 **Diskrete Verteilungen:**
-Eine diskrete Verteilung beschreibt Zufallsvariablen, deren Werte nur abzählbare, separate Werte annehmen können. Zwischen zwei aufeinanderfolgenden Werten gibt es keine weiteren möglichen Werte.
+Eine diskrete Verteilung beschreibt Zufallsvariablen, deren Werte nur abzählbare, separate Werte annehmen können (Ordinalskala oder Nominalskala).
 
 * **Beispiel 1: Binomialverteilung**
     * Beschreibung: Beschreibt die Anzahl der Erfolge in einer festen Anzahl von unabhängigen Bernoulli-Versuchen (z.B. Münzwürfe oder ja/nein-Fragen), wobei jeder Versuch nur zwei mögliche Ergebnisse hat.
     * Anwendung: Anzahl der fehlerhaften Produkte in einer Stichprobe von 100 produzierten Artikeln.
 
-* **Beispiel 2: Poisson-Verteilung**
-    * Beschreibung: Beschreibt die Anzahl der Ereignisse, die in einem festen Zeitintervall oder Raumgebiet auftreten, wenn diese Ereignisse mit einer bekannten durchschnittlichen Rate unabhängig voneinander geschehen.
-    * Anwendung: Anzahl der Kundenanrufe in einem Callcenter pro Stunde; Anzahl der Verkehrsunfälle an einer Kreuzung pro Monat.
+* **Beispiel 2: Diskrete Gleich-Verteilung**
+    * Beschreibung: Beschreibt eine Situation, in der alle möglichen Ergebnisse gleich wahrscheinlich sind. Zum Beispiel das Werfen eines fairen Würfels.
 
 **Kontinuierliche Verteilungen:**
 Eine kontinuierliche Verteilung beschreibt Zufallsvariablen, deren Werte jeden beliebigen Wert innerhalb eines bestimmten Intervalls annehmen können. Die Wahrscheinlichkeit, dass die Variable einen *bestimmten* einzelnen Wert annimmt, ist Null; stattdessen werden Wahrscheinlichkeiten für Intervalle berechnet.
@@ -109,10 +108,8 @@ Eine kontinuierliche Verteilung beschreibt Zufallsvariablen, deren Werte jeden b
     * Beschreibung: Eine symmetrische, glockenförmige Verteilung, die häufig in der Natur und in vielen Messprozessen auftritt. Sie ist durch ihren Mittelwert ($\mu$) und ihre Standardabweichung ($\sigma$) vollständig definiert.
     * Anwendung: Körpergröße von Menschen in einer Population; Messfehler bei physikalischen Experimenten; Intelligenzquotient (IQ) in einer Bevölkerung.
 
-* **Beispiel 2: Exponentialverteilung**
-    * Beschreibung: Beschreibt die Zeit bis zum Eintreten eines Ereignisses in einem Poisson-Prozess, d.h., die Zeit bis zum ersten Ereignis oder die Zeit zwischen zwei aufeinanderfolgenden Ereignissen. Sie ist "gedächtnislos".
-    * Anwendung: Lebensdauer von elektronischen Bauteilen; Zeit zwischen aufeinanderfolgenden Erdbeben; Wartezeit auf den nächsten Kunden in einem Servicegeschäft.
-:::
+* **Beispiel 2: T-Verteilung**
+    * Beschreibung: Eine Verteilung, die ähnlich wie die Normalverteilung aussieht, aber dickere Ränder hat. Sie wird häufig verwendet, wenn die Stichprobengröße klein ist und die Populationsstandardabweichung unbekannt ist.
 
 #### 4. Datenvisualisierung
 
