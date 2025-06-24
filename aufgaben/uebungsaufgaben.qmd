@@ -1016,7 +1016,7 @@ Sie haben die folgenden beobachteten ($Y$) und vorhergesagten ($\hat{Y}$) Werte:
 * Berechnen Sie den Mean Squared Error (MSE) und den Root Mean Squared Error (RMSE) für diese Vorhersagen.
 * MSE $= \frac{1}{n} \sum (Y_i - \hat{Y}_i)^2$
 * RMSE $= \sqrt{MSE}$
-* MAPE $= \frac{1}{n} \sum |Y_i - \hat{Y}_i|$ (optional, aber hilfreich für die Interpretation).
+* MAPE $= \frac{1}{n} \sum \left| \frac{Y_i - \hat{Y}_i}{Y_i} \right|$ (optional, aber hilfreich für die Interpretation).
 
 * Welchen Nachteil kann der MAPE haben?
 
