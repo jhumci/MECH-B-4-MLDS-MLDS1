@@ -95,8 +95,8 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-43df0d6f53b733b42d37fa7808e17715.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-35a0a6ff63dc489592d737420f28c51a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-3553ea59eb901081601ef76abf8d5447.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-6010515a9eaa39e00cd7277287a4efde.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-a9e9869f84cda674a4060d07c7be2428.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -494,7 +494,7 @@ Figure&nbsp;6.1: Verteilung des Eiweißgehalts in der Stichprobe und der maximal
 <ul>
 <li><span class="math inline">\(t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}\)</span></li>
 </ul>
-<div id="49b042a6" class="cell" data-execution_count="2">
+<div id="49e66db4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Berechnung der Teststatistik für Gerste</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>standard_error_barley <span class="op">=</span> s_barley <span class="op">/</span> np.sqrt(n_barley)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>t_statistic_barley <span class="op">=</span> (x_bar_barley <span class="op">-</span> mu_0_barley) <span class="op">/</span> standard_error_barley</span>
@@ -513,7 +513,7 @@ Teststatistik (t): 4.381</code></pre>
 <li>Wir führen einen einseitigen Test (rechtsseitig) mit <span class="math inline">\(\alpha = 0.05\)</span> und <span class="math inline">\(n-1 = 50-1 = 49\)</span> Freiheitsgraden durch. Wir suchen den Wert <span class="math inline">\(t_{1-\alpha, n-1} = t_{0.95, 49}\)</span>.</li>
 <li>Aus der t-Verteilungstabelle oder mit Software erhalten wir <span class="math inline">\(t_{\text{krit}} \approx 1.677\)</span>.</li>
 </ul>
-<div id="42915da7" class="cell" data-execution_count="3">
+<div id="96451fe9" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> t <span class="im">as</span> t_dist</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>alpha_barley <span class="op">=</span> <span class="fl">0.05</span></span>
@@ -576,7 +576,7 @@ Note
 <li><p><strong>p-Wert:</strong> Berechnung der Wahrscheinlichkeit, unter <span class="math inline">\(H_0\)</span> eine Teststatistik zu beobachten, die mindestens so extrem ist wie <span class="math inline">\(t \approx 4.011\)</span>.</p></li>
 </ul></li>
 </ol>
-<div id="14735e17" class="cell" data-execution_count="5">
+<div id="5a38b122" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>p_value_barley <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> t_dist.cdf(t_statistic_barley, df_barley)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'p-Wert: </span><span class="sc">{</span>p_value_barley<span class="sc">:.3e}</span><span class="ss">'</span>) <span class="co"># Formatierung in wissenschaftlicher Notation</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Vergleich mit alpha</span></span>
@@ -671,7 +671,7 @@ t = \frac{\bar{x} - \mu_0}{s / \sqrt{n}}
 <p><span class="math display">\[
 t = \frac{10.47 - 10.5}{0.0693} \approx -0.433
 \]</span></p>
-<div id="f51cd136" class="cell" data-execution_count="6">
+<div id="63279fb1" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x_bar <span class="op">=</span> <span class="fl">10.47</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> <span class="fl">0.49</span></span>
@@ -688,7 +688,7 @@ Teststatistik t: -0.433</code></pre>
 </div>
 <p><strong>Schritt 3: Kritischer Wert</strong></p>
 <p>Freiheitsgrade: <span class="math inline">\(df = n - 1 = 49\)</span>. Für einen zweiseitigen Test mit <span class="math inline">\(\alpha = 0.05\)</span> ist der kritische Wert <span class="math inline">\(t_{1-\alpha/2, 49} = t_{0.975, 49} \approx 2.010\)</span> (aus t-Tabelle oder Software).</p>
-<div id="7719ec25" class="cell" data-execution_count="7">
+<div id="2d093f1a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> t <span class="im">as</span> t_dist</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> n <span class="op">-</span> <span class="dv">1</span></span>
@@ -700,7 +700,7 @@ Teststatistik t: -0.433</code></pre>
 </div>
 <p><strong>Schritt 4: p-Wert</strong></p>
 <p>Der p-Wert für einen zweiseitigen Test ist: <span class="math inline">\(p = 2 \cdot P(T \geq |t|)\)</span>.</p>
-<div id="84bd0e54" class="cell" data-execution_count="8">
+<div id="db35a42e" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> t_dist.cdf(<span class="bu">abs</span>(t_statistic), df))</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-Wert: </span><span class="sc">{</span>p_value<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -984,7 +984,7 @@ t = \frac{(\bar{x}_1 - \bar{x}_2) - \omega_0}{s_p \sqrt{\frac{1}{n_1} + \frac{1}
 <ul>
 <li>Berechne den Mittelwert der Differenzen <span class="math inline">\(\bar{d}\)</span> und die Standardabweichung der Differenzen <span class="math inline">\(s_d\)</span>.</li>
 </ul>
-<div id="856a1abc" class="cell styled-output" data-execution_count="10">
+<div id="72a0936d" class="cell styled-output" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> t <span class="im">as</span> t_dist</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1022,7 +1022,7 @@ Teststatistik (t): 11.705</code></pre>
 <li><p><strong>Signifikanzniveau:</strong> <span class="math inline">\(\alpha = 0.05\)</span>.</p></li>
 <li><p><strong>Teststatistik:</strong> <span class="math inline">\(t = \frac{\bar{d} - 0}{s_d / \sqrt{n}} \approx 11.58\)</span>.</p></li>
 <li><p><strong>Kritischer Wert:</strong> Für einen einseitigen Test mit <span class="math inline">\(\alpha = 0.05\)</span> und <span class="math inline">\(df = n-1 = 10-1 = 9\)</span> Freiheitsgraden ist <span class="math inline">\(t_{\text{krit}} = t_{0.95, 9}\)</span>.</p>
-<div id="09731f16" class="cell styled-output" data-execution_count="11">
+<div id="4c4a0294" class="cell styled-output" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df_paired <span class="op">=</span> n <span class="op">-</span> <span class="dv">1</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>alpha_paired <span class="op">=</span> <span class="fl">0.05</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>t_crit_paired <span class="op">=</span> t_dist.ppf(<span class="dv">1</span> <span class="op">-</span> alpha_paired, df_paired)</span>
@@ -1040,7 +1040,7 @@ Kritischer Wert (t_krit) für α=0.05 (einseitig): 1.833</code></pre>
 <li><strong>p-Wert:</strong></li>
 </ul></li>
 </ol>
-<div id="8f6a3328" class="cell" data-execution_count="12">
+<div id="91adb687" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>p_value_paired <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> t_dist.cdf(t_stat_paired, df_paired)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'p-Wert (einseitig): </span><span class="sc">{</span>p_value_paired<span class="sc">:.3e}</span><span class="ss">'</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value_paired <span class="op">&lt;</span> alpha_paired:</span>
@@ -1089,7 +1089,7 @@ Da p-Wert (4.760e-07) &lt; α (0.05), wird H₀ abgelehnt.</code></pre>
 <li><strong>Signifikanzniveau</strong>: <span class="math inline">\(\alpha = 0.05\)</span>.</li>
 <li><strong>Teststatistik</strong>:</li>
 </ol>
-<div id="f9a20ef3" class="cell" data-execution_count="13">
+<div id="a993af1e" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1106,7 +1106,7 @@ Da p-Wert (4.760e-07) &lt; α (0.05), wird H₀ abgelehnt.</code></pre>
 <li><strong>Kritischer Wert</strong>:</li>
 </ol>
 <p>Für <span class="math inline">\(df = 3-1 = 2\)</span> und <span class="math inline">\(\alpha = 0.05\)</span> ist <span class="math inline">\(\chi^2_{\text{krit}} \approx 5.991\)</span>.</p>
-<div id="f62edac5" class="cell" data-execution_count="14">
+<div id="200b4692" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> <span class="bu">len</span>(O) <span class="op">-</span> <span class="dv">1</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>chi2_critical <span class="op">=</span> chi2.ppf(<span class="dv">1</span> <span class="op">-</span> alpha, df)</span>
@@ -1118,7 +1118,7 @@ Da p-Wert (4.760e-07) &lt; α (0.05), wird H₀ abgelehnt.</code></pre>
 <ol start="5" type="1">
 <li><strong>p-Wert</strong>:</li>
 </ol>
-<div id="1e877e2c" class="cell" data-execution_count="15">
+<div id="70dbd0a7" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> chi2.cdf(chi2_statistic, df)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-Wert: </span><span class="sc">{</span>p_value<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1135,7 +1135,7 @@ Da p-Wert (4.760e-07) &lt; α (0.05), wird H₀ abgelehnt.</code></pre>
 </section>
 <section id="visualisierung-der-teststatistik" class="level3" data-number="6.2.2">
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="visualisierung-der-teststatistik"><span class="header-section-number">6.2.2</span> Visualisierung der Teststatistik</h3>
-<div id="ae10b890" class="cell" data-execution_count="16">
+<div id="e196a0ac" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Chi-Quadrat-Verteilung</span></span>
